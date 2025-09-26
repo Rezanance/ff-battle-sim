@@ -1,0 +1,15 @@
+[gd_scene load_steps=2 format=3 uid="uid://crhdaipejxkkv"]
+
+[ext_resource type="Theme" uid="uid://qw3ckwy7bak5" path="res://theme/ui_theme.tres" id="1_o23oa"]
+
+[node name="ContextMenu" type="PopupMenu"]
+oversampling_override = 1.0
+title = "Team Actions"
+theme = ExtResource("1_o23oa")
+item_count = 3
+item_0/text = "Asssign"
+item_0/id = 0
+item_1/text = "Swap"
+item_1/id = 1
+item_2/text = "Remove"
+item_2/id = 2

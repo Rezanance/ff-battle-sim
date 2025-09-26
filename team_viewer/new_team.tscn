@@ -1,0 +1,11 @@
+[gd_scene load_steps=3 format=3 uid="uid://croc0tyusn234"]
+
+[ext_resource type="Theme" uid="uid://qw3ckwy7bak5" path="res://theme/ui_theme.tres" id="1_061b7"]
+[ext_resource type="Script" uid="uid://dlfn3mk75wbal" path="res://team_viewer/new_team.gd" id="2_3tu47"]
+
+[node name="New team" type="Button"]
+theme = ExtResource("1_061b7")
+text = "+ New team"
+script = ExtResource("2_3tu47")
+
+[connection signal="pressed" from="." to="." method="_on_pressed"]

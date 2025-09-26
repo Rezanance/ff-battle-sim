@@ -1,0 +1,38 @@
+; Engine configuration file.
+; It's best edited using the editor UI and not directly,
+; since the parameters that go here are not all obvious.
+;
+; Format:
+;   [section] ; section goes between []
+;   param=value ; assign values to parameters
+
+config_version=5
+
+[application]
+
+config/name="FFC Battle Sim"
+run/main_scene="uid://b5e63667bvai4"
+config/use_custom_user_dir=true
+config/features=PackedStringArray("4.5", "Forward Plus")
+config/icon="res://icon.svg"
+
+[autoload]
+
+SceneTransition="*res://autoloads/scene_transition.tscn"
+Global="*res://autoloads/global.gd"
+DataTypes="*res://autoloads/data_types.gd"
+
+[display]
+
+window/size/viewport_width=1920
+window/size/viewport_height=1080
+window/size/mode=2
+window/stretch/mode="canvas_items"
+
+[gui]
+
+theme/custom="uid://qw3ckwy7bak5"
+
+[rendering]
+
+textures/canvas_textures/default_texture_filter=0

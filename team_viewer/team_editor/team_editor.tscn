@@ -1,0 +1,218 @@
+[gd_scene load_steps=20 format=3 uid="uid://myvsxwydumrn"]
+
+[ext_resource type="Texture2D" uid="uid://chevdw52lcf04" path="res://common_assets/backgrounds/rock_bg.jpg" id="1_57wfa"]
+[ext_resource type="Script" uid="uid://b1o058wioim37" path="res://team_viewer/team_editor/team_editor.gd" id="2_kcpo7"]
+[ext_resource type="Texture2D" uid="uid://cfj1ntsnfctw5" path="res://common_assets/formation/jurrassic_btn.png" id="3_kcpo7"]
+[ext_resource type="Texture2D" uid="uid://bdrs400086n8q" path="res://common_assets/formation/triassic_btn.png" id="4_wfc57"]
+[ext_resource type="Texture2D" uid="uid://0rslbu47ytjt" path="res://team_viewer/assets/giant_fossil_rock_2.png" id="5_onxxx"]
+[ext_resource type="Texture2D" uid="uid://wtdb10d4ufh7" path="res://common_assets/formation/jurassic_slots.png" id="5_tbraw"]
+[ext_resource type="PackedScene" uid="uid://twprmxgwv8kw" path="res://team_viewer/team_editor/vivosaur_summary/VivosaurSummary.tscn" id="6_82hiq"]
+[ext_resource type="Texture2D" uid="uid://dyvy3f6afttu2" path="res://common_assets/hud/selectable.png" id="6_kcpo7"]
+[ext_resource type="PackedScene" uid="uid://crhdaipejxkkv" path="res://team_viewer/team_editor/context_menu.tscn" id="8_p0qsv"]
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_wfc57"]
+atlas = ExtResource("6_kcpo7")
+region = Rect2(0, 0, 32, 32)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_tbraw"]
+atlas = ExtResource("6_kcpo7")
+region = Rect2(32, 0, 32, 32)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_6odcm"]
+atlas = ExtResource("6_kcpo7")
+region = Rect2(64, 0, 32, 32)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_qk5ds"]
+atlas = ExtResource("6_kcpo7")
+region = Rect2(96, 0, 32, 32)
+
+[sub_resource type="SpriteFrames" id="SpriteFrames_qmpqq"]
+animations = [{
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_wfc57")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_tbraw")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_6odcm")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_qk5ds")
+}],
+"loop": true,
+"name": &"default",
+"speed": 5.0
+}]
+
+[sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_kcpo7"]
+
+[sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_wfc57"]
+
+[sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_tbraw"]
+
+[sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_6odcm"]
+
+[sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_qk5ds"]
+
+[node name="TeamEditor" type="TextureRect"]
+offset_right = 1920.0
+offset_bottom = 1080.0
+texture = ExtResource("1_57wfa")
+expand_mode = 3
+script = ExtResource("2_kcpo7")
+
+[node name="HBoxContainer" type="HBoxContainer" parent="."]
+z_as_relative = false
+layout_mode = 0
+offset_left = 682.0
+offset_top = 62.0
+offset_right = 1238.0
+offset_bottom = 158.0
+
+[node name="FormationToggle" type="TextureButton" parent="HBoxContainer"]
+layout_mode = 2
+size_flags_horizontal = 3
+toggle_mode = true
+texture_normal = ExtResource("3_kcpo7")
+texture_pressed = ExtResource("4_wfc57")
+
+[node name="FormationSlots" type="TextureRect" parent="HBoxContainer"]
+layout_mode = 2
+size_flags_horizontal = 3
+texture = ExtResource("5_tbraw")
+stretch_mode = 2
+
+[node name="Slot1" type="AnimatedSprite2D" parent="HBoxContainer/FormationSlots"]
+visible = false
+position = Vector2(5.9999995, 4.9999995)
+scale = Vector2(2.75, 2.75)
+sprite_frames = SubResource("SpriteFrames_qmpqq")
+speed_scale = 2.0
+centered = false
+
+[node name="Button" type="Button" parent="HBoxContainer/FormationSlots/Slot1"]
+offset_right = 32.0
+offset_bottom = 32.0
+theme_override_styles/normal = SubResource("StyleBoxEmpty_kcpo7")
+theme_override_styles/pressed = SubResource("StyleBoxEmpty_wfc57")
+theme_override_styles/hover = SubResource("StyleBoxEmpty_tbraw")
+theme_override_styles/disabled = SubResource("StyleBoxEmpty_6odcm")
+theme_override_styles/focus = SubResource("StyleBoxEmpty_qk5ds")
+
+[node name="Slot2" type="AnimatedSprite2D" parent="HBoxContainer/FormationSlots"]
+visible = false
+position = Vector2(105.99999, 4.9999995)
+scale = Vector2(2.75, 2.75)
+sprite_frames = SubResource("SpriteFrames_qmpqq")
+speed_scale = 2.0
+centered = false
+
+[node name="Button" type="Button" parent="HBoxContainer/FormationSlots/Slot2"]
+offset_right = 32.0
+offset_bottom = 32.0
+theme_override_styles/normal = SubResource("StyleBoxEmpty_kcpo7")
+theme_override_styles/pressed = SubResource("StyleBoxEmpty_wfc57")
+theme_override_styles/hover = SubResource("StyleBoxEmpty_tbraw")
+theme_override_styles/disabled = SubResource("StyleBoxEmpty_6odcm")
+theme_override_styles/focus = SubResource("StyleBoxEmpty_qk5ds")
+
+[node name="Slot3" type="AnimatedSprite2D" parent="HBoxContainer/FormationSlots"]
+visible = false
+position = Vector2(206.99998, 4.9999995)
+scale = Vector2(2.75, 2.75)
+sprite_frames = SubResource("SpriteFrames_qmpqq")
+speed_scale = 2.0
+centered = false
+
+[node name="Button" type="Button" parent="HBoxContainer/FormationSlots/Slot3"]
+offset_right = 32.0
+offset_bottom = 32.0
+theme_override_styles/normal = SubResource("StyleBoxEmpty_kcpo7")
+theme_override_styles/pressed = SubResource("StyleBoxEmpty_wfc57")
+theme_override_styles/hover = SubResource("StyleBoxEmpty_tbraw")
+theme_override_styles/disabled = SubResource("StyleBoxEmpty_6odcm")
+theme_override_styles/focus = SubResource("StyleBoxEmpty_qk5ds")
+
+[node name="Slot4" type="AnimatedSprite2D" parent="HBoxContainer/FormationSlots"]
+visible = false
+position = Vector2(307.99997, 4.9999995)
+scale = Vector2(2.75, 2.75)
+sprite_frames = SubResource("SpriteFrames_qmpqq")
+speed_scale = 2.0
+centered = false
+
+[node name="Button" type="Button" parent="HBoxContainer/FormationSlots/Slot4"]
+offset_right = 32.0
+offset_bottom = 32.0
+theme_override_styles/normal = SubResource("StyleBoxEmpty_kcpo7")
+theme_override_styles/pressed = SubResource("StyleBoxEmpty_wfc57")
+theme_override_styles/hover = SubResource("StyleBoxEmpty_tbraw")
+theme_override_styles/disabled = SubResource("StyleBoxEmpty_6odcm")
+theme_override_styles/focus = SubResource("StyleBoxEmpty_qk5ds")
+
+[node name="Slot5" type="AnimatedSprite2D" parent="HBoxContainer/FormationSlots"]
+visible = false
+position = Vector2(408.99997, 4.9999995)
+scale = Vector2(2.75, 2.75)
+sprite_frames = SubResource("SpriteFrames_qmpqq")
+speed_scale = 2.0
+centered = false
+
+[node name="Button" type="Button" parent="HBoxContainer/FormationSlots/Slot5"]
+offset_right = 32.0
+offset_bottom = 32.0
+theme_override_styles/normal = SubResource("StyleBoxEmpty_kcpo7")
+theme_override_styles/pressed = SubResource("StyleBoxEmpty_wfc57")
+theme_override_styles/hover = SubResource("StyleBoxEmpty_tbraw")
+theme_override_styles/disabled = SubResource("StyleBoxEmpty_6odcm")
+theme_override_styles/focus = SubResource("StyleBoxEmpty_qk5ds")
+
+[node name="TextureRect" type="TextureRect" parent="."]
+layout_mode = 0
+offset_left = 3.0
+offset_top = 251.0
+offset_right = 1078.2
+offset_bottom = 1076.6
+texture = ExtResource("5_onxxx")
+
+[node name="Fossilary" type="HFlowContainer" parent="TextureRect"]
+layout_mode = 0
+offset_left = 177.0
+offset_top = 147.0
+offset_right = 927.0
+offset_bottom = 697.0
+size_flags_horizontal = 3
+size_flags_vertical = 3
+
+[node name="VivosaurSummary" parent="." instance=ExtResource("6_82hiq")]
+visible = false
+layout_mode = 0
+offset_left = 1222.0
+offset_top = 308.0
+offset_right = 1822.0
+offset_bottom = 1028.0
+
+[node name="SaveTeam" type="Button" parent="."]
+layout_mode = 0
+offset_left = 1430.0
+offset_top = 141.0
+offset_right = 1529.0
+offset_bottom = 188.0
+disabled = true
+text = "Save team"
+
+[node name="TeamName" type="LineEdit" parent="."]
+layout_mode = 0
+offset_left = 1440.0
+offset_top = 62.0
+offset_right = 1840.0
+offset_bottom = 112.0
+placeholder_text = "Team name"
+caret_blink = true
+
+[node name="AnimationPlayer" type="AnimationPlayer" parent="."]
+
+[node name="ContextMenu" parent="." instance=ExtResource("8_p0qsv")]
+item_count = 0

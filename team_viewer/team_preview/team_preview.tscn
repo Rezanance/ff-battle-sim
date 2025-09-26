@@ -1,0 +1,74 @@
+[gd_scene load_steps=10 format=3 uid="uid://ctrtxlg3nby8r"]
+
+[ext_resource type="Texture2D" uid="uid://dge7lrtu82fp1" path="res://team_viewer/assets/giant_fossil_rock.png" id="1_6v28v"]
+[ext_resource type="Script" uid="uid://tb1a4le3y1c8" path="res://team_viewer/team_preview/team_preview.gd" id="1_o6ahg"]
+[ext_resource type="Texture2D" uid="uid://ckee51ytbvju" path="res://common_assets/formation_container/jurassic_formation_empty_imgupscaler.ai_General_2K.jpg" id="2_tvx1y"]
+[ext_resource type="Texture2D" uid="uid://box3rchtdbcqo" path="res://vivosaur/1/medals/1 (2).png" id="3_ddlni"]
+[ext_resource type="Texture2D" uid="uid://carlpcjwntisk" path="res://vivosaur/97/medals/97 (10).png" id="4_fhyqo"]
+[ext_resource type="Texture2D" uid="uid://d3p858wy5c8dg" path="res://vivosaur/44/medals/44 (8).png" id="5_q24ua"]
+[ext_resource type="Texture2D" uid="uid://bj21mdhfd4kyq" path="res://vivosaur/1/medals/1 (4).png" id="6_0ai5s"]
+[ext_resource type="Texture2D" uid="uid://cnpk3v7wm5nn2" path="res://vivosaur/97/medals/97 (4).png" id="7_2vrb7"]
+
+[sub_resource type="SystemFont" id="SystemFont_e1cs2"]
+font_names = PackedStringArray("Monospace")
+subpixel_positioning = 0
+
+[node name="VBoxContainer" type="VBoxContainer"]
+custom_minimum_size = Vector2(0, 300)
+alignment = 1
+script = ExtResource("1_o6ahg")
+
+[node name="Team name background" type="TextureRect" parent="."]
+layout_mode = 2
+texture = ExtResource("1_6v28v")
+
+[node name="Team name" type="Label" parent="Team name background"]
+layout_mode = 0
+offset_left = 73.0
+offset_right = 439.0
+offset_bottom = 192.0
+theme_override_fonts/font = SubResource("SystemFont_e1cs2")
+theme_override_font_sizes/font_size = 33
+text = "First team"
+horizontal_alignment = 1
+vertical_alignment = 1
+autowrap_mode = 2
+
+[node name="Formation background" type="TextureRect" parent="."]
+layout_mode = 2
+texture = ExtResource("2_tvx1y")
+expand_mode = 5
+
+[node name="Medal container" type="HBoxContainer" parent="Formation background"]
+custom_minimum_size = Vector2(512, 93.5)
+layout_mode = 0
+offset_right = 40.0
+offset_bottom = 40.0
+theme_override_constants/separation = 12
+
+[node name="Medal 0" type="TextureRect" parent="Formation background/Medal container"]
+layout_mode = 2
+texture = ExtResource("3_ddlni")
+expand_mode = 3
+
+[node name="Medal 1" type="TextureRect" parent="Formation background/Medal container"]
+layout_mode = 2
+texture = ExtResource("4_fhyqo")
+expand_mode = 3
+
+[node name="Medal 2" type="TextureRect" parent="Formation background/Medal container"]
+layout_mode = 2
+texture = ExtResource("5_q24ua")
+expand_mode = 3
+
+[node name="Medal 3" type="TextureRect" parent="Formation background/Medal container"]
+layout_mode = 2
+texture = ExtResource("6_0ai5s")
+expand_mode = 3
+
+[node name="Medal 4" type="TextureRect" parent="Formation background/Medal container"]
+layout_mode = 2
+texture = ExtResource("7_2vrb7")
+expand_mode = 3
+
+[connection signal="gui_input" from="." to="." method="_on_gui_input" binds= [0]]

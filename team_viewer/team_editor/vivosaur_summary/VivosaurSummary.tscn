@@ -1,0 +1,262 @@
+[gd_scene load_steps=11 format=3 uid="uid://twprmxgwv8kw"]
+
+[ext_resource type="Texture2D" uid="uid://donnyydh3q13f" path="res://common_assets/stats/LP_2.webp" id="2_1v7sl"]
+[ext_resource type="Texture2D" uid="uid://tr5e4ixd3lvn" path="res://common_assets/stats/Attack_2.webp" id="3_yatd4"]
+[ext_resource type="Texture2D" uid="uid://c8ixrbey1td8j" path="res://common_assets/stats/Defense_2.webp" id="4_ls88g"]
+[ext_resource type="Texture2D" uid="uid://nrk77fnr3enl" path="res://common_assets/stats/Accuracy_2.webp" id="5_e7f3q"]
+[ext_resource type="Texture2D" uid="uid://6vyniumte402" path="res://common_assets/stats/Evasion_2.webp" id="6_poj42"]
+[ext_resource type="Texture2D" uid="uid://cahehxmxgrksv" path="res://common_assets/stats/Atk.png" id="7_n5a61"]
+[ext_resource type="Texture2D" uid="uid://c4mrc4cykheth" path="res://common_assets/stats/Def.png" id="8_iagp4"]
+[ext_resource type="Texture2D" uid="uid://stck0kdwo7eq" path="res://common_assets/stats/Acc.png" id="9_l0bah"]
+[ext_resource type="Texture2D" uid="uid://2uj43ser72q6" path="res://common_assets/stats/Eva.png" id="10_ahiiy"]
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_onxxx"]
+bg_color = Color(0, 0, 0, 0.72156864)
+corner_radius_top_left = 10
+corner_radius_top_right = 10
+corner_radius_bottom_right = 10
+corner_radius_bottom_left = 10
+
+[node name="Panel" type="Panel"]
+offset_right = 600.0
+offset_bottom = 720.0
+theme_override_styles/panel = SubResource("StyleBoxFlat_onxxx")
+
+[node name="ScrollContainer" type="ScrollContainer" parent="."]
+layout_mode = 0
+offset_left = 12.0
+offset_top = 10.0
+offset_right = 587.0
+offset_bottom = 710.0
+
+[node name="VBoxContainer" type="VBoxContainer" parent="ScrollContainer"]
+layout_mode = 2
+size_flags_horizontal = 3
+theme_override_constants/separation = 16
+
+[node name="HBoxContainer2" type="HBoxContainer" parent="ScrollContainer/VBoxContainer"]
+layout_mode = 2
+theme_override_constants/separation = 14
+alignment = 1
+
+[node name="Element" type="TextureRect" parent="ScrollContainer/VBoxContainer/HBoxContainer2"]
+layout_mode = 2
+expand_mode = 3
+
+[node name="Name" type="Label" parent="ScrollContainer/VBoxContainer/HBoxContainer2"]
+layout_mode = 2
+theme_type_variation = &"HeaderLarge"
+text = "Vivosaur name"
+horizontal_alignment = 1
+
+[node name="Range" type="Label" parent="ScrollContainer/VBoxContainer"]
+layout_mode = 2
+theme_type_variation = &"HeaderMedium"
+text = "Mid-Range"
+horizontal_alignment = 1
+
+[node name="Headers" type="HBoxContainer" parent="ScrollContainer/VBoxContainer"]
+layout_mode = 2
+
+[node name="header" type="Label" parent="ScrollContainer/VBoxContainer/Headers"]
+layout_mode = 2
+size_flags_horizontal = 3
+theme_type_variation = &"HeaderMedium"
+text = "Stats"
+horizontal_alignment = 1
+
+[node name="header2" type="Label" parent="ScrollContainer/VBoxContainer/Headers"]
+layout_mode = 2
+size_flags_horizontal = 3
+theme_type_variation = &"HeaderMedium"
+text = "Support Effects"
+horizontal_alignment = 1
+
+[node name="StatsSupportEffects" type="HBoxContainer" parent="ScrollContainer/VBoxContainer"]
+layout_mode = 2
+theme_override_constants/separation = 10
+
+[node name="MarginContainer" type="MarginContainer" parent="ScrollContainer/VBoxContainer/StatsSupportEffects"]
+layout_mode = 2
+size_flags_horizontal = 3
+theme_override_constants/margin_left = 110
+
+[node name="Stats" type="VBoxContainer" parent="ScrollContainer/VBoxContainer/StatsSupportEffects/MarginContainer"]
+layout_mode = 2
+
+[node name="HBoxContainer" type="HBoxContainer" parent="ScrollContainer/VBoxContainer/StatsSupportEffects/MarginContainer/Stats"]
+layout_mode = 2
+theme_override_constants/separation = 14
+
+[node name="TextureRect" type="TextureRect" parent="ScrollContainer/VBoxContainer/StatsSupportEffects/MarginContainer/Stats/HBoxContainer"]
+layout_mode = 2
+texture = ExtResource("2_1v7sl")
+expand_mode = 3
+
+[node name="LpValue" type="Label" parent="ScrollContainer/VBoxContainer/StatsSupportEffects/MarginContainer/Stats/HBoxContainer"]
+layout_mode = 2
+text = "100"
+horizontal_alignment = 1
+vertical_alignment = 1
+
+[node name="HBoxContainer2" type="HBoxContainer" parent="ScrollContainer/VBoxContainer/StatsSupportEffects/MarginContainer/Stats"]
+layout_mode = 2
+theme_override_constants/separation = 14
+
+[node name="TextureRect" type="TextureRect" parent="ScrollContainer/VBoxContainer/StatsSupportEffects/MarginContainer/Stats/HBoxContainer2"]
+layout_mode = 2
+texture = ExtResource("3_yatd4")
+expand_mode = 3
+
+[node name="AtkValue" type="Label" parent="ScrollContainer/VBoxContainer/StatsSupportEffects/MarginContainer/Stats/HBoxContainer2"]
+layout_mode = 2
+text = "100"
+horizontal_alignment = 1
+vertical_alignment = 1
+
+[node name="HBoxContainer3" type="HBoxContainer" parent="ScrollContainer/VBoxContainer/StatsSupportEffects/MarginContainer/Stats"]
+layout_mode = 2
+theme_override_constants/separation = 14
+
+[node name="TextureRect" type="TextureRect" parent="ScrollContainer/VBoxContainer/StatsSupportEffects/MarginContainer/Stats/HBoxContainer3"]
+layout_mode = 2
+texture = ExtResource("4_ls88g")
+expand_mode = 3
+
+[node name="DefValue" type="Label" parent="ScrollContainer/VBoxContainer/StatsSupportEffects/MarginContainer/Stats/HBoxContainer3"]
+layout_mode = 2
+text = "100"
+horizontal_alignment = 1
+vertical_alignment = 1
+
+[node name="HBoxContainer4" type="HBoxContainer" parent="ScrollContainer/VBoxContainer/StatsSupportEffects/MarginContainer/Stats"]
+layout_mode = 2
+theme_override_constants/separation = 14
+
+[node name="TextureRect" type="TextureRect" parent="ScrollContainer/VBoxContainer/StatsSupportEffects/MarginContainer/Stats/HBoxContainer4"]
+layout_mode = 2
+texture = ExtResource("5_e7f3q")
+expand_mode = 3
+
+[node name="AccValue" type="Label" parent="ScrollContainer/VBoxContainer/StatsSupportEffects/MarginContainer/Stats/HBoxContainer4"]
+layout_mode = 2
+text = "100"
+horizontal_alignment = 1
+vertical_alignment = 1
+
+[node name="HBoxContainer5" type="HBoxContainer" parent="ScrollContainer/VBoxContainer/StatsSupportEffects/MarginContainer/Stats"]
+layout_mode = 2
+theme_override_constants/separation = 14
+
+[node name="TextureRect" type="TextureRect" parent="ScrollContainer/VBoxContainer/StatsSupportEffects/MarginContainer/Stats/HBoxContainer5"]
+layout_mode = 2
+texture = ExtResource("6_poj42")
+expand_mode = 3
+
+[node name="EvaValue" type="Label" parent="ScrollContainer/VBoxContainer/StatsSupportEffects/MarginContainer/Stats/HBoxContainer5"]
+layout_mode = 2
+text = "100"
+horizontal_alignment = 1
+vertical_alignment = 1
+
+[node name="CritValue" type="Label" parent="ScrollContainer/VBoxContainer/StatsSupportEffects/MarginContainer/Stats"]
+layout_mode = 2
+text = "Crit Chance: 15%"
+
+[node name="MarginContainer2" type="MarginContainer" parent="ScrollContainer/VBoxContainer/StatsSupportEffects"]
+layout_mode = 2
+size_flags_horizontal = 3
+theme_override_constants/margin_left = 110
+
+[node name="SupportEffects" type="VBoxContainer" parent="ScrollContainer/VBoxContainer/StatsSupportEffects/MarginContainer2"]
+layout_mode = 2
+size_flags_horizontal = 3
+
+[node name="AZ" type="Label" parent="ScrollContainer/VBoxContainer/StatsSupportEffects/MarginContainer2/SupportEffects"]
+layout_mode = 2
+text = "Own AZ"
+
+[node name="HBoxContainer2" type="HBoxContainer" parent="ScrollContainer/VBoxContainer/StatsSupportEffects/MarginContainer2/SupportEffects"]
+layout_mode = 2
+theme_override_constants/separation = 14
+
+[node name="TextureRect" type="TextureRect" parent="ScrollContainer/VBoxContainer/StatsSupportEffects/MarginContainer2/SupportEffects/HBoxContainer2"]
+layout_mode = 2
+texture = ExtResource("7_n5a61")
+expand_mode = 3
+
+[node name="AtkValue" type="Label" parent="ScrollContainer/VBoxContainer/StatsSupportEffects/MarginContainer2/SupportEffects/HBoxContainer2"]
+layout_mode = 2
+text = "+30%"
+horizontal_alignment = 1
+vertical_alignment = 1
+
+[node name="HBoxContainer3" type="HBoxContainer" parent="ScrollContainer/VBoxContainer/StatsSupportEffects/MarginContainer2/SupportEffects"]
+layout_mode = 2
+theme_override_constants/separation = 14
+
+[node name="TextureRect" type="TextureRect" parent="ScrollContainer/VBoxContainer/StatsSupportEffects/MarginContainer2/SupportEffects/HBoxContainer3"]
+layout_mode = 2
+texture = ExtResource("8_iagp4")
+expand_mode = 3
+
+[node name="DefValue" type="Label" parent="ScrollContainer/VBoxContainer/StatsSupportEffects/MarginContainer2/SupportEffects/HBoxContainer3"]
+layout_mode = 2
+text = "--"
+horizontal_alignment = 1
+vertical_alignment = 1
+
+[node name="HBoxContainer4" type="HBoxContainer" parent="ScrollContainer/VBoxContainer/StatsSupportEffects/MarginContainer2/SupportEffects"]
+layout_mode = 2
+theme_override_constants/separation = 14
+
+[node name="TextureRect" type="TextureRect" parent="ScrollContainer/VBoxContainer/StatsSupportEffects/MarginContainer2/SupportEffects/HBoxContainer4"]
+layout_mode = 2
+texture = ExtResource("9_l0bah")
+expand_mode = 3
+
+[node name="AccValue" type="Label" parent="ScrollContainer/VBoxContainer/StatsSupportEffects/MarginContainer2/SupportEffects/HBoxContainer4"]
+layout_mode = 2
+text = "+30%"
+horizontal_alignment = 1
+vertical_alignment = 1
+
+[node name="HBoxContainer5" type="HBoxContainer" parent="ScrollContainer/VBoxContainer/StatsSupportEffects/MarginContainer2/SupportEffects"]
+layout_mode = 2
+theme_override_constants/separation = 14
+
+[node name="TextureRect" type="TextureRect" parent="ScrollContainer/VBoxContainer/StatsSupportEffects/MarginContainer2/SupportEffects/HBoxContainer5"]
+layout_mode = 2
+texture = ExtResource("10_ahiiy")
+expand_mode = 3
+
+[node name="EvaValue" type="Label" parent="ScrollContainer/VBoxContainer/StatsSupportEffects/MarginContainer2/SupportEffects/HBoxContainer5"]
+layout_mode = 2
+text = "--"
+horizontal_alignment = 1
+vertical_alignment = 1
+
+[node name="HBoxContainer" type="HBoxContainer" parent="ScrollContainer/VBoxContainer"]
+layout_mode = 2
+
+[node name="StatusImmunities" type="Label" parent="ScrollContainer/VBoxContainer/HBoxContainer"]
+custom_minimum_size = Vector2(300, 0)
+layout_mode = 2
+size_flags_horizontal = 3
+text = "Status Immunities: None"
+autowrap_mode = 2
+
+[node name="TeamSkillGroups" type="Label" parent="ScrollContainer/VBoxContainer/HBoxContainer"]
+custom_minimum_size = Vector2(250, 0)
+layout_mode = 2
+text = "Team Skill Groups: 1, 2"
+autowrap_mode = 2
+
+[node name="Skillheader" type="Label" parent="ScrollContainer/VBoxContainer"]
+layout_mode = 2
+theme_type_variation = &"HeaderMedium"
+text = "Skills"
+horizontal_alignment = 1
+
+[node name="SkillsContainer" type="VBoxContainer" parent="ScrollContainer/VBoxContainer"]
+layout_mode = 2
