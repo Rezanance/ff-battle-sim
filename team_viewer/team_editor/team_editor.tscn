@@ -216,3 +216,5 @@ caret_blink = true
 
 [node name="ContextMenu" parent="." instance=ExtResource("8_p0qsv")]
 item_count = 0
+
+[connection signal="toggled" from="HBoxContainer/FormationToggle" to="." method="_on_formation_toggled"]

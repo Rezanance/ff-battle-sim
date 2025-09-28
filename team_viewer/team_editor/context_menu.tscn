@@ -5,6 +5,7 @@
 [node name="ContextMenu" type="PopupMenu"]
 oversampling_override = 1.0
 title = "Team Actions"
+size = Vector2i(80, 90)
 theme = ExtResource("1_o23oa")
 item_count = 3
 item_0/text = "Asssign"

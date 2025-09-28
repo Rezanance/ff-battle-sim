@@ -227,24 +227,16 @@ class Vivosaur:
 class Team:
 	var name: String
 	var formation: Formation
-#	Active slots
-	var slot1: Vivosaur
-	var slot2: Vivosaur
-	var slot3: Vivosaur
-#	Extra slots
-	var slot4: Vivosaur
-	var slot5: Vivosaur
+	var slots: Array
 		
-	func _init( _name: String = '', _formation: Formation = Formation.JURASSIC, _slot1: Vivosaur = null, 
-	_slot2: Vivosaur = null, _slot3: Vivosaur = null, _slot4: Vivosaur = null, _slot5: Vivosaur = null):
+	func _init( _name: String = '', _formation: Formation = Formation.JURASSIC, _slots: Array = []):
 		self.name = _name
 		self.formation = _formation
 		
-		self.slot1 = _slot1
-		self.slot2 = _slot2
-		self.slot3 = _slot3
-		self.slot4 = _slot4
-		self.slot5 = _slot5
+		if len(_slots) != 5:
+			self.slots = [null, null, null, null, null]
+		else:
+			self.slots = _slots
 	
 	func is_team_valid():
 #		TODO
