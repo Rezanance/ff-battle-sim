@@ -1,7 +1,7 @@
 extends TextureRect
 
-var MedalFossilary = preload("res://team_viewer/team_editor/fossilary/MedalFossilary.tscn")
-var MedalBtn = preload("res://team_viewer/team_editor/fossilary/MedalBtn.tscn")
+var MedalFossilary = preload("res://team_viewer/team_editor/fossilary/medal_fossilary.tscn")
+var MedalBtn = preload("res://team_viewer/team_editor/fossilary/medal_btn.tscn")
 var SkillScene = preload("res://team_viewer/team_editor/vivosaur_summary/skill.tscn")
 
 var vivosaurs_json = preload("res://vivosaur/vivosaurs.json").data
@@ -17,56 +17,67 @@ var statuses_json = preload("res://vivosaur/statuses.json").data
 @onready var slot5_selectable: AnimatedSprite2D = $"HBoxContainer/FormationSlots/Slot5"
 @onready var fossilary_container = $"TextureRect/Fossilary"
 @onready var vivosaur_summary = $"VivosaurSummary"
+@onready var context_menu: PopupMenu = $"ContextMenu"
+@onready var team_name_input: LineEdit = $"TeamName"
+@onready var save_btn: BaseButton = $"SaveTeam"
 
 var currently_selected_vivosaur_id: String
 var currently_selected_medal_btn: TextureButton
 var current_action: int
 var team: DataTypes.Team
 var slots_selectable: Array[AnimatedSprite2D] 
-var slots_medal_btns: Array
+var slots_medal_btns: Array = [null, null, null, null, null]
 var fossilary_medals: Dictionary[String, TextureRect] = {}
 
 func _ready() -> void:
 	team = DataTypes.Team.new()
-	slots_medal_btns = [null, null, null, null, null]
 	_initialize_selectables()
-	
 	_add_fossilary_medals()
-	
-func _initialize_selectables():
-	slots_selectable = [slot1_selectable, slot2_selectable, slot3_selectable, slot4_selectable, slot5_selectable]
-	for i in range(len(slots_selectable)):
-		slots_selectable[i].play()
-		slots_selectable[i].get_node("Button").pressed.connect(_perform_context_action.bind(i, slots_selectable[i].global_position))
 	
 func _add_fossilary_medals():
 	for vivosaur_id in Global.fossilary:
-		var id_super_revival = vivosaur_id.split('_')
-		var _texture = load("res://vivosaur/%s/medals/%s (%d).png" % [id_super_revival[0], id_super_revival[0], int(id_super_revival[1]) * 2 + 2])
-		
-		var medal_fossilary = MedalFossilary.instantiate()
-		var medal_btn: BaseButton = MedalBtn.instantiate()
-		medal_fossilary.texture = _texture
-		medal_btn.texture_normal = _texture
-		medal_btn.fossilary_index = vivosaur_id
-		medal_btn.gui_input.connect(medal_btn_clicked.bind(medal_btn, vivosaur_id))
-		medal_fossilary.add_child(medal_btn)
+		var _texture = _load_medal_texture(vivosaur_id)
+		var medal_btn = _create_medal_btn(_texture, vivosaur_id)
+		var medal_fossilary = _create_medal_fossilary(_texture, medal_btn)
 		fossilary_medals[vivosaur_id] = medal_fossilary
 		fossilary_container.add_child(medal_fossilary)
 
-func medal_btn_clicked(event: InputEvent, medal_btn: BaseButton, vivosaur_id: String):
+func _load_medal_texture(vivosaur_id):
+	var id_super_revival = vivosaur_id.split('_')
+	return load("res://vivosaur/%s/medals/%s (%d).png" % [id_super_revival[0], id_super_revival[0], int(id_super_revival[1]) * 2 + 2])
+
+func _create_medal_btn(_texture, vivosaur_id: String):
+	var medal_btn: BaseButton = MedalBtn.instantiate()
+	medal_btn.texture_normal = _texture
+	medal_btn.fossilary_index = vivosaur_id
+	medal_btn.gui_input.connect(_medal_btn_clicked.bind(medal_btn, vivosaur_id))
+	return medal_btn
+
+func _create_medal_fossilary(_texture, medal_btn: BaseButton):
+	var medal_fossilary = MedalFossilary.instantiate()
+	medal_fossilary.texture = _texture
+	medal_fossilary.add_child(medal_btn)
+	return medal_fossilary
+	
+
+func _medal_btn_clicked(event: InputEvent, medal_btn: BaseButton, vivosaur_id: String):
 	if event is InputEventMouseButton:
-		if currently_selected_medal_btn:
-			currently_selected_medal_btn.get_node('SelectedAnimation').visible = false
-		medal_btn.get_node('SelectedAnimation').visible = true
-		currently_selected_vivosaur_id = vivosaur_id
-		currently_selected_medal_btn = medal_btn
+		_unselect_previous_medal_btn()
+		_select_current_medal_btn(medal_btn, vivosaur_id)
+#		
 		if event.button_index == MOUSE_BUTTON_RIGHT and event.pressed:
 			_show_context_menu(event, medal_btn)
-		show_vivosaur_summary(vivosaur_id)
-		
+		show_vivosaur_summary(vivosaur_id)	
 
-@onready var context_menu: PopupMenu = $"ContextMenu"
+func _unselect_previous_medal_btn():
+	if currently_selected_medal_btn != null:
+		currently_selected_medal_btn.get_node('SelectedAnimation').visible = false
+
+func _select_current_medal_btn(medal_btn: BaseButton, vivosaur_id: String):
+	medal_btn.get_node('SelectedAnimation').visible = true
+	currently_selected_vivosaur_id = vivosaur_id
+	currently_selected_medal_btn = medal_btn
+	
 func _show_context_menu(event: InputEventMouseButton, medal_btn: BaseButton):
 	context_menu.clear()
 	if not medal_btn in slots_medal_btns:
@@ -78,16 +89,22 @@ func _show_context_menu(event: InputEventMouseButton, medal_btn: BaseButton):
 	context_menu.position = event.global_position
 	context_menu.visible = true
 
-func _context_menu_item_pressed(id: int):
-	if id == 0 or id == 1:
-		_show_selectable_slots(id)
+func _context_menu_item_pressed(context_menu_id: int):
+	_hide_selectable_slots()
+	if context_menu_id == 0 or context_menu_id == 1:
+		_show_selectable_slots(context_menu_id)
 	else:
 		_remove_medal()
-	current_action = id
+	current_action = context_menu_id
 	
-			
-func _show_selectable_slots(id: int):
-	match id:
+func _initialize_selectables():
+	slots_selectable = [slot1_selectable, slot2_selectable, slot3_selectable, slot4_selectable, slot5_selectable]
+	for i in range(len(slots_selectable)):
+		slots_selectable[i].play()
+		slots_selectable[i].get_node("Button").pressed.connect(_select_slot_handler.bind(i))
+		
+func _show_selectable_slots(context_menu_id: int):
+	match context_menu_id:
 		0:
 			for i in range(len(team.slots)):
 				if team.slots[i] == null:
@@ -105,50 +122,60 @@ func _hide_selectable_slots():
 	for i in range(len(slots_selectable)):
 		slots_selectable[i].visible = false
 	
-func _perform_context_action(slot: int, pos: Vector2):
+func _select_slot_handler(slot: int):
 	if current_action == 0:
-		_assign_slot(slot, pos)
+		_assign_slot(slot)
 	elif current_action == 1:
 		_move_swap_slots(slot)
 		
-func _assign_slot(slot: int, pos: Vector2):
-	assert(slot < 5)
+func _assign_slot(slot: int):
 	
 	var tween = create_tween()
 	tween.tween_property(currently_selected_medal_btn, 
 			'global_position', 
-			pos + Vector2(48, -2), 1.0).set_trans(Tween.TRANS_SPRING)
+			slots_selectable[slot].global_position + Vector2(0, -2), 1.0).set_trans(Tween.TRANS_SPRING)
 			
 	_hide_selectable_slots()
 	
+#	Add vivosaur to team
 	team.slots[slot] = Global.fossilary[currently_selected_vivosaur_id]
+#	Add medal btn to slots
 	slots_medal_btns[slot] = currently_selected_medal_btn
 	currently_selected_medal_btn.get_node("SelectedAnimation").visible = false
+	
+	_enable_disable_save_team_btn()
 
 func _move_swap_slots(new_slot: int):
 	var current_slot = slots_medal_btns.find(currently_selected_medal_btn)
-	var vivosaur_in_new_slot = team.slots[new_slot]
-	team.slots[new_slot] = Global.fossilary[currently_selected_vivosaur_id]
-	team.slots[current_slot] = vivosaur_in_new_slot
 	
+#	Swap medal btn slots 
 	var medal_btn_in_new_slot = slots_medal_btns[new_slot]
+	slots_medal_btns[new_slot] = slots_medal_btns[current_slot]
+	slots_medal_btns[current_slot] = medal_btn_in_new_slot
 	
 	currently_selected_medal_btn.get_node("SelectedAnimation").visible = false
 	
+#	Swap btns in UI
 	var tween = create_tween()
 	tween.tween_property(currently_selected_medal_btn, 'global_position', slots_selectable[new_slot].global_position + Vector2(0, -2), 1.0).set_trans(Tween.TRANS_SPRING)
 	tween.set_parallel()
 	if medal_btn_in_new_slot != null:
 		tween.tween_property(medal_btn_in_new_slot, 'global_position', slots_selectable[current_slot].global_position + Vector2(0, -2), 1.0).set_trans(Tween.TRANS_SPRING)
 	
-	slots_medal_btns[new_slot] = slots_medal_btns[current_slot]
-	slots_medal_btns[current_slot] = medal_btn_in_new_slot
+	_hide_selectable_slots()
 	
+#	Swap team slots 
+	var vivosaur_in_new_slot = team.slots[new_slot]
+	team.slots[new_slot] = team.slots[current_slot]
+	team.slots[current_slot] = vivosaur_in_new_slot
+	
+#	Temporarily ignore inpit from medal btns in slots
 	for slot_medal_btn in slots_medal_btns:
 		if slot_medal_btn != null:
 			slot_medal_btn.mouse_filter = MouseFilter.MOUSE_FILTER_STOP
 	
-	_hide_selectable_slots()
+	
+	_enable_disable_save_team_btn()
 
 func _remove_medal():
 	var OFFSCREEN_POS = Vector2(currently_selected_medal_btn.global_position.x + 1920, currently_selected_medal_btn.global_position.y + 1000)
@@ -157,16 +184,17 @@ func _remove_medal():
 	
 	var tween = create_tween()
 	tween.tween_property(currently_selected_medal_btn, 'global_position', OFFSCREEN_POS, 1.5)
+	tween.finished.connect(_reset_medal_btn_pos)
 	
 	var slot = slots_medal_btns.find(currently_selected_medal_btn)
 	slots_medal_btns[slot] = null
 	team.slots[slot] = null
 	
-	tween.finished.connect(_reset_medal)
+	_enable_disable_save_team_btn()
 	
-func _reset_medal():
+func _reset_medal_btn_pos():
 	currently_selected_medal_btn.global_position = fossilary_medals[currently_selected_medal_btn.fossilary_index].global_position
-	
+
 func show_vivosaur_summary(vivosaur_id: String):
 	_show_vivosaur_summary_main(vivosaur_summary, vivosaur_id)
 	
@@ -279,3 +307,14 @@ func _on_formation_toggled(toggled_on: bool) -> void:
 		team.formation = DataTypes.Formation.JURASSIC 
 		formation_slots.texture = load("res://common_assets/formation/jurassic_slots.png")
 		
+func _enable_disable_save_team_btn():
+	save_btn.disabled = team_name_input.text.strip_edges() == '' or not team.is_valid()
+
+
+func _on_save_team_pressed() -> void:
+	pass # Replace with function body.
+
+
+func _on_team_name_text_changed(new_text: String) -> void:
+	save_btn.disabled = new_text.strip_edges() == '' or not team.is_valid()
+	

@@ -194,15 +194,6 @@ offset_top = 308.0
 offset_right = 1822.0
 offset_bottom = 1028.0
 
-[node name="SaveTeam" type="Button" parent="."]
-layout_mode = 0
-offset_left = 1430.0
-offset_top = 141.0
-offset_right = 1529.0
-offset_bottom = 188.0
-disabled = true
-text = "Save team"
-
 [node name="TeamName" type="LineEdit" parent="."]
 layout_mode = 0
 offset_left = 1440.0
@@ -212,9 +203,18 @@ offset_bottom = 112.0
 placeholder_text = "Team name"
 caret_blink = true
 
-[node name="AnimationPlayer" type="AnimationPlayer" parent="."]
+[node name="SaveTeam" type="Button" parent="."]
+layout_mode = 0
+offset_left = 1430.0
+offset_top = 141.0
+offset_right = 1635.0
+offset_bottom = 188.0
+disabled = true
+text = "Save team"
 
 [node name="ContextMenu" parent="." instance=ExtResource("8_p0qsv")]
 item_count = 0
 
 [connection signal="toggled" from="HBoxContainer/FormationToggle" to="." method="_on_formation_toggled"]
+[connection signal="text_changed" from="TeamName" to="." method="_on_team_name_text_changed"]
+[connection signal="pressed" from="SaveTeam" to="." method="_on_save_team_pressed"]

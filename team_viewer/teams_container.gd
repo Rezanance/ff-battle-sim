@@ -3,7 +3,7 @@ extends Node
 var teams_file = "user://teams.save"
 
 const TeamPreviewScene = preload("res://team_viewer/team_preview/team_preview.tscn")
-const NewTeamBtn = preload("res://team_viewer/new_team.tscn")
+const NewTeamBtn = preload("res://team_viewer/new_team_btn.tscn")
 
 func _ready() -> void:
 	var config = ConfigFile.new()

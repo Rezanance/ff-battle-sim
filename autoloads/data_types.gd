@@ -238,6 +238,10 @@ class Team:
 		else:
 			self.slots = _slots
 	
-	func is_team_valid():
-#		TODO
-		pass
+	func is_valid():
+		assert(len(slots) == 5)
+		
+		for i in range(3):
+			if slots[i] != null:
+				return true
+		return false

@@ -1,22 +1,22 @@
 [gd_scene load_steps=8 format=3 uid="uid://d1onejqadwhw8"]
 
-[ext_resource type="Script" uid="uid://cexbj051wwqj2" path="res://team_viewer/team_editor/fossilary/medal_btn.gd" id="1_r4ps6"]
-[ext_resource type="Texture2D" uid="uid://cobhs474gbevu" path="res://common_assets/hud/selected.png" id="1_uh72q"]
+[ext_resource type="Script" uid="uid://cexbj051wwqj2" path="res://team_viewer/team_editor/fossilary/medal_btn.gd" id="1_f6uvh"]
+[ext_resource type="Texture2D" uid="uid://cobhs474gbevu" path="res://common_assets/hud/selected.png" id="2_j8164"]
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_ncb4d"]
-atlas = ExtResource("1_uh72q")
+atlas = ExtResource("2_j8164")
 region = Rect2(0, 0, 32, 32)
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_kub14"]
-atlas = ExtResource("1_uh72q")
+atlas = ExtResource("2_j8164")
 region = Rect2(32, 0, 32, 32)
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_kehss"]
-atlas = ExtResource("1_uh72q")
+atlas = ExtResource("2_j8164")
 region = Rect2(64, 0, 32, 32)
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_1l3fe"]
-atlas = ExtResource("1_uh72q")
+atlas = ExtResource("2_j8164")
 region = Rect2(96, 0, 32, 32)
 
 [sub_resource type="SpriteFrames" id="SpriteFrames_r4ps6"]
@@ -42,7 +42,7 @@ animations = [{
 [node name="MedalBtn" type="TextureButton"]
 custom_minimum_size = Vector2(92, 92)
 stretch_mode = 4
-script = ExtResource("1_r4ps6")
+script = ExtResource("1_f6uvh")
 
 [node name="SelectedAnimation" type="AnimatedSprite2D" parent="."]
 visible = false
