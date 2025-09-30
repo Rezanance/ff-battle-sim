@@ -253,6 +253,13 @@ class Team:
 			'slots': slots.map(func (vivosaur): return "%s_%d" % [vivosaur.id, vivosaur.super_revival] if vivosaur != null else null)
 		}
 	
-	static func unserialize():
-#		TODO
-		pass
+	static func unserialize(team_dict: Dictionary):
+		var new_slots = []
+		for i in range(5):
+			var fossilary_id = team_dict.slots[i]
+			if fossilary_id != null:
+				new_slots.append(Global.fossilary[fossilary_id])
+			else:
+				new_slots.append(null)
+		
+		return DataTypes.Team.new(team_dict.name, team_dict.formation, new_slots)

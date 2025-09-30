@@ -12,6 +12,7 @@ var teams_file = "user://teams.cfg"
 var preferences_file = "user://preferences.cfg"
 
 var editing_team_uuid: String
+var is_new_team: bool
 
 func _ready() -> void:
 	for vivosaur_id in vivosaurs_json:

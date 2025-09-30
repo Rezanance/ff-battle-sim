@@ -3,19 +3,51 @@ extends Node
 const TeamPreviewScene = preload("res://team_viewer/team_preview/team_preview.tscn")
 const NewTeamBtn = preload("res://team_viewer/new_team_btn.tscn")
 
+var config = ConfigFile.new()
+
 func _ready() -> void:
-	var config = ConfigFile.new()
 	
 	var status = config.load(Global.teams_file)
 	
 	if status == OK :
-		for teamUUID in config.get_sections():
+		for team_uuid in config.get_sections():
 			var team_preview = TeamPreviewScene.instantiate()
-			var team = config.get_value(teamUUID, 'team')
-			pass
+			var team_dict = config.get_value(team_uuid, 'team')
+			var team = DataTypes.Team.unserialize(team_dict)
+			team_preview.get_node("TeamNameBackground/TeamName").text = team.name
+			var formation_texture = "res://common_assets/formation/jurassic_slots.png" if team.formation == DataTypes.Formation.JURASSIC else "res://common_assets/formation/triassic_slots.png"
+			team_preview.get_node("FormationBackground").texture = load(formation_texture)
+			
+			var medal_container: Node = team_preview.get_node("FormationBackground/MedalContainer")
+			
+			for i in range(5):
+				var vivosaur_slot: DataTypes.Vivosaur = team.slots[i]
+				if vivosaur_slot != null:
+					medal_container.get_child(i).texture = load("res://vivosaur/%s/medals/%s (%d).png" % [vivosaur_slot.id, vivosaur_slot.id, int(vivosaur_slot.super_revival) * 2 + 2])
+			
+			team_preview.get_node("Delete").pressed.connect(_delete_team.bind(team_uuid, team.name, team_preview))
+			team_preview.gui_input.connect(_on_team_preview_gui_input.bind(team_uuid))
+			add_child(team_preview)
 			
 	_add_new_team_btn()
 	
 	
 func _add_new_team_btn():
 	add_child(NewTeamBtn.instantiate()) 
+
+func _on_team_preview_gui_input(event: InputEvent, team_uuid: String) -> void:
+	if event is InputEventMouseButton:
+		if event.button_index == MOUSE_BUTTON_LEFT and event.pressed:
+			Global.editing_team_uuid = team_uuid
+			Global.is_new_team = false
+			SceneTransition.change_scene("res://team_viewer/team_editor/team_editor.tscn")
+
+func _delete_team(team_uuid: String, team_name: String, team_preview: Node):
+	config.erase_section(team_uuid)
+	var status = config.save(Global.teams_file)
+	
+	if status == OK:
+		DialogPopup.reveal_dialog(DialogPopup.MessageType.SUCCESS, "\"%s\" deleted sucessfully " % team_name)
+		team_preview.queue_free()
+	else:
+		DialogPopup.reveal_dialog(DialogPopup.MessageType.ERROR, "Error deleting \"%s\"" % team_name)

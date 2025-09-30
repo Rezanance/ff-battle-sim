@@ -29,9 +29,11 @@ var team: DataTypes.Team
 var slots_selectable: Array[AnimatedSprite2D] 
 var slots_medal_btns: Array = [null, null, null, null, null]
 var fossilary_medals: Dictionary[String, TextureRect] = {}
+var config = ConfigFile.new()
 
 func _ready() -> void:
 	team = DataTypes.Team.new()
+	config.load(Global.teams_file)
 	_initialize_selectables()
 	_add_fossilary_medals()
 	
@@ -86,7 +88,6 @@ func _show_context_menu(event: InputEventMouseButton, medal_btn: BaseButton):
 	else:
 		context_menu.add_item('Move/Swap', 1)
 		context_menu.add_item('Remove', 2)
-	context_menu.id_pressed.connect(_context_menu_item_pressed)
 	context_menu.position = event.global_position
 	context_menu.visible = true
 
@@ -314,7 +315,6 @@ func _enable_disable_save_team_btn():
 
 func _on_save_team_pressed() -> void:
 	team.name = team_name_input.text
-	var config = ConfigFile.new()
 	
 	config.set_value(Global.editing_team_uuid, 'team', team.serialize())
 	
