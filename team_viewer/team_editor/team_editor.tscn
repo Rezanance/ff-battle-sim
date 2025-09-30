@@ -1,4 +1,4 @@
-[gd_scene load_steps=20 format=3 uid="uid://myvsxwydumrn"]
+[gd_scene load_steps=22 format=3 uid="uid://myvsxwydumrn"]
 
 [ext_resource type="Texture2D" uid="uid://chevdw52lcf04" path="res://common_assets/backgrounds/rock_bg.jpg" id="1_57wfa"]
 [ext_resource type="Script" uid="uid://b1o058wioim37" path="res://team_viewer/team_editor/team_editor.gd" id="2_kcpo7"]
@@ -9,6 +9,8 @@
 [ext_resource type="PackedScene" uid="uid://twprmxgwv8kw" path="res://team_viewer/team_editor/vivosaur_summary/VivosaurSummary.tscn" id="6_82hiq"]
 [ext_resource type="Texture2D" uid="uid://dyvy3f6afttu2" path="res://common_assets/hud/selectable.png" id="6_kcpo7"]
 [ext_resource type="PackedScene" uid="uid://crhdaipejxkkv" path="res://team_viewer/team_editor/context_menu.tscn" id="8_p0qsv"]
+[ext_resource type="Theme" uid="uid://qw3ckwy7bak5" path="res://theme/ui_theme.tres" id="10_tbraw"]
+[ext_resource type="Script" uid="uid://i0tyv84emqjl" path="res://team_viewer/team_editor/back.gd" id="11_tbraw"]
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_wfc57"]
 atlas = ExtResource("6_kcpo7")
@@ -215,6 +217,17 @@ text = "Save team"
 [node name="ContextMenu" parent="." instance=ExtResource("8_p0qsv")]
 item_count = 0
 
+[node name="Back" type="Button" parent="."]
+layout_mode = 0
+offset_left = 88.0
+offset_top = 67.0
+offset_right = 181.0
+offset_bottom = 108.0
+theme = ExtResource("10_tbraw")
+text = "Back"
+script = ExtResource("11_tbraw")
+
 [connection signal="toggled" from="HBoxContainer/FormationToggle" to="." method="_on_formation_toggled"]
 [connection signal="text_changed" from="TeamName" to="." method="_on_team_name_text_changed"]
 [connection signal="pressed" from="SaveTeam" to="." method="_on_save_team_pressed"]
+[connection signal="pressed" from="Back" to="Back" method="_on_pressed"]

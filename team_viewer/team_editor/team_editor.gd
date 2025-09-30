@@ -9,6 +9,7 @@ var skills_json = preload("res://vivosaur/skills.json").data
 var effects_json = preload("res://vivosaur/effects.json").data
 var statuses_json = preload("res://vivosaur/statuses.json").data
 
+
 @onready var formation_slots: TextureRect = $"HBoxContainer/FormationSlots"
 @onready var slot1_selectable: AnimatedSprite2D = $"HBoxContainer/FormationSlots/Slot1"
 @onready var slot2_selectable: AnimatedSprite2D = $"HBoxContainer/FormationSlots/Slot2"
@@ -312,7 +313,17 @@ func _enable_disable_save_team_btn():
 
 
 func _on_save_team_pressed() -> void:
-	pass # Replace with function body.
+	team.name = team_name_input.text
+	var config = ConfigFile.new()
+	
+	config.set_value(Global.editing_team_uuid, 'team', team.serialize())
+	
+	var status = config.save(Global.teams_file)
+	
+	if status == OK:
+		DialogPopup.reveal_dialog(DialogPopup.MessageType.SUCCESS, 'Team Saved')
+	else:
+		DialogPopup.reveal_dialog(DialogPopup.MessageType.ERROR, 'Error saving team (error_code=%d)' % status)
 
 
 func _on_team_name_text_changed(new_text: String) -> void:

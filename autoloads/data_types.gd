@@ -245,3 +245,14 @@ class Team:
 			if slots[i] != null:
 				return true
 		return false
+	
+	func serialize():
+		return {
+			'name': name,
+			'formation': formation,
+			'slots': slots.map(func (vivosaur): return "%s_%d" % [vivosaur.id, vivosaur.super_revival] if vivosaur != null else null)
+		}
+	
+	static func unserialize():
+#		TODO
+		pass

@@ -5,9 +5,13 @@ var skills_json = preload("res://vivosaur/skills.json").data
 var effects_json = preload("res://vivosaur/effects.json").data
 var statuses_json = preload("res://vivosaur/statuses.json").data
 
-
 # Data on all vivosaurs with the id as the key
 var fossilary: Dictionary[String, DataTypes.Vivosaur]
+
+var teams_file = "user://teams.cfg"
+var preferences_file = "user://preferences.cfg"
+
+var editing_team_uuid: String
 
 func _ready() -> void:
 	for vivosaur_id in vivosaurs_json:

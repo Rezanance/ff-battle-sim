@@ -22,7 +22,7 @@ offset_bottom = 989.0
 theme_override_constants/v_separation = 50
 script = ExtResource("1_e1cs2")
 
-[node name="Button" type="Button" parent="Background"]
+[node name="Back" type="Button" parent="Background"]
 layout_mode = 0
 offset_left = 110.0
 offset_top = 944.0
@@ -32,4 +32,4 @@ theme = ExtResource("3_e1cs2")
 text = "Back"
 script = ExtResource("4_ecuqo")
 
-[connection signal="pressed" from="Background/Button" to="Background/Button" method="_on_pressed"]
+[connection signal="pressed" from="Background/Back" to="Background/Back" method="_on_pressed"]
