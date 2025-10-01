@@ -13,20 +13,20 @@ func _ready() -> void:
 		for team_uuid in config.get_sections():
 			var team_preview = TeamPreviewScene.instantiate()
 			var team_dict = config.get_value(team_uuid, 'team')
-			var team = DataTypes.Team.unserialize(team_dict)
+			var team: DataTypes.Team = DataTypes.Team.unserialize(team_uuid, team_dict)
 			team_preview.get_node("TeamNameBackground/TeamName").text = team.name
 			var formation_texture = "res://common_assets/formation/jurassic_slots.png" if team.formation == DataTypes.Formation.JURASSIC else "res://common_assets/formation/triassic_slots.png"
 			team_preview.get_node("FormationBackground").texture = load(formation_texture)
 			
 			var medal_container: Node = team_preview.get_node("FormationBackground/MedalContainer")
 			
-			for i in range(5):
+			for i in range(DataTypes.TEAM_SLOTS):
 				var vivosaur_slot: DataTypes.Vivosaur = team.slots[i]
 				if vivosaur_slot != null:
 					medal_container.get_child(i).texture = load("res://vivosaur/%s/medals/%s (%d).png" % [vivosaur_slot.id, vivosaur_slot.id, int(vivosaur_slot.super_revival) * 2 + 2])
 			
 			team_preview.get_node("Delete").pressed.connect(_delete_team.bind(team_uuid, team.name, team_preview))
-			team_preview.gui_input.connect(_on_team_preview_gui_input.bind(team_uuid))
+			team_preview.gui_input.connect(_on_team_preview_gui_input.bind(team))
 			add_child(team_preview)
 			
 	_add_new_team_btn()
@@ -35,10 +35,10 @@ func _ready() -> void:
 func _add_new_team_btn():
 	add_child(NewTeamBtn.instantiate()) 
 
-func _on_team_preview_gui_input(event: InputEvent, team_uuid: String) -> void:
+func _on_team_preview_gui_input(event: InputEvent, team: DataTypes.Team) -> void:
 	if event is InputEventMouseButton:
 		if event.button_index == MOUSE_BUTTON_LEFT and event.pressed:
-			Global.editing_team_uuid = team_uuid
+			Global.editing_team = team
 			Global.is_new_team = false
 			SceneTransition.change_scene("res://team_viewer/team_editor/team_editor.tscn")
 

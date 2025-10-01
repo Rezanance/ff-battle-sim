@@ -24,6 +24,8 @@ enum SkillType {
 }
 enum StatusType {POSITIVE, NEGATIVE}
 
+const TEAM_SLOTS = 5
+
 const SUPER_REVIVAL_LP_MODIFIER = 20
 const HEAD_ACC_MODIFIER = 5
 const BODY_DEF_MODIFIER = 10
@@ -225,21 +227,23 @@ class Vivosaur:
 		self.team_skill_groups = _team_skill_groups
 	
 class Team:
+	var uuid: String
 	var name: String
 	var formation: Formation
 	var slots: Array
 		
-	func _init( _name: String = '', _formation: Formation = Formation.JURASSIC, _slots: Array = []):
+	func _init(_uuid: String, _name: String = '', _formation: Formation = Formation.JURASSIC, _slots: Array = []):
+		self.uuid = _uuid
 		self.name = _name
 		self.formation = _formation
 		
-		if len(_slots) != 5:
+		if len(_slots) != TEAM_SLOTS:
 			self.slots = [null, null, null, null, null]
 		else:
 			self.slots = _slots
 	
 	func is_valid():
-		assert(len(slots) == 5)
+		assert(len(slots) == TEAM_SLOTS)
 		
 		for i in range(3):
 			if slots[i] != null:
@@ -250,16 +254,19 @@ class Team:
 		return {
 			'name': name,
 			'formation': formation,
-			'slots': slots.map(func (vivosaur): return "%s_%d" % [vivosaur.id, vivosaur.super_revival] if vivosaur != null else null)
+			'slots': slots_fossilary_ids()
 		}
 	
-	static func unserialize(team_dict: Dictionary):
+	func slots_fossilary_ids():
+		return slots.map(func (vivosaur): return "%s_%d" % [vivosaur.id, vivosaur.super_revival] if vivosaur != null else null)
+	
+	static func unserialize(team_uuid: String, team_dict: Dictionary):
 		var new_slots = []
-		for i in range(5):
+		for i in range(TEAM_SLOTS):
 			var fossilary_id = team_dict.slots[i]
 			if fossilary_id != null:
 				new_slots.append(Global.fossilary[fossilary_id])
 			else:
 				new_slots.append(null)
 		
-		return DataTypes.Team.new(team_dict.name, team_dict.formation, new_slots)
+		return DataTypes.Team.new(team_uuid, team_dict.name, team_dict.formation, new_slots)

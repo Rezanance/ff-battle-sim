@@ -11,6 +11,7 @@ var statuses_json = preload("res://vivosaur/statuses.json").data
 
 
 @onready var formation_slots: TextureRect = $"HBoxContainer/FormationSlots"
+@onready var formation_toggle: TextureButton = $"HBoxContainer/FormationToggle"
 @onready var slot1_selectable: AnimatedSprite2D = $"HBoxContainer/FormationSlots/Slot1"
 @onready var slot2_selectable: AnimatedSprite2D = $"HBoxContainer/FormationSlots/Slot2"
 @onready var slot3_selectable: AnimatedSprite2D = $"HBoxContainer/FormationSlots/Slot3"
@@ -32,28 +33,47 @@ var fossilary_medals: Dictionary[String, TextureRect] = {}
 var config = ConfigFile.new()
 
 func _ready() -> void:
-	team = DataTypes.Team.new()
+	team = Global.editing_team
 	config.load(Global.teams_file)
 	_initialize_selectables()
+	_initialize_team_UI()
 	_add_fossilary_medals()
+	_enable_disable_save_team_btn()
+
+func _initialize_team_UI():
+	formation_toggle.button_pressed = team.formation == DataTypes.Formation.TRIASSIC
+	team_name_input.text = team.name
 	
 func _add_fossilary_medals():
-	for vivosaur_id in Global.fossilary:
-		var _texture = _load_medal_texture(vivosaur_id)
-		var medal_btn = _create_medal_btn(_texture, vivosaur_id)
+	for fossilary_id in Global.fossilary:
+		var _texture = _load_medal_texture(fossilary_id)
+		var medal_btn = _create_medal_btn(_texture, fossilary_id)
 		var medal_fossilary = _create_medal_fossilary(_texture, medal_btn)
-		fossilary_medals[vivosaur_id] = medal_fossilary
+		fossilary_medals[fossilary_id] = medal_fossilary
 		fossilary_container.add_child(medal_fossilary)
+		
+func _position_team_medals():
+	for slot in range(len(slots_medal_btns)):
+		var medal_btn = slots_medal_btns[slot]
+		if medal_btn != null:
+			medal_btn.global_position = slots_selectable[slot].global_position + Vector2(0, -2)
 
-func _load_medal_texture(vivosaur_id):
-	var id_super_revival = vivosaur_id.split('_')
-	return load("res://vivosaur/%s/medals/%s (%d).png" % [id_super_revival[0], id_super_revival[0], int(id_super_revival[1]) * 2 + 2])
+func _load_medal_texture(fossilary_id):
+	var id = fossilary_id.split('_')[0]
+	var super_revival = fossilary_id.split('_')[1]
+	return load("res://vivosaur/%s/medals/%s (%d).png" % [id, id, int(super_revival) * 2 + 2])
 
-func _create_medal_btn(_texture, vivosaur_id: String):
+func _create_medal_btn(_texture, fossilary_id: String):
 	var medal_btn: BaseButton = MedalBtn.instantiate()
 	medal_btn.texture_normal = _texture
-	medal_btn.fossilary_index = vivosaur_id
-	medal_btn.gui_input.connect(_medal_btn_clicked.bind(medal_btn, vivosaur_id))
+	medal_btn.fossilary_id = fossilary_id
+	
+	medal_btn.gui_input.connect(_medal_btn_clicked.bind(medal_btn, fossilary_id))
+	
+	var slot = team.slots_fossilary_ids().find(fossilary_id)
+	if  slot != -1:
+		slots_medal_btns[slot] = medal_btn
+		
 	return medal_btn
 
 func _create_medal_fossilary(_texture, medal_btn: BaseButton):
@@ -195,7 +215,7 @@ func _remove_medal():
 	_enable_disable_save_team_btn()
 	
 func _reset_medal_btn_pos():
-	currently_selected_medal_btn.global_position = fossilary_medals[currently_selected_medal_btn.fossilary_index].global_position
+	currently_selected_medal_btn.global_position = fossilary_medals[currently_selected_medal_btn.fossilary_id].global_position
 
 func show_vivosaur_summary(vivosaur_id: String):
 	_show_vivosaur_summary_main(vivosaur_summary, vivosaur_id)
@@ -316,7 +336,7 @@ func _enable_disable_save_team_btn():
 func _on_save_team_pressed() -> void:
 	team.name = team_name_input.text
 	
-	config.set_value(Global.editing_team_uuid, 'team', team.serialize())
+	config.set_value(Global.editing_team.uuid, 'team', team.serialize())
 	
 	var status = config.save(Global.teams_file)
 	

@@ -228,6 +228,7 @@ text = "Back"
 script = ExtResource("11_tbraw")
 
 [connection signal="toggled" from="HBoxContainer/FormationToggle" to="." method="_on_formation_toggled"]
+[connection signal="sort_children" from="TextureRect/Fossilary" to="." method="_position_team_medals"]
 [connection signal="text_changed" from="TeamName" to="." method="_on_team_name_text_changed"]
 [connection signal="pressed" from="SaveTeam" to="." method="_on_save_team_pressed"]
 [connection signal="id_pressed" from="ContextMenu" to="." method="_context_menu_item_pressed"]

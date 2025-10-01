@@ -11,7 +11,7 @@ var fossilary: Dictionary[String, DataTypes.Vivosaur]
 var teams_file = "user://teams.cfg"
 var preferences_file = "user://preferences.cfg"
 
-var editing_team_uuid: String
+var editing_team: DataTypes.Team
 var is_new_team: bool
 
 func _ready() -> void:

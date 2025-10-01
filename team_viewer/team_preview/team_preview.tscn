@@ -78,5 +78,3 @@ expand_mode = 3
 [node name="Delete" type="Button" parent="."]
 layout_mode = 2
 text = "Delete"
-
-[connection signal="gui_input" from="." to="." method="_on_gui_input" binds= [0]]
