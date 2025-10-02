@@ -1,0 +1,74 @@
+{
+  "1": {
+	"name": "T-Rex",
+	"element": "fire",
+	"super_revival_possible": true,
+	"stats": {
+	  "lp": 600,
+	  "atk": 99,
+	  "def": 43,
+	  "acc": 43,
+	  "eva": 12,
+	  "crit": 0.15
+	},
+	"skills": ["76", "77", "78", "91", "79"],
+	"support_effects": {
+	  "own_az": true,
+	  "atk": -0.3,
+	  "def": -0.3,
+	  "acc": -0.3,
+	  "eva": -0.3
+	},
+	"attack_range": "close",
+	"status_immunities": [],
+	"team_skill_groups": [1, 6]
+  },
+  "44": {
+	"name": "Brachio",
+	"element": "neutral",
+	"super_revival_possible": true,
+	"stats": {
+	  "lp": 660,
+	  "atk": 65,
+	  "def": 27,
+	  "acc": 44,
+	  "eva": 10,
+	  "crit": 0.15
+	},
+	"skills": ["52", "53", "54", "67", "55"],
+	"support_effects": {
+	  "own_az": true,
+	  "atk": 0,
+	  "def": 0,
+	  "acc": 0,
+	  "eva": 0
+	},
+	"attack_range": "long",
+	"status_immunities": [],
+	"team_skill_groups": [5, 14, 25]
+  },
+  "97": {
+	"name": "Mammoth",
+	"element": "water",
+	"super_revival_possible": true,
+	"stats": {
+	  "lp": 380,
+	  "atk": 59,
+	  "def": 37,
+	  "acc": 40,
+	  "eva": 16,
+	  "crit": 0.30
+	},
+	"skills": ["81", "82", "83", "60", "84", "18"],
+	"support_effects": {
+	  "own_az": true,
+	  "atk": 0.1,
+	  "def": 0.1,
+	  "acc": 0.1,
+	  "eva": 0.1
+	},
+	"attack_range": "mid",
+	"status_immunities": [],
+	"team_skill_groups": [4, 14, 15, 20]
+  }
+}

@@ -23,6 +23,7 @@ Global="*res://autoloads/global.gd"
 DataTypes="*res://autoloads/data_types.gd"
 uuid="*res://addons/uuid/uuid.gd"
 DialogPopup="*res://autoloads/dialog_popup.tscn"
+Lobby="*res://autoloads/lobby.gd"
 
 [display]
 
@@ -42,3 +43,4 @@ theme/custom="uid://qw3ckwy7bak5"
 [rendering]
 
 textures/canvas_textures/default_texture_filter=0
+textures/vram_compression/import_etc2_astc=true

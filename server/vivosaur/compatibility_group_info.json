@@ -1,0 +1,42 @@
+[
+  {
+    "id": 1,
+    "name": "Fire"
+  },
+  {
+    "id": 2,
+    "name": "Air"
+  },
+  {
+    "id": 3,
+    "name": "Earth"
+  },
+  {
+    "id": 4,
+    "name": "Water"
+  },
+  {
+    "id": 5,
+    "name": "Neutral"
+  },
+  {
+    "id": 6,
+    "name": "Violent"
+  },
+  {
+    "id": 16,
+    "name": "Japanese"
+  },
+  {
+    "id": 22,
+    "name": "Boney"
+  },
+  {
+    "id": 23,
+    "name": "Zombie"
+  },
+  {
+    "id": 30,
+    "name": "Dinaurians"
+  }
+]

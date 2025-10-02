@@ -44,35 +44,40 @@ offset_bottom = 93.5
 
 [node name="Slot0" type="TextureRect" parent="FormationBackground/MedalContainer"]
 layout_mode = 0
-offset_bottom = 93.0
+offset_top = 2.0
+offset_bottom = 95.0
 expand_mode = 3
 
 [node name="Slot1" type="TextureRect" parent="FormationBackground/MedalContainer"]
 layout_mode = 0
 offset_left = 107.0
+offset_top = 2.0
 offset_right = 107.0
-offset_bottom = 93.0
+offset_bottom = 95.0
 expand_mode = 3
 
 [node name="Slot2" type="TextureRect" parent="FormationBackground/MedalContainer"]
 layout_mode = 0
 offset_left = 211.0
+offset_top = 2.0
 offset_right = 211.0
-offset_bottom = 93.0
+offset_bottom = 95.0
 expand_mode = 3
 
 [node name="Slot3" type="TextureRect" parent="FormationBackground/MedalContainer"]
 layout_mode = 0
 offset_left = 312.0
+offset_top = 2.0
 offset_right = 312.0
-offset_bottom = 93.0
+offset_bottom = 95.0
 expand_mode = 3
 
 [node name="Slot4" type="TextureRect" parent="FormationBackground/MedalContainer"]
 layout_mode = 0
 offset_left = 415.0
+offset_top = 2.0
 offset_right = 415.0
-offset_bottom = 93.0
+offset_bottom = 95.0
 expand_mode = 3
 
 [node name="Delete" type="Button" parent="."]

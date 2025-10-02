@@ -1,71 +1,22 @@
 # Fossil Fighters: Champions battle sim
 
-## Entity composition 
-? = optional
+A battle simulator for the game Fossil Fighters: Champions released on the Nintendo DS
+in 2011.
 
-Screens
-- Title scene
-- Team setup scene
-- Match finder scene (rando or known user)
-- Battle formation screen (Look at oppenents vivosaurs, change formation 
-and choose 3/5 in team)
-- Battle scene
-- Results scene
+## Useful scripts/commands
 
-### Battle scene (where the whole battle takes place )
-Battle Manager
-- GUI
-- Arena
+### deploy_and_run_server.sh
+```sh
+#!/bin/zsh
+cd ~/ffc-battle-sim
+scp server.x86_64 ffc-battle-sim-server:~
+scp server.pck ffc-battle-sim-server:~
+ssh ffc-battle-sim-server -t '~/run_server.sh'
+```
 
-GUI
-- Your FP
-- Opponents FP
-- Vivosaur Select (yours and the opponents)
-- End turn
-- Rotate left
-- Rotate Right
-- Use Skill
+### SSH into server
+`ssh ffc-battle-sim-server`
 
-Arena
-- Your zones
-- Opponent zones
-
-Zone
-- Vivosaur?
-
-Vivosaur
-- id
-- Name
-- Element
-- Stats (LP, attack ,..., crit rate)
-- Super revival stats
-- Skills (including passive skills)
-- Support effects
-- Status effects (Increased defense, poision, ...)
-- Attack range (close, mid or long)
-- Status immunities
-- team skill groups
-
-Skills
-- id
-- Name
-- Skill type (damage, neutral, positive, passive, team skill)
-- Damage
-- FP cost
-- Effects
-- Counterable
-- 
-
-Effect
-- id
-- Description
-
-Status
-- id
-- Description
-- Turns active
-
-
-#### Type of effects 
-- Stat boost
-- Damage per turn
+### Run server remotely
+1. Export project and export pck
+2. run `deploy_and_run_server.sh` (make sure directory is in $PATH)
