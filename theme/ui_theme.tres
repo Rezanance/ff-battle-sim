@@ -4,7 +4,7 @@
 font_names = PackedStringArray("Monospace")
 
 [sub_resource type="StyleBoxFlat" id="StyleBoxFlat_8aw70"]
-bg_color = Color(0.9137255, 0.4, 0, 1)
+bg_color = Color(1, 0.827451, 0.74509805, 1)
 corner_radius_top_left = 10
 corner_radius_top_right = 10
 corner_radius_bottom_right = 10

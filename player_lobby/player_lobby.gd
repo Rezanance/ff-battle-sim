@@ -5,6 +5,7 @@ extends VideoStreamPlayer
 @onready var server_address_input: LineEdit = $'ServerIP'
 @onready var go_online_btn: Button = $'GoOnlineBtn'
 @onready var team_select: OptionButton = $'VBoxContainer/TeamSelect'
+@onready var challenge_user_btn = $'VBoxContainer/ChallengeUserBtn'
 
 var connected = false
 
@@ -31,6 +32,7 @@ func _on_player_connected(player_info):
 	player_icon_select.disabled = true
 	display_name_input.editable = false
 	server_address_input.editable = false
+	challenge_user_btn.disabled = false
 
 func _on_player_disconnected():
 	reset_ui()
@@ -41,3 +43,4 @@ func reset_ui():
 	player_icon_select.disabled = false
 	display_name_input.editable = true
 	server_address_input.editable = true
+	challenge_user_btn.disabled = true
