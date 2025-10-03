@@ -1,4 +1,4 @@
-[gd_scene load_steps=13 format=3 uid="uid://b5e63667bvai4"]
+[gd_scene load_steps=30 format=3 uid="uid://b5e63667bvai4"]
 
 [ext_resource type="VideoStream" uid="uid://dne462c6boo3x" path="res://player_lobby/lobby_screen_bg.ogv" id="1_j3h5w"]
 [ext_resource type="Texture2D" uid="uid://bb1ctlrjckyj8" path="res://player_lobby/ffc_logo.png" id="2_hmeuf"]
@@ -9,6 +9,10 @@
 [ext_resource type="Script" uid="uid://ikifc5i2mrdl" path="res://player_lobby/quit.gd" id="5_gcpix"]
 [ext_resource type="Texture2D" uid="uid://clmis5rrdxbal" path="res://common_assets/wifi-icons/wifi.png" id="8_k3aj0"]
 [ext_resource type="Script" uid="uid://d00vbqrgootmd" path="res://player_lobby/player_icons.gd" id="9_hrceg"]
+[ext_resource type="Texture2D" uid="uid://bkq6uevdeu7ka" path="res://common_assets/copy.png" id="10_hrceg"]
+[ext_resource type="Texture2D" uid="uid://clm1h7pg528ep" path="res://common_assets/copy_hover.png" id="11_q1g5o"]
+[ext_resource type="Texture2D" uid="uid://dhqinoc2txy7e" path="res://common_assets/loading.png" id="12_gcpix"]
+[ext_resource type="Script" uid="uid://ccp74qdnkf5ae" path="res://player_lobby/connecting.gd" id="13_qohhd"]
 
 [sub_resource type="SystemFont" id="SystemFont_uvhto"]
 font_names = PackedStringArray("Futura")
@@ -34,6 +38,91 @@ corner_radius_top_left = 10
 corner_radius_top_right = 10
 corner_radius_bottom_right = 10
 corner_radius_bottom_left = 10
+
+[sub_resource type="SystemFont" id="SystemFont_q1g5o"]
+font_names = PackedStringArray("Monospace")
+
+[sub_resource type="SystemFont" id="SystemFont_gcpix"]
+font_names = PackedStringArray("Monospace")
+font_italic = true
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_qohhd"]
+atlas = ExtResource("12_gcpix")
+region = Rect2(0, 0, 48, 48)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_b45hg"]
+atlas = ExtResource("12_gcpix")
+region = Rect2(48, 0, 48, 48)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_k3aj0"]
+atlas = ExtResource("12_gcpix")
+region = Rect2(96, 0, 48, 48)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_fye4s"]
+atlas = ExtResource("12_gcpix")
+region = Rect2(144, 0, 48, 48)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_qfdgg"]
+atlas = ExtResource("12_gcpix")
+region = Rect2(192, 0, 48, 48)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_1l27s"]
+atlas = ExtResource("12_gcpix")
+region = Rect2(240, 0, 48, 48)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_8eqp2"]
+atlas = ExtResource("12_gcpix")
+region = Rect2(288, 0, 48, 48)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_ra0c6"]
+atlas = ExtResource("12_gcpix")
+region = Rect2(336, 0, 48, 48)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_w8nrr"]
+atlas = ExtResource("12_gcpix")
+region = Rect2(384, 0, 48, 48)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_n5g0v"]
+atlas = ExtResource("12_gcpix")
+region = Rect2(432, 0, 48, 48)
+
+[sub_resource type="SpriteFrames" id="SpriteFrames_eaq1v"]
+animations = [{
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_qohhd")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_b45hg")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_k3aj0")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_fye4s")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_qfdgg")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_1l27s")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_8eqp2")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_ra0c6")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_w8nrr")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_n5g0v")
+}],
+"loop": true,
+"name": &"default",
+"speed": 10.0
+}]
 
 [node name="PlayerLobby" type="VideoStreamPlayer"]
 offset_right = 1920.0
@@ -102,11 +191,11 @@ popup/item_0/id = 0
 popup/item_0/disabled = true
 script = ExtResource("4_hmeuf")
 
-[node name="ChallengeUserBtn" type="Button" parent="VBoxContainer"]
+[node name="BattleBtn" type="Button" parent="VBoxContainer"]
 layout_mode = 2
 theme = ExtResource("3_hrceg")
 disabled = true
-text = "Challenge A User"
+text = "Battle!"
 
 [node name="TeamEditorBtn" type="Button" parent="VBoxContainer"]
 layout_mode = 2
@@ -171,6 +260,62 @@ icon = ExtResource("8_k3aj0")
 icon_alignment = 2
 expand_icon = true
 
+[node name="Label" type="Label" parent="."]
+layout_mode = 1
+anchors_preset = 1
+anchor_left = 1.0
+anchor_right = 1.0
+offset_left = -568.0
+offset_top = 547.0
+offset_right = -352.0
+offset_bottom = 584.0
+grow_horizontal = 0
+theme_override_colors/font_color = Color(0, 0, 0, 1)
+theme_override_colors/font_outline_color = Color(1, 1, 1, 1)
+theme_override_constants/outline_size = 10
+theme_override_fonts/font = SubResource("SystemFont_q1g5o")
+theme_override_font_sizes/font_size = 36
+text = "Player ID: "
+
+[node name="PlayerID" type="Label" parent="."]
+visible = false
+layout_mode = 1
+anchors_preset = 1
+anchor_left = 1.0
+anchor_right = 1.0
+offset_left = -143.0
+offset_top = 547.0
+offset_right = -103.0
+offset_bottom = 564.0
+grow_horizontal = 0
+theme_override_colors/font_color = Color(0, 0, 0, 1)
+theme_override_fonts/font = SubResource("SystemFont_gcpix")
+theme_override_font_sizes/font_size = 36
+
+[node name="CopyBtn" type="TextureButton" parent="."]
+visible = false
+layout_mode = 1
+anchors_preset = 1
+anchor_left = 1.0
+anchor_right = 1.0
+offset_left = -352.0
+offset_top = 541.0
+offset_right = 160.0
+offset_bottom = 1053.0
+grow_horizontal = 0
+scale = Vector2(0.05, 0.05)
+texture_normal = ExtResource("10_hrceg")
+texture_pressed = ExtResource("10_hrceg")
+texture_hover = ExtResource("11_q1g5o")
+
+[node name="LoadingConn" type="AnimatedSprite2D" parent="."]
+visible = false
+position = Vector2(1455, 449)
+sprite_frames = SubResource("SpriteFrames_eaq1v")
+frame_progress = 0.78679264
+script = ExtResource("13_qohhd")
+
 [connection signal="pressed" from="VBoxContainer/TeamEditorBtn" to="VBoxContainer/TeamEditorBtn" method="_on_pressed"]
 [connection signal="pressed" from="VBoxContainer/QuitBtn" to="VBoxContainer/QuitBtn" method="_on_pressed"]
 [connection signal="pressed" from="GoOnlineBtn" to="." method="_on_go_online_btn_pressed"]
+[connection signal="pressed" from="CopyBtn" to="." method="_on_copy_btn_pressed"]

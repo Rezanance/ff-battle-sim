@@ -14,7 +14,7 @@ config/name="FFC Battle Sim"
 run/main_scene="uid://b5e63667bvai4"
 config/use_custom_user_dir=true
 config/features=PackedStringArray("4.5", "Forward Plus")
-config/icon="res://icon.svg"
+config/icon="uid://bb7jtyck313ds"
 
 [autoload]
 

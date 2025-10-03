@@ -1,6 +1,9 @@
 extends Node
 
+signal player_connecting()
 signal player_connected(player_info)
+signal player_connect_failed()
+signal player_disconnecting()
 signal player_disconnected()
 
 const PORT = 7000
@@ -20,7 +23,8 @@ func _ready() -> void:
 	
 	multiplayer.connected_to_server.connect(_on_player_connected)
 	multiplayer.connection_failed.connect(_on_player_connect_failed)
-	multiplayer.peer_disconnected.connect(_on_player_disconnected)
+	multiplayer.peer_disconnected.connect(_on_client_disconnected)
+	multiplayer.server_disconnected.connect(_on_player_disconnected)
 
 func start_server():
 	var peer = ENetMultiplayerPeer.new()
@@ -42,30 +46,32 @@ func go_online(server_ip: String, display_name: String, icon_id: int):
 		local_player_info['display_name'] = display_name
 		local_player_info['icon_id'] = icon_id
 		multiplayer.multiplayer_peer = peer
+		player_connecting.emit()
 		return OK
 	else:
-		multiplayer.multiplayer_peer = OfflineMultiplayerPeer.new()
-		player_disconnected.emit()
+		multiplayer.multiplayer_peer.close()
+		player_disconnecting.emit()
 
-func _on_player_disconnected(id):
+func _on_client_disconnected(id):
 	if multiplayer.is_server():
 		print('Player %s disconnected' % id)
 		all_player_info.erase(id)
-	elif id == local_player_info['peer_id']:
-		connected = false
-		local_player_info = {}
-		player_disconnected.emit()
 	else:
-#		If in the middle of match, terminate battle and cleanup
+#		TODO If in the middle of match, terminate battle and cleanup
 		pass
+
+func _on_player_disconnected():
+	connected = false
+	local_player_info = {}
+	player_disconnected.emit()
 
 func _on_player_connected():
 	connected = true
-	player_connected.emit(local_player_info)
 	register_player.rpc_id(SERVER_PEER_ID, local_player_info)
+	player_connected.emit(local_player_info)
 		
 func _on_player_connect_failed():
-	DialogPopup.reveal_dialog(DialogPopup.MessageType.ERROR, 'Error connecting to server')
+	player_connect_failed.emit()
 
 @rpc("any_peer", 'call_remote', "reliable")
 func register_player(new_player_info):
