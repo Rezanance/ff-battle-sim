@@ -1,4 +1,4 @@
-[gd_resource type="Theme" load_steps=10 format=3 uid="uid://qw3ckwy7bak5"]
+[gd_resource type="Theme" load_steps=15 format=3 uid="uid://qw3ckwy7bak5"]
 
 [sub_resource type="SystemFont" id="SystemFont_v6wrm"]
 font_names = PackedStringArray("Monospace")
@@ -73,6 +73,14 @@ corner_radius_bottom_right = 10
 corner_radius_bottom_left = 10
 expand_margin_left = 10.0
 
+[sub_resource type="PlaceholderTexture2D" id="PlaceholderTexture2D_v6wrm"]
+
+[sub_resource type="PlaceholderTexture2D" id="PlaceholderTexture2D_27v6b"]
+
+[sub_resource type="PlaceholderTexture2D" id="PlaceholderTexture2D_7uusv"]
+
+[sub_resource type="PlaceholderTexture2D" id="PlaceholderTexture2D_8aw70"]
+
 [sub_resource type="StyleBoxFlat" id="StyleBoxFlat_es402"]
 bg_color = Color(1, 0.82481384, 0.7687377, 1)
 
@@ -82,6 +90,17 @@ corner_radius_top_left = 5
 corner_radius_top_right = 5
 corner_radius_bottom_right = 5
 corner_radius_bottom_left = 5
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_p7mgs"]
+content_margin_left = 10.0
+content_margin_top = 10.0
+content_margin_right = 10.0
+content_margin_bottom = 5.0
+bg_color = Color(0.972549, 0.39215687, 0.043137256, 0.7294118)
+corner_radius_top_left = 10
+corner_radius_top_right = 10
+corner_radius_bottom_right = 10
+corner_radius_bottom_left = 10
 
 [resource]
 Button/colors/font_color = Color(0, 0, 0, 1)
@@ -104,9 +123,10 @@ LineEdit/font_sizes/font_size = 24
 LineEdit/styles/normal = SubResource("StyleBoxFlat_eqcwn")
 PopupMenu/colors/font_color = Color(0, 0, 0, 1)
 PopupMenu/colors/font_hover_color = Color(0.19255614, 0.19255552, 0.19255564, 1)
-PopupMenu/icons/radio_checked = null
-PopupMenu/icons/radio_checked_disabled = null
-PopupMenu/icons/radio_unchecked = null
-PopupMenu/icons/radio_unchecked_disabled = null
+PopupMenu/icons/radio_checked = SubResource("PlaceholderTexture2D_v6wrm")
+PopupMenu/icons/radio_checked_disabled = SubResource("PlaceholderTexture2D_27v6b")
+PopupMenu/icons/radio_unchecked = SubResource("PlaceholderTexture2D_7uusv")
+PopupMenu/icons/radio_unchecked_disabled = SubResource("PlaceholderTexture2D_8aw70")
 PopupMenu/styles/hover = SubResource("StyleBoxFlat_es402")
 PopupMenu/styles/panel = SubResource("StyleBoxFlat_6r5ox")
+PopupPanel/styles/panel = SubResource("StyleBoxFlat_p7mgs")

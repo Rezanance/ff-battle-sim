@@ -8,9 +8,10 @@ extends VideoStreamPlayer
 @onready var copy_btn: TextureButton = $CopyBtn
 @onready var player_id: Label = $'PlayerID'
 @onready var team_select: OptionButton = $'VBoxContainer/TeamSelect'
-@onready var battle_btn = $'VBoxContainer/BattleBtn'
-
-var connected = false
+@onready var opponent_popup = $'OpponentPopup'
+@onready var direct_challenge_btn = $'VBoxContainer/DirectChallengeBtn'
+@onready var opponent_id_input: LineEdit = $OpponentPopup/CenterContainer/VBoxContainer/HBoxContainer/OpponentPlayerId
+@onready var send_challenge_btn = $OpponentPopup/CenterContainer/VBoxContainer/CenterContainer/SendChallengeBtn
 
 func _ready() -> void:
 	Lobby.player_connecting.connect(_on_player_connecting)
@@ -32,6 +33,7 @@ func _on_go_online_btn_pressed() -> void:
 
 func _on_player_connecting():
 	loading_conn.visible = true
+	go_online_btn.disabled = true
 	disable_ui()
 	
 func _on_player_connected(player_info):
@@ -42,6 +44,7 @@ func _on_player_connected(player_info):
 	copy_btn.visible = true
 	player_id.visible = true
 	player_id.text = str(player_info['peer_id'])
+	direct_challenge_btn.disabled = team_select.selected == 0
 	disable_ui()
 	DialogPopup.reveal_dialog(DialogPopup.MessageType.SUCCESS, 'Successfully connected to server!')
 
@@ -59,6 +62,7 @@ func _on_player_disconnecting():
 func _on_player_disconnected():
 	loading_conn.visible = false
 	go_online_btn.disabled = false
+	direct_challenge_btn.disabled = true
 	enable_ui()
 	DialogPopup.reveal_dialog(DialogPopup.MessageType.SUCCESS, 'Successfully Disconnected from server')
 
@@ -66,7 +70,6 @@ func disable_ui():
 	player_icon_select.disabled = true
 	display_name_input.editable = false
 	server_address_input.editable = false
-	battle_btn.disabled = false
 	
 func enable_ui():
 	go_online_btn.disabled = false
@@ -75,11 +78,22 @@ func enable_ui():
 	player_icon_select.disabled = false
 	display_name_input.editable = true
 	server_address_input.editable = true
-	battle_btn.disabled = true
 	copy_btn.visible = false
 	player_id.visible = false
-
 
 func _on_copy_btn_pressed() -> void:
 	DisplayServer.clipboard_set(player_id.text)
 	DialogPopup.reveal_dialog(DialogPopup.MessageType.SUCCESS, 'Copied ID to clipboard!')
+
+func _on_battle_btn_pressed() -> void:
+	opponent_popup.visible = true
+	opponent_id_input.text = ''
+	send_challenge_btn.disabled = true
+
+func _on_opponent_player_id_text_changed(new_text: String) -> void:
+	var stripped = new_text.strip_edges()
+	send_challenge_btn.disabled = stripped == ''
+
+
+func _on_team_selected(index: int) -> void:
+	direct_challenge_btn.disabled = not Lobby.connected or index == 0
