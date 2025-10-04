@@ -312,46 +312,64 @@ texture_hover = ExtResource("11_q1g5o")
 visible = false
 position = Vector2(1455, 449)
 sprite_frames = SubResource("SpriteFrames_eaq1v")
-frame_progress = 0.34401575
+frame_progress = 0.40593693
 script = ExtResource("13_qohhd")
 
-[node name="OpponentPopup" type="PopupPanel" parent="."]
+[node name="WaitingChallenge" type="AnimatedSprite2D" parent="."]
+visible = false
+position = Vector2(659, 631)
+sprite_frames = SubResource("SpriteFrames_eaq1v")
+frame_progress = 0.47061718
+script = ExtResource("13_qohhd")
+
+[node name="SendChallenge" type="PopupPanel" parent="."]
 oversampling_override = 1.0
 title = "Battle Form"
 initial_position = 2
 size = Vector2i(678, 200)
 
-[node name="CenterContainer" type="CenterContainer" parent="OpponentPopup"]
+[node name="CenterContainer" type="CenterContainer" parent="SendChallenge"]
 offset_left = 10.0
 offset_top = 10.0
 offset_right = 668.0
 offset_bottom = 195.0
 
-[node name="VBoxContainer" type="VBoxContainer" parent="OpponentPopup/CenterContainer"]
+[node name="VBoxContainer" type="VBoxContainer" parent="SendChallenge/CenterContainer"]
 layout_mode = 2
 theme_override_constants/separation = 15
 
-[node name="HBoxContainer" type="HBoxContainer" parent="OpponentPopup/CenterContainer/VBoxContainer"]
+[node name="HBoxContainer" type="HBoxContainer" parent="SendChallenge/CenterContainer/VBoxContainer"]
 layout_mode = 2
 theme_override_constants/separation = 15
 
-[node name="Label" type="Label" parent="OpponentPopup/CenterContainer/VBoxContainer/HBoxContainer"]
+[node name="Label" type="Label" parent="SendChallenge/CenterContainer/VBoxContainer/HBoxContainer"]
 layout_mode = 2
 theme_override_font_sizes/font_size = 26
 text = "Opponent's Player ID: "
 
-[node name="OpponentPlayerId" type="LineEdit" parent="OpponentPopup/CenterContainer/VBoxContainer/HBoxContainer"]
+[node name="OpponentPlayerId" type="LineEdit" parent="SendChallenge/CenterContainer/VBoxContainer/HBoxContainer"]
 custom_minimum_size = Vector2(300, 0)
 layout_mode = 2
 placeholder_text = "1234567890"
 
-[node name="CenterContainer" type="CenterContainer" parent="OpponentPopup/CenterContainer/VBoxContainer"]
+[node name="CenterContainer" type="CenterContainer" parent="SendChallenge/CenterContainer/VBoxContainer"]
 layout_mode = 2
 
-[node name="SendChallengeBtn" type="Button" parent="OpponentPopup/CenterContainer/VBoxContainer/CenterContainer"]
+[node name="SendChallengeBtn" type="Button" parent="SendChallenge/CenterContainer/VBoxContainer/CenterContainer"]
 layout_mode = 2
 disabled = true
 text = "Send Challenge!"
+
+[node name="AcceptChallenge" type="ConfirmationDialog" parent="."]
+oversampling_override = 1.0
+title = "Do you accept"
+initial_position = 2
+size = Vector2i(500, 200)
+theme = ExtResource("3_hrceg")
+ok_button_text = "Accept"
+dialog_text = "{Player} ({id}) challenges you to a Fossil Battle. Do accept??!"
+dialog_autowrap = true
+cancel_button_text = "Decline"
 
 [connection signal="item_selected" from="VBoxContainer/TeamSelect" to="." method="_on_team_selected"]
 [connection signal="pressed" from="VBoxContainer/DirectChallengeBtn" to="." method="_on_battle_btn_pressed"]
@@ -359,4 +377,5 @@ text = "Send Challenge!"
 [connection signal="pressed" from="VBoxContainer/QuitBtn" to="VBoxContainer/QuitBtn" method="_on_pressed"]
 [connection signal="pressed" from="GoOnlineBtn" to="." method="_on_go_online_btn_pressed"]
 [connection signal="pressed" from="CopyBtn" to="." method="_on_copy_btn_pressed"]
-[connection signal="text_changed" from="OpponentPopup/CenterContainer/VBoxContainer/HBoxContainer/OpponentPlayerId" to="." method="_on_opponent_player_id_text_changed"]
+[connection signal="text_changed" from="SendChallenge/CenterContainer/VBoxContainer/HBoxContainer/OpponentPlayerId" to="." method="_on_opponent_player_id_text_changed"]
+[connection signal="pressed" from="SendChallenge/CenterContainer/VBoxContainer/CenterContainer/SendChallengeBtn" to="." method="_on_send_challenge_btn_pressed"]

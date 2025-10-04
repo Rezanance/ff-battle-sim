@@ -18,5 +18,8 @@ ssh ffc-battle-sim-server -t '~/run_server.sh'
 `ssh ffc-battle-sim-server`
 
 ### Run server remotely
-1. Export project and export pck
+1. Export project
 2. run `deploy_and_run_server.sh` (make sure parent directory is in $PATH)
+
+### Copy game to pc
+`scp ~/ffc-battle-sim/FFC\ Battle\ Sim\ (Linux).x86_64 cachyos-pc:~/Desktop`

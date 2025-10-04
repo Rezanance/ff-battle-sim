@@ -149,6 +149,7 @@ func _select_slot_handler(slot: int):
 		
 func _assign_slot(slot: int):
 	var duplicate_medal_btn = currently_selected_medal_btn.duplicate()
+	duplicate_medal_btn.fossilary_id = currently_selected_medal_btn.fossilary_id
 	duplicate_medal_btn.global_position = currently_selected_medal_btn.global_position
 	duplicate_medal_btn.gui_input.connect(_medal_btn_clicked.bind(duplicate_medal_btn, currently_selected_fossilary_id))
 	add_child(duplicate_medal_btn)
