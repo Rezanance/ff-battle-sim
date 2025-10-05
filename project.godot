@@ -25,6 +25,7 @@ uuid="*res://addons/uuid/uuid.gd"
 DialogPopup="*res://autoloads/dialog_popup.tscn"
 Lobby="*res://autoloads/lobby.gd"
 GlobalAcceptDialog="*res://autoloads/accept_dialog.tscn"
+Battles="*res://autoloads/battles.gd"
 
 [display]
 

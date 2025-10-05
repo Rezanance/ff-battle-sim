@@ -313,14 +313,14 @@ texture_hover = ExtResource("11_q1g5o")
 visible = false
 position = Vector2(1455, 449)
 sprite_frames = SubResource("SpriteFrames_eaq1v")
-frame_progress = 0.90778893
+frame_progress = 0.51300097
 script = ExtResource("13_qohhd")
 
 [node name="WaitingChallenge" type="AnimatedSprite2D" parent="."]
 visible = false
 position = Vector2(659, 631)
 sprite_frames = SubResource("SpriteFrames_eaq1v")
-frame_progress = 0.972245
+frame_progress = 0.5773565
 script = ExtResource("13_qohhd")
 
 [node name="SendChallenge" type="PopupPanel" parent="."]
@@ -363,7 +363,7 @@ text = "Send Challenge!"
 
 [node name="AcceptChallenge" type="ConfirmationDialog" parent="."]
 oversampling_override = 1.0
-title = "Do you accept"
+title = "Battle Invitation"
 initial_position = 2
 size = Vector2i(500, 200)
 theme = ExtResource("3_hrceg")
@@ -381,3 +381,4 @@ cancel_button_text = "Decline"
 [connection signal="text_changed" from="SendChallenge/CenterContainer/VBoxContainer/HBoxContainer/OpponentPlayerId" to="." method="_on_opponent_player_id_text_changed"]
 [connection signal="pressed" from="SendChallenge/CenterContainer/VBoxContainer/CenterContainer/SendChallengeBtn" to="." method="_on_send_challenge_btn_pressed"]
 [connection signal="canceled" from="AcceptChallenge" to="." method="_on_decline_challenge"]
+[connection signal="confirmed" from="AcceptChallenge" to="." method="_on_accept_challenge"]

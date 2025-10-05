@@ -1,0 +1,36 @@
+[gd_scene load_steps=5 format=3 uid="uid://drgnrkjsrmmr1"]
+
+[ext_resource type="Texture2D" uid="uid://chevdw52lcf04" path="res://common_assets/backgrounds/rock_bg.jpg" id="1_6ey1f"]
+[ext_resource type="Script" uid="uid://dr7tvwyodgr5e" path="res://battle_preperation/battle_preperation.gd" id="2_7xb3l"]
+[ext_resource type="Texture2D" uid="uid://cfj1ntsnfctw5" path="res://common_assets/formation/jurrassic_btn.png" id="2_xxmoe"]
+[ext_resource type="Texture2D" uid="uid://bi5tlnw351eg1" path="res://common_assets/formation/jurassic_slots.png" id="4_3egmv"]
+
+[node name="BattlePreperation" type="TextureRect"]
+offset_right = 1920.0
+offset_bottom = 1080.0
+texture = ExtResource("1_6ey1f")
+expand_mode = 3
+script = ExtResource("2_7xb3l")
+
+[node name="PlayerFormation" type="HBoxContainer" parent="."]
+layout_mode = 0
+offset_left = 268.0
+offset_top = 366.0
+offset_right = 820.0
+offset_bottom = 462.0
+
+[node name="FormationToggle" type="TextureRect" parent="PlayerFormation"]
+layout_mode = 2
+texture = ExtResource("2_xxmoe")
+
+[node name="FormationSlots" type="TextureRect" parent="PlayerFormation"]
+layout_mode = 2
+texture = ExtResource("4_3egmv")
+
+[node name="OpponentFormation" type="TextureRect" parent="."]
+layout_mode = 0
+offset_left = 1066.0
+offset_top = 366.0
+offset_right = 1566.0
+offset_bottom = 462.0
+texture = ExtResource("4_3egmv")

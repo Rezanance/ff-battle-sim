@@ -10,7 +10,6 @@ in 2011.
 #!/bin/zsh
 cd ~/ffc-battle-sim
 scp server.x86_64 ffc-battle-sim-server:~
-scp server.pck ffc-battle-sim-server:~
 ssh ffc-battle-sim-server -t '~/run_server.sh'
 ```
 

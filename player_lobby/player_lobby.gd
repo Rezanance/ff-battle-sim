@@ -25,6 +25,7 @@ func _ready() -> void:
 	Lobby.opponent_not_online.connect(_on_opponent_not_online)
 	Lobby.challenge_requested.connect(_on_challenge_requested)
 	Lobby.challenge_declined.connect(_on_challenge_declined)
+	Lobby.challenge_accepted.connect(_on_challenge_accepted)
 	
 func _on_go_online_btn_pressed() -> void:
 	var display_name = display_name_input.text.strip_edges()
@@ -128,4 +129,10 @@ func _on_challenge_declined(opponent_info: Dictionary) -> void:
 	GlobalAcceptDialog.visible = true
 	direct_challenge_btn.disabled = false
 	waiting_challenge.hide()
-	
+
+func _on_accept_challenge() -> void:
+	Lobby.accept_challenge()
+	SceneTransition.change_scene('res://battle_preperation/BattlePreperation.tscn')
+
+func _on_challenge_accepted(opponent_info: Dictionary) -> void:
+	SceneTransition.change_scene('res://battle_preperation/BattlePreperation.tscn')

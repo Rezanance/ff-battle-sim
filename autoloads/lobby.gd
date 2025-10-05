@@ -10,6 +10,7 @@ signal opponent_not_online()
 signal opponent_busy()
 signal challenge_requested(challenger_info)
 signal challenge_declined(opponent_info)
+signal challenge_accepted(opponent_info)
 
 const PORT = 7000
 const MAX_PLAYERS = 10
@@ -98,7 +99,7 @@ func send_challenge_server(_challenger_id: int, opponent_id: int):
 	if not all_player_info.has(opponent_id):
 		print("%d is not online" % opponent_id)
 		forward_opponent_not_online.rpc_id(_challenger_id)
-	elif challenge_requests.has(opponent_id) or battles.has(opponent_id):
+	elif challenge_requests.has(opponent_id) or Battles.battles.has(opponent_id):
 		print("%d sent challenge to %d but %d is busy (already has challenge request or in battle)" % [_challenger_id, opponent_id, opponent_id])
 		forward_opponent_busy.rpc_id(_challenger_id)
 	else:
@@ -133,3 +134,20 @@ func decline_challenge_server(opponent_id: int, challenger_id: int):
 @rpc("authority", "call_remote", "reliable")
 func forward_decline_challenge(opponent_info: Dictionary):
 	challenge_declined.emit(opponent_info)
+
+func accept_challenge():
+	accept_challenge_server.rpc_id(SERVER_PEER_ID, multiplayer.get_unique_id(), challenger_info['player_id'])
+
+@rpc("any_peer", "call_remote", "reliable")
+func accept_challenge_server(opponent_id: int, challenger_id: int):
+	assert(multiplayer.is_server()) 
+	if not all_player_info.has(challenger_id):
+		print("%d is not online" % opponent_id)
+		forward_opponent_not_online.rpc_id(opponent_id)
+	else:
+		print("%d ACCEPTED %d's challenge" % [opponent_id, challenger_id])
+		forward_accept_challenge.rpc_id(challenger_id, all_player_info[opponent_id])
+
+@rpc("authority", "call_remote", "reliable")
+func forward_accept_challenge(opponent_info: Dictionary):
+	challenge_accepted.emit(opponent_info)
