@@ -24,6 +24,7 @@ func _ready() -> void:
 	
 	Lobby.opponent_not_online.connect(_on_opponent_not_online)
 	Lobby.challenge_requested.connect(_on_challenge_requested)
+	Lobby.challenge_declined.connect(_on_challenge_declined)
 	
 func _on_go_online_btn_pressed() -> void:
 	var display_name = display_name_input.text.strip_edges()
@@ -48,7 +49,7 @@ func _on_player_connected(player_info):
 	go_online_btn.icon = load("res://common_assets/wifi-icons/no-wifi.png")
 	copy_btn.show()
 	player_id.show()
-	player_id.text = str(player_info['peer_id'])
+	player_id.text = str(player_info['player_id'])
 	direct_challenge_btn.disabled = team_select.selected == 0
 	disable_ui()
 	DialogPopup.reveal_dialog(DialogPopup.MessageType.SUCCESS, 'Successfully connected to server!')
@@ -100,6 +101,7 @@ func _on_opponent_player_id_text_changed(new_text: String) -> void:
 	send_challenge_btn.disabled = stripped == ''
 
 func _on_team_selected(index: int) -> void:
+	go_online_btn.disabled = false
 	direct_challenge_btn.disabled = not Lobby.connected or index == 0
 
 func _on_send_challenge_btn_pressed() -> void:
@@ -114,6 +116,16 @@ func _on_opponent_not_online():
 	waiting_challenge.hide()
 	DialogPopup.reveal_dialog(DialogPopup.MessageType.ERROR, 'Opponent is no longer online or the id is incorrect')
 
-func _on_challenge_requested(peer_id: int, player_info: Dictionary):
-	accept_challenge_confirmation.dialog_text = '%s (%d) challenges you to a Fossil Battle. Do you accept??!' % [player_info['display_name'], peer_id] 
+func _on_challenge_requested(opponent_info: Dictionary):
+	accept_challenge_confirmation.dialog_text = '%s (%d) challenges you to a Fossil Battle. Do you accept??!' % [opponent_info['display_name'], opponent_info['player_id']] 
 	accept_challenge_confirmation.show()
+
+func _on_decline_challenge() -> void:
+	Lobby.decline_challenge()
+
+func _on_challenge_declined(opponent_info: Dictionary) -> void:
+	GlobalAcceptDialog.dialog_text = "%s (%d) declined your challenge" % [opponent_info['display_name'], opponent_info['player_id']]
+	GlobalAcceptDialog.visible = true
+	direct_challenge_btn.disabled = false
+	waiting_challenge.hide()
+	

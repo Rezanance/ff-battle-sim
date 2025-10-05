@@ -1,0 +1,9 @@
+[gd_scene format=3 uid="uid://p8e3rkuqmil7"]
+
+[node name="AcceptDialog" type="AcceptDialog"]
+oversampling_override = 1.0
+title = "Challenge declined"
+initial_position = 2
+size = Vector2i(300, 104)
+dialog_text = "{Opponent} ({id}) declined your challenge"
+dialog_autowrap = true

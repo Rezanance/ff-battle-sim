@@ -24,6 +24,7 @@ DataTypes="*res://autoloads/data_types.gd"
 uuid="*res://addons/uuid/uuid.gd"
 DialogPopup="*res://autoloads/dialog_popup.tscn"
 Lobby="*res://autoloads/lobby.gd"
+GlobalAcceptDialog="*res://autoloads/accept_dialog.tscn"
 
 [display]
 
