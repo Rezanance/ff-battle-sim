@@ -194,7 +194,7 @@ func _move_swap_slots(new_slot: int):
 	team.slots[new_slot] = team.slots[current_slot]
 	team.slots[current_slot] = vivosaur_in_new_slot
 	
-#	Temporarily ignore inpit from medal btns in slots
+#	Temporarily ignore input from medal btns in slots
 	for slot_medal_btn in slots_medal_btns:
 		if slot_medal_btn != null:
 			slot_medal_btn.mouse_filter = MouseFilter.MOUSE_FILTER_STOP

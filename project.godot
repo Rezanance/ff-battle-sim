@@ -23,9 +23,11 @@ Global="*res://autoloads/global.gd"
 DataTypes="*res://autoloads/data_types.gd"
 uuid="*res://addons/uuid/uuid.gd"
 DialogPopup="*res://autoloads/dialog_popup.tscn"
-Lobby="*res://autoloads/lobby.gd"
+MultiplayerLobby="*res://autoloads/multiplayer_lobby.gd"
 GlobalAcceptDialog="*res://autoloads/accept_dialog.tscn"
-Battles="*res://autoloads/battles.gd"
+MultiplayerBattles="*res://autoloads/multiplayer_battles.gd"
+Logging="*res://autoloads/logging.gd"
+Battle="*res://autoloads/battle.gd"
 
 [display]
 

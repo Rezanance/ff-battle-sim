@@ -1,16 +1,16 @@
 extends Node
 
 signal player_connecting()
-signal player_connected(player_info)
+signal player_connected(player_info: Dictionary)
 signal player_connect_failed()
 signal player_disconnecting()
 signal player_disconnected()
 
 signal opponent_not_online()
 signal opponent_busy()
-signal challenge_requested(challenger_info)
-signal challenge_declined(opponent_info)
-signal challenge_accepted(opponent_info)
+signal challenge_requested(challenger_info: Dictionary)
+signal challenge_declined(opponent_info: Dictionary)
+signal challenge_accepted(opponent_info: Dictionary)
 
 const PORT = 7000
 const MAX_PLAYERS = 10
@@ -19,7 +19,6 @@ const SERVER_PEER_ID = 1
 # Server
 var all_player_info = {} #key=player
 var challenge_requests = {} # key=player, value=opponent
-var battles = {} # key=player, value=opponent
 
 # Local client only
 var connected = false
@@ -41,7 +40,7 @@ func start_server():
 	var peer = ENetMultiplayerPeer.new()
 	var error = peer.create_server(PORT, MAX_PLAYERS)
 	if error:
-		printerr('Error creating server (error_code=%d)' % error)
+		Logging.error('Error creating server (error_code=%d)' % error)
 		return error
 	print("Started server")
 	multiplayer.multiplayer_peer = peer
@@ -73,8 +72,16 @@ func _on_player_connected():
 
 func _on_client_disconnected(id: int):
 	if multiplayer.is_server():
-		print('%d disconnected' % id)
+		Logging.info('%d disconnected' % id)
 		all_player_info.erase(id)
+		
+		if MultiplayerBattles.player_battles.has(id):
+			var battle_id = MultiplayerBattles.player_battles[id]
+			var opponent_id = MultiplayerBattles.battles[battle_id].keys().filter(func (player_id): return player_id != id)[0]
+			
+			MultiplayerBattles.player_battles.erase(id)
+			MultiplayerBattles.player_battles.erase(opponent_id)
+			MultiplayerBattles.battles.erase(battle_id)
 	else:
 #		TODO If in the middle of match, terminate battle and cleanup
 		pass
@@ -86,24 +93,26 @@ func _on_player_disconnected():
 
 @rpc("any_peer", 'call_remote', "reliable")
 func register_player(new_player_info):
+	assert(multiplayer.is_server()) 
 	var new_player_id = multiplayer.get_remote_sender_id()
-	print('%d connected' % new_player_id)
+	Logging.info('Player %d connected' % new_player_id)
 	all_player_info[new_player_id] = new_player_info
 
 func send_challenge(opponent_id: int):
-	send_challenge_server.rpc_id(SERVER_PEER_ID, multiplayer.get_unique_id(), opponent_id)
+	send_challenge_server.rpc_id(SERVER_PEER_ID, opponent_id)
 
 @rpc("any_peer", "call_remote", "reliable")
-func send_challenge_server(_challenger_id: int, opponent_id: int):
+func send_challenge_server(opponent_id: int):
+	var _challenger_id = multiplayer.get_remote_sender_id()
 	assert(multiplayer.is_server()) 
 	if not all_player_info.has(opponent_id):
-		print("%d is not online" % opponent_id)
+		Logging.info("Player %d is not online" % opponent_id)
 		forward_opponent_not_online.rpc_id(_challenger_id)
-	elif challenge_requests.has(opponent_id) or Battles.battles.has(opponent_id):
-		print("%d sent challenge to %d but %d is busy (already has challenge request or in battle)" % [_challenger_id, opponent_id, opponent_id])
+	elif challenge_requests.has(opponent_id) or MultiplayerBattles.player_battles.has(opponent_id):
+		Logging.info("Player %d sent challenge to %d BUT %d is busy (already has challenge request or in battle)" % [_challenger_id, opponent_id, opponent_id])
 		forward_opponent_busy.rpc_id(_challenger_id)
 	else:
-		print("%d sent challenge to %d" % [_challenger_id, opponent_id])
+		Logging.info("Player %d sent challenge to %d" % [_challenger_id, opponent_id])
 		challenge_requests[_challenger_id] = opponent_id
 		forward_challenge.rpc_id(opponent_id, all_player_info[_challenger_id])
 
@@ -126,7 +135,7 @@ func decline_challenge():
 @rpc('any_peer', "call_remote", "reliable")
 func decline_challenge_server(opponent_id: int, challenger_id: int):
 	assert(multiplayer.is_server()) 
-	print("%d declined %d's challenge" % [opponent_id, challenger_id])
+	Logging.info("Player %d declined %d's challenge" % [opponent_id, challenger_id])
 	challenge_requests.erase(challenger_id)
 	if all_player_info.has(challenger_id):
 		forward_decline_challenge.rpc_id(challenger_id, all_player_info[opponent_id])
@@ -142,12 +151,12 @@ func accept_challenge():
 func accept_challenge_server(opponent_id: int, challenger_id: int):
 	assert(multiplayer.is_server()) 
 	if not all_player_info.has(challenger_id):
-		print("%d is not online" % opponent_id)
+		Logging.info("Player %d is not online" % opponent_id)
 		forward_opponent_not_online.rpc_id(opponent_id)
 	else:
-		print("%d ACCEPTED %d's challenge" % [opponent_id, challenger_id])
-		forward_accept_challenge.rpc_id(challenger_id, all_player_info[opponent_id])
+		Logging.info("Player %d ACCEPTED %d's challenge" % [opponent_id, challenger_id])
+		forward_accept_challenge.rpc_id(challenger_id, challenger_id)
 
 @rpc("authority", "call_remote", "reliable")
-func forward_accept_challenge(opponent_info: Dictionary):
-	challenge_accepted.emit(opponent_info)
+func forward_accept_challenge(challenger_id: int):
+	challenge_accepted.emit(challenger_id)

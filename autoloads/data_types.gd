@@ -226,6 +226,9 @@ class Vivosaur:
 		self.status_immunities = _status_immunities
 		self.team_skill_groups = _team_skill_groups
 	
+	func get_fossilary_id() -> String:
+		return "%s_%d" % [id, super_revival]
+	
 class Team:
 	var uuid: String
 	var name: String

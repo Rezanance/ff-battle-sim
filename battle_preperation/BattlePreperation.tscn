@@ -1,9 +1,58 @@
-[gd_scene load_steps=5 format=3 uid="uid://drgnrkjsrmmr1"]
+[gd_scene load_steps=18 format=3 uid="uid://drgnrkjsrmmr1"]
 
 [ext_resource type="Texture2D" uid="uid://chevdw52lcf04" path="res://common_assets/backgrounds/rock_bg.jpg" id="1_6ey1f"]
 [ext_resource type="Script" uid="uid://dr7tvwyodgr5e" path="res://battle_preperation/battle_preperation.gd" id="2_7xb3l"]
 [ext_resource type="Texture2D" uid="uid://cfj1ntsnfctw5" path="res://common_assets/formation/jurrassic_btn.png" id="2_xxmoe"]
 [ext_resource type="Texture2D" uid="uid://bi5tlnw351eg1" path="res://common_assets/formation/jurassic_slots.png" id="4_3egmv"]
+[ext_resource type="Texture2D" uid="uid://bdrs400086n8q" path="res://common_assets/formation/triassic_btn.png" id="5_4uon1"]
+[ext_resource type="Texture2D" uid="uid://dyvy3f6afttu2" path="res://common_assets/hud/selectable.png" id="6_e8n63"]
+[ext_resource type="PackedScene" uid="uid://crhdaipejxkkv" path="res://team_viewer/team_editor/context_menu.tscn" id="7_e8n63"]
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_wfc57"]
+atlas = ExtResource("6_e8n63")
+region = Rect2(0, 0, 32, 32)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_tbraw"]
+atlas = ExtResource("6_e8n63")
+region = Rect2(32, 0, 32, 32)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_6odcm"]
+atlas = ExtResource("6_e8n63")
+region = Rect2(64, 0, 32, 32)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_qk5ds"]
+atlas = ExtResource("6_e8n63")
+region = Rect2(96, 0, 32, 32)
+
+[sub_resource type="SpriteFrames" id="SpriteFrames_php66"]
+animations = [{
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_wfc57")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_tbraw")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_6odcm")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_qk5ds")
+}],
+"loop": true,
+"name": &"default",
+"speed": 5.0
+}]
+
+[sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_d00or"]
+
+[sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_qcvb5"]
+
+[sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_0p6ue"]
+
+[sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_adkwj"]
+
+[sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_bx747"]
 
 [node name="BattlePreperation" type="TextureRect"]
 offset_right = 1920.0
@@ -12,25 +61,151 @@ texture = ExtResource("1_6ey1f")
 expand_mode = 3
 script = ExtResource("2_7xb3l")
 
-[node name="PlayerFormation" type="HBoxContainer" parent="."]
+[node name="OpponentFormation" type="TextureRect" parent="."]
 layout_mode = 0
-offset_left = 268.0
+offset_left = 1272.0
 offset_top = 366.0
-offset_right = 820.0
+offset_right = 1772.0
+offset_bottom = 462.0
+texture = ExtResource("4_3egmv")
+stretch_mode = 2
+
+[node name="Slot1" type="TextureButton" parent="OpponentFormation"]
+layout_mode = 0
+offset_right = 96.0
+offset_bottom = 96.0
+
+[node name="Slot2" type="TextureButton" parent="OpponentFormation"]
+layout_mode = 0
+offset_left = 104.0
+offset_right = 200.0
+offset_bottom = 96.0
+
+[node name="Slot3" type="TextureButton" parent="OpponentFormation"]
+layout_mode = 0
+offset_left = 204.0
+offset_right = 300.0
+offset_bottom = 96.0
+
+[node name="Slot4" type="TextureButton" parent="OpponentFormation"]
+layout_mode = 0
+offset_left = 305.0
+offset_right = 401.0
+offset_bottom = 96.0
+
+[node name="Slot5" type="TextureButton" parent="OpponentFormation"]
+layout_mode = 0
+offset_left = 407.0
+offset_right = 503.0
+offset_bottom = 96.0
+
+[node name="PlayerFormation" type="HBoxContainer" parent="."]
+z_as_relative = false
+layout_mode = 0
+offset_left = 134.0
+offset_top = 366.0
+offset_right = 690.0
 offset_bottom = 462.0
 
-[node name="FormationToggle" type="TextureRect" parent="PlayerFormation"]
+[node name="FormationToggle" type="TextureButton" parent="PlayerFormation"]
 layout_mode = 2
-texture = ExtResource("2_xxmoe")
+size_flags_horizontal = 3
+toggle_mode = true
+texture_normal = ExtResource("2_xxmoe")
+texture_pressed = ExtResource("5_4uon1")
 
 [node name="FormationSlots" type="TextureRect" parent="PlayerFormation"]
 layout_mode = 2
+size_flags_horizontal = 3
 texture = ExtResource("4_3egmv")
+stretch_mode = 2
 
-[node name="OpponentFormation" type="TextureRect" parent="."]
-layout_mode = 0
-offset_left = 1066.0
-offset_top = 366.0
-offset_right = 1566.0
-offset_bottom = 462.0
-texture = ExtResource("4_3egmv")
+[node name="Slot1" type="AnimatedSprite2D" parent="PlayerFormation/FormationSlots"]
+visible = false
+position = Vector2(5.9999995, 4.9999995)
+scale = Vector2(2.75, 2.75)
+sprite_frames = SubResource("SpriteFrames_php66")
+speed_scale = 2.0
+centered = false
+
+[node name="Button" type="Button" parent="PlayerFormation/FormationSlots/Slot1"]
+offset_right = 32.0
+offset_bottom = 32.0
+theme_override_styles/normal = SubResource("StyleBoxEmpty_d00or")
+theme_override_styles/pressed = SubResource("StyleBoxEmpty_qcvb5")
+theme_override_styles/hover = SubResource("StyleBoxEmpty_0p6ue")
+theme_override_styles/disabled = SubResource("StyleBoxEmpty_adkwj")
+theme_override_styles/focus = SubResource("StyleBoxEmpty_bx747")
+
+[node name="Slot2" type="AnimatedSprite2D" parent="PlayerFormation/FormationSlots"]
+visible = false
+position = Vector2(105.99999, 4.9999995)
+scale = Vector2(2.75, 2.75)
+sprite_frames = SubResource("SpriteFrames_php66")
+speed_scale = 2.0
+centered = false
+
+[node name="Button" type="Button" parent="PlayerFormation/FormationSlots/Slot2"]
+offset_right = 32.0
+offset_bottom = 32.0
+theme_override_styles/normal = SubResource("StyleBoxEmpty_d00or")
+theme_override_styles/pressed = SubResource("StyleBoxEmpty_qcvb5")
+theme_override_styles/hover = SubResource("StyleBoxEmpty_0p6ue")
+theme_override_styles/disabled = SubResource("StyleBoxEmpty_adkwj")
+theme_override_styles/focus = SubResource("StyleBoxEmpty_bx747")
+
+[node name="Slot3" type="AnimatedSprite2D" parent="PlayerFormation/FormationSlots"]
+visible = false
+position = Vector2(206.99998, 4.9999995)
+scale = Vector2(2.75, 2.75)
+sprite_frames = SubResource("SpriteFrames_php66")
+speed_scale = 2.0
+centered = false
+
+[node name="Button" type="Button" parent="PlayerFormation/FormationSlots/Slot3"]
+offset_right = 32.0
+offset_bottom = 32.0
+theme_override_styles/normal = SubResource("StyleBoxEmpty_d00or")
+theme_override_styles/pressed = SubResource("StyleBoxEmpty_qcvb5")
+theme_override_styles/hover = SubResource("StyleBoxEmpty_0p6ue")
+theme_override_styles/disabled = SubResource("StyleBoxEmpty_adkwj")
+theme_override_styles/focus = SubResource("StyleBoxEmpty_bx747")
+
+[node name="Slot4" type="AnimatedSprite2D" parent="PlayerFormation/FormationSlots"]
+visible = false
+position = Vector2(307.99997, 4.9999995)
+scale = Vector2(2.75, 2.75)
+sprite_frames = SubResource("SpriteFrames_php66")
+speed_scale = 2.0
+centered = false
+
+[node name="Button" type="Button" parent="PlayerFormation/FormationSlots/Slot4"]
+offset_right = 32.0
+offset_bottom = 32.0
+theme_override_styles/normal = SubResource("StyleBoxEmpty_d00or")
+theme_override_styles/pressed = SubResource("StyleBoxEmpty_qcvb5")
+theme_override_styles/hover = SubResource("StyleBoxEmpty_0p6ue")
+theme_override_styles/disabled = SubResource("StyleBoxEmpty_adkwj")
+theme_override_styles/focus = SubResource("StyleBoxEmpty_bx747")
+
+[node name="Slot5" type="AnimatedSprite2D" parent="PlayerFormation/FormationSlots"]
+visible = false
+position = Vector2(408.99997, 4.9999995)
+scale = Vector2(2.75, 2.75)
+sprite_frames = SubResource("SpriteFrames_php66")
+speed_scale = 2.0
+centered = false
+
+[node name="Button" type="Button" parent="PlayerFormation/FormationSlots/Slot5"]
+offset_right = 32.0
+offset_bottom = 32.0
+theme_override_styles/normal = SubResource("StyleBoxEmpty_d00or")
+theme_override_styles/pressed = SubResource("StyleBoxEmpty_qcvb5")
+theme_override_styles/hover = SubResource("StyleBoxEmpty_0p6ue")
+theme_override_styles/disabled = SubResource("StyleBoxEmpty_adkwj")
+theme_override_styles/focus = SubResource("StyleBoxEmpty_bx747")
+
+[node name="ContextMenu" parent="." instance=ExtResource("7_e8n63")]
+item_count = 0
+
+[connection signal="id_pressed" from="ContextMenu" to="." method="context_menu_item_pressed"]

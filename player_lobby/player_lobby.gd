@@ -15,17 +15,29 @@ extends VideoStreamPlayer
 @onready var waiting_challenge: AnimatedSprite2D = $'WaitingChallenge'
 @onready var accept_challenge_confirmation: ConfirmationDialog = $AcceptChallenge
 
+var config = ConfigFile.new()
+
 func _ready() -> void:
-	Lobby.player_connecting.connect(_on_player_connecting)
-	Lobby.player_connected.connect(_on_player_connected)
-	Lobby.player_connect_failed.connect(_on_player_connect_failed)
-	Lobby.player_disconnecting.connect(_on_player_disconnecting)
-	Lobby.player_disconnected.connect(_on_player_disconnected)
-	
-	Lobby.opponent_not_online.connect(_on_opponent_not_online)
-	Lobby.challenge_requested.connect(_on_challenge_requested)
-	Lobby.challenge_declined.connect(_on_challenge_declined)
-	Lobby.challenge_accepted.connect(_on_challenge_accepted)
+	var status = config.load(Global.teams_file)
+	if not OS.has_feature('dedicated_server'):
+		assert(status == OK)
+		MultiplayerLobby.player_connecting.connect(_on_player_connecting)
+		MultiplayerLobby.player_connected.connect(_on_player_connected)
+		MultiplayerLobby.player_connect_failed.connect(_on_player_connect_failed)
+		MultiplayerLobby.player_disconnecting.connect(_on_player_disconnecting)
+		MultiplayerLobby.player_disconnected.connect(_on_player_disconnected)
+		
+		MultiplayerLobby.opponent_not_online.connect(_on_opponent_not_online)
+		MultiplayerLobby.challenge_requested.connect(_on_challenge_requested)
+		MultiplayerLobby.challenge_declined.connect(_on_challenge_declined)
+		MultiplayerLobby.challenge_accepted.connect(_on_challenge_accepted)
+		
+		MultiplayerBattles.battle_created.connect(_on_battle_created)
+		MultiplayerBattles.battle_prep_started.connect(_on_battle_prep_started)
+
+func load_selected_team_info():
+	var team_uuid = config.get_sections()[team_select.selected - 1]
+	return config.get_value(team_uuid, 'team')
 	
 func _on_go_online_btn_pressed() -> void:
 	var display_name = display_name_input.text.strip_edges()
@@ -36,7 +48,7 @@ func _on_go_online_btn_pressed() -> void:
 	if len(server_ip.split('.'))  != 4:
 		DialogPopup.reveal_dialog(DialogPopup.MessageType.ERROR, 'Server IP not the correct format')
 		return
-	Lobby.go_online(server_ip, display_name, player_icon_select.selected)
+	MultiplayerLobby.go_online(server_ip, display_name, player_icon_select.selected)
 
 func _on_player_connecting():
 	loading_conn.show()
@@ -103,17 +115,19 @@ func _on_opponent_player_id_text_changed(new_text: String) -> void:
 
 func _on_team_selected(index: int) -> void:
 	go_online_btn.disabled = false
-	direct_challenge_btn.disabled = not Lobby.connected or index == 0
+	direct_challenge_btn.disabled = not MultiplayerLobby.connected or index == 0
 
 func _on_send_challenge_btn_pressed() -> void:
-	Lobby.send_challenge(int(opponent_id_input.text.strip_edges()))
+	MultiplayerLobby.send_challenge(int(opponent_id_input.text.strip_edges()))
 	
 	send_challenge_popup.visible = false
 	direct_challenge_btn.disabled = true
+	team_select.disabled = true
 	waiting_challenge.show()
 
 func _on_opponent_not_online():
 	direct_challenge_btn.disabled = false
+	team_select.disabled = false
 	waiting_challenge.hide()
 	DialogPopup.reveal_dialog(DialogPopup.MessageType.ERROR, 'Opponent is no longer online or the id is incorrect')
 
@@ -122,7 +136,7 @@ func _on_challenge_requested(opponent_info: Dictionary):
 	accept_challenge_confirmation.show()
 
 func _on_decline_challenge() -> void:
-	Lobby.decline_challenge()
+	MultiplayerLobby.decline_challenge()
 
 func _on_challenge_declined(opponent_info: Dictionary) -> void:
 	GlobalAcceptDialog.dialog_text = "%s (%d) declined your challenge" % [opponent_info['display_name'], opponent_info['player_id']]
@@ -131,8 +145,18 @@ func _on_challenge_declined(opponent_info: Dictionary) -> void:
 	waiting_challenge.hide()
 
 func _on_accept_challenge() -> void:
-	Lobby.accept_challenge()
-	SceneTransition.change_scene('res://battle_preperation/BattlePreperation.tscn')
+	MultiplayerLobby.accept_challenge()
+	
+func _on_challenge_accepted(challenger_id: int):
+#	Maybe show indicator that battle being setup
+	MultiplayerBattles.create_battle(challenger_id)
 
-func _on_challenge_accepted(opponent_info: Dictionary) -> void:
-	SceneTransition.change_scene('res://battle_preperation/BattlePreperation.tscn')
+func _on_battle_created(battle_id: int):
+	MultiplayerBattles.send_team_info(battle_id, load_selected_team_info())
+
+func _on_battle_prep_started(opponent_info, opponent_team_info):
+	Battle.player_info = MultiplayerLobby.local_player_info
+	Battle.player_team = DataTypes.Team.unserialize('', load_selected_team_info())
+	Battle.opponent_info = opponent_info
+	Battle.opponent_team = DataTypes.Team.unserialize('', opponent_team_info)
+	SceneTransition.change_scene("res://battle_preperation/BattlePreperation.tscn")
