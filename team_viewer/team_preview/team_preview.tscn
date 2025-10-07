@@ -2,7 +2,7 @@
 
 [ext_resource type="Texture2D" uid="uid://dge7lrtu82fp1" path="res://team_viewer/assets/giant_fossil_rock.png" id="1_6v28v"]
 [ext_resource type="Script" uid="uid://tb1a4le3y1c8" path="res://team_viewer/team_preview/team_preview.gd" id="1_o6ahg"]
-[ext_resource type="Texture2D" uid="uid://wtdb10d4ufh7" path="res://common_assets/formation/jurassic_slots.png" id="2_tvx1y"]
+[ext_resource type="Texture2D" uid="uid://bi5tlnw351eg1" path="res://common_assets/formation/triassic_slots.png" id="2_tvx1y"]
 
 [sub_resource type="SystemFont" id="SystemFont_e1cs2"]
 font_names = PackedStringArray("Monospace")

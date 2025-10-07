@@ -28,6 +28,7 @@ GlobalAcceptDialog="*res://autoloads/accept_dialog.tscn"
 MultiplayerBattles="*res://autoloads/multiplayer_battles.gd"
 Logging="*res://autoloads/logging.gd"
 Battle="*res://autoloads/battle.gd"
+VivosaurSummary="*res://autoloads/vivosaur_summary.gd"
 
 [display]
 

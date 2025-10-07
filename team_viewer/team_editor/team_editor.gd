@@ -132,6 +132,7 @@ func _show_selectable_slots(context_menu_id: int):
 			for i in range(len(slots_selectable)):
 				if currently_selected_medal_btn != slots_medal_btns[i]:
 					slots_selectable[i].visible = true
+#					Temporarily ignore input from buttons
 					if slots_medal_btns[i] != null:
 						slots_medal_btns[i].mouse_filter = MouseFilter.MOUSE_FILTER_IGNORE
 				else:
@@ -194,7 +195,7 @@ func _move_swap_slots(new_slot: int):
 	team.slots[new_slot] = team.slots[current_slot]
 	team.slots[current_slot] = vivosaur_in_new_slot
 	
-#	Temporarily ignore input from medal btns in slots
+#	Restore input to buttons in slots
 	for slot_medal_btn in slots_medal_btns:
 		if slot_medal_btn != null:
 			slot_medal_btn.mouse_filter = MouseFilter.MOUSE_FILTER_STOP
