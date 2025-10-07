@@ -20,6 +20,11 @@ var MedalBtn = preload("res://team_viewer/team_editor/fossilary/medal_btn.tscn")
 @onready var context_menu: PopupMenu = $"ContextMenu"
 @onready var vivosaur_summary = $VivosaurSummary
 
+@onready var player_icon: TextureRect = $TextureRect/PlayerIcon
+@onready var player_name: Label = $TextureRect/PlayerName
+@onready var opp_icon: TextureRect = $TextureRect2/OppIcon
+@onready var opp_name: Label = $TextureRect2/OppName
+
 var currently_selected_medal_btn: TextureButton
 var selectable_slots: Array[AnimatedSprite2D] 
 var opponent_slots: Array[TextureButton] 
@@ -27,10 +32,19 @@ var slots_medal_btns: Array = [null, null, null, null, null]
 
 # Called when the node enters the scene tree for the first time.
 func _ready() -> void:
+	initialize_UI()
 	initialize_player_slots()
 	add_player_team_medals()
 	initialize_opponent_slots()
 	add_opponent_team_medals()
+
+func initialize_UI():
+	var icon_path = 'res://common_assets/player-icons'
+	var icon_files = ResourceLoader.list_directory(icon_path)
+	player_icon.texture = load(icon_path + '/' + icon_files[Battle.player_info['icon_id']])
+	opp_icon.texture = load(icon_path + '/' + icon_files[Battle.opponent_info['icon_id']])
+	player_name.text = Battle.player_info['display_name']
+	opp_name.text = Battle.opponent_info['display_name']
 
 func _on_formation_toggled(toggled_on: bool) -> void:
 	if toggled_on:
@@ -39,7 +53,6 @@ func _on_formation_toggled(toggled_on: bool) -> void:
 	else:
 		Battle.player_team.formation = DataTypes.Formation.JURASSIC 
 		formation_slots.texture = load("res://common_assets/formation/jurassic_slots.png")
-		
 		
 func initialize_player_slots():
 	selectable_slots = [player_slot1_selectable, player_slot2_selectable, player_slot3_selectable, player_slot4_selectable, player_slot5_selectable]
@@ -57,7 +70,7 @@ func add_opponent_team_medals():
 	add_medals(false)
 
 func add_medals(is_player_team: bool):
-	var slots = Battle.player_team.slots
+	var slots = Battle.player_team.slots if is_player_team else Battle.opponent_team.slots
 	for slot: int in range(len(slots)):
 		var vivosaur = slots[slot]
 		if vivosaur != null:
@@ -144,7 +157,6 @@ func medal_btn_clicked(event: InputEvent, medal_btn: BaseButton, fossilary_id: S
 		if is_player_team and event.button_index == MOUSE_BUTTON_RIGHT and event.pressed:
 			show_context_menu(event)
 		VivosaurSummary.show_vivosaur_summary(vivosaur_summary, fossilary_id)
-
 
 func select_current_medal_btn(medal_btn: BaseButton):
 	medal_btn.get_node('SelectedAnimation').visible = true

@@ -313,14 +313,14 @@ texture_hover = ExtResource("11_q1g5o")
 visible = false
 position = Vector2(1455, 449)
 sprite_frames = SubResource("SpriteFrames_eaq1v")
-frame_progress = 0.80513495
+frame_progress = 0.2772595
 script = ExtResource("13_qohhd")
 
 [node name="WaitingChallenge" type="AnimatedSprite2D" parent="."]
 visible = false
 position = Vector2(659, 631)
 sprite_frames = SubResource("SpriteFrames_eaq1v")
-frame_progress = 0.8693342
+frame_progress = 0.34145063
 script = ExtResource("13_qohhd")
 
 [node name="SendChallenge" type="PopupPanel" parent="."]
