@@ -19,16 +19,19 @@ var MedalBtn = preload("res://team_viewer/team_editor/fossilary/medal_btn.tscn")
 
 @onready var context_menu: PopupMenu = $"ContextMenu"
 @onready var vivosaur_summary = $VivosaurSummary
+@onready var timer: RichTextLabel = $PanelContainer/Timer
 
 @onready var player_icon: TextureRect = $TextureRect/PlayerIcon
 @onready var player_name: Label = $TextureRect/PlayerName
 @onready var opp_icon: TextureRect = $TextureRect2/OppIcon
 @onready var opp_name: Label = $TextureRect2/OppName
 
+
 var currently_selected_medal_btn: TextureButton
 var selectable_slots: Array[AnimatedSprite2D] 
 var opponent_slots: Array[TextureButton] 
 var slots_medal_btns: Array = [null, null, null, null, null] 
+var time_left = 90.0
 
 # Called when the node enters the scene tree for the first time.
 func _ready() -> void:
@@ -37,6 +40,17 @@ func _ready() -> void:
 	add_player_team_medals()
 	initialize_opponent_slots()
 	add_opponent_team_medals()
+	
+	MultiplayerBattles.battle_prep_time_up.connect(_on_battle_prep_time_up)
+	MultiplayerBattles.battle_started.connect(_on_battle_started)
+
+func _process(delta: float) -> void:
+	if time_left > 0:
+		time_left -= delta
+		if time_left > 0:
+			timer.text = "%.2f" % time_left
+		else:
+			timer.text = "0"
 
 func initialize_UI():
 	var icon_path = 'res://common_assets/player-icons'
@@ -108,10 +122,10 @@ func move_swap_slots(new_slot: int):
 			
 #	Swap btns in UI
 	var tween = create_tween()
-	tween.tween_property(currently_selected_medal_btn, 'global_position', selectable_slots[new_slot].global_position + Vector2(0, -2), 1.0).set_trans(Tween.TRANS_SPRING)
+	tween.tween_property(currently_selected_medal_btn, 'global_position', selectable_slots[new_slot].global_position + Vector2(2, -2), 1.0).set_trans(Tween.TRANS_SPRING)
 	tween.set_parallel()
 	if medal_btn_in_new_slot != null:
-		tween.tween_property(medal_btn_in_new_slot, 'global_position', selectable_slots[current_slot].global_position + Vector2(0, -2), 1.0).set_trans(Tween.TRANS_SPRING)
+		tween.tween_property(medal_btn_in_new_slot, 'global_position', selectable_slots[current_slot].global_position + Vector2(2, -2), 1.0).set_trans(Tween.TRANS_SPRING)
 	
 	hide_selectable_slots()
 	
@@ -165,3 +179,10 @@ func select_current_medal_btn(medal_btn: BaseButton):
 func unselect_previous_medal_btn():
 	if currently_selected_medal_btn != null:
 		currently_selected_medal_btn.get_node('SelectedAnimation').visible = false
+
+func _on_battle_prep_time_up():
+	MultiplayerBattles.send_new_team_info(Battle.player_team)
+
+func _on_battle_started(opponent_team_info):
+	Battle.opponent_team = DataTypes.Team.unserialize('', opponent_team_info)
+	SceneTransition.change_scene("res://battle/Battle.tscn")

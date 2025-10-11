@@ -253,7 +253,7 @@ class Team:
 				return true
 		return false
 	
-	func serialize():
+	func serialize() -> Dictionary:
 		return {
 			'name': name,
 			'formation': formation,

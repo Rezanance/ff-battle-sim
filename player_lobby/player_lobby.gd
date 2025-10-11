@@ -148,10 +148,10 @@ func _on_accept_challenge() -> void:
 	MultiplayerLobby.accept_challenge()
 	
 func _on_challenge_accepted(challenger_id: int):
-#	Maybe show indicator that battle being setup
 	MultiplayerBattles.create_battle(challenger_id)
 
 func _on_battle_created(battle_id: int):
+	Battle.battle_id = battle_id
 	MultiplayerBattles.send_team_info(battle_id, load_selected_team_info())
 
 func _on_battle_prep_started(opponent_info, opponent_team_info):

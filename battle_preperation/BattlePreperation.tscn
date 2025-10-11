@@ -1,4 +1,4 @@
-[gd_scene load_steps=23 format=3 uid="uid://drgnrkjsrmmr1"]
+[gd_scene load_steps=25 format=3 uid="uid://drgnrkjsrmmr1"]
 
 [ext_resource type="Texture2D" uid="uid://chevdw52lcf04" path="res://common_assets/backgrounds/rock_bg.jpg" id="1_6ey1f"]
 [ext_resource type="Script" uid="uid://dr7tvwyodgr5e" path="res://battle_preperation/battle_preperation.gd" id="2_7xb3l"]
@@ -58,6 +58,17 @@ animations = [{
 [sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_adkwj"]
 
 [sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_bx747"]
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_adkwj"]
+content_margin_right = 5.0
+bg_color = Color(0, 0, 0, 0.67058825)
+corner_radius_top_left = 10
+corner_radius_top_right = 10
+corner_radius_bottom_right = 10
+corner_radius_bottom_left = 10
+
+[sub_resource type="SystemFont" id="SystemFont_adkwj"]
+font_names = PackedStringArray("Monospace")
 
 [node name="BattlePreperation" type="TextureRect"]
 offset_right = 1920.0
@@ -272,11 +283,28 @@ horizontal_alignment = 2
 item_count = 0
 
 [node name="VivosaurSummary" parent="." instance=ExtResource("8_php66")]
+visible = false
 layout_mode = 0
 offset_left = 690.0
 offset_top = 208.0
 offset_right = 1290.0
 offset_bottom = 928.0
+
+[node name="PanelContainer" type="PanelContainer" parent="."]
+layout_mode = 0
+offset_left = 917.0
+offset_top = 93.0
+offset_right = 1082.0
+offset_bottom = 148.0
+theme_override_styles/panel = SubResource("StyleBoxFlat_adkwj")
+
+[node name="Timer" type="RichTextLabel" parent="PanelContainer"]
+custom_minimum_size = Vector2(160, 50)
+layout_mode = 2
+theme_override_fonts/normal_font = SubResource("SystemFont_adkwj")
+theme_override_font_sizes/normal_font_size = 48
+text = "90"
+horizontal_alignment = 2
 
 [connection signal="toggled" from="PlayerFormation/FormationToggle" to="." method="_on_formation_toggled"]
 [connection signal="id_pressed" from="ContextMenu" to="." method="context_menu_item_pressed"]
