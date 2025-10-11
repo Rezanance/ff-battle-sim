@@ -1,6 +1,6 @@
 [gd_scene load_steps=30 format=3 uid="uid://b5e63667bvai4"]
 
-[ext_resource type="VideoStream" uid="uid://dne462c6boo3x" path="res://player_lobby/lobby_screen_bg.ogv" id="1_j3h5w"]
+[ext_resource type="Texture2D" uid="uid://cdxw7nby5hr34" path="res://player_lobby/fossil-fighters-bg.webp" id="1_qohhd"]
 [ext_resource type="Script" uid="uid://fnsxtd3k6nge" path="res://player_lobby/player_lobby.gd" id="2_hrceg"]
 [ext_resource type="Theme" uid="uid://qw3ckwy7bak5" path="res://theme/ui_theme.tres" id="3_hrceg"]
 [ext_resource type="Texture2D" uid="uid://b0fvobcgknonn" path="res://player_lobby/ff_logo.png" id="3_qohhd"]
@@ -124,13 +124,11 @@ animations = [{
 "speed": 10.0
 }]
 
-[node name="PlayerLobby" type="VideoStreamPlayer"]
+[node name="PlayerLobby" type="TextureRect"]
 offset_right = 1920.0
 offset_bottom = 1080.0
-stream = ExtResource("1_j3h5w")
-autoplay = true
-expand = true
-loop = true
+texture = ExtResource("1_qohhd")
+expand_mode = 5
 script = ExtResource("2_hrceg")
 
 [node name="BackgroundOverlay" type="ColorRect" parent="."]
@@ -313,14 +311,14 @@ texture_hover = ExtResource("11_q1g5o")
 visible = false
 position = Vector2(1455, 449)
 sprite_frames = SubResource("SpriteFrames_eaq1v")
-frame_progress = 0.3321804
+frame_progress = 0.22291267
 script = ExtResource("13_qohhd")
 
 [node name="WaitingChallenge" type="AnimatedSprite2D" parent="."]
 visible = false
 position = Vector2(659, 631)
 sprite_frames = SubResource("SpriteFrames_eaq1v")
-frame_progress = 0.396366
+frame_progress = 0.28708875
 script = ExtResource("13_qohhd")
 
 [node name="SendChallenge" type="PopupPanel" parent="."]

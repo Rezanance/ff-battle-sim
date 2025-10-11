@@ -1,4 +1,4 @@
-extends VideoStreamPlayer
+extends TextureRect
 
 @onready var player_icon_select: OptionButton = $'PlayerIcons'
 @onready var display_name_input: LineEdit = $'DisplayName'
@@ -18,7 +18,7 @@ extends VideoStreamPlayer
 var config = ConfigFile.new()
 
 func _ready() -> void:
-	var status = config.load(Global.teams_file)
+	config.load(Global.teams_file)
 	if not OS.has_feature('dedicated_server'):
 		MultiplayerLobby.player_connecting.connect(_on_player_connecting)
 		MultiplayerLobby.player_connected.connect(_on_player_connected)
