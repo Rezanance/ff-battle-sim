@@ -1,13 +1,11 @@
-[gd_scene load_steps=22 format=3 uid="uid://myvsxwydumrn"]
+[gd_scene load_steps=20 format=3 uid="uid://myvsxwydumrn"]
 
 [ext_resource type="Texture2D" uid="uid://chevdw52lcf04" path="res://common_assets/backgrounds/rock_bg.jpg" id="1_57wfa"]
 [ext_resource type="Script" uid="uid://b1o058wioim37" path="res://team_viewer/team_editor/team_editor.gd" id="2_kcpo7"]
-[ext_resource type="Texture2D" uid="uid://cfj1ntsnfctw5" path="res://common_assets/formation/jurrassic_btn.png" id="3_kcpo7"]
-[ext_resource type="Texture2D" uid="uid://bdrs400086n8q" path="res://common_assets/formation/triassic_btn.png" id="4_wfc57"]
 [ext_resource type="Texture2D" uid="uid://0rslbu47ytjt" path="res://team_viewer/assets/giant_fossil_rock_2.png" id="5_onxxx"]
-[ext_resource type="Texture2D" uid="uid://bi5tlnw351eg1" path="res://common_assets/formation/triassic_slots.png" id="5_tbraw"]
 [ext_resource type="PackedScene" uid="uid://twprmxgwv8kw" path="res://team_viewer/team_editor/vivosaur_summary/VivosaurSummary.tscn" id="6_82hiq"]
 [ext_resource type="Texture2D" uid="uid://dyvy3f6afttu2" path="res://common_assets/hud/selectable.png" id="6_kcpo7"]
+[ext_resource type="Texture2D" uid="uid://d3rw1bcnrd1c8" path="res://common_assets/Formation_slots.png" id="8_kcpo7"]
 [ext_resource type="PackedScene" uid="uid://crhdaipejxkkv" path="res://team_viewer/team_editor/context_menu.tscn" id="8_p0qsv"]
 [ext_resource type="Theme" uid="uid://qw3ckwy7bak5" path="res://theme/ui_theme.tres" id="10_tbraw"]
 [ext_resource type="Script" uid="uid://i0tyv84emqjl" path="res://team_viewer/team_editor/back.gd" id="11_tbraw"]
@@ -64,113 +62,6 @@ offset_bottom = 1080.0
 texture = ExtResource("1_57wfa")
 expand_mode = 3
 script = ExtResource("2_kcpo7")
-
-[node name="HBoxContainer" type="HBoxContainer" parent="."]
-z_as_relative = false
-layout_mode = 0
-offset_left = 682.0
-offset_top = 62.0
-offset_right = 1238.0
-offset_bottom = 158.0
-
-[node name="FormationToggle" type="TextureButton" parent="HBoxContainer"]
-layout_mode = 2
-size_flags_horizontal = 3
-toggle_mode = true
-button_pressed = true
-texture_normal = ExtResource("3_kcpo7")
-texture_pressed = ExtResource("4_wfc57")
-
-[node name="FormationSlots" type="TextureRect" parent="HBoxContainer"]
-layout_mode = 2
-size_flags_horizontal = 3
-texture = ExtResource("5_tbraw")
-stretch_mode = 2
-
-[node name="Slot1" type="AnimatedSprite2D" parent="HBoxContainer/FormationSlots"]
-visible = false
-position = Vector2(5.9999995, 4.9999995)
-scale = Vector2(2.75, 2.75)
-sprite_frames = SubResource("SpriteFrames_qmpqq")
-speed_scale = 2.0
-centered = false
-
-[node name="Button" type="Button" parent="HBoxContainer/FormationSlots/Slot1"]
-offset_right = 32.0
-offset_bottom = 32.0
-theme_override_styles/normal = SubResource("StyleBoxEmpty_kcpo7")
-theme_override_styles/pressed = SubResource("StyleBoxEmpty_wfc57")
-theme_override_styles/hover = SubResource("StyleBoxEmpty_tbraw")
-theme_override_styles/disabled = SubResource("StyleBoxEmpty_6odcm")
-theme_override_styles/focus = SubResource("StyleBoxEmpty_qk5ds")
-
-[node name="Slot2" type="AnimatedSprite2D" parent="HBoxContainer/FormationSlots"]
-visible = false
-position = Vector2(105.99999, 4.9999995)
-scale = Vector2(2.75, 2.75)
-sprite_frames = SubResource("SpriteFrames_qmpqq")
-speed_scale = 2.0
-centered = false
-
-[node name="Button" type="Button" parent="HBoxContainer/FormationSlots/Slot2"]
-offset_right = 32.0
-offset_bottom = 32.0
-theme_override_styles/normal = SubResource("StyleBoxEmpty_kcpo7")
-theme_override_styles/pressed = SubResource("StyleBoxEmpty_wfc57")
-theme_override_styles/hover = SubResource("StyleBoxEmpty_tbraw")
-theme_override_styles/disabled = SubResource("StyleBoxEmpty_6odcm")
-theme_override_styles/focus = SubResource("StyleBoxEmpty_qk5ds")
-
-[node name="Slot3" type="AnimatedSprite2D" parent="HBoxContainer/FormationSlots"]
-visible = false
-position = Vector2(206.99998, 4.9999995)
-scale = Vector2(2.75, 2.75)
-sprite_frames = SubResource("SpriteFrames_qmpqq")
-speed_scale = 2.0
-centered = false
-
-[node name="Button" type="Button" parent="HBoxContainer/FormationSlots/Slot3"]
-offset_right = 32.0
-offset_bottom = 32.0
-theme_override_styles/normal = SubResource("StyleBoxEmpty_kcpo7")
-theme_override_styles/pressed = SubResource("StyleBoxEmpty_wfc57")
-theme_override_styles/hover = SubResource("StyleBoxEmpty_tbraw")
-theme_override_styles/disabled = SubResource("StyleBoxEmpty_6odcm")
-theme_override_styles/focus = SubResource("StyleBoxEmpty_qk5ds")
-
-[node name="Slot4" type="AnimatedSprite2D" parent="HBoxContainer/FormationSlots"]
-visible = false
-position = Vector2(307.99997, 4.9999995)
-scale = Vector2(2.75, 2.75)
-sprite_frames = SubResource("SpriteFrames_qmpqq")
-speed_scale = 2.0
-centered = false
-
-[node name="Button" type="Button" parent="HBoxContainer/FormationSlots/Slot4"]
-offset_right = 32.0
-offset_bottom = 32.0
-theme_override_styles/normal = SubResource("StyleBoxEmpty_kcpo7")
-theme_override_styles/pressed = SubResource("StyleBoxEmpty_wfc57")
-theme_override_styles/hover = SubResource("StyleBoxEmpty_tbraw")
-theme_override_styles/disabled = SubResource("StyleBoxEmpty_6odcm")
-theme_override_styles/focus = SubResource("StyleBoxEmpty_qk5ds")
-
-[node name="Slot5" type="AnimatedSprite2D" parent="HBoxContainer/FormationSlots"]
-visible = false
-position = Vector2(408.99997, 4.9999995)
-scale = Vector2(2.75, 2.75)
-sprite_frames = SubResource("SpriteFrames_qmpqq")
-speed_scale = 2.0
-centered = false
-
-[node name="Button" type="Button" parent="HBoxContainer/FormationSlots/Slot5"]
-offset_right = 32.0
-offset_bottom = 32.0
-theme_override_styles/normal = SubResource("StyleBoxEmpty_kcpo7")
-theme_override_styles/pressed = SubResource("StyleBoxEmpty_wfc57")
-theme_override_styles/hover = SubResource("StyleBoxEmpty_tbraw")
-theme_override_styles/disabled = SubResource("StyleBoxEmpty_6odcm")
-theme_override_styles/focus = SubResource("StyleBoxEmpty_qk5ds")
 
 [node name="TextureRect" type="TextureRect" parent="."]
 layout_mode = 0
@@ -231,7 +122,102 @@ theme = ExtResource("10_tbraw")
 text = "Back"
 script = ExtResource("11_tbraw")
 
-[connection signal="toggled" from="HBoxContainer/FormationToggle" to="." method="_on_formation_toggled"]
+[node name="FormationSlots" type="TextureRect" parent="."]
+layout_mode = 0
+offset_left = 688.0
+offset_top = 62.0
+offset_right = 1213.0
+offset_bottom = 167.0
+size_flags_horizontal = 3
+texture = ExtResource("8_kcpo7")
+expand_mode = 3
+
+[node name="Slot1" type="AnimatedSprite2D" parent="FormationSlots"]
+visible = false
+position = Vector2(21.999998, 4.9999995)
+scale = Vector2(2.8, 2.8)
+sprite_frames = SubResource("SpriteFrames_qmpqq")
+speed_scale = 2.0
+centered = false
+
+[node name="Button" type="Button" parent="FormationSlots/Slot1"]
+offset_right = 32.0
+offset_bottom = 32.0
+theme_override_styles/normal = SubResource("StyleBoxEmpty_kcpo7")
+theme_override_styles/pressed = SubResource("StyleBoxEmpty_wfc57")
+theme_override_styles/hover = SubResource("StyleBoxEmpty_tbraw")
+theme_override_styles/disabled = SubResource("StyleBoxEmpty_6odcm")
+theme_override_styles/focus = SubResource("StyleBoxEmpty_qk5ds")
+
+[node name="Slot2" type="AnimatedSprite2D" parent="FormationSlots"]
+visible = false
+position = Vector2(127.99999, 4.9999995)
+scale = Vector2(2.8, 2.8)
+sprite_frames = SubResource("SpriteFrames_qmpqq")
+speed_scale = 2.0
+centered = false
+
+[node name="Button" type="Button" parent="FormationSlots/Slot2"]
+offset_right = 32.0
+offset_bottom = 32.0
+theme_override_styles/normal = SubResource("StyleBoxEmpty_kcpo7")
+theme_override_styles/pressed = SubResource("StyleBoxEmpty_wfc57")
+theme_override_styles/hover = SubResource("StyleBoxEmpty_tbraw")
+theme_override_styles/disabled = SubResource("StyleBoxEmpty_6odcm")
+theme_override_styles/focus = SubResource("StyleBoxEmpty_qk5ds")
+
+[node name="Slot3" type="AnimatedSprite2D" parent="FormationSlots"]
+visible = false
+position = Vector2(214.99998, 4.9999995)
+scale = Vector2(2.8, 2.8)
+sprite_frames = SubResource("SpriteFrames_qmpqq")
+speed_scale = 2.0
+centered = false
+
+[node name="Button" type="Button" parent="FormationSlots/Slot3"]
+offset_right = 32.0
+offset_bottom = 32.0
+theme_override_styles/normal = SubResource("StyleBoxEmpty_kcpo7")
+theme_override_styles/pressed = SubResource("StyleBoxEmpty_wfc57")
+theme_override_styles/hover = SubResource("StyleBoxEmpty_tbraw")
+theme_override_styles/disabled = SubResource("StyleBoxEmpty_6odcm")
+theme_override_styles/focus = SubResource("StyleBoxEmpty_qk5ds")
+
+[node name="Slot4" type="AnimatedSprite2D" parent="FormationSlots"]
+visible = false
+position = Vector2(333.99997, 4.9999995)
+scale = Vector2(2.8, 2.8)
+sprite_frames = SubResource("SpriteFrames_qmpqq")
+speed_scale = 2.0
+centered = false
+
+[node name="Button" type="Button" parent="FormationSlots/Slot4"]
+offset_right = 32.0
+offset_bottom = 32.0
+theme_override_styles/normal = SubResource("StyleBoxEmpty_kcpo7")
+theme_override_styles/pressed = SubResource("StyleBoxEmpty_wfc57")
+theme_override_styles/hover = SubResource("StyleBoxEmpty_tbraw")
+theme_override_styles/disabled = SubResource("StyleBoxEmpty_6odcm")
+theme_override_styles/focus = SubResource("StyleBoxEmpty_qk5ds")
+
+[node name="Slot5" type="AnimatedSprite2D" parent="FormationSlots"]
+visible = false
+position = Vector2(420.99997, 4.9999995)
+scale = Vector2(2.8, 2.8)
+sprite_frames = SubResource("SpriteFrames_qmpqq")
+frame_progress = 0.19100167
+speed_scale = 2.0
+centered = false
+
+[node name="Button" type="Button" parent="FormationSlots/Slot5"]
+offset_right = 32.0
+offset_bottom = 32.0
+theme_override_styles/normal = SubResource("StyleBoxEmpty_kcpo7")
+theme_override_styles/pressed = SubResource("StyleBoxEmpty_wfc57")
+theme_override_styles/hover = SubResource("StyleBoxEmpty_tbraw")
+theme_override_styles/disabled = SubResource("StyleBoxEmpty_6odcm")
+theme_override_styles/focus = SubResource("StyleBoxEmpty_qk5ds")
+
 [connection signal="sort_children" from="TextureRect/ScrollContainer/Fossilary" to="." method="_position_team_medals"]
 [connection signal="text_changed" from="TeamName" to="." method="_on_team_name_text_changed"]
 [connection signal="pressed" from="SaveTeam" to="." method="_on_save_team_pressed"]

@@ -20,7 +20,6 @@ var config = ConfigFile.new()
 func _ready() -> void:
 	var status = config.load(Global.teams_file)
 	if not OS.has_feature('dedicated_server'):
-		assert(status == OK)
 		MultiplayerLobby.player_connecting.connect(_on_player_connecting)
 		MultiplayerLobby.player_connected.connect(_on_player_connected)
 		MultiplayerLobby.player_connect_failed.connect(_on_player_connect_failed)

@@ -1,205 +1,214 @@
 {
-  "76": {
-	"name": "Tyrant's Roar",
-	"description": "Attack AZ and SZ simultaneously",
-	"skill_type": "damage",
-	"damage": 100,
-	"fp_cost": 100,
-	"target": "all_enemies",
-	"effects": [],
-	"counterable": false
-  },
-  "77": {
-	"name": "Scare Tactics",
-	"description": "Scare: 40% [img=24,center,center]res://common_assets/statuses/Scare.webp[/img]",
-	"skill_type": "damage",
-	"damage": 166,
-	"fp_cost": 200,
-	"target": "enemy",
-	"effects": {
-	  "2": {
-		"chance": 0.4,
-		"status_id": 6
-	  }
+	"76": {
+		"name": "Tyrant's Roar",
+		"description": "Special: Attack both AZ and SZ",
+		"skill_type": "damage",
+		"damage": 100.0,
+		"fp_cost": 100.0,
+		"target": "all_enemies",
+		"effects": [],
+		"counterable": false
 	},
-	"counterable": true
-  },
-  "78": {
-	"name": "Frightful Assault",
-	"description": "Scare: 80% [img=24,center,center]res://common_assets/statuses/Super_Scare.webp[/img]",
-	"skill_type": "damage",
-	"damage": 189,
-	"fp_cost": 300,
-	"target": "enemy",
-	"effects": {
-	  "2": {
-		"chance": 0.8,
-		"status_id": 7
-	  }
+	"77": {
+		"name": "Scare Tactics",
+		"description": "Scare [img=24,center,center]res://common_assets/statuses/Scare.webp[/img] Success rate: 50%",
+		"skill_type": "damage",
+		"damage": 166.0,
+		"fp_cost": 200.0,
+		"target": "enemy",
+		"effects": {
+			"2": {
+				"chance": 0.5,
+				"status_id": 6.0
+			}
+		},
+		"counterable": true
 	},
-	"counterable": true
-  },
-  "91": {
-	"name": "Law of the Jungle",
-	"description": "Recover using ally LP",
-	"skill_type": "enhancement",
-	"damage": 0,
-	"fp_cost": 50,
-	"target": "all_allies",
-	"effects": {
-	  "3": {
-		"lp": "leave_1_lp"
-	  }
+	"78": {
+		"name": "Frightful Assault",
+		"description": "Scare [img=24,center,center]res://common_assets/statuses/Super_Scare.webp[/img] Success rate: 100%",
+		"skill_type": "damage",
+		"damage": 189.0,
+		"fp_cost": 300.0,
+		"target": "enemy",
+		"effects": {
+			"2": {
+				"chance": 1.0,
+				"status_id": 7.0
+			}
+		},
+		"counterable": true
 	},
-	"counterable": false
-  },
-  "79": {
-	"name": "Tyrant's Breath",
-	"description": "Attack AZ and SZ simultaneously",
-	"skill_type": "team_skill",
-	"damage": 164,
-	"fp_cost": 280,
-	"target": "all_enemies",
-	"effects": {},
-	"counterable": false
-  },
+	"91": {
+		"name": "Law of the Jungle",
+		"description": "Recover using ally LP",
+		"skill_type": "enhancement",
+		"damage": 0.0,
+		"fp_cost": 200.0,
+		"target": "all_allies",
+		"effects": {
+			"3": {
+				"lp": "leave_1_lp"
+			}
+		},
+		"counterable": false
+	},
+	"79": {
+		"name": "Tyrant's Breath",
+		"description": "Team Skill: Attack both AZ and SZ",
+		"skill_type": "team_skill",
+		"damage": 164.0,
+		"fp_cost": 280.0,
+		"target": "all_enemies",
+		"effects": {
 
-  "52": {
-	"name": "Mighty Stomp",
-	"description": "Rotate: 100%",
-	"skill_type": "damage",
-	"damage": 87,
-	"fp_cost": 100,
-	"target": "enemy",
-	"effects": {
-	  "4": {
-		"chance": 1,
-		"rotations": "random",
-		"direction": "random"
-	  }
+		},
+		"counterable": false
 	},
-	"counterable": false
-  },
-  "53": {
-	"name": "Mountain Wave",
-	"description": "",
-	"skill_type": "damage",
-	"damage": 110,
-	"fp_cost": 180,
-	"target": "enemy",
-	"effects": {},
-	"counterable": true
-  },
-  "54": {
-	"name": "Earth Crush",
-	"description": "",
-	"skill_type": "damage",
-	"damage": 110,
-	"fp_cost": 180,
-	"target": "enemy",
-	"effects": {},
-	"counterable": false
-  },
-  "67": {
-	"name": "Power Scale",
-	"description": "Equalize FP",
-	"skill_type": "neutral",
-	"damage": 0,
-	"fp_cost": 50,
-	"target": "all",
-	"effects": {
-	  "5": {}
+	"52": {
+		"name": "Mighty Stomp",
+		"description": "Swap zones Success rate: 100%",
+		"skill_type": "damage",
+		"damage": 0.0,
+		"fp_cost": 100.0,
+		"target": "all_enemies",
+		"effects": {
+			"4": {
+				"chance": 1.0
+			}
+		},
+		"counterable": false
 	},
-	"counterable": false
-  },
-  "55": {
-	"name": "Voidquake",
-	"description": "Attack AZ and SZ simultaneously",
-	"skill_type": "team_skill",
-	"damage": 157,
-	"fp_cost": 400,
-	"target": "all_enemies",
-	"effects": {},
-	"counterable": false
-  },
+	"53": {
+		"name": "Mountain Wave",
+		"description": "",
+		"skill_type": "damage",
+		"damage": 110.0,
+		"fp_cost": 180.0,
+		"target": "enemy",
+		"effects": {
 
-  "81": {
-	"name": "Trunk Lash",
-	"description": "",
-	"skill_type": "damage",
-	"damage": 67,
-	"fp_cost": 30,
-	"target": "enemy",
-	"effects": {},
-	"counterable": true
-  },
-  "82": {
-	"name": "Mammoth Combo",
-	"description": "Enrage 50% [img=24,center,center]res://common_assets/statuses/Enrage.webp[/img]",
-	"skill_type": "damage",
-	"damage": 79,
-	"fp_cost": 90,
-	"target": "enemy",
-	"effects": {
-	  "2": {
-		"chance": 0.5,
-		"status_id": 12
-	  }
+		},
+		"counterable": true
 	},
-	"counterable": true
-  },
-  "83": {
-	"name": "Mammoth Cannon",
-	"description": "",
-	"skill_type": "damage",
-	"damage": 89,
-	"fp_cost": 120,
-	"target": "enemy",
-	"effects": {},
-	"counterable": false
-  },
-  "60": {
-	"name": "Sacrifice",
-	"description": "Give LP to allies",
-	"skill_type": "enhancement",
-	"damage": 0,
-	"fp_cost": 50,
-	"target": "all_allies",
-	"effects": {
-	  "6": {
-		"lp": "leave_1_lp"
-	  }
+	"54": {
+		"name": "Earth Crush",
+		"description": "",
+		"skill_type": "damage",
+		"damage": 110.0,
+		"fp_cost": 180.0,
+		"target": "enemy",
+		"effects": {
+
+		},
+		"counterable": false
 	},
-	"counterable": false
-  },
-  "84": {
-	"name": "Glacial Barrage",
-	"description": "Sleep: 30% (team) [img=24,center,center]res://common_assets/statuses/Super_Sleep.webp[/img]",
-	"skill_type": "team_skill",
-	"damage": 0,
-	"fp_cost": 390,
-	"target": "all_enemies",
-	"effects": {
-	  "2": {
-		"chance": 0.3,
-		"status_id": 5
-	  }
+	"67": {
+		"name": "Power Scale",
+		"description": "Equalize FP",
+		"skill_type": "neutral",
+		"damage": 0.0,
+		"fp_cost": 50.0,
+		"target": "all",
+		"effects": {
+			"5": {
+
+			}
+		},
+		"counterable": false
 	},
-	"counterable": false
-  },
-  "18": {
-	"name": "Auto LP Recovery",
-	"description": "Automatically recovers LP every turn.",
-	"skill_type": "passive",
-	"damage": 0,
-	"fp_cost": 0,
-	"target": "self",
-	"effects": {
-	  "7": {
-		"lp": "0.1"
-	  }
+	"55": {
+		"name": "Voidquake",
+		"description": "Team Skill: Attack both AZ and SZ",
+		"skill_type": "team_skill",
+		"damage": 157.0,
+		"fp_cost": 400.0,
+		"target": "all_enemies",
+		"effects": {
+
+		},
+		"counterable": false
 	},
-	"counterable": false
-	
-  }
+	"81": {
+		"name": "Trunk Lash",
+		"description": "",
+		"skill_type": "damage",
+		"damage": 62.0,
+		"fp_cost": 30.0,
+		"target": "enemy",
+		"effects": {
+
+		},
+		"counterable": true
+	},
+	"82": {
+		"name": "Mammoth Combo",
+		"description": "Enrage [img=24,center,center]res://common_assets/statuses/Enrage.webp[/img] Success rate: 50%",
+		"skill_type": "damage",
+		"damage": 74.0,
+		"fp_cost": 90.0,
+		"target": "enemy",
+		"effects": {
+			"2": {
+				"chance": 0.5,
+				"status_id": 12.0
+			}
+		},
+		"counterable": true
+	},
+	"83": {
+		"name": "Mammoth Cannon",
+		"description": "",
+		"skill_type": "damage",
+		"damage": 84.0,
+		"fp_cost": 120.0,
+		"target": "enemy",
+		"effects": {
+
+		},
+		"counterable": false
+	},
+	"60": {
+		"name": "Sacrifice",
+		"description": "Give LP to allies Success rate: 100%",
+		"skill_type": "enhancement",
+		"damage": 0.0,
+		"fp_cost": 50.0,
+		"target": "all_allies",
+		"effects": {
+			"6": {
+				"lp": "leave_1_lp"
+			}
+		},
+		"counterable": false
+	},
+	"84": {
+		"name": "Glacial Barrage",
+		"description": "Team Skill: Attack both AZ and SZ",
+		"skill_type": "team_skill",
+		"damage": 0.0,
+		"fp_cost": 390.0,
+		"target": "all_enemies",
+		"effects": {
+			"2": {
+				"chance": 0.299999999999999989,
+				"status_id": 5.0
+			}
+		},
+		"counterable": false
+	},
+	"18": {
+		"name": "Auto LP Recovery",
+		"description": "Automatically recovers LP every turn.",
+		"skill_type": "passive",
+		"damage": 0.0,
+		"fp_cost": 0.0,
+		"target": "self",
+		"effects": {
+			"7": {
+				"lp": "0.1"
+			}
+		},
+		"counterable": false
+	}
 }

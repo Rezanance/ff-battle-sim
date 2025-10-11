@@ -1,26 +1,37 @@
 {
-  "2": {
-	"description": "{Chance} to apply {Status}",
-	"params": ["chance", "status_id"]
-  },
-  "3": {
-	"description": "Drain {percent | max_amount | option} LP",
-	"params": ["lp"]
-  },
-  "4": {
-	"description": "{Chance} to rotate {1-3 times | random} {clockwise | counter-clockwise}",
-	"params": ["chance", "rotations", "direction"]
-  },
-  "5": {
-	"description": "Equalize FP",
-	"params": []
-  },
-  "6": {
-	"description": "Give {percent | max_amount | option} LP equally",
-	"params": ["lp"]
-  },
-  "7": {
-	"description": "Heal {percent | max_amount | option} LP",
-	"params": ["lp"]
-  }
+	"2": {
+		"description": "{Chance} to apply {Status}",
+		"params": [
+			"chance",
+			"status_id"
+		]
+	},
+	"3": {
+		"description": "Drain {percent | max_amount | option} LP",
+		"params": [
+			"lp"
+		]
+	},
+	"4": {
+		"description": "{Chance} to swap enemy zones",
+		"params": [
+			"chance"
+		]
+	},
+	"5": {
+		"description": "Equalize FP",
+		"params": []
+	},
+	"6": {
+		"description": "Donate {percent | max_amount | option} LP equally",
+		"params": [
+			"lp"
+		]
+	},
+	"7": {
+		"description": "Heal {percent | max_amount | option} LP",
+		"params": [
+			"lp"
+		]
+	}
 }

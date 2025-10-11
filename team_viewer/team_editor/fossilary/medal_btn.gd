@@ -1,6 +1,6 @@
 extends TextureButton
 
-var fossilary_id: String
+var vivosaur_id: int
 
 @onready var selected_anim = $SelectedAnimation
 # Called when the node enters the scene tree for the first time.

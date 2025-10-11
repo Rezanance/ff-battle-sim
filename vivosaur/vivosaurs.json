@@ -1,74 +1,104 @@
 {
-  "1": {
-	"name": "T-Rex",
-	"element": "fire",
-	"super_revival_possible": true,
-	"stats": {
-	  "lp": 600,
-	  "atk": 99,
-	  "def": 43,
-	  "acc": 43,
-	  "eva": 12,
-	  "crit": 0.15
+	"1": {
+		"name": "T-Rex",
+		"element": "fire",
+		"stats": {
+			"lp": 600.0,
+			"atk": 99.0,
+			"def": 50.0,
+			"acc": 43.0,
+			"eva": 18.0,
+			"crit": 0.149999999999999994,
+			"ranged_multiplier": 0.5
+		},
+		"skills": [
+			"76",
+			"77",
+			"78",
+			"91",
+			"79"
+		],
+		"support_effects": {
+			"own_az": true,
+			"atk": -0.299999999999999989,
+			"def": -0.299999999999999989,
+			"acc": -0.299999999999999989,
+			"eva": -0.299999999999999989
+		},
+		"class": "attack",
+		"status_immunities": [],
+		"team_skill_groups": [
+			1.0,
+			6.0
+		]
 	},
-	"skills": ["76", "77", "78", "91", "79"],
-	"support_effects": {
-	  "own_az": true,
-	  "atk": -0.3,
-	  "def": -0.3,
-	  "acc": -0.3,
-	  "eva": -0.3
+	"44": {
+		"name": "Brachio",
+		"element": "neutral",
+		"stats": {
+			"lp": 660.0,
+			"atk": 65.0,
+			"def": 27.0,
+			"acc": 44.0,
+			"eva": 10.0,
+			"crit": 0.149999999999999994,
+			"ranged_multiplier": 1.39999999999999991
+		},
+		"skills": [
+			"52",
+			"53",
+			"54",
+			"67",
+			"55"
+		],
+		"support_effects": {
+			"own_az": true,
+			"atk": -0.299999999999999989,
+			"def": 0.0,
+			"acc": -0.299999999999999989,
+			"eva": 0.0
+		},
+		"class": "long-range",
+		"status_immunities": [],
+		"team_skill_groups": [
+			5.0,
+			14.0
+		]
 	},
-	"attack_range": "close",
-	"status_immunities": [],
-	"team_skill_groups": [1, 6]
-  },
-  "44": {
-	"name": "Brachio",
-	"element": "neutral",
-	"super_revival_possible": true,
-	"stats": {
-	  "lp": 660,
-	  "atk": 65,
-	  "def": 27,
-	  "acc": 44,
-	  "eva": 10,
-	  "crit": 0.15
-	},
-	"skills": ["52", "53", "54", "67", "55"],
-	"support_effects": {
-	  "own_az": true,
-	  "atk": 0,
-	  "def": 0,
-	  "acc": 0,
-	  "eva": 0
-	},
-	"attack_range": "long",
-	"status_immunities": [],
-	"team_skill_groups": [5, 14, 25]
-  },
-  "97": {
-	"name": "Mammoth",
-	"element": "water",
-	"super_revival_possible": true,
-	"stats": {
-	  "lp": 380,
-	  "atk": 59,
-	  "def": 37,
-	  "acc": 40,
-	  "eva": 16,
-	  "crit": 0.30
-	},
-	"skills": ["81", "82", "83", "60", "84", "18"],
-	"support_effects": {
-	  "own_az": true,
-	  "atk": 0.1,
-	  "def": 0.1,
-	  "acc": 0.1,
-	  "eva": 0.1
-	},
-	"attack_range": "mid",
-	"status_immunities": [],
-	"team_skill_groups": [4, 14, 15, 20]
-  }
+	"97": {
+		"name": "Mammoth",
+		"element": "water",
+		"stats": {
+			"lp": 280.0,
+			"atk": 54.0,
+			"def": 32.0,
+			"acc": 45.0,
+			"eva": 21.0,
+			"crit": 0.200000000000000011,
+			"ranged_multiplier": 0.5
+		},
+		"skills": [
+			"81",
+			"82",
+			"83",
+			"60",
+			"84",
+			"18"
+		],
+		"support_effects": {
+			"own_az": true,
+			"atk": 0.100000000000000006,
+			"def": 0.100000000000000006,
+			"acc": 0.100000000000000006,
+			"eva": 0.100000000000000006
+		},
+		"class": "support",
+		"status_immunities": [],
+		"team_skill_groups": [
+			4.0,
+			14.0,
+			15.0,
+			20.0
+		]
+	}
 }

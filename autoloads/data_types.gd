@@ -1,17 +1,14 @@
 extends Node
 
 enum FighterTeam {ALLY, ENEMY}
-enum Formation {TRIASSIC, JURASSIC}
-enum AttackRange {CLOSE, MID, LONG}
-enum SuperRevival {BASE, HEAD, BODY, ARMS, LEGS}
 enum Element {FIRE, WATER, AIR, EARTH, NEUTRAL}
 enum Target {
-	SELF, 
-	ALLY, 
+	SELF,
+	ALLY,
 	ALLY_EXCEPT_SELF,
-	ENEMY, 
-	ALL_ALLIES, 
-	ALL_ENEMIES, 
+	ENEMY,
+	ALL_ALLIES,
+	ALL_ENEMIES,
 	ALL
 }
 enum SkillType {
@@ -22,17 +19,8 @@ enum SkillType {
 	PASSIVE,
 	TEAM_SKILL
 }
-enum StatusType {POSITIVE, NEGATIVE}
 
 const TEAM_SLOTS = 5
-
-const SUPER_REVIVAL_LP_MODIFIER = 20
-const HEAD_ACC_MODIFIER = 5
-const BODY_DEF_MODIFIER = 10
-const ARMS_ATK_MODIFIER = 10
-const LEGS_EVA_MODIFIER = 5
-
-const RANGES_STR = ['Close', 'Mid', 'Long']
 
 
 class Stats:
@@ -42,29 +30,25 @@ class Stats:
 	var accuracy: int
 	var evasion: int
 	var crit_chance: float
+	var ranged_multiplier: float
 	
 	func _init(_life_points: int, _attack: int, _defense: int, _accuracy: int,
-	_evasion: int, _crit_chance: float, super_revival: SuperRevival ):
+	_evasion: int, _crit_chance: float, _ranged_multiplier: float):
 		assert(_life_points >= 0)
 		assert(_attack >= 0)
 		assert(_defense >= 0)
 		assert(_accuracy >= 0)
 		assert(_evasion >= 0)
 		assert(_crit_chance >= 0 and _crit_chance <= 1)
-		
-		var lp_modifier = SUPER_REVIVAL_LP_MODIFIER if super_revival != SuperRevival.BASE else 0
-		var atk_modifier = ARMS_ATK_MODIFIER if super_revival == SuperRevival.ARMS else 0
-		var def_modifier = BODY_DEF_MODIFIER if super_revival == SuperRevival.BODY else 0
-		var acc_modifier = HEAD_ACC_MODIFIER if super_revival == SuperRevival.HEAD else 0
-		var eva_modifier = LEGS_EVA_MODIFIER if super_revival == SuperRevival.LEGS else 0
-		
-		self.life_points = _life_points + lp_modifier
-		self.attack = _attack + atk_modifier
-		self.defense = _defense + def_modifier
-		self.accuracy = _accuracy + acc_modifier
-		self.evasion = _evasion + eva_modifier
+		assert(_ranged_multiplier >= 0)
+				
+		self.life_points = _life_points
+		self.attack = _attack
+		self.defense = _defense
+		self.accuracy = _accuracy
+		self.evasion = _evasion
 		self.crit_chance = _crit_chance
-		
+		self.ranged_multiplier = _ranged_multiplier
 	
 class SupportEffects:
 	var own_az: bool
@@ -73,7 +57,7 @@ class SupportEffects:
 	var accuracy_modifier: float
 	var evasion_modifier: float
 	
-	func _init(_own_az: bool, _attack_modifier: float, _defense_modifier: float, 
+	func _init(_own_az: bool, _attack_modifier: float, _defense_modifier: float,
 	_accuracy_modifier: float, _evasion_modifier: float):
 		assert(_attack_modifier >= -1 and _attack_modifier <= 1)
 		assert(_defense_modifier >= -1 and _defense_modifier <= 1)
@@ -121,8 +105,8 @@ class Skill:
 	var effects: Dictionary[String, Effect]
 	var counterable: bool
 	
-	func _init(_id: String, _skill_type_str: String, _description: String, _name: String, 
-	_damage: int, _fp_cost: int, _target_str: String, _effects: Dictionary[String, Effect], 
+	func _init(_id: String, _skill_type_str: String, _description: String, _name: String,
+	_damage: int, _fp_cost: int, _target_str: String, _effects: Dictionary[String, Effect],
 	_counterable: bool):
 		assert(damage >= 0)
 		assert(fp_cost >= 0)
@@ -174,20 +158,19 @@ class Skill:
 		self.counterable = _counterable
 	
 class Vivosaur:
-	var id: String
+	var id: int
 	var name: String
 	var element: Element
-	var super_revival: SuperRevival
 	var stats: Stats
 	var support_effects: SupportEffects
 	var skills: Array[Skill]
-	var attack_range: AttackRange
+	var battle_class: String
 	var status_immunities: Array[Status]
 	var team_skill_groups: Array[int]
 	
-	func _init(_id: String, _name: String, _element_str: String, _super_revival: SuperRevival,
+	func _init(_id: int, _name: String, _element_str: String,
 	_stats: Stats, _support_effects: SupportEffects, _skills: Array[Skill],
-	_attack_range_str: String, _status_immunities: Array[Status],
+	_battle_class: String, _status_immunities: Array[Status],
 	_team_skill_groups: Array[int]):
 		var _element
 		match _element_str.to_lower().strip_edges():
@@ -204,41 +187,33 @@ class Vivosaur:
 			_:
 				assert(false, 'Not a valid element')
 		
-		var _attack_range
-		match _attack_range_str.to_lower().strip_edges():
-			'close':
-				_attack_range = AttackRange.CLOSE
-			'mid':
-				_attack_range = AttackRange.MID
-			'long':
-				_attack_range = AttackRange.LONG
-			_:
-				assert(false, 'Not a attack range')
-				
+		assert(
+			_battle_class == 'attack' or
+			_battle_class == 'all-around' or
+			_battle_class == 'defense' or
+			_battle_class == 'long-range' or
+			_battle_class == 'support' or
+			_battle_class == 'transformation',
+			'Not a valid class'
+		)
+
 		self.id = _id
 		self.name = _name
 		self.element = _element
-		self.super_revival = _super_revival
 		self.stats = _stats
 		self.support_effects = _support_effects
 		self.skills = _skills
-		self.attack_range = _attack_range
+		self.battle_class = _battle_class
 		self.status_immunities = _status_immunities
-		self.team_skill_groups = _team_skill_groups
-	
-	func get_fossilary_id() -> String:
-		return "%s_%d" % [id, super_revival]
 	
 class Team:
 	var uuid: String
 	var name: String
-	var formation: Formation
 	var slots: Array
 		
-	func _init(_uuid: String, _name: String = '', _formation: Formation = Formation.JURASSIC, _slots: Array = []):
+	func _init(_uuid: String, _name: String = '', _slots: Array = []):
 		self.uuid = _uuid
 		self.name = _name
-		self.formation = _formation
 		
 		if len(_slots) != TEAM_SLOTS:
 			self.slots = [null, null, null, null, null]
@@ -248,28 +223,24 @@ class Team:
 	func is_valid():
 		assert(len(slots) == TEAM_SLOTS)
 		
-		for i in range(3):
-			if slots[i] != null:
-				return true
-		return false
+		return slots[0] != null
 	
 	func serialize() -> Dictionary:
 		return {
 			'name': name,
-			'formation': formation,
-			'slots': slots_fossilary_ids()
+			'slots': slots_vivosaur_ids()
 		}
 	
-	func slots_fossilary_ids():
-		return slots.map(func (vivosaur): return "%s_%d" % [vivosaur.id, vivosaur.super_revival] if vivosaur != null else null)
+	func slots_vivosaur_ids():
+		return slots.map(func(vivosaur): return vivosaur.id if vivosaur != null else null)
 	
 	static func unserialize(team_uuid: String, team_dict: Dictionary):
-		var new_slots = []
+		var _slots = []
 		for i in range(TEAM_SLOTS):
-			var fossilary_id = team_dict.slots[i]
-			if fossilary_id != null:
-				new_slots.append(Global.fossilary[fossilary_id])
+			var vivosaur_id = team_dict.slots[i]
+			if vivosaur_id != null:
+				_slots.append(Global.fossilary[vivosaur_id])
 			else:
-				new_slots.append(null)
+				_slots.append(null)
 		
-		return DataTypes.Team.new(team_uuid, team_dict.name, team_dict.formation, new_slots)
+		return DataTypes.Team.new(team_uuid, team_dict['name'], _slots)

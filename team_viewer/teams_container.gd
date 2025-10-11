@@ -15,15 +15,13 @@ func _ready() -> void:
 			var team_dict = config.get_value(team_uuid, 'team')
 			var team: DataTypes.Team = DataTypes.Team.unserialize(team_uuid, team_dict)
 			team_preview.get_node("TeamNameBackground/TeamName").text = team.name
-			var formation_texture = "res://common_assets/formation/jurassic_slots.png" if team.formation == DataTypes.Formation.JURASSIC else "res://common_assets/formation/triassic_slots.png"
-			team_preview.get_node("FormationBackground").texture = load(formation_texture)
 			
 			var medal_container: Node = team_preview.get_node("FormationBackground/MedalContainer")
 			
 			for i in range(DataTypes.TEAM_SLOTS):
 				var vivosaur_slot: DataTypes.Vivosaur = team.slots[i]
 				if vivosaur_slot != null:
-					medal_container.get_child(i).texture = load("res://vivosaur/%s/medals/%s (%d).png" % [vivosaur_slot.id, vivosaur_slot.id, int(vivosaur_slot.super_revival) * 2 + 2])
+					medal_container.get_child(i).texture = load("res://vivosaur/%s/medal/%s (2).png" % [vivosaur_slot.id, vivosaur_slot.id])
 			
 			team_preview.get_node("Delete").pressed.connect(_delete_team.bind(team_uuid, team.name, team_preview))
 			team_preview.gui_input.connect(_on_team_preview_gui_input.bind(team))
