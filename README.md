@@ -21,4 +21,4 @@ ssh ffc-battle-sim-server -t '~/run_server.sh'
 2. run `deploy_and_run_server.sh` (make sure parent directory is in $PATH)
 
 ### Copy game to pc
-`scp ~/ffc-battle-sim/FFC\ Battle\ Sim\ (Linux).x86_64 cachyos-pc:~/Desktop`
+`scp ~/ffc-battle-sim/FF\ Battle\ Sim\ (Linux).x86_64 cachyos-pc:~/Desktop`

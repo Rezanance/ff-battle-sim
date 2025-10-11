@@ -151,7 +151,7 @@ theme_override_styles/focus = SubResource("StyleBoxEmpty_qk5ds")
 
 [node name="Slot2" type="AnimatedSprite2D" parent="FormationSlots"]
 visible = false
-position = Vector2(127.99999, 4.9999995)
+position = Vector2(125.99999, 4.9999995)
 scale = Vector2(2.8, 2.8)
 sprite_frames = SubResource("SpriteFrames_qmpqq")
 speed_scale = 2.0
@@ -168,7 +168,7 @@ theme_override_styles/focus = SubResource("StyleBoxEmpty_qk5ds")
 
 [node name="Slot3" type="AnimatedSprite2D" parent="FormationSlots"]
 visible = false
-position = Vector2(214.99998, 4.9999995)
+position = Vector2(219.99998, 4.9999995)
 scale = Vector2(2.8, 2.8)
 sprite_frames = SubResource("SpriteFrames_qmpqq")
 speed_scale = 2.0

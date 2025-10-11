@@ -15,18 +15,18 @@ var player_battles: Dictionary[int, int] = {} # key=player, value=battle_id
 	#}
 	#...
 #}
-var battle_teams = {} 
+var battle_teams = {}
 var responses_to_server = {} # key=battle_id, value=[players]
 
-func create_battle(challenger_id: int ):
+func create_battle(challenger_id: int):
 	create_battle_server.rpc_id(MultiplayerLobby.SERVER_PEER_ID, challenger_id)
 
 @rpc("any_peer", "call_remote", "reliable")
 func create_battle_server(player1_id: int):
-	assert(multiplayer.is_server()) 
+	assert(multiplayer.is_server())
 	var player2_id = MultiplayerLobby.challenge_requests[player1_id]
 	var battle_id = randi()
-	while used_battle_ids.has(battle_id) :
+	while used_battle_ids.has(battle_id):
 		battle_id = randi()
 	used_battle_ids[battle_id] = null
 	player_battles[player1_id] = battle_id
@@ -49,7 +49,7 @@ func send_team_info(battle_id: int, team_info: Dictionary):
 
 @rpc("any_peer", 'call_remote', "reliable")
 func send_team_info_server(battle_id: int, team_info: Dictionary):
-	assert(multiplayer.is_server()) 
+	assert(multiplayer.is_server())
 	
 	var player_id = multiplayer.get_remote_sender_id()
 	battle_teams[battle_id][player_id] = team_info
@@ -74,7 +74,6 @@ func notify_battle_prep_start(opponent_info: Dictionary, opponent_team_info: Dic
 	battle_prep_started.emit(opponent_info, opponent_team_info)
 
 func _on_battle_prep_timeout(battle_prep_timer: Timer, battle_id: int):
-	Logging.info("Battle %d starting!" % battle_id)
 	for player_id in battle_teams[battle_id]:
 		notify_battle_prep_time_up.rpc_id(player_id)
 	battle_prep_timer.queue_free()

@@ -10,7 +10,7 @@ config_version=5
 
 [application]
 
-config/name="FFC Battle Sim"
+config/name="FF Battle Sim"
 run/main_scene="uid://b5e63667bvai4"
 config/use_custom_user_dir=true
 config/features=PackedStringArray("4.5", "Forward Plus")
