@@ -21,7 +21,9 @@ enum SkillType {
 }
 
 const TEAM_SLOTS = 5
-
+const BASE_FP_RECHARGE = 180
+const MAX_FP = 660
+const FP_GAIN_AFTER_KNOCKOUT = 220
 
 class Stats:
 	var life_points: int
@@ -205,10 +207,11 @@ class Vivosaur:
 		self.skills = _skills
 		self.battle_class = _battle_class
 		self.status_immunities = _status_immunities
-	
+
 class Team:
 	var uuid: String
 	var name: String
+	# Vivosaur | null
 	var slots: Array
 		
 	func _init(_uuid: String, _name: String = '', _slots: Array = []):
@@ -244,3 +247,44 @@ class Team:
 				_slots.append(null)
 		
 		return DataTypes.Team.new(team_uuid, team_dict['name'], _slots)
+
+class VivosaurBattle:
+	var vivosaur: Vivosaur
+	var statuses: Array[Status]
+	var can_attack: bool
+
+	func _init(_vivosaur: Vivosaur):
+			self.vivosaur = _vivosaur
+			self.statuses = []
+			self.can_attack = false
+
+class Zones:
+	# VivosaurBattle | null
+	var az
+	var sz1
+	var sz2
+	var ez
+
+	func _init(_az, _sz1, _sz2) -> void:
+		assert(is_instance_of(_az, VivosaurBattle))
+		assert(is_instance_of(_sz1, VivosaurBattle) or _az == null)
+		assert(is_instance_of(_sz2, VivosaurBattle) or _az == null)
+
+		self.az = _az
+		self.sz1 = _sz1
+		self.sz2 = _sz2
+		self.ez = null
+
+class BattleField:
+	var player1_zones: Zones
+	var player1_fp: int
+	var player2_zones: Zones
+	var player2_fp: int
+	var turn: int
+
+	func _init(_player1_zones: Zones, _player2_zones: Zones) -> void:
+		self.player1_zones = _player1_zones
+		self.player1_fp = 0
+		self.player2_zones = _player2_zones
+		self.player2_fp = 0
+		self.turn = -1

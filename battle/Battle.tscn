@@ -1,6 +1,8 @@
-[gd_scene load_steps=2 format=3 uid="uid://bbwu2mq4o6p3o"]
+[gd_scene load_steps=4 format=3 uid="uid://bbwu2mq4o6p3o"]
 
 [ext_resource type="Texture2D" uid="uid://bp640urtcm7u3" path="res://common_assets/battlefields/15.png" id="1_hkniu"]
+[ext_resource type="Script" uid="uid://dmtm3ded2fmjg" path="res://battle/battle.gd" id="2_5r4g4"]
+[ext_resource type="Texture2D" uid="uid://cqd6js1dnxjhr" path="res://common_assets/support_effects/1111.png" id="2_pjid2"]
 
 [node name="Battle" type="TextureRect"]
 anchors_preset = 8
@@ -15,3 +17,140 @@ offset_bottom = 270.0
 grow_horizontal = 2
 grow_vertical = 2
 texture = ExtResource("1_hkniu")
+script = ExtResource("2_5r4g4")
+
+[node name="PlayerSupportEffects" type="TextureRect" parent="."]
+layout_mode = 0
+offset_left = 248.0
+offset_top = 48.0
+offset_right = 376.0
+offset_bottom = 176.0
+texture = ExtResource("2_pjid2")
+
+[node name="Atk" type="Label" parent="PlayerSupportEffects"]
+layout_mode = 0
+offset_left = -3.0
+offset_top = 27.0
+offset_right = 37.0
+offset_bottom = 44.0
+
+[node name="Acc" type="Label" parent="PlayerSupportEffects"]
+layout_mode = 0
+offset_left = -3.0
+offset_top = 74.0
+offset_right = 37.0
+offset_bottom = 91.0
+
+[node name="Eva" type="Label" parent="PlayerSupportEffects"]
+layout_mode = 0
+offset_left = 44.0
+offset_top = 74.0
+offset_right = 84.0
+offset_bottom = 91.0
+
+[node name="Def" type="Label" parent="PlayerSupportEffects"]
+layout_mode = 0
+offset_left = 44.0
+offset_top = 27.0
+offset_right = 84.0
+offset_bottom = 44.0
+
+[node name="PlayerVivosaurPositions" type="Control" parent="."]
+anchors_preset = 0
+
+[node name="AZ" type="Control" parent="PlayerVivosaurPositions"]
+anchors_preset = 0
+offset_left = 151.0
+offset_top = 145.0
+offset_right = 191.0
+offset_bottom = 185.0
+
+[node name="EZ" type="Control" parent="PlayerVivosaurPositions"]
+anchors_preset = 0
+offset_left = -12.0
+offset_top = 145.0
+offset_right = 28.0
+offset_bottom = 185.0
+
+[node name="SZ1" type="Control" parent="PlayerVivosaurPositions"]
+anchors_preset = 0
+offset_left = 52.0
+offset_top = 13.0
+offset_right = 92.0
+offset_bottom = 53.0
+
+[node name="SZ2" type="Control" parent="PlayerVivosaurPositions"]
+anchors_preset = 0
+offset_left = 15.0
+offset_top = 254.0
+offset_right = 55.0
+offset_bottom = 294.0
+
+[node name="OpponentSupportEffects" type="TextureRect" parent="."]
+layout_mode = 0
+offset_left = 400.0
+offset_top = 48.0
+offset_right = 528.0
+offset_bottom = 176.0
+texture = ExtResource("2_pjid2")
+
+[node name="Atk" type="Label" parent="OpponentSupportEffects"]
+layout_mode = 0
+offset_left = -5.0
+offset_top = 27.0
+offset_right = 35.0
+offset_bottom = 44.0
+
+[node name="Acc" type="Label" parent="OpponentSupportEffects"]
+layout_mode = 0
+offset_left = -5.0
+offset_top = 74.0
+offset_right = 35.0
+offset_bottom = 91.0
+
+[node name="Eva" type="Label" parent="OpponentSupportEffects"]
+layout_mode = 0
+offset_left = 45.0
+offset_top = 74.0
+offset_right = 85.0
+offset_bottom = 91.0
+
+[node name="Def" type="Label" parent="OpponentSupportEffects"]
+layout_mode = 0
+offset_left = 45.0
+offset_top = 27.0
+offset_right = 85.0
+offset_bottom = 44.0
+
+[node name="OpponentVivosaurPositions" type="Control" parent="."]
+anchors_preset = 0
+offset_right = 40.0
+offset_bottom = 40.0
+
+[node name="AZ" type="Control" parent="OpponentVivosaurPositions"]
+anchors_preset = 0
+offset_left = 411.0
+offset_top = 145.0
+offset_right = 451.0
+offset_bottom = 185.0
+
+[node name="EZ" type="Control" parent="OpponentVivosaurPositions"]
+anchors_preset = 0
+offset_left = 597.0
+offset_top = 145.0
+offset_right = 637.0
+offset_bottom = 185.0
+
+[node name="SZ1" type="Control" parent="OpponentVivosaurPositions"]
+anchors_preset = 0
+offset_left = 493.0
+offset_top = 13.0
+offset_right = 533.0
+offset_bottom = 53.0
+
+[node name="SZ2" type="Control" parent="OpponentVivosaurPositions"]
+anchors_preset = 0
+offset_left = 507.0
+offset_top = 254.0
+offset_right = 547.0
+offset_bottom = 294.0

@@ -91,7 +91,7 @@ func add_medals(is_player_team: bool):
 			var medal_btn = create_medal_btn(_texture, vivosaur.id, is_player_team)
 			if is_player_team:
 				slots_medal_btns[slot] = medal_btn
-				medal_btn.global_position = selectable_slots[slot].global_position + Vector2(50, -2)
+				medal_btn.global_position = selectable_slots[slot].global_position
 			else:
 				medal_btn.global_position = opponent_slots[slot].global_position + Vector2(0, 2)
 			add_child(medal_btn)
@@ -118,10 +118,10 @@ func move_swap_slots(new_slot: int):
 			
 #	Swap btns in UI
 	var tween = create_tween()
-	tween.tween_property(currently_selected_medal_btn, 'global_position', selectable_slots[new_slot].global_position + Vector2(2, -2), 1.0).set_trans(Tween.TRANS_SPRING)
+	tween.tween_property(currently_selected_medal_btn, 'global_position', selectable_slots[new_slot].global_position + Vector2(2, 0), 1.0).set_trans(Tween.TRANS_SPRING)
 	tween.set_parallel()
 	if medal_btn_in_new_slot != null:
-		tween.tween_property(medal_btn_in_new_slot, 'global_position', selectable_slots[current_slot].global_position + Vector2(2, -2), 1.0).set_trans(Tween.TRANS_SPRING)
+		tween.tween_property(medal_btn_in_new_slot, 'global_position', selectable_slots[current_slot].global_position + Vector2(2, 0), 1.0).set_trans(Tween.TRANS_SPRING)
 	
 	hide_selectable_slots()
 	
@@ -181,4 +181,18 @@ func _on_battle_prep_time_up():
 
 func _on_battle_started(opponent_team_info):
 	Battle.opponent_team = DataTypes.Team.unserialize('', opponent_team_info)
+
+	Battle.battlefield = DataTypes.BattleField.new(
+		DataTypes.Zones.new(
+			DataTypes.VivosaurBattle.new(Battle.player_team.slots[0]),
+			DataTypes.VivosaurBattle.new(Battle.player_team.slots[1]),
+			DataTypes.VivosaurBattle.new(Battle.player_team.slots[2]),
+		),
+		DataTypes.Zones.new(
+			DataTypes.VivosaurBattle.new(Battle.opponent_team.slots[0]),
+			DataTypes.VivosaurBattle.new(Battle.opponent_team.slots[1]),
+			DataTypes.VivosaurBattle.new(Battle.opponent_team.slots[2]),
+		),
+	)
+
 	SceneTransition.change_scene("res://battle/Battle.tscn")

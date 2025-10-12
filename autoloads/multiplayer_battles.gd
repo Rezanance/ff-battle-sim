@@ -8,14 +8,30 @@ signal battle_started(opponent_team_info)
 # Would use a set but dont exist in godot yet (values always == null)
 var used_battle_ids = {}
 var player_battles: Dictionary[int, int] = {} # key=player, value=battle_id
-#{
-	#battle_id: {
-		#player1_id: {team_info}
-		#player2_id: {team_info2}
-	#}
-	#...
-#}
+# {
+# 	battle_id: {
+# 		player1_id: {team_info}
+# 		player2_id: {team_info2}
+# 	}
+# 	...
+# }
 var battle_teams = {}
+# {
+# 	battle_id: {
+# 		player1_id: {
+# 			AZ: VivosaurBattle,
+# 			SZ1: VivosaurBattle,
+# 			SZ2: VivosaurBattle,
+# 			EZ: null,
+# 			FP: 0
+# 		},
+# 		player2_id: {
+# 			...
+# 		},
+# 	},
+#   ...
+# }
+var battlefields = {}
 var responses_to_server = {} # key=battle_id, value=[players]
 
 func create_battle(challenger_id: int):
@@ -32,6 +48,7 @@ func create_battle_server(player1_id: int):
 	player_battles[player1_id] = battle_id
 	player_battles[player2_id] = battle_id
 	battle_teams[battle_id] = {}
+	battlefields[battle_id] = {}
 	responses_to_server[battle_id] = {}
 	used_battle_ids[battle_id] = null
 	MultiplayerLobby.challenge_requests.erase(player1_id)
@@ -98,10 +115,27 @@ func send_new_team_info_server(battle_id: int, new_team_info: Dictionary):
 		Logging.info("Battle %d starting!" % battle_id)
 		responses_to_server[battle_id] = {}
 		
-		var player1_id = battle_teams[battle_id].keys()[0]
-		var player2_id = battle_teams[battle_id].keys()[1]
-		notify_battle_start.rpc_id(player1_id, battle_teams[battle_id][player2_id])
-		notify_battle_start.rpc_id(player2_id, battle_teams[battle_id][player1_id])
+		start_battle(battle_id)
+
+func start_battle(battle_id: int):
+	var player1_id = battle_teams[battle_id].keys()[0]
+	var player2_id = battle_teams[battle_id].keys()[1]
+
+	battlefields[battle_id] = DataTypes.BattleField.new(
+		DataTypes.Zones.new(
+			DataTypes.VivosaurBattle.new(Global.fossilary.get(battle_teams[battle_id][player1_id].slots[0])),
+			DataTypes.VivosaurBattle.new(Global.fossilary.get(battle_teams[battle_id][player1_id].slots[1])),
+			DataTypes.VivosaurBattle.new(Global.fossilary.get(battle_teams[battle_id][player1_id].slots[2])),
+		),
+		DataTypes.Zones.new(
+			DataTypes.VivosaurBattle.new(Global.fossilary.get(battle_teams[battle_id][player2_id].slots[0])),
+			DataTypes.VivosaurBattle.new(Global.fossilary.get(battle_teams[battle_id][player2_id].slots[1])),
+			DataTypes.VivosaurBattle.new(Global.fossilary.get(battle_teams[battle_id][player2_id].slots[2])),
+		),
+	)
+
+	notify_battle_start.rpc_id(player1_id, battle_teams[battle_id][player2_id])
+	notify_battle_start.rpc_id(player2_id, battle_teams[battle_id][player1_id])
 
 @rpc("authority", "call_remote", "reliable")
 func notify_battle_start(opponent_team_info: Dictionary):
