@@ -1,7 +1,7 @@
 extends Node
 
 enum FighterTeam {ALLY, ENEMY}
-enum Element {FIRE, WATER, AIR, EARTH, NEUTRAL}
+enum Element {FIRE, WATER, AIR, EARTH, NEUTRAL, LEGENDARY}
 enum Target {
 	SELF,
 	ALLY,
@@ -22,8 +22,8 @@ enum SkillType {
 
 const TEAM_SLOTS = 5
 const BASE_FP_RECHARGE = 180
-const MAX_FP = 660
-const FP_GAIN_AFTER_KNOCKOUT = 220
+const MAX_FP = 500
+const FP_GAIN_AFTER_KNOCKOUT = BASE_FP_RECHARGE * 2
 
 class Stats:
 	var life_points: int
@@ -250,13 +250,15 @@ class Team:
 
 class VivosaurBattle:
 	var vivosaur: Vivosaur
+	var current_lp: int
 	var statuses: Array[Status]
 	var can_attack: bool
 
 	func _init(_vivosaur: Vivosaur):
-			self.vivosaur = _vivosaur
-			self.statuses = []
-			self.can_attack = false
+		self.vivosaur = _vivosaur
+		self.current_lp = _vivosaur.stats.life_points
+		self.statuses = []
+		self.can_attack = false
 
 class Zones:
 	# VivosaurBattle | null
@@ -267,8 +269,8 @@ class Zones:
 
 	func _init(_az, _sz1, _sz2) -> void:
 		assert(is_instance_of(_az, VivosaurBattle))
-		assert(is_instance_of(_sz1, VivosaurBattle) or _az == null)
-		assert(is_instance_of(_sz2, VivosaurBattle) or _az == null)
+		assert(is_instance_of(_sz1, VivosaurBattle) or _sz1 == null)
+		assert(is_instance_of(_sz2, VivosaurBattle) or _sz2 == null)
 
 		self.az = _az
 		self.sz1 = _sz1

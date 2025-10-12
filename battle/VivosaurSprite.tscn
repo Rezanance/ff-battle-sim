@@ -1,7 +1,7 @@
 [gd_scene load_steps=3 format=3 uid="uid://vl2rq8bashda"]
 
 [ext_resource type="Texture2D" uid="uid://bmsqvk1yf0uxl" path="res://vivosaur/1/sprite/1.png" id="1_2krq1"]
-[ext_resource type="Texture2D" uid="uid://8w1gvd7l0vih" path="res://common_assets/lifebars/fire.png" id="2_jgtk3"]
+[ext_resource type="Texture2D" uid="uid://8w1gvd7l0vih" path="res://common_assets/lifebars/0.png" id="2_jgtk3"]
 
 [node name="VivosaurSprite" type="TextureButton"]
 offset_left = 151.0

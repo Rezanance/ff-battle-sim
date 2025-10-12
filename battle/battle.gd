@@ -32,37 +32,40 @@ func add_vivosaurs(opponent: bool):
 	add_child(vivosaur_sprite_sz1)
 	add_child(vivosaur_sprite_sz2)
 	
-	var vivosaur_id_az
+	var vivosaur_az
 	var vivosaur_sz1
 	var vivosaur_sz2
 	if not opponent:
-		vivosaur_id_az = Battle.battlefield.player1_zones.az.vivosaur.id
+		vivosaur_az = Battle.battlefield.player1_zones.az
 		vivosaur_sprite_az.global_position = PlayerAZ.global_position
 
-		vivosaur_sz1 = Battle.battlefield.player1_zones.sz1.vivosaur
+		vivosaur_sz1 = Battle.battlefield.player1_zones.sz1
 		vivosaur_sprite_sz1.global_position = PlayerSZ1.global_position
 		
-		vivosaur_sz2 = Battle.battlefield.player1_zones.sz2.vivosaur
+		vivosaur_sz2 = Battle.battlefield.player1_zones.sz2
 		vivosaur_sprite_sz2.global_position = PlayerSZ2.global_position
 	else:
-		vivosaur_id_az = Battle.battlefield.player2_zones.az.vivosaur.id
+		vivosaur_az = Battle.battlefield.player2_zones.az
 		vivosaur_sprite_az.flip_h = false
 		vivosaur_sprite_az.global_position = OpponentAZ.global_position
 
-		vivosaur_sz1 = Battle.battlefield.player2_zones.sz1.vivosaur
+		vivosaur_sz1 = Battle.battlefield.player2_zones.sz1
 		vivosaur_sprite_sz1.flip_h = false
 		vivosaur_sprite_sz1.global_position = OpponentSZ1.global_position
 		
-		vivosaur_sz2 = Battle.battlefield.player2_zones.sz2.vivosaur
+		vivosaur_sz2 = Battle.battlefield.player2_zones.sz2
 		vivosaur_sprite_sz2.flip_h = false
 		vivosaur_sprite_sz2.global_position = OpponentSZ2.global_position
 
-	vivosaur_sprite_az.texture_normal = load('res://vivosaur/%d/sprite/%d.png' % [vivosaur_id_az, vivosaur_id_az])
+	vivosaur_sprite_az.texture_normal = load('res://vivosaur/%d/sprite/%d.png' % [vivosaur_az.vivosaur.id, vivosaur_az.vivosaur.id])
+	vivosaur_sprite_az.get_node('LifeBar/Bg').texture = load('res://common_assets/lifebars/%d.png' % vivosaur_az.vivosaur.element)
 	if vivosaur_sz1 != null:
-		vivosaur_sprite_sz1.texture_normal = load('res://vivosaur/%d/sprite/%d.png' % [vivosaur_sz1.id, vivosaur_sz1.id])
+		vivosaur_sprite_sz1.texture_normal = load('res://vivosaur/%d/sprite/%d.png' % [vivosaur_sz1.vivosaur.id, vivosaur_sz1.vivosaur.id])
+		vivosaur_sprite_sz1.get_node('LifeBar/Bg').texture = load('res://common_assets/lifebars/%d.png' % vivosaur_sz1.vivosaur.element)
 	else:
 		vivosaur_sprite_sz1.queue_free()
 	if vivosaur_sz2 != null:
-		vivosaur_sprite_sz2.texture_normal = load('res://vivosaur/%d/sprite/%d.png' % [vivosaur_sz2.id, vivosaur_sz2.id])
+		vivosaur_sprite_sz2.texture_normal = load('res://vivosaur/%d/sprite/%d.png' % [vivosaur_sz2.vivosaur.id, vivosaur_sz2.vivosaur.id])
+		vivosaur_sprite_sz2.get_node('LifeBar/Bg').texture = load('res://common_assets/lifebars/%d.png' % vivosaur_sz2.vivosaur.element)
 	else:
 		vivosaur_sprite_sz2.queue_free()

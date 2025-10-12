@@ -121,16 +121,25 @@ func start_battle(battle_id: int):
 	var player1_id = battle_teams[battle_id].keys()[0]
 	var player2_id = battle_teams[battle_id].keys()[1]
 
+	var player_slot1 = battle_teams[battle_id][player1_id].slots[0]
+	var player_slot2 = battle_teams[battle_id][player1_id].slots[1]
+	var player_slot3 = battle_teams[battle_id][player1_id].slots[2]
+
+	var opponent_slot1 = battle_teams[battle_id][player2_id].slots[0]
+	var opponent_slot2 = battle_teams[battle_id][player2_id].slots[1]
+	var opponent_slot3 = battle_teams[battle_id][player2_id].slots[2]
+
+
 	battlefields[battle_id] = DataTypes.BattleField.new(
 		DataTypes.Zones.new(
-			DataTypes.VivosaurBattle.new(Global.fossilary.get(battle_teams[battle_id][player1_id].slots[0])),
-			DataTypes.VivosaurBattle.new(Global.fossilary.get(battle_teams[battle_id][player1_id].slots[1])),
-			DataTypes.VivosaurBattle.new(Global.fossilary.get(battle_teams[battle_id][player1_id].slots[2])),
+			DataTypes.VivosaurBattle.new(Global.fossilary[player_slot1]) if player_slot1 != null else null,
+			DataTypes.VivosaurBattle.new(Global.fossilary[player_slot2]) if player_slot2 != null else null,
+			DataTypes.VivosaurBattle.new(Global.fossilary[player_slot3]) if player_slot3 != null else null,
 		),
 		DataTypes.Zones.new(
-			DataTypes.VivosaurBattle.new(Global.fossilary.get(battle_teams[battle_id][player2_id].slots[0])),
-			DataTypes.VivosaurBattle.new(Global.fossilary.get(battle_teams[battle_id][player2_id].slots[1])),
-			DataTypes.VivosaurBattle.new(Global.fossilary.get(battle_teams[battle_id][player2_id].slots[2])),
+			DataTypes.VivosaurBattle.new(Global.fossilary[opponent_slot1]) if opponent_slot1 != null else null,
+			DataTypes.VivosaurBattle.new(Global.fossilary[opponent_slot2]) if opponent_slot2 != null else null,
+			DataTypes.VivosaurBattle.new(Global.fossilary[opponent_slot3]) if opponent_slot3 != null else null,
 		),
 	)
 
