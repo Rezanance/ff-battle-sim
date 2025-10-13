@@ -14,9 +14,9 @@ flip_h = true
 
 [node name="LifeBar" type="Control" parent="."]
 anchors_preset = 0
-offset_top = 114.0
+offset_top = 103.0
 offset_right = 40.0
-offset_bottom = 154.0
+offset_bottom = 143.0
 
 [node name="Bg" type="TextureRect" parent="LifeBar"]
 layout_mode = 0

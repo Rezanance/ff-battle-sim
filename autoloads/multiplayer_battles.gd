@@ -6,7 +6,7 @@ signal battle_prep_time_up(battle_id: int)
 signal battle_started(opponent_team_info)
 
 # Would use a set but dont exist in godot yet (values always == null)
-var used_battle_ids = {}
+var used_battle_ids: Dictionary[int, Variant] = {}
 var player_battles: Dictionary[int, int] = {} # key=player, value=battle_id
 # {
 # 	battle_id: {
@@ -15,7 +15,7 @@ var player_battles: Dictionary[int, int] = {} # key=player, value=battle_id
 # 	}
 # 	...
 # }
-var battle_teams = {}
+var battle_teams: Dictionary[int, Dictionary] = {}
 # {
 # 	battle_id: {
 # 		player1_id: {
@@ -31,9 +31,9 @@ var battle_teams = {}
 # 	},
 #   ...
 # }
-var battlefields = {}
-var battle_timers = {}
-var responses_to_server = {} # key=battle_id, value=[players]
+var battlefields: Dictionary[int, DataTypes.BattleField] = {}
+var battle_timers: Dictionary[int, Timer] = {}
+var responses_to_server: Dictionary[int, Dictionary] = {} # key=battle_id, value=[players]
 
 func create_battle(challenger_id: int):
 	create_battle_server.rpc_id(MultiplayerLobby.SERVER_PEER_ID, challenger_id)
@@ -51,7 +51,6 @@ func create_battle_server(player1_id: int):
 	battle_teams[battle_id] = {}
 	battle_timers[battle_id] = Timer.new()
 	add_child(battle_timers[battle_id])
-	battlefields[battle_id] = {}
 	responses_to_server[battle_id] = {}
 	used_battle_ids[battle_id] = null
 	MultiplayerLobby.challenge_requests.erase(player1_id)
@@ -158,10 +157,39 @@ func start_battle(battle_id: int):
 		),
 	)
 
+	calculate_support_effects(
+		battlefields[battle_id],
+		[battlefields[battle_id].player_zones.sz1, battlefields[battle_id].player_zones.sz2],
+		false
+	)
+	calculate_support_effects(
+		battlefields[battle_id],
+		[battlefields[battle_id].opponent_zones.sz1, battlefields[battle_id].opponent_zones.sz2],
+		true
+	)
+
 	notify_battle_start.rpc_id(player1_id, battle_teams[battle_id][player2_id])
 	notify_battle_start.rpc_id(player2_id, battle_teams[battle_id][player1_id])
+
+func calculate_support_effects(battlefield, support_zones, is_player1: bool):
+	for i in range(len(support_zones)):
+		var vivosaur_battle = support_zones[i]
+		if vivosaur_battle == null:
+			continue
+
+		var support_effects = vivosaur_battle.vivosaur_info.support_effects
+		if (is_player1 and support_effects.own_az) or (not is_player1 and not support_effects.own_az):
+			battlefield.opponent_az_effects.atk += support_effects.attack_modifier
+			battlefield.opponent_az_effects.def += support_effects.defense_modifier
+			battlefield.opponent_az_effects.acc += support_effects.accuracy_modifier
+			battlefield.opponent_az_effects.eva += support_effects.evasion_modifier
+		else:
+			battlefield.player_az_effects.atk += support_effects.attack_modifier
+			battlefield.player_az_effects.def += support_effects.defense_modifier
+			battlefield.player_az_effects.acc += support_effects.accuracy_modifier
+			battlefield.player_az_effects.eva += support_effects.evasion_modifier
+
 
 @rpc("authority", "call_remote", "reliable")
 func notify_battle_start(opponent_team_info: Dictionary):
 	battle_started.emit(opponent_team_info)
-	

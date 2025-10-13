@@ -249,23 +249,27 @@ class Team:
 		return DataTypes.Team.new(team_uuid, team_dict['name'], _slots)
 
 class VivosaurBattle:
-	var vivosaur: Vivosaur
+	var vivosaur_info: Vivosaur
 	var current_lp: int
 	var statuses: Array[Status]
 	var can_attack: bool
 
-	func _init(_vivosaur: Vivosaur):
-		self.vivosaur = _vivosaur
-		self.current_lp = _vivosaur.stats.life_points
+	func _init(_vivosaur_info: Vivosaur):
+		self.vivosaur_info = _vivosaur_info
+		self.current_lp = _vivosaur_info.stats.life_points
 		self.statuses = []
 		self.can_attack = false
 
 class Zones:
 	# VivosaurBattle | null
 	var az
+	var az_sprite
 	var sz1
+	var sz1_sprite
 	var sz2
+	var sz2_sprite
 	var ez
+	var ez_sprite
 
 	func _init(_az, _sz1, _sz2) -> void:
 		assert(is_instance_of(_az, VivosaurBattle))
@@ -273,9 +277,25 @@ class Zones:
 		assert(is_instance_of(_sz2, VivosaurBattle) or _sz2 == null)
 
 		self.az = _az
+		self.az_sprite = null
 		self.sz1 = _sz1
+		self.sz1_sprite = null
 		self.sz2 = _sz2
+		self.sz2_sprite = null
 		self.ez = null
+		self.ez_sprite = null
+
+class AZSupportEffects:
+	var atk: float
+	var def: float
+	var acc: float
+	var eva: float
+
+	func _init() -> void:
+		self.atk = 0
+		self.def = 0
+		self.acc = 0
+		self.eva = 0
 
 class BattleField:
 	var player_zones: Zones
@@ -283,6 +303,8 @@ class BattleField:
 	var opponent_zones: Zones
 	var player2_fp: int
 	var turn: int
+	var player_az_effects: AZSupportEffects
+	var opponent_az_effects: AZSupportEffects
 
 	func _init(_player1_zones: Zones, _player2_zones: Zones) -> void:
 		self.player_zones = _player1_zones
@@ -290,3 +312,5 @@ class BattleField:
 		self.opponent_zones = _player2_zones
 		self.player2_fp = 0
 		self.turn = -1
+		self.player_az_effects = AZSupportEffects.new()
+		self.opponent_az_effects = AZSupportEffects.new()

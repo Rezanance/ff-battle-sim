@@ -182,26 +182,4 @@ func _on_battle_prep_time_up():
 func _on_battle_started(opponent_team_info):
 	Battle.opponent_team = DataTypes.Team.unserialize('', opponent_team_info)
 	
-	var player_slot1 = Battle.player_team.slots[0]
-	var player_slot2 = Battle.player_team.slots[1]
-	var player_slot3 = Battle.player_team.slots[2]
-
-	var _opponent_slot1 = Battle.opponent_team.slots[0]
-	var _opponent_slot2 = Battle.opponent_team.slots[1]
-	var _opponent_slot3 = Battle.opponent_team.slots[2]
-
-	Battle.battlefield = DataTypes.BattleField.new(
-		DataTypes.Zones.new(
-			DataTypes.VivosaurBattle.new(player_slot1) if player_slot1 != null else null,
-			DataTypes.VivosaurBattle.new(player_slot2) if player_slot2 != null else null,
-			DataTypes.VivosaurBattle.new(player_slot3) if player_slot3 != null else null,
-		),
-		DataTypes.Zones.new(
-			DataTypes.VivosaurBattle.new(_opponent_slot1) if _opponent_slot1 != null else null,
-			DataTypes.VivosaurBattle.new(_opponent_slot2) if _opponent_slot2 != null else null,
-			DataTypes.VivosaurBattle.new(_opponent_slot3) if _opponent_slot3 != null else null,
-
-		),
-	)
-
 	SceneTransition.change_scene("res://battle/Battle.tscn")

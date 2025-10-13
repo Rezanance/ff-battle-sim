@@ -5,5 +5,3 @@ var player_info: Dictionary
 var player_team: DataTypes.Team
 var opponent_info: Dictionary
 var opponent_team: DataTypes.Team
-
-var battlefield: DataTypes.BattleField

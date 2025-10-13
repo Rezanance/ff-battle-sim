@@ -316,7 +316,7 @@ script = ExtResource("13_qohhd")
 
 [node name="WaitingChallenge" type="AnimatedSprite2D" parent="."]
 visible = false
-position = Vector2(659, 631)
+position = Vector2(659, 664)
 sprite_frames = SubResource("SpriteFrames_eaq1v")
 frame_progress = 0.28708875
 script = ExtResource("13_qohhd")
