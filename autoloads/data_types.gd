@@ -278,15 +278,15 @@ class Zones:
 		self.ez = null
 
 class BattleField:
-	var player1_zones: Zones
+	var player_zones: Zones
 	var player1_fp: int
-	var player2_zones: Zones
+	var opponent_zones: Zones
 	var player2_fp: int
 	var turn: int
 
 	func _init(_player1_zones: Zones, _player2_zones: Zones) -> void:
-		self.player1_zones = _player1_zones
+		self.player_zones = _player1_zones
 		self.player1_fp = 0
-		self.player2_zones = _player2_zones
+		self.opponent_zones = _player2_zones
 		self.player2_fp = 0
 		self.turn = -1

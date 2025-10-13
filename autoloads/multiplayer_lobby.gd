@@ -77,11 +77,15 @@ func _on_client_disconnected(id: int):
 		
 		if MultiplayerBattles.player_battles.has(id):
 			var battle_id = MultiplayerBattles.player_battles[id]
-			var opponent_id = MultiplayerBattles.battles[battle_id].keys().filter(func (player_id): return player_id != id)[0]
+			var opponent_id = MultiplayerBattles.battle_teams[battle_id].keys().filter(func (player_id): return player_id != id)[0]
 			
 			MultiplayerBattles.player_battles.erase(id)
 			MultiplayerBattles.player_battles.erase(opponent_id)
-			MultiplayerBattles.battles.erase(battle_id)
+			MultiplayerBattles.battle_teams.erase(battle_id)
+			MultiplayerBattles.battle_timers.erase(battle_id)
+			MultiplayerBattles.battlefields.erase(battle_id)
+			MultiplayerBattles.responses_to_server.erase(battle_id)
+			MultiplayerBattles.used_battle_ids.erase(battle_id)
 	else:
 #		TODO If in the middle of match, terminate battle and cleanup
 		pass
