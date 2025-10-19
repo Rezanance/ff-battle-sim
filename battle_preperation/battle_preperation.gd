@@ -59,14 +59,6 @@ func initialize_UI():
 	player_name.text = Battle.player_info['display_name']
 	opp_name.text = Battle.opponent_info['display_name']
 
-func _on_formation_toggled(toggled_on: bool) -> void:
-	if toggled_on:
-		Battle.player_team.formation = DataTypes.Formation.TRIASSIC
-		formation_slots.texture = load("res://common_assets/formation/triassic_slots.png")
-	else:
-		Battle.player_team.formation = DataTypes.Formation.JURASSIC
-		formation_slots.texture = load("res://common_assets/formation/jurassic_slots.png")
-		
 func initialize_player_slots():
 	selectable_slots = [player_slot1_selectable, player_slot2_selectable, player_slot3_selectable, player_slot4_selectable, player_slot5_selectable]
 	for i in range(len(selectable_slots)):

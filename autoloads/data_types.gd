@@ -1,5 +1,6 @@
 extends Node
 
+
 enum FighterTeam {ALLY, ENEMY}
 enum Element {FIRE, WATER, AIR, EARTH, NEUTRAL, LEGENDARY}
 enum Target {
@@ -19,6 +20,7 @@ enum SkillType {
 	PASSIVE,
 	TEAM_SKILL
 }
+enum SupportZone {SZ1, SZ2}
 
 const TEAM_SLOTS = 5
 const BASE_FP_RECHARGE = 180
@@ -44,13 +46,13 @@ class Stats:
 		assert(_crit_chance >= 0 and _crit_chance <= 1)
 		assert(_ranged_multiplier >= 0)
 				
-		self.life_points = _life_points
-		self.attack = _attack
-		self.defense = _defense
-		self.accuracy = _accuracy
-		self.evasion = _evasion
-		self.crit_chance = _crit_chance
-		self.ranged_multiplier = _ranged_multiplier
+		life_points = _life_points
+		attack = _attack
+		defense = _defense
+		accuracy = _accuracy
+		evasion = _evasion
+		crit_chance = _crit_chance
+		ranged_multiplier = _ranged_multiplier
 	
 class SupportEffects:
 	var own_az: bool
@@ -66,11 +68,11 @@ class SupportEffects:
 		assert(_accuracy_modifier >= -1 and _accuracy_modifier <= 1)
 		assert(_evasion_modifier >= -1 and _evasion_modifier <= 1)
 
-		self.own_az = _own_az
-		self.attack_modifier = _attack_modifier
-		self.defense_modifier = _defense_modifier
-		self.accuracy_modifier = _accuracy_modifier
-		self.evasion_modifier = _evasion_modifier
+		own_az = _own_az
+		attack_modifier = _attack_modifier
+		defense_modifier = _defense_modifier
+		accuracy_modifier = _accuracy_modifier
+		evasion_modifier = _evasion_modifier
 		
 class Status:
 	var id: String
@@ -82,19 +84,19 @@ class Status:
 	func _init(_id: String, _name: String, _is_negative: bool, _description: String, _turns_active: int):
 		assert(_turns_active > 0, "A status condition must be active for at least 1 turn")
 		
-		self.id = _id
-		self.name = _name
-		self.is_negative = _is_negative
-		self.description = _description
-		self.turns_active = _turns_active
+		id = _id
+		name = _name
+		is_negative = _is_negative
+		description = _description
+		turns_active = _turns_active
 		
 class Effect:
 	var id: String
 	var parameters: Dictionary
 	
 	func _init(_id: String, _parameters: Dictionary):
-		self.id = _id
-		self.parameters = _parameters
+		id = _id
+		parameters = _parameters
 	
 class Skill:
 	var id: String
@@ -149,15 +151,15 @@ class Skill:
 			_:
 				assert(false, 'Not a valid target')
 		
-		self.id = _id
-		self.skill_type = _skill_type
-		self.description = _description
-		self.name = _name
-		self.damage = _damage
-		self.fp_cost = _fp_cost
-		self.target = _target
-		self.effects = _effects
-		self.counterable = _counterable
+		id = _id
+		skill_type = _skill_type
+		description = _description
+		name = _name
+		damage = _damage
+		fp_cost = _fp_cost
+		target = _target
+		effects = _effects
+		counterable = _counterable
 	
 class Vivosaur:
 	var id: int
@@ -199,14 +201,14 @@ class Vivosaur:
 			'Not a valid class'
 		)
 
-		self.id = _id
-		self.name = _name
-		self.element = _element
-		self.stats = _stats
-		self.support_effects = _support_effects
-		self.skills = _skills
-		self.battle_class = _battle_class
-		self.status_immunities = _status_immunities
+		id = _id
+		name = _name
+		element = _element
+		stats = _stats
+		support_effects = _support_effects
+		skills = _skills
+		battle_class = _battle_class
+		status_immunities = _status_immunities
 
 class Team:
 	var uuid: String
@@ -215,13 +217,13 @@ class Team:
 	var slots: Array
 		
 	func _init(_uuid: String, _name: String = '', _slots: Array = []):
-		self.uuid = _uuid
-		self.name = _name
+		uuid = _uuid
+		name = _name
 		
 		if len(_slots) != TEAM_SLOTS:
-			self.slots = [null, null, null, null, null]
+			slots = [null, null, null, null, null]
 		else:
-			self.slots = _slots
+			slots = _slots
 	
 	func is_valid():
 		assert(len(slots) == TEAM_SLOTS)
@@ -253,37 +255,14 @@ class VivosaurBattle:
 	var current_lp: int
 	var statuses: Array[Status]
 	var can_attack: bool
+	var is_support_effects_applied: bool
 
 	func _init(_vivosaur_info: Vivosaur):
-		self.vivosaur_info = _vivosaur_info
-		self.current_lp = _vivosaur_info.stats.life_points
-		self.statuses = []
-		self.can_attack = false
-
-class Zones:
-	# VivosaurBattle | null
-	var az
-	var az_sprite
-	var sz1
-	var sz1_sprite
-	var sz2
-	var sz2_sprite
-	var ez
-	var ez_sprite
-
-	func _init(_az, _sz1, _sz2) -> void:
-		assert(is_instance_of(_az, VivosaurBattle))
-		assert(is_instance_of(_sz1, VivosaurBattle) or _sz1 == null)
-		assert(is_instance_of(_sz2, VivosaurBattle) or _sz2 == null)
-
-		self.az = _az
-		self.az_sprite = null
-		self.sz1 = _sz1
-		self.sz1_sprite = null
-		self.sz2 = _sz2
-		self.sz2_sprite = null
-		self.ez = null
-		self.ez_sprite = null
+		vivosaur_info = _vivosaur_info
+		current_lp = _vivosaur_info.stats.life_points
+		statuses = []
+		can_attack = false
+		is_support_effects_applied = false
 
 class AZSupportEffects:
 	var atk: float
@@ -292,25 +271,99 @@ class AZSupportEffects:
 	var eva: float
 
 	func _init() -> void:
-		self.atk = 0
-		self.def = 0
-		self.acc = 0
-		self.eva = 0
+		atk = 0
+		def = 0
+		acc = 0
+		eva = 0
 
-class BattleField:
-	var player_zones: Zones
-	var player1_fp: int
-	var opponent_zones: Zones
-	var player2_fp: int
-	var turn: int
-	var player_az_effects: AZSupportEffects
-	var opponent_az_effects: AZSupportEffects
+class Zones:
+	# VivosaurBattle | null
+	var az
+	var sz1
+	var sz2
+	var ez
+	# TextureRect | null
+	var az_sprite
+	var sz1_sprite
+	var sz2_sprite
+	var ez_sprite
 
-	func _init(_player1_zones: Zones, _player2_zones: Zones) -> void:
-		self.player_zones = _player1_zones
-		self.player1_fp = 0
-		self.opponent_zones = _player2_zones
-		self.player2_fp = 0
-		self.turn = -1
-		self.player_az_effects = AZSupportEffects.new()
-		self.opponent_az_effects = AZSupportEffects.new()
+	var fp: int
+
+	var az_support_effects: AZSupportEffects
+
+	func _init(_az, _sz1, _sz2) -> void:
+		assert(is_instance_of(_az, VivosaurBattle))
+		assert(is_instance_of(_sz1, VivosaurBattle) or _sz1 == null)
+		assert(is_instance_of(_sz2, VivosaurBattle) or _sz2 == null)
+
+		az = _az
+		az_sprite = null
+		sz1 = _sz1
+		sz1_sprite = null
+		sz2 = _sz2
+		sz2_sprite = null
+		ez = null
+		ez_sprite = null
+
+		fp = 0
+
+		az_support_effects = AZSupportEffects.new()
+
+	func get_sz_vivosaurs() -> Array:
+		return [sz1, sz2]
+
+	func get_support_zones_sprites() -> Array:
+		return [sz1_sprite, sz2_sprite]
+	
+	func get_total_lp():
+		var az_lp = az.get('current_lp') if az != null else 0
+		var sz1_lp = sz1.get('current_lp') if sz1 != null else 0
+		var sz2_lp = sz2.get('current_lp') if sz2 != null else 0
+
+		return az_lp + sz1_lp + sz2_lp
+	
+class Battlefield:
+	signal support_effects_applied(player_id: int, index: SupportZone)
+	signal apply_next_support_effects()
+
+	var on_client: bool
+	var zones: Dictionary[int, Zones]
+	var turn_id: int
+
+	func _init(_zones: Dictionary[int, Zones], _on_client: bool) -> void:
+		assert(len(_zones.keys()) == 2)
+
+		zones = _zones
+		turn_id = -1
+		on_client = _on_client
+
+	func get_opponent_id(player_id: int):
+		return zones.keys().filter(func(id): return id != player_id)[0]
+
+	func apply_support_effects(player_id: int):
+		var opponent_id = get_opponent_id(player_id)
+		var player_az_support_effects = zones[player_id].az_support_effects
+		var opponent_az_support_effects = zones[opponent_id].az_support_effects
+		var sz_vivosaurs = zones[player_id].get_sz_vivosaurs()
+
+		for index in range(len(sz_vivosaurs)):
+			var vivosaur_battle = sz_vivosaurs[index]
+			if vivosaur_battle == null or vivosaur_battle.is_support_effects_applied:
+				continue
+
+			var support_effects = vivosaur_battle.vivosaur_info.support_effects
+			if support_effects.own_az:
+				player_az_support_effects.atk += support_effects.attack_modifier
+				player_az_support_effects.def += support_effects.defense_modifier
+				player_az_support_effects.acc += support_effects.accuracy_modifier
+				player_az_support_effects.eva += support_effects.evasion_modifier
+			else:
+				opponent_az_support_effects.atk += support_effects.attack_modifier
+				opponent_az_support_effects.def += support_effects.defense_modifier
+				opponent_az_support_effects.acc += support_effects.accuracy_modifier
+				opponent_az_support_effects.eva += support_effects.evasion_modifier
+			vivosaur_battle.is_support_effects_applied = true
+
+			support_effects_applied.emit(player_id, index)
+			await apply_next_support_effects

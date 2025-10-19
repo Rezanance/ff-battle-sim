@@ -36,15 +36,30 @@ var VivosaurSprite = preload("res://battle/VivosaurSprite.tscn")
 @onready var opponent_acc_modifier: Label = $BattleWindow/OpponentSupportEffects/Acc
 @onready var opponent_eva_modifier: Label = $BattleWindow/OpponentSupportEffects/Eva
 
-var battlefield: DataTypes.BattleField
+@onready var player_total_lp: TextureRect = $BattleWindow/PlayerTotalLp
+@onready var player_total_lp_finish: Control = $BattleWindow/PlayerTotalLpFinish
+@onready var opponent_total_lp: TextureRect = $BattleWindow/OpponentTotalLp
+@onready var opponent_total_lp_finish: Control = $BattleWindow/OpponentTotalLpFinish
+
+var battlefield: DataTypes.Battlefield
+var player_id
+var opponent_id
 
 # Called when the node enters the scene tree for the first time.
 func _ready() -> void:
+	player_id = Battle.player_info.player_id
+	opponent_id = Battle.opponent_info.player_id
+	
 	create_battlefield()
 	add_player_vivosaurs()
 	add_opponent_vivosaurs()
 	await animate_entrance()
-	await apply_support_effects()
+	await apply_support_effects(player_id)
+	await apply_support_effects(opponent_id)
+	await animate_who_goes_first()
+
+	MultiplayerBattles.who_goes_first(Battle.battle_id)
+	MultiplayerBattles.turn_started.connect(_on_turn_started)
 
 func create_battlefield():
 	var player_slot1 = Battle.player_team.slots[0]
@@ -55,24 +70,26 @@ func create_battlefield():
 	var _opponent_slot2 = Battle.opponent_team.slots[1]
 	var _opponent_slot3 = Battle.opponent_team.slots[2]
 
-	battlefield = DataTypes.BattleField.new(
-		DataTypes.Zones.new(
-			DataTypes.VivosaurBattle.new(player_slot1) if player_slot1 != null else null,
-			DataTypes.VivosaurBattle.new(player_slot2) if player_slot2 != null else null,
-			DataTypes.VivosaurBattle.new(player_slot3) if player_slot3 != null else null,
-		),
-		DataTypes.Zones.new(
-			DataTypes.VivosaurBattle.new(_opponent_slot1) if _opponent_slot1 != null else null,
-			DataTypes.VivosaurBattle.new(_opponent_slot2) if _opponent_slot2 != null else null,
-			DataTypes.VivosaurBattle.new(_opponent_slot3) if _opponent_slot3 != null else null,
-
-		),
+	var zones: Dictionary[int, DataTypes.Zones] = {}
+	zones[Battle.player_info.player_id] = DataTypes.Zones.new(
+		DataTypes.VivosaurBattle.new(player_slot1) if player_slot1 != null else null,
+		DataTypes.VivosaurBattle.new(player_slot2) if player_slot2 != null else null,
+		DataTypes.VivosaurBattle.new(player_slot3) if player_slot3 != null else null,
 	)
+	zones[Battle.opponent_info.player_id] = DataTypes.Zones.new(
+		DataTypes.VivosaurBattle.new(_opponent_slot1) if _opponent_slot1 != null else null,
+		DataTypes.VivosaurBattle.new(_opponent_slot2) if _opponent_slot2 != null else null,
+		DataTypes.VivosaurBattle.new(_opponent_slot3) if _opponent_slot3 != null else null,
+	)
+	battlefield = DataTypes.Battlefield.new(zones, true)
+
+	battlefield.support_effects_applied.connect(display_support_effects)
 
 func add_player_vivosaurs():
-	var vivosaur_az = battlefield.player_zones.az
-	var vivosaur_sz1 = battlefield.player_zones.sz1
-	var vivosaur_sz2 = battlefield.player_zones.sz2
+	var zones = battlefield.zones[Battle.player_info.player_id]
+	var vivosaur_az = zones.az
+	var vivosaur_sz1 = zones.sz1
+	var vivosaur_sz2 = zones.sz2
 
 	player_vivosaur1_sprite.global_position = player_az_start.global_position
 	player_vivosaur2_sprite.global_position = player_sz1_start.global_position
@@ -80,24 +97,25 @@ func add_player_vivosaurs():
 
 	player_vivosaur1_sprite.texture_normal = load('res://vivosaur/%d/sprite/%d.png' % [vivosaur_az.vivosaur_info.id, vivosaur_az.vivosaur_info.id])
 	player_vivosaur1_sprite.get_node('LifeBar/Bg').texture = load('res://common_assets/lifebars/%d.png' % vivosaur_az.vivosaur_info.element)
-	battlefield.player_zones.az_sprite = player_vivosaur1_sprite
+	zones.az_sprite = player_vivosaur1_sprite
 	if vivosaur_sz1 != null:
 		player_vivosaur2_sprite.texture_normal = load('res://vivosaur/%d/sprite/%d.png' % [vivosaur_sz1.vivosaur_info.id, vivosaur_sz1.vivosaur_info.id])
 		player_vivosaur2_sprite.get_node('LifeBar/Bg').texture = load('res://common_assets/lifebars/%d.png' % vivosaur_sz1.vivosaur_info.element)
-		battlefield.player_zones.sz1_sprite = player_vivosaur2_sprite
+		zones.sz1_sprite = player_vivosaur2_sprite
 	else:
 		player_vivosaur2_sprite.queue_free()
 	if vivosaur_sz2 != null:
 		player_vivosaur3_sprite.texture_normal = load('res://vivosaur/%d/sprite/%d.png' % [vivosaur_sz2.vivosaur_info.id, vivosaur_sz2.vivosaur_info.id])
 		player_vivosaur3_sprite.get_node('LifeBar/Bg').texture = load('res://common_assets/lifebars/%d.png' % vivosaur_sz2.vivosaur_info.element)
-		battlefield.player_zones.sz2_sprite = player_vivosaur3_sprite
+		zones.sz2_sprite = player_vivosaur3_sprite
 	else:
 		player_vivosaur3_sprite.queue_free()
 
 func add_opponent_vivosaurs():
-	var vivosaur_az = battlefield.opponent_zones.az
-	var vivosaur_sz1 = battlefield.opponent_zones.sz1
-	var vivosaur_sz2 = battlefield.opponent_zones.sz2
+	var zones = battlefield.zones[Battle.opponent_info.player_id]
+	var vivosaur_az = zones.az
+	var vivosaur_sz1 = zones.sz1
+	var vivosaur_sz2 = zones.sz2
 	
 	opponent_vivosaur1_sprite.flip_h = false
 	opponent_vivosaur1_sprite.global_position = opponent_az.global_position
@@ -110,17 +128,17 @@ func add_opponent_vivosaurs():
 
 	opponent_vivosaur1_sprite.texture_normal = load('res://vivosaur/%d/sprite/%d.png' % [vivosaur_az.vivosaur_info.id, vivosaur_az.vivosaur_info.id])
 	opponent_vivosaur1_sprite.get_node('LifeBar/Bg').texture = load('res://common_assets/lifebars/%d.png' % vivosaur_az.vivosaur_info.element)
-	battlefield.opponent_zones.az_sprite = opponent_vivosaur1_sprite
+	zones.az_sprite = opponent_vivosaur1_sprite
 	if vivosaur_sz1 != null:
 		opponent_vivosaur2_sprite.texture_normal = load('res://vivosaur/%d/sprite/%d.png' % [vivosaur_sz1.vivosaur_info.id, vivosaur_sz1.vivosaur_info.id])
 		opponent_vivosaur2_sprite.get_node('LifeBar/Bg').texture = load('res://common_assets/lifebars/%d.png' % vivosaur_sz1.vivosaur_info.element)
-		battlefield.opponent_zones.sz1_sprite = opponent_vivosaur2_sprite
+		zones.sz1_sprite = opponent_vivosaur2_sprite
 	else:
 		opponent_vivosaur2_sprite.queue_free()
 	if vivosaur_sz2 != null:
 		opponent_vivosaur3_sprite.texture_normal = load('res://vivosaur/%d/sprite/%d.png' % [vivosaur_sz2.vivosaur_info.id, vivosaur_sz2.vivosaur_info.id])
 		opponent_vivosaur3_sprite.get_node('LifeBar/Bg').texture = load('res://common_assets/lifebars/%d.png' % vivosaur_sz2.vivosaur_info.element)
-		battlefield.opponent_zones.sz2_sprite = opponent_vivosaur3_sprite
+		zones.sz2_sprite = opponent_vivosaur3_sprite
 	else:
 		opponent_vivosaur3_sprite.queue_free()
 
@@ -128,64 +146,70 @@ func add_opponent_vivosaurs():
 func animate_entrance():
 	var tween = create_tween()
 	tween.tween_property(player_vivosaur1_sprite, 'global_position', player_az.global_position, 0.1).set_delay(0.2)
-	tween.tween_property(player_vivosaur2_sprite, 'global_position', player_sz1.global_position, 0.1)
-	tween.tween_property(player_vivosaur3_sprite, 'global_position', player_sz2.global_position, 0.1)
+	tween.set_parallel()
+	tween.tween_property(player_vivosaur2_sprite, 'global_position', player_sz1.global_position, 0.1).set_delay(0.05)
+	tween.tween_property(player_vivosaur3_sprite, 'global_position', player_sz2.global_position, 0.1).set_delay(0.1)
 	await tween.finished
 	await get_tree().create_timer(0.5).timeout
 
 
-func apply_support_effects():
-	var player_support_zones = [
-		battlefield.player_zones.sz1,
-		battlefield.player_zones.sz2,
-	]
-	var player_support_sprites = [
-		battlefield.player_zones.sz1_sprite,
-		battlefield.player_zones.sz2_sprite
-	]
+func apply_support_effects(id: int):
+	await battlefield.apply_support_effects(id)
 
-	var opponent_support_zones = [
-		battlefield.opponent_zones.sz1,
-		battlefield.opponent_zones.sz2
-	]
-	var opponent_support_sprites = [
-		battlefield.opponent_zones.sz1_sprite,
-		battlefield.opponent_zones.sz2_sprite
-	]
+func display_support_effects(id: int, index: int):
+	var support_sprites = battlefield.zones[id].get_support_zones_sprites()
+	
+	var tween = create_tween()
+	player_atk_modifier.text = "%d" % (battlefield.zones[player_id].az_support_effects.atk * 100) + '%'
+	player_def_modifier.text = "%d" % (battlefield.zones[player_id].az_support_effects.def * 100) + '%'
+	player_acc_modifier.text = "%d" % (battlefield.zones[player_id].az_support_effects.acc * 100) + '%'
+	player_eva_modifier.text = "%d" % (battlefield.zones[player_id].az_support_effects.eva * 100) + '%'
 
-	await calculate_support_effects(player_support_zones, player_support_sprites, false)
-	await calculate_support_effects(opponent_support_zones, opponent_support_sprites, true)
+	opponent_atk_modifier.text = "%d" % (battlefield.zones[opponent_id].az_support_effects.atk * 100) + '%'
+	opponent_def_modifier.text = "%d" % (battlefield.zones[opponent_id].az_support_effects.def * 100) + '%'
+	opponent_acc_modifier.text = "%d" % (battlefield.zones[opponent_id].az_support_effects.acc * 100) + '%'
+	opponent_eva_modifier.text = "%d" % (battlefield.zones[opponent_id].az_support_effects.eva * 100) + '%'
+	
+	tween.tween_property(support_sprites[index], 'scale', Vector2(1.2, 1.2), 0.1)
+	tween.tween_property(support_sprites[index], 'scale', Vector2(1.0, 1.0), 0.1)
+	await tween.finished
+	await get_tree().create_timer(0.33).timeout
+	battlefield.apply_next_support_effects.emit()
 
-func calculate_support_effects(support_zones, support_sprites, is_opponent: bool):
-		for i in range(len(support_zones)):
-			var tween = create_tween()
-			var vivosaur_battle = support_zones[i]
-			if vivosaur_battle == null:
-				continue
+func animate_who_goes_first():
+	var _player_total_lp = battlefield.zones[player_id].get_total_lp()
+	var _opponent_total_lp = battlefield.zones[opponent_id].get_total_lp()
 
-			var support_effects = vivosaur_battle.vivosaur_info.support_effects
-			if (is_opponent and support_effects.own_az) or (not is_opponent and not support_effects.own_az):
-				battlefield.opponent_az_effects.atk += support_effects.attack_modifier
-				battlefield.opponent_az_effects.def += support_effects.defense_modifier
-				battlefield.opponent_az_effects.acc += support_effects.accuracy_modifier
-				battlefield.opponent_az_effects.eva += support_effects.evasion_modifier
-			else:
-				battlefield.player_az_effects.atk += support_effects.attack_modifier
-				battlefield.player_az_effects.def += support_effects.defense_modifier
-				battlefield.player_az_effects.acc += support_effects.accuracy_modifier
-				battlefield.player_az_effects.eva += support_effects.evasion_modifier
-			
-			player_atk_modifier.text = "%d" % (battlefield.player_az_effects.atk * 100) + '%'
-			player_def_modifier.text = "%d" % (battlefield.player_az_effects.def * 100) + '%'
-			player_acc_modifier.text = "%d" % (battlefield.player_az_effects.acc * 100) + '%'
-			player_eva_modifier.text = "%d" % (battlefield.player_az_effects.eva * 100) + '%'
+	player_total_lp.get_node('Lp').text = '%d' % _player_total_lp
+	opponent_total_lp.get_node('Lp').text = '%d' % _opponent_total_lp
 
-			opponent_atk_modifier.text = "%d" % (battlefield.opponent_az_effects.atk * 100) + '%'
-			opponent_def_modifier.text = "%d" % (battlefield.opponent_az_effects.def * 100) + '%'
-			opponent_acc_modifier.text = "%d" % (battlefield.opponent_az_effects.acc * 100) + '%'
-			opponent_eva_modifier.text = "%d" % (battlefield.opponent_az_effects.eva * 100) + '%'
-			
-			tween.tween_property(support_sprites[i], 'scale', Vector2(1.2, 1.2), 0.2)
-			tween.tween_property(support_sprites[i], 'scale', Vector2(1.0, 1.0), 0.2)
-			await tween.finished
-			await get_tree().create_timer(0.2).timeout
+	player_total_lp.visible = true
+	opponent_total_lp.visible = true
+
+	var tween = create_tween()
+	tween.tween_property(player_total_lp, "global_position", player_total_lp_finish.global_position, 0.33)
+	tween.set_parallel()
+	tween.tween_property(opponent_total_lp, "global_position", opponent_total_lp_finish.global_position, 0.33)
+
+	await tween.finished
+
+	var first_attack: TextureRect
+	if _player_total_lp > _opponent_total_lp:
+		first_attack = player_total_lp.get_node('FirstAttack')
+	else:
+		first_attack = opponent_total_lp.get_node('FirstAttack')
+	
+	tween = create_tween()
+	
+	tween.tween_property(first_attack, "modulate", Color(1, 1, 1, 1), 0.1)
+	tween.set_parallel()
+	tween.tween_property(first_attack, "scale", Vector2(2, 2), 0.2)
+
+	await tween.finished
+	await get_tree().create_timer(0.33).timeout
+
+	player_total_lp.queue_free()
+	opponent_total_lp.queue_free()
+
+func _on_turn_started():
+	pass

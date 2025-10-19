@@ -4,6 +4,8 @@ signal battle_created(battle_id: int)
 signal battle_prep_started(opponent_info, opponent_team_info)
 signal battle_prep_time_up(battle_id: int)
 signal battle_started(opponent_team_info)
+signal turn_started()
+signal turn_ended(battle_id: int)
 
 # Would use a set but dont exist in godot yet (values always == null)
 var used_battle_ids: Dictionary[int, Variant] = {}
@@ -31,7 +33,7 @@ var battle_teams: Dictionary[int, Dictionary] = {}
 # 	},
 #   ...
 # }
-var battlefields: Dictionary[int, DataTypes.BattleField] = {}
+var battlefields: Dictionary[int, DataTypes.Battlefield] = {}
 var battle_timers: Dictionary[int, Timer] = {}
 var responses_to_server: Dictionary[int, Dictionary] = {} # key=battle_id, value=[players]
 
@@ -79,7 +81,7 @@ func send_team_info_server(battle_id: int, team_info: Dictionary):
 		responses_to_server[battle_id] = {}
 		
 		battle_timers[battle_id].start(90)
-		battle_timers[battle_id].timeout.connect(_on_battle_prep_timeout.bind(battle_id))
+		battle_timers[battle_id].timeout.connect(_on_battle_prep_timeout_server.bind(battle_id))
 		
 		var player1_id = battle_teams[battle_id].keys()[0]
 		var player2_id = battle_teams[battle_id].keys()[1]
@@ -104,7 +106,7 @@ func ready_server(battle_id: int):
 		battle_timers[battle_id].stop()
 		battle_timers[battle_id].timeout.emit()
 
-func _on_battle_prep_timeout(battle_id: int):
+func _on_battle_prep_timeout_server(battle_id: int):
 	responses_to_server[battle_id] = {}
 	for player_id in battle_teams[battle_id]:
 		notify_battle_prep_time_up.rpc_id(player_id)
@@ -129,67 +131,106 @@ func send_new_team_info_server(battle_id: int, new_team_info: Dictionary):
 		Logging.info("Battle %d starting!" % battle_id)
 		responses_to_server[battle_id] = {}
 		
-		start_battle(battle_id)
+		start_battle_server(battle_id)
 
-func start_battle(battle_id: int):
-	var player1_id = battle_teams[battle_id].keys()[0]
-	var player2_id = battle_teams[battle_id].keys()[1]
+func start_battle_server(battle_id: int):
+	var player_id = battle_teams[battle_id].keys()[0]
+	var opponent_id = battle_teams[battle_id].keys()[1]
 
-	var player_slot1 = battle_teams[battle_id][player1_id].slots[0]
-	var player_slot2 = battle_teams[battle_id][player1_id].slots[1]
-	var player_slot3 = battle_teams[battle_id][player1_id].slots[2]
+	var player_slot1 = battle_teams[battle_id][player_id].slots[0]
+	var player_slot2 = battle_teams[battle_id][player_id].slots[1]
+	var player_slot3 = battle_teams[battle_id][player_id].slots[2]
 
-	var opponent_slot1 = battle_teams[battle_id][player2_id].slots[0]
-	var opponent_slot2 = battle_teams[battle_id][player2_id].slots[1]
-	var opponent_slot3 = battle_teams[battle_id][player2_id].slots[2]
+	var opponent_slot1 = battle_teams[battle_id][opponent_id].slots[0]
+	var opponent_slot2 = battle_teams[battle_id][opponent_id].slots[1]
+	var opponent_slot3 = battle_teams[battle_id][opponent_id].slots[2]
 
-
-	battlefields[battle_id] = DataTypes.BattleField.new(
-		DataTypes.Zones.new(
+	var zones: Dictionary[int, DataTypes.Zones] = {}
+	zones[player_id] = DataTypes.Zones.new(
 			DataTypes.VivosaurBattle.new(Global.fossilary[player_slot1]) if player_slot1 != null else null,
 			DataTypes.VivosaurBattle.new(Global.fossilary[player_slot2]) if player_slot2 != null else null,
 			DataTypes.VivosaurBattle.new(Global.fossilary[player_slot3]) if player_slot3 != null else null,
-		),
-		DataTypes.Zones.new(
-			DataTypes.VivosaurBattle.new(Global.fossilary[opponent_slot1]) if opponent_slot1 != null else null,
-			DataTypes.VivosaurBattle.new(Global.fossilary[opponent_slot2]) if opponent_slot2 != null else null,
-			DataTypes.VivosaurBattle.new(Global.fossilary[opponent_slot3]) if opponent_slot3 != null else null,
-		),
 	)
-
-	calculate_support_effects(
-		battlefields[battle_id],
-		[battlefields[battle_id].player_zones.sz1, battlefields[battle_id].player_zones.sz2],
-		false
+	zones[opponent_id] = DataTypes.Zones.new(
+		DataTypes.VivosaurBattle.new(Global.fossilary[opponent_slot1]) if opponent_slot1 != null else null,
+		DataTypes.VivosaurBattle.new(Global.fossilary[opponent_slot2]) if opponent_slot2 != null else null,
+		DataTypes.VivosaurBattle.new(Global.fossilary[opponent_slot3]) if opponent_slot3 != null else null,
 	)
-	calculate_support_effects(
-		battlefields[battle_id],
-		[battlefields[battle_id].opponent_zones.sz1, battlefields[battle_id].opponent_zones.sz2],
-		true
-	)
+	
+	battlefields[battle_id] = DataTypes.Battlefield.new(zones, false)
 
-	notify_battle_start.rpc_id(player1_id, battle_teams[battle_id][player2_id])
-	notify_battle_start.rpc_id(player2_id, battle_teams[battle_id][player1_id])
+	battlefields[battle_id].support_effects_applied.connect(apply_next_support_effects.bind(battle_id))
 
-func calculate_support_effects(battlefield, support_zones, is_player1: bool):
-	for i in range(len(support_zones)):
-		var vivosaur_battle = support_zones[i]
-		if vivosaur_battle == null:
-			continue
+	# Apply all supports effects from both teams
+	battlefields[battle_id].apply_support_effects(player_id)
+	battlefields[battle_id].apply_support_effects(opponent_id)
 
-		var support_effects = vivosaur_battle.vivosaur_info.support_effects
-		if (is_player1 and support_effects.own_az) or (not is_player1 and not support_effects.own_az):
-			battlefield.opponent_az_effects.atk += support_effects.attack_modifier
-			battlefield.opponent_az_effects.def += support_effects.defense_modifier
-			battlefield.opponent_az_effects.acc += support_effects.accuracy_modifier
-			battlefield.opponent_az_effects.eva += support_effects.evasion_modifier
-		else:
-			battlefield.player_az_effects.atk += support_effects.attack_modifier
-			battlefield.player_az_effects.def += support_effects.defense_modifier
-			battlefield.player_az_effects.acc += support_effects.accuracy_modifier
-			battlefield.player_az_effects.eva += support_effects.evasion_modifier
+	notify_battle_start.rpc_id(player_id, battle_teams[battle_id][opponent_id])
+	notify_battle_start.rpc_id(opponent_id, battle_teams[battle_id][player_id])
 
-
+func apply_next_support_effects(_id, _index, battle_id: int):
+	battlefields[battle_id].apply_next_support_effects.emit()
+	
 @rpc("authority", "call_remote", "reliable")
 func notify_battle_start(opponent_team_info: Dictionary):
 	battle_started.emit(opponent_team_info)
+
+func who_goes_first(battle_id: int):
+	who_goes_first_server.rpc_id(MultiplayerLobby.SERVER_PEER_ID, battle_id)
+
+@rpc("any_peer", "call_remote", "reliable")
+func who_goes_first_server(battle_id: int):
+	assert(multiplayer.is_server())
+
+	responses_to_server[battle_id][multiplayer.get_remote_sender_id()] = null
+	if len(responses_to_server[battle_id].keys()) == 2:
+		responses_to_server[battle_id] = {}
+		var battlefield: DataTypes.Battlefield = battlefields[battle_id]
+		var player_id: int = battle_teams[battle_id].keys()[0]
+		var opponent_id: int = battle_teams[battle_id].keys()[1]
+
+		var player_zones = battlefield.zones[player_id]
+		var player_az_lp = player_zones.az.get('current_lp') if player_zones.az != null else 0
+		var player_sz1_lp = player_zones.sz1.get('current_lp') if player_zones.sz1 != null else 0
+		var player_sz2_lp = player_zones.sz2.get('current_lp') if player_zones.sz2 != null else 0
+
+		var opponent_zones = battlefield.zones[opponent_id]
+		var opponent_az_lp = opponent_zones.az.get('current_lp') if opponent_zones.az != null else 0
+		var opponent_sz1_lp = opponent_zones.sz1.get('current_lp') if opponent_zones.sz1 != null else 0
+		var opponent_sz2_lp = opponent_zones.sz2.get('current_lp') if opponent_zones.sz2 != null else 0
+
+		var player_total_lp = player_az_lp + player_sz1_lp + player_sz2_lp
+		var opponent_total_lp = opponent_az_lp + opponent_sz1_lp + opponent_sz2_lp
+
+		if player_total_lp < opponent_total_lp:
+			battlefield.turn_id = player_id
+		elif opponent_total_lp < player_total_lp:
+			battlefield.turn_id = opponent_id
+		# Coin flip
+		elif randf() > 0.5:
+			battlefield.turn_id = player_id
+		else:
+			battlefield.turn_id = opponent_id
+		
+		Logging.info("Battle %d - Player %d's turn" % [battle_id, battlefield.turn_id])
+		battlefield.zones[battlefield.turn_id].fp += DataTypes.BASE_FP_RECHARGE
+		notify_turn_start.rpc_id(battlefield.turn_id)
+
+
+@rpc("authority", "call_remote", "reliable")
+func notify_turn_start():
+	turn_started.emit()
+
+func end_turn(battle_id: int):
+	end_turn_server.rpc_id(MultiplayerLobby.SERVER_PEER_ID, battle_id)
+
+@rpc("any_peer", "call_remote", "reliable")
+func end_turn_server(battle_id: int):
+	assert(multiplayer.is_server())
+	var battlefield: DataTypes.Battlefield = battlefields[battle_id]
+
+	if multiplayer.get_remote_sender_id() == battlefield.turn_id:
+		var player_id: int = battle_teams[battle_id].keys()[0]
+		var opponent_id: int = battle_teams[battle_id].keys()[1]
+		battlefield.turn_id = player_id if battlefield.turn_id == opponent_id else opponent_id
+		notify_turn_start.rpc_id(battlefield.turn_id)

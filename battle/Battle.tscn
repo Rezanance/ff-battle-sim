@@ -1,4 +1,4 @@
-[gd_scene load_steps=8 format=3 uid="uid://bbwu2mq4o6p3o"]
+[gd_scene load_steps=12 format=3 uid="uid://bbwu2mq4o6p3o"]
 
 [ext_resource type="Texture2D" uid="uid://bp640urtcm7u3" path="res://common_assets/battlefields/15.png" id="1_hkniu"]
 [ext_resource type="Script" uid="uid://dmtm3ded2fmjg" path="res://battle/battle.gd" id="2_5r4g4"]
@@ -6,6 +6,14 @@
 [ext_resource type="PackedScene" uid="uid://twprmxgwv8kw" path="res://team_viewer/team_editor/vivosaur_summary/VivosaurSummary.tscn" id="4_34q6o"]
 [ext_resource type="PackedScene" uid="uid://vl2rq8bashda" path="res://battle/VivosaurSprite.tscn" id="4_dgjnm"]
 [ext_resource type="Texture2D" uid="uid://bm2l3pyiylbyo" path="res://common_assets/backgrounds/ceratops_oraange.png" id="4_v3re7"]
+[ext_resource type="PackedScene" uid="uid://cun17yo45gcvm" path="res://battle/TotalLp.tscn" id="5_r8nfv"]
+[ext_resource type="Texture2D" uid="uid://f62xf1rve0k1" path="res://common_assets/total_lp/total_lp_blue.png" id="6_jhxqk"]
+[ext_resource type="Texture2D" uid="uid://cjhmc5g1vbswl" path="res://common_assets/total_lp/first_attaack.png" id="6_t871k"]
+
+[sub_resource type="SystemFont" id="SystemFont_d0b6a"]
+font_names = PackedStringArray("Sans-Serif")
+font_weight = 625
+subpixel_positioning = 0
 
 [sub_resource type="StyleBoxFlat" id="StyleBoxFlat_dgjnm"]
 bg_color = Color(0.9160458, 0.70603096, 0.4494692, 1)
@@ -237,6 +245,93 @@ offset_top = 13.0
 offset_right = 653.0
 offset_bottom = 173.0
 flip_h = false
+
+[node name="PlayerTotalLp" parent="BattleWindow" instance=ExtResource("5_r8nfv")]
+visible = false
+layout_mode = 0
+offset_left = -248.0
+offset_top = 190.0
+offset_right = -8.0
+offset_bottom = 350.0
+
+[node name="Lp" type="Label" parent="BattleWindow/PlayerTotalLp"]
+layout_mode = 0
+offset_left = 17.0
+offset_top = 74.0
+offset_right = 217.0
+offset_bottom = 147.0
+theme_override_colors/font_color = Color(0.04165571, 0.60885954, 0.90270776, 1)
+theme_override_colors/font_shadow_color = Color(0, 0, 0, 1)
+theme_override_colors/font_outline_color = Color(1, 1, 1, 1)
+theme_override_constants/shadow_offset_x = 4
+theme_override_constants/shadow_offset_y = 4
+theme_override_constants/outline_size = 10
+theme_override_constants/shadow_outline_size = 10
+theme_override_fonts/font = SubResource("SystemFont_d0b6a")
+theme_override_font_sizes/font_size = 72
+horizontal_alignment = 2
+
+[node name="FirstAttack" type="TextureRect" parent="BattleWindow/PlayerTotalLp"]
+modulate = Color(1, 1, 1, 0)
+layout_mode = 0
+offset_left = 149.0
+offset_top = 123.0
+offset_right = 213.0
+offset_bottom = 187.0
+scale = Vector2(4, 4)
+pivot_offset = Vector2(32, 32)
+texture = ExtResource("6_t871k")
+
+[node name="PlayerTotalLpFinish" type="Control" parent="BattleWindow"]
+anchors_preset = 0
+offset_left = 100.0
+offset_top = 190.0
+offset_right = 140.0
+offset_bottom = 230.0
+
+[node name="OpponentTotalLp" parent="BattleWindow" instance=ExtResource("5_r8nfv")]
+visible = false
+layout_mode = 0
+offset_left = 729.0
+offset_top = 190.0
+offset_right = 969.0
+offset_bottom = 350.0
+texture = ExtResource("6_jhxqk")
+
+[node name="Lp" type="Label" parent="BattleWindow/OpponentTotalLp"]
+layout_mode = 0
+offset_left = 17.0
+offset_top = 74.0
+offset_right = 217.0
+offset_bottom = 147.0
+theme_override_colors/font_color = Color(0.04165571, 0.60885954, 0.90270776, 1)
+theme_override_colors/font_shadow_color = Color(0, 0, 0, 1)
+theme_override_colors/font_outline_color = Color(1, 1, 1, 1)
+theme_override_constants/shadow_offset_x = 4
+theme_override_constants/shadow_offset_y = 4
+theme_override_constants/outline_size = 10
+theme_override_constants/shadow_outline_size = 10
+theme_override_fonts/font = SubResource("SystemFont_d0b6a")
+theme_override_font_sizes/font_size = 72
+horizontal_alignment = 2
+
+[node name="FirstAttack" type="TextureRect" parent="BattleWindow/OpponentTotalLp"]
+modulate = Color(1, 1, 1, 0)
+layout_mode = 0
+offset_left = 149.0
+offset_top = 123.0
+offset_right = 213.0
+offset_bottom = 187.0
+scale = Vector2(4, 4)
+pivot_offset = Vector2(32, 32)
+texture = ExtResource("6_t871k")
+
+[node name="OpponentTotalLpFinish" type="Control" parent="BattleWindow"]
+anchors_preset = 0
+offset_left = 381.0
+offset_top = 190.0
+offset_right = 421.0
+offset_bottom = 230.0
 
 [node name="TextureRect" type="TextureRect" parent="."]
 layout_mode = 0
