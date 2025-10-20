@@ -323,9 +323,17 @@ class Zones:
 
 		return az_lp + sz1_lp + sz2_lp
 	
+	func recharge_fp():
+		if fp + BASE_FP_RECHARGE > MAX_FP:
+			fp += MAX_FP - fp
+		else:
+			fp += BASE_FP_RECHARGE
+
+	
 class Battlefield:
 	signal support_effects_applied(player_id: int, index: SupportZone)
 	signal apply_next_support_effects()
+	signal fp_recharged(player_id: int)
 
 	var on_client: bool
 	var zones: Dictionary[int, Zones]
@@ -367,3 +375,7 @@ class Battlefield:
 
 			support_effects_applied.emit(player_id, index)
 			await apply_next_support_effects
+	
+	func recharge_fp(player_id: int):
+		zones[player_id].recharge_fp()
+		fp_recharged.emit(player_id)

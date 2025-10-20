@@ -4,7 +4,7 @@ signal battle_created(battle_id: int)
 signal battle_prep_started(opponent_info, opponent_team_info)
 signal battle_prep_time_up(battle_id: int)
 signal battle_started(opponent_team_info)
-signal turn_started()
+signal turn_started(player_id: int)
 signal turn_ended(battle_id: int)
 
 # Would use a set but dont exist in godot yet (values always == null)
@@ -214,12 +214,13 @@ func who_goes_first_server(battle_id: int):
 		
 		Logging.info("Battle %d - Player %d's turn" % [battle_id, battlefield.turn_id])
 		battlefield.zones[battlefield.turn_id].fp += DataTypes.BASE_FP_RECHARGE
-		notify_turn_start.rpc_id(battlefield.turn_id)
+		notify_turn_start.rpc_id(player_id, battlefield.turn_id)
+		notify_turn_start.rpc_id(opponent_id, battlefield.turn_id)
 
 
 @rpc("authority", "call_remote", "reliable")
-func notify_turn_start():
-	turn_started.emit()
+func notify_turn_start(player_id: int):
+	turn_started.emit(player_id)
 
 func end_turn(battle_id: int):
 	end_turn_server.rpc_id(MultiplayerLobby.SERVER_PEER_ID, battle_id)

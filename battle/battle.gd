@@ -41,6 +41,21 @@ var VivosaurSprite = preload("res://battle/VivosaurSprite.tscn")
 @onready var opponent_total_lp: TextureRect = $BattleWindow/OpponentTotalLp
 @onready var opponent_total_lp_finish: Control = $BattleWindow/OpponentTotalLpFinish
 
+@onready var player_turn: Control = $BattleWindow/PlayerTurn
+@onready var player_turn_start: Control = $BattleWindow/PlayerTurnStart
+@onready var player_icon: TextureRect = $BattleWindow/PlayerTurn/Icon
+@onready var player_name: Label = $BattleWindow/PlayerTurn/Name
+
+@onready var opponent_turn: Control = $BattleWindow/OpponentTurn
+@onready var opponent_turn_start: Control = $BattleWindow/OpponentTurnStart
+@onready var opponent_icon: TextureRect = $BattleWindow/OpponentTurn/Icon
+@onready var opponent_name: Label = $BattleWindow/OpponentTurn/Name
+
+@onready var player_fp: Label = $BattleWindow/PlayerFP
+@onready var player_fp_delta: Label = $BattleWindow/PlayerFPDelta
+@onready var opponent_fp: Label = $BattleWindow/OpponentFP
+@onready var opponent_fp_delta: Label = $BattleWindow/OpponentFPDelta
+
 var battlefield: DataTypes.Battlefield
 var player_id
 var opponent_id
@@ -53,10 +68,18 @@ func _ready() -> void:
 	create_battlefield()
 	add_player_vivosaurs()
 	add_opponent_vivosaurs()
+	initialize_turn_start_ui()
+	await get_tree().create_timer(0.2).timeout
+
 	await animate_entrance()
+	await get_tree().create_timer(0.5).timeout
+
 	await apply_support_effects(player_id)
 	await apply_support_effects(opponent_id)
+	await get_tree().create_timer(0.5).timeout
+
 	await animate_who_goes_first()
+	await get_tree().create_timer(0.5).timeout
 
 	MultiplayerBattles.who_goes_first(Battle.battle_id)
 	MultiplayerBattles.turn_started.connect(_on_turn_started)
@@ -142,15 +165,23 @@ func add_opponent_vivosaurs():
 	else:
 		opponent_vivosaur3_sprite.queue_free()
 
+func initialize_turn_start_ui():
+	var icon_path = 'res://common_assets/player-icons'
+	var icon_files = ResourceLoader.list_directory(icon_path)
+
+	player_icon.texture = load(icon_path + '/' + icon_files[Battle.player_info.icon_id])
+	player_name.text = Battle.player_info.display_name
+
+	opponent_icon.texture = load(icon_path + '/' + icon_files[Battle.player_info.icon_id])
+	opponent_name.text = Battle.opponent_info.display_name
 
 func animate_entrance():
 	var tween = create_tween()
-	tween.tween_property(player_vivosaur1_sprite, 'global_position', player_az.global_position, 0.1).set_delay(0.2)
+	tween.tween_property(player_vivosaur1_sprite, 'global_position', player_az.global_position, 0.1)
 	tween.set_parallel()
 	tween.tween_property(player_vivosaur2_sprite, 'global_position', player_sz1.global_position, 0.1).set_delay(0.05)
 	tween.tween_property(player_vivosaur3_sprite, 'global_position', player_sz2.global_position, 0.1).set_delay(0.1)
 	await tween.finished
-	await get_tree().create_timer(0.5).timeout
 
 
 func apply_support_effects(id: int):
@@ -206,10 +237,59 @@ func animate_who_goes_first():
 	tween.tween_property(first_attack, "scale", Vector2(2, 2), 0.2)
 
 	await tween.finished
-	await get_tree().create_timer(0.33).timeout
+	await get_tree().create_timer(0.5).timeout
 
 	player_total_lp.queue_free()
 	opponent_total_lp.queue_free()
 
-func _on_turn_started():
-	pass
+func _on_turn_started(id: int):
+	await animate_turn_start(id)
+	await get_tree().create_timer(0.2).timeout
+
+	await apply_support_effects(id)
+
+	await recharge_fp(id)
+
+func animate_turn_start(id: int):
+	var tween = create_tween()
+	var turn: Control
+	var turn_start: Control
+	if id == multiplayer.get_unique_id():
+		turn = player_turn
+		turn_start = player_turn_start
+	else:
+		turn = opponent_turn
+		turn_start = opponent_turn_start
+	
+	tween.tween_property(turn, "position", Vector2(0, 0), 0.2)
+	
+	await tween.finished
+	await get_tree().create_timer(0.33).timeout
+	
+	turn.position = turn_start.position
+
+func recharge_fp(id: int):
+	battlefield.recharge_fp(id)
+
+	var fp: Label
+	var fp_delta: Label
+
+	if id == multiplayer.get_unique_id():
+		fp = player_fp
+		fp_delta = player_fp_delta
+	else:
+		fp = opponent_fp
+		fp_delta = opponent_fp_delta
+	
+	var old_fp: int = int(fp.text)
+	var delta_fp: int = battlefield.zones[id].fp - old_fp
+	
+	fp_delta.visible = true
+	fp_delta.text = '+%d' % delta_fp
+
+	for i in range(1, delta_fp + 1, 5):
+		fp.text = '%d' % (old_fp + i)
+		await get_tree().create_timer(0.0056).timeout
+	
+	fp.text = '%d' % (old_fp + delta_fp)
+	fp_delta.visible = false
