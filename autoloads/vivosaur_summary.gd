@@ -49,10 +49,13 @@ func show_vivosaur_summary(vivosaur_summary_node, vivosaur_id: int):
 	
 	vivosaur_summary_groups.text = "Team Skill Groups: " + ", ".join(vivosaur.team_skill_groups)
 	
-	for old_skill in vivosaur_summary_skills_container.get_children():
+	update_skills_shown(vivosaur_summary_skills_container, vivosaur.skills)
+
+func update_skills_shown(skills_container: VBoxContainer, skills: Array[DataTypes.Skill], _on_skill_clicked = null):
+	for old_skill in skills_container.get_children():
 		old_skill.queue_free()
-	
-	for skill in vivosaur.skills:
+
+	for skill in skills:
 		var skill_node: Panel = SkillScene.instantiate()
 
 		var style_box_flat: StyleBoxFlat = skill_node.theme.get_stylebox('panel', 'Panel').duplicate()
@@ -81,8 +84,11 @@ func show_vivosaur_summary(vivosaur_summary_node, vivosaur_id: int):
 		
 		var skill_effect = skill_node.get_node("HBoxContainer/Description")
 		skill_effect.text = skill.description
+
+		if _on_skill_clicked != null:
+			skill_node.gui_input.connect(_on_skill_clicked.bind(skill))
 			
-		vivosaur_summary_skills_container.add_child(skill_node)
+		skills_container.add_child(skill_node)
 
 func display_support_effect(se_label, modifier):
 	if modifier > 0:

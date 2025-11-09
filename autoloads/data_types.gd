@@ -282,11 +282,11 @@ class Zones:
 	var sz1
 	var sz2
 	var ez
-	# TextureRect | null
-	var az_sprite
-	var sz1_sprite
-	var sz2_sprite
-	var ez_sprite
+	# TextureButton | null
+	var az_sprite_btn
+	var sz1_sprite_btn
+	var sz2_sprite_btn
+	var ez_sprite_btn
 
 	var fp: int
 
@@ -298,13 +298,13 @@ class Zones:
 		assert(is_instance_of(_sz2, VivosaurBattle) or _sz2 == null)
 
 		az = _az
-		az_sprite = null
+		az_sprite_btn = null
 		sz1 = _sz1
-		sz1_sprite = null
+		sz1_sprite_btn = null
 		sz2 = _sz2
-		sz2_sprite = null
+		sz2_sprite_btn = null
 		ez = null
-		ez_sprite = null
+		ez_sprite_btn = null
 
 		fp = 0
 
@@ -313,8 +313,8 @@ class Zones:
 	func get_sz_vivosaurs() -> Array:
 		return [sz1, sz2]
 
-	func get_support_zones_sprites() -> Array:
-		return [sz1_sprite, sz2_sprite]
+	func get_support_zones_sprite_btns() -> Array:
+		return [sz1_sprite_btn, sz2_sprite_btn]
 	
 	func get_total_lp():
 		var az_lp = az.get('current_lp') if az != null else 0

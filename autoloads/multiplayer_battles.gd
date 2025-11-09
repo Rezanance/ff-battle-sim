@@ -5,7 +5,6 @@ signal battle_prep_started(opponent_info, opponent_team_info)
 signal battle_prep_time_up(battle_id: int)
 signal battle_started(opponent_team_info)
 signal turn_started(player_id: int)
-signal turn_ended(battle_id: int)
 
 # Would use a set but dont exist in godot yet (values always == null)
 var used_battle_ids: Dictionary[int, Variant] = {}

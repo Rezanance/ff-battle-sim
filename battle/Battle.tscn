@@ -1,4 +1,4 @@
-[gd_scene load_steps=21 format=3 uid="uid://bbwu2mq4o6p3o"]
+[gd_scene load_steps=25 format=3 uid="uid://bbwu2mq4o6p3o"]
 
 [ext_resource type="Texture2D" uid="uid://bp640urtcm7u3" path="res://common_assets/battlefields/15.png" id="1_hkniu"]
 [ext_resource type="Script" uid="uid://dmtm3ded2fmjg" path="res://battle/battle.gd" id="2_5r4g4"]
@@ -16,6 +16,10 @@
 [ext_resource type="Texture2D" uid="uid://cw3n455nqypfs" path="res://common_assets/start_turn/Attack-player.png" id="12_boaws"]
 [ext_resource type="Texture2D" uid="uid://o484266p8t2" path="res://common_assets/nameplates/nameplate-opp.png" id="12_sc7kr"]
 [ext_resource type="Texture2D" uid="uid://db0lmn81jwx1g" path="res://common_assets/start_turn/Attack-opponent.png" id="13_2bopn"]
+[ext_resource type="Texture2D" uid="uid://kkt40tvwkxrt" path="res://common_assets/back/back.png" id="15_uxlnq"]
+[ext_resource type="Texture2D" uid="uid://bwfb6qqm38exu" path="res://common_assets/ok/ok.png" id="16_bgkx4"]
+[ext_resource type="Texture2D" uid="uid://c5krceuxlhv2n" path="res://common_assets/ok/ok_pressed.png" id="17_xha48"]
+[ext_resource type="Texture2D" uid="uid://cyuvw6spt0cwv" path="res://common_assets/ok/ok_hover.png" id="18_dmge3"]
 
 [sub_resource type="SystemFont" id="SystemFont_d0b6a"]
 font_names = PackedStringArray("Sans-Serif")
@@ -562,6 +566,28 @@ offset_left = 332.0
 offset_right = 372.0
 offset_bottom = 40.0
 
+[node name="Back" type="TextureButton" parent="BattleWindow"]
+visible = false
+layout_mode = 0
+offset_left = 245.0
+offset_top = 493.0
+offset_right = 325.0
+offset_bottom = 573.0
+texture_normal = ExtResource("15_uxlnq")
+stretch_mode = 0
+
+[node name="Ok" type="TextureButton" parent="BattleWindow"]
+visible = false
+layout_mode = 0
+offset_left = 318.0
+offset_top = 463.0
+offset_right = 478.0
+offset_bottom = 543.0
+texture_normal = ExtResource("16_bgkx4")
+texture_pressed = ExtResource("17_xha48")
+texture_hover = ExtResource("18_dmge3")
+stretch_mode = 0
+
 [node name="SkillScreen" type="TextureRect" parent="."]
 z_index = 100
 layout_mode = 0
@@ -571,6 +597,17 @@ offset_right = 1375.0
 offset_bottom = 1080.0
 texture = ExtResource("4_v3re7")
 expand_mode = 3
+
+[node name="ScrollContainer" type="ScrollContainer" parent="SkillScreen"]
+layout_mode = 0
+offset_left = 28.0
+offset_top = 27.0
+offset_right = 692.0
+offset_bottom = 508.0
+
+[node name="SkillsContainer" type="VBoxContainer" parent="SkillScreen/ScrollContainer"]
+layout_mode = 2
+theme_override_constants/separation = 8
 
 [node name="ColorRect" type="ColorRect" parent="."]
 z_index = 100
@@ -603,3 +640,6 @@ offset_bottom = 1075.0
 
 [node name="VBoxContainer" type="VBoxContainer" parent="EventLogBg/ScrollContainer"]
 layout_mode = 2
+
+[connection signal="pressed" from="BattleWindow/Back" to="." method="_on_back_pressed"]
+[connection signal="pressed" from="BattleWindow/Ok" to="." method="_on_ok_pressed"]

@@ -1,6 +1,7 @@
 extends ColorRect
 
 var VivosaurSprite = preload("res://battle/VivosaurSprite.tscn")
+var SkillScene = preload("res://team_viewer/team_editor/vivosaur_summary/skill.tscn")
 
 @onready var player_az_start: Control = $BattleWindow/PlayerVivosaurPositions/AZStart
 @onready var player_sz1_start: Control = $BattleWindow/PlayerVivosaurPositions/SZ1Start
@@ -16,13 +17,13 @@ var VivosaurSprite = preload("res://battle/VivosaurSprite.tscn")
 @onready var opponent_sz2: Control = $BattleWindow/OpponentVivosaurPositions/SZ2
 @onready var opponent_ez: Control = $BattleWindow/OpponentVivosaurPositions/EZ
 
-@onready var player_vivosaur1_sprite: TextureButton = $BattleWindow/PlayerVivosaurPositions/VivosaurSpriteAZ
-@onready var player_vivosaur2_sprite: TextureButton = $BattleWindow/PlayerVivosaurPositions/VivosaurSpriteSZ1
-@onready var player_vivosaur3_sprite: TextureButton = $BattleWindow/PlayerVivosaurPositions/VivosaurSpriteSZ2
+@onready var player_vivosaur1_sprite_btn: TextureButton = $BattleWindow/PlayerVivosaurPositions/VivosaurSpriteAZ
+@onready var player_vivosaur2_sprite_btn: TextureButton = $BattleWindow/PlayerVivosaurPositions/VivosaurSpriteSZ1
+@onready var player_vivosaur3_sprite_btn: TextureButton = $BattleWindow/PlayerVivosaurPositions/VivosaurSpriteSZ2
 
-@onready var opponent_vivosaur1_sprite: TextureButton = $BattleWindow/OpponentVivosaurPositions/VivosaurSpriteAZ
-@onready var opponent_vivosaur2_sprite: TextureButton = $BattleWindow/OpponentVivosaurPositions/VivosaurSpriteSZ1
-@onready var opponent_vivosaur3_sprite: TextureButton = $BattleWindow/OpponentVivosaurPositions/VivosaurSpriteSZ2
+@onready var opponent_vivosaur1_sprite_btn: TextureButton = $BattleWindow/OpponentVivosaurPositions/VivosaurSpriteAZ
+@onready var opponent_vivosaur2_sprite_btn: TextureButton = $BattleWindow/OpponentVivosaurPositions/VivosaurSpriteSZ1
+@onready var opponent_vivosaur3_sprite_btn: TextureButton = $BattleWindow/OpponentVivosaurPositions/VivosaurSpriteSZ2
 
 @onready var player_support_effects_img: TextureRect = $BattleWindow/PlayerSupportEffects
 @onready var player_atk_modifier: Label = $BattleWindow/PlayerSupportEffects/Atk
@@ -51,14 +52,28 @@ var VivosaurSprite = preload("res://battle/VivosaurSprite.tscn")
 @onready var opponent_icon: TextureRect = $BattleWindow/OpponentTurn/Icon
 @onready var opponent_name: Label = $BattleWindow/OpponentTurn/Name
 
+@onready var player_fp_bg: TextureRect = $BattleWindow/PlayerFPBg
 @onready var player_fp: Label = $BattleWindow/PlayerFP
 @onready var player_fp_delta: Label = $BattleWindow/PlayerFPDelta
+
+@onready var opponent_fp_bg: TextureRect = $BattleWindow/OpponentFPBg
 @onready var opponent_fp: Label = $BattleWindow/OpponentFP
 @onready var opponent_fp_delta: Label = $BattleWindow/OpponentFPDelta
+
+@onready var vivosaur_summary = $ColorRect/VivosaurSummary
+@onready var skills_container: VBoxContainer = $SkillScreen/ScrollContainer/SkillsContainer
+
+@onready var skill_back: TextureButton = $BattleWindow/Back
+@onready var skill_ok: TextureButton = $BattleWindow/Ok
 
 var battlefield: DataTypes.Battlefield
 var player_id
 var opponent_id
+
+var currently_selected_vivosaur: DataTypes.VivosaurBattle
+var currently_selected_vivosaur_sprite_btn: TextureButton
+
+var is_choosing_target: bool = false
 
 # Called when the node enters the scene tree for the first time.
 func _ready() -> void:
@@ -114,25 +129,28 @@ func add_player_vivosaurs():
 	var vivosaur_sz1 = zones.sz1
 	var vivosaur_sz2 = zones.sz2
 
-	player_vivosaur1_sprite.global_position = player_az_start.global_position
-	player_vivosaur2_sprite.global_position = player_sz1_start.global_position
-	player_vivosaur3_sprite.global_position = player_sz2_start.global_position
+	player_vivosaur1_sprite_btn.global_position = player_az_start.global_position
+	player_vivosaur2_sprite_btn.global_position = player_sz1_start.global_position
+	player_vivosaur3_sprite_btn.global_position = player_sz2_start.global_position
 
-	player_vivosaur1_sprite.texture_normal = load('res://vivosaur/%d/sprite/%d.png' % [vivosaur_az.vivosaur_info.id, vivosaur_az.vivosaur_info.id])
-	player_vivosaur1_sprite.get_node('LifeBar/Bg').texture = load('res://common_assets/lifebars/%d.png' % vivosaur_az.vivosaur_info.element)
-	zones.az_sprite = player_vivosaur1_sprite
+	player_vivosaur1_sprite_btn.texture_normal = load('res://vivosaur/%d/sprite/%d.png' % [vivosaur_az.vivosaur_info.id, vivosaur_az.vivosaur_info.id])
+	player_vivosaur1_sprite_btn.get_node('LifeBar/Bg').texture = load('res://common_assets/lifebars/%d.png' % vivosaur_az.vivosaur_info.element)
+	player_vivosaur1_sprite_btn.pressed.connect(_on_vivosaur_selected.bind(vivosaur_az, player_vivosaur1_sprite_btn))
+	zones.az_sprite_btn = player_vivosaur1_sprite_btn
 	if vivosaur_sz1 != null:
-		player_vivosaur2_sprite.texture_normal = load('res://vivosaur/%d/sprite/%d.png' % [vivosaur_sz1.vivosaur_info.id, vivosaur_sz1.vivosaur_info.id])
-		player_vivosaur2_sprite.get_node('LifeBar/Bg').texture = load('res://common_assets/lifebars/%d.png' % vivosaur_sz1.vivosaur_info.element)
-		zones.sz1_sprite = player_vivosaur2_sprite
+		player_vivosaur2_sprite_btn.texture_normal = load('res://vivosaur/%d/sprite/%d.png' % [vivosaur_sz1.vivosaur_info.id, vivosaur_sz1.vivosaur_info.id])
+		player_vivosaur2_sprite_btn.get_node('LifeBar/Bg').texture = load('res://common_assets/lifebars/%d.png' % vivosaur_sz1.vivosaur_info.element)
+		player_vivosaur2_sprite_btn.pressed.connect(_on_vivosaur_selected.bind(vivosaur_sz1, player_vivosaur2_sprite_btn))
+		zones.sz1_sprite_btn = player_vivosaur2_sprite_btn
 	else:
-		player_vivosaur2_sprite.queue_free()
+		player_vivosaur2_sprite_btn.queue_free()
 	if vivosaur_sz2 != null:
-		player_vivosaur3_sprite.texture_normal = load('res://vivosaur/%d/sprite/%d.png' % [vivosaur_sz2.vivosaur_info.id, vivosaur_sz2.vivosaur_info.id])
-		player_vivosaur3_sprite.get_node('LifeBar/Bg').texture = load('res://common_assets/lifebars/%d.png' % vivosaur_sz2.vivosaur_info.element)
-		zones.sz2_sprite = player_vivosaur3_sprite
+		player_vivosaur3_sprite_btn.texture_normal = load('res://vivosaur/%d/sprite/%d.png' % [vivosaur_sz2.vivosaur_info.id, vivosaur_sz2.vivosaur_info.id])
+		player_vivosaur3_sprite_btn.get_node('LifeBar/Bg').texture = load('res://common_assets/lifebars/%d.png' % vivosaur_sz2.vivosaur_info.element)
+		player_vivosaur3_sprite_btn.pressed.connect(_on_vivosaur_selected.bind(vivosaur_sz2, player_vivosaur3_sprite_btn))
+		zones.sz2_sprite_btn = player_vivosaur3_sprite_btn
 	else:
-		player_vivosaur3_sprite.queue_free()
+		player_vivosaur3_sprite_btn.queue_free()
 
 func add_opponent_vivosaurs():
 	var zones = battlefield.zones[Battle.opponent_info.player_id]
@@ -140,30 +158,33 @@ func add_opponent_vivosaurs():
 	var vivosaur_sz1 = zones.sz1
 	var vivosaur_sz2 = zones.sz2
 	
-	opponent_vivosaur1_sprite.flip_h = false
-	opponent_vivosaur1_sprite.global_position = opponent_az.global_position
+	opponent_vivosaur1_sprite_btn.flip_h = false
+	opponent_vivosaur1_sprite_btn.global_position = opponent_az.global_position
 
-	opponent_vivosaur2_sprite.flip_h = false
-	opponent_vivosaur2_sprite.global_position = opponent_sz1.global_position
+	opponent_vivosaur2_sprite_btn.flip_h = false
+	opponent_vivosaur2_sprite_btn.global_position = opponent_sz1.global_position
 	
-	opponent_vivosaur3_sprite.flip_h = false
-	opponent_vivosaur3_sprite.global_position = opponent_sz2.global_position
+	opponent_vivosaur3_sprite_btn.flip_h = false
+	opponent_vivosaur3_sprite_btn.global_position = opponent_sz2.global_position
 
-	opponent_vivosaur1_sprite.texture_normal = load('res://vivosaur/%d/sprite/%d.png' % [vivosaur_az.vivosaur_info.id, vivosaur_az.vivosaur_info.id])
-	opponent_vivosaur1_sprite.get_node('LifeBar/Bg').texture = load('res://common_assets/lifebars/%d.png' % vivosaur_az.vivosaur_info.element)
-	zones.az_sprite = opponent_vivosaur1_sprite
+	opponent_vivosaur1_sprite_btn.texture_normal = load('res://vivosaur/%d/sprite/%d.png' % [vivosaur_az.vivosaur_info.id, vivosaur_az.vivosaur_info.id])
+	opponent_vivosaur1_sprite_btn.get_node('LifeBar/Bg').texture = load('res://common_assets/lifebars/%d.png' % vivosaur_az.vivosaur_info.element)
+	opponent_vivosaur1_sprite_btn.pressed.connect(_on_vivosaur_selected.bind(vivosaur_az, opponent_vivosaur1_sprite_btn))
+	zones.az_sprite_btn = opponent_vivosaur1_sprite_btn
 	if vivosaur_sz1 != null:
-		opponent_vivosaur2_sprite.texture_normal = load('res://vivosaur/%d/sprite/%d.png' % [vivosaur_sz1.vivosaur_info.id, vivosaur_sz1.vivosaur_info.id])
-		opponent_vivosaur2_sprite.get_node('LifeBar/Bg').texture = load('res://common_assets/lifebars/%d.png' % vivosaur_sz1.vivosaur_info.element)
-		zones.sz1_sprite = opponent_vivosaur2_sprite
+		opponent_vivosaur2_sprite_btn.texture_normal = load('res://vivosaur/%d/sprite/%d.png' % [vivosaur_sz1.vivosaur_info.id, vivosaur_sz1.vivosaur_info.id])
+		opponent_vivosaur2_sprite_btn.get_node('LifeBar/Bg').texture = load('res://common_assets/lifebars/%d.png' % vivosaur_sz1.vivosaur_info.element)
+		opponent_vivosaur2_sprite_btn.pressed.connect(_on_vivosaur_selected.bind(vivosaur_sz1, opponent_vivosaur2_sprite_btn))
+		zones.sz1_sprite_btn = opponent_vivosaur2_sprite_btn
 	else:
-		opponent_vivosaur2_sprite.queue_free()
+		opponent_vivosaur2_sprite_btn.queue_free()
 	if vivosaur_sz2 != null:
-		opponent_vivosaur3_sprite.texture_normal = load('res://vivosaur/%d/sprite/%d.png' % [vivosaur_sz2.vivosaur_info.id, vivosaur_sz2.vivosaur_info.id])
-		opponent_vivosaur3_sprite.get_node('LifeBar/Bg').texture = load('res://common_assets/lifebars/%d.png' % vivosaur_sz2.vivosaur_info.element)
-		zones.sz2_sprite = opponent_vivosaur3_sprite
+		opponent_vivosaur3_sprite_btn.texture_normal = load('res://vivosaur/%d/sprite/%d.png' % [vivosaur_sz2.vivosaur_info.id, vivosaur_sz2.vivosaur_info.id])
+		opponent_vivosaur3_sprite_btn.get_node('LifeBar/Bg').texture = load('res://common_assets/lifebars/%d.png' % vivosaur_sz2.vivosaur_info.element)
+		opponent_vivosaur3_sprite_btn.pressed.connect(_on_vivosaur_selected.bind(vivosaur_sz2, opponent_vivosaur3_sprite_btn))
+		zones.sz2_sprite_btn = opponent_vivosaur3_sprite_btn
 	else:
-		opponent_vivosaur3_sprite.queue_free()
+		opponent_vivosaur3_sprite_btn.queue_free()
 
 func initialize_turn_start_ui():
 	var icon_path = 'res://common_assets/player-icons'
@@ -177,10 +198,10 @@ func initialize_turn_start_ui():
 
 func animate_entrance():
 	var tween = create_tween()
-	tween.tween_property(player_vivosaur1_sprite, 'global_position', player_az.global_position, 0.1)
+	tween.tween_property(player_vivosaur1_sprite_btn, 'global_position', player_az.global_position, 0.1)
 	tween.set_parallel()
-	tween.tween_property(player_vivosaur2_sprite, 'global_position', player_sz1.global_position, 0.1).set_delay(0.05)
-	tween.tween_property(player_vivosaur3_sprite, 'global_position', player_sz2.global_position, 0.1).set_delay(0.1)
+	tween.tween_property(player_vivosaur2_sprite_btn, 'global_position', player_sz1.global_position, 0.1).set_delay(0.05)
+	tween.tween_property(player_vivosaur3_sprite_btn, 'global_position', player_sz2.global_position, 0.1).set_delay(0.1)
 	await tween.finished
 
 
@@ -188,7 +209,7 @@ func apply_support_effects(id: int):
 	await battlefield.apply_support_effects(id)
 
 func display_support_effects(id: int, index: int):
-	var support_sprites = battlefield.zones[id].get_support_zones_sprites()
+	var support_sprites = battlefield.zones[id].get_support_zones_sprite_btns()
 	
 	var tween = create_tween()
 	player_atk_modifier.text = "%d" % (battlefield.zones[player_id].az_support_effects.atk * 100) + '%'
@@ -251,6 +272,13 @@ func _on_turn_started(id: int):
 	await recharge_fp(id)
 
 func animate_turn_start(id: int):
+	if id == multiplayer.get_unique_id():
+		opponent_fp_bg.texture = load("res://common_assets/fp_counter/opp_not_turn.png")
+		player_fp_bg.texture = load("res://common_assets/fp_counter/player_turn.png")
+	else:
+		player_fp_bg.texture = load("res://common_assets/fp_counter/player_not_turn.png")
+		opponent_fp_bg.texture = load("res://common_assets/fp_counter/opp_turn.png")
+
 	var tween = create_tween()
 	var turn: Control
 	var turn_start: Control
@@ -293,3 +321,88 @@ func recharge_fp(id: int):
 	
 	fp.text = '%d' % (old_fp + delta_fp)
 	fp_delta.visible = false
+
+func _on_vivosaur_selected(vivosaur: DataTypes.VivosaurBattle, vivosaur_sprite_btn: TextureButton):
+	if currently_selected_vivosaur and currently_selected_vivosaur_sprite_btn:
+		currently_selected_vivosaur_sprite_btn.get_node('Arrow').visible = false
+
+	currently_selected_vivosaur = vivosaur
+	currently_selected_vivosaur_sprite_btn = vivosaur_sprite_btn
+	
+	currently_selected_vivosaur_sprite_btn.get_node('Arrow').visible = true
+
+	VivosaurSummary.show_vivosaur_summary(vivosaur_summary, currently_selected_vivosaur.vivosaur_info.id)
+	VivosaurSummary.update_skills_shown(skills_container, currently_selected_vivosaur.vivosaur_info.skills, _on_skill_clicked)
+
+func _on_skill_clicked(event: InputEvent, skill: DataTypes.Skill):
+	if event is InputEventMouseButton and event.button_index == MOUSE_BUTTON_LEFT and event.pressed:
+		currently_selected_vivosaur_sprite_btn.get_node('Arrow').visible = false
+
+		var player_zones = battlefield.zones[player_id]
+		var player_az_cursor = player_zones.az_sprite_btn.get_node('Cursor') if player_zones.az_sprite_btn != null else null
+		var player_sz1_cursor = player_zones.sz1_sprite_btn.get_node('Cursor') if player_zones.sz1_sprite_btn != null else null
+		var player_sz2_cursor = player_zones.sz2_sprite_btn.get_node('Cursor') if player_zones.sz2_sprite_btn != null else null
+		var opponent_zones = battlefield.zones[opponent_id]
+		var opponent_az_cursor = opponent_zones.az_sprite_btn.get_node('Cursor') if player_zones.az_sprite_btn != null else null
+		var opponent_sz1_cursor = opponent_zones.sz1_sprite_btn.get_node('Cursor') if player_zones.sz1_sprite_btn != null else null
+		var opponent_sz2_cursor = opponent_zones.sz2_sprite_btn.get_node('Cursor') if player_zones.sz2_sprite_btn != null else null
+		
+		if player_az_cursor != null: player_az_cursor.visible = false
+		if player_sz1_cursor != null: player_sz1_cursor.visible = false
+		if player_sz2_cursor != null: player_sz2_cursor.visible = false
+		if opponent_az_cursor != null: opponent_az_cursor.visible = false
+		if opponent_sz1_cursor != null: opponent_sz1_cursor.visible = false
+		if opponent_sz2_cursor != null: opponent_sz2_cursor.visible = false
+
+		match skill.target:
+			DataTypes.Target.ALL:
+				if player_az_cursor != null: player_az_cursor.visible = true
+				if player_sz1_cursor != null: player_sz1_cursor.visible = true
+				if player_sz2_cursor != null: player_sz2_cursor.visible = true
+				if opponent_az_cursor != null: opponent_az_cursor.visible = true
+				if opponent_sz1_cursor != null: opponent_sz1_cursor.visible = true
+				if opponent_sz2_cursor != null: opponent_sz2_cursor.visible = true
+			DataTypes.Target.ALL_ALLIES:
+				if player_az_cursor != null: opponent_az_cursor.visible = true
+				if player_sz1_cursor != null: opponent_sz1_cursor.visible = true
+				if player_sz2_cursor != null: opponent_sz2_cursor.visible = true
+
+				if opponent_zones.az_sprite_btn != null: opponent_zones.az_sprite_btn.self_modulate = Color.hex(0xffffff58)
+				if opponent_zones.sz1_sprite_btn != null: opponent_zones.sz1_sprite_btn.self_modulate = Color.hex(0xffffff58)
+				if opponent_zones.sz2_sprite_btn != null: opponent_zones.sz2_sprite_btn.self_modulate = Color.hex(0xffffff58)
+			DataTypes.Target.ALL_ENEMIES:
+				if opponent_az_cursor != null: opponent_az_cursor.visible = true
+				if opponent_sz1_cursor != null: opponent_sz1_cursor.visible = true
+				if opponent_sz2_cursor != null: opponent_sz2_cursor.visible = true
+
+				if player_zones.az_sprite_btn != null: player_zones.az_sprite_btn.self_modulate = Color.hex(0xffffff58)
+				if player_zones.sz1_sprite_btn != null: player_zones.sz1_sprite_btn.self_modulate = Color.hex(0xffffff58)
+				if player_zones.sz2_sprite_btn != null: player_zones.sz2_sprite_btn.self_modulate = Color.hex(0xffffff58)
+			DataTypes.Target.ALLY:
+				pass
+			DataTypes.Target.ALLY_EXCEPT_SELF:
+				pass
+			DataTypes.Target.ENEMY:
+				pass
+			DataTypes.Target.SELF:
+				pass
+				
+		for old_skill in skills_container.get_children():
+			old_skill.queue_free()
+		
+		is_choosing_target = true
+
+		skill_back.visible = true
+		skill_ok.visible = true
+		
+
+func _on_back_pressed() -> void:
+	skill_back.visible = false
+	skill_ok.visible = false
+
+
+func _on_ok_pressed() -> void:
+	skill_back.visible = false
+	skill_ok.visible = false
+
+	# notify server
