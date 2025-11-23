@@ -20,6 +20,7 @@ enum SkillType {
 	PASSIVE,
 	TEAM_SKILL
 }
+enum Zone {AZ, SZ1, SZ2, EZ}
 enum SupportZone {SZ1, SZ2}
 
 const TEAM_SLOTS = 5
@@ -328,6 +329,21 @@ class Zones:
 			fp += MAX_FP - fp
 		else:
 			fp += BASE_FP_RECHARGE
+	
+	func get_vivosaur_zone(vivo: VivosaurBattle) -> Zone:
+		var az_id = az.get('vivosaur_info').get('id')
+		var sz1_id = sz1.get('vivosaur_info').get('id')
+		var sz2_id = sz2.get('vivosaur_info').get('id')
+
+		match vivo.vivosaur_info.id:
+			az_id:
+				return Zone.AZ
+			sz1_id:
+				return Zone.SZ1
+			sz2_id:
+				return Zone.SZ2
+			_:
+				return Zone.EZ
 
 	
 class Battlefield:

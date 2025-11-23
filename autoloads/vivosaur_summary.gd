@@ -51,9 +51,12 @@ func show_vivosaur_summary(vivosaur_summary_node, vivosaur_id: int):
 	
 	update_skills_shown(vivosaur_summary_skills_container, vivosaur.skills)
 
-func update_skills_shown(skills_container: VBoxContainer, skills: Array[DataTypes.Skill], _on_skill_clicked = null):
+func clear_skills(skills_container: VBoxContainer):
 	for old_skill in skills_container.get_children():
 		old_skill.queue_free()
+
+func update_skills_shown(skills_container: VBoxContainer, skills: Array[DataTypes.Skill], _on_skill_clicked = null):
+	clear_skills(skills_container)
 
 	for skill in skills:
 		var skill_node: Panel = SkillScene.instantiate()
