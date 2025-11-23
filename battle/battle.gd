@@ -1,5 +1,6 @@
 extends ColorRect
 
+
 var VivosaurSprite = preload("res://battle/VivosaurSprite.tscn")
 var SkillScene = preload("res://team_viewer/team_editor/vivosaur_summary/skill.tscn")
 
@@ -66,14 +67,14 @@ var SkillScene = preload("res://team_viewer/team_editor/vivosaur_summary/skill.t
 @onready var skill_back: TextureButton = $BattleWindow/Back
 @onready var skill_ok: TextureButton = $BattleWindow/Ok
 
-var battlefield: DataTypes.Battlefield
+var battlefield: BattleField
 var player_id
 var opponent_id
 
-var currently_selected_vivosaur: DataTypes.VivosaurBattle
+var currently_selected_vivosaur: VivosaurBattle
 var currently_selected_vivosaur_sprite_btn: TextureButton
 var selectable_targets: Array[TextureButton]
-var currently_selected_target: DataTypes.VivosaurBattle
+var currently_selected_target: VivosaurBattle
 var currently_selected_target_sprite_btn: TextureButton
 
 var is_choosing_target: bool = false
@@ -111,18 +112,18 @@ func create_battlefield():
 	var _opponent_slot2 = Battle.opponent_team.slots[1]
 	var _opponent_slot3 = Battle.opponent_team.slots[2]
 
-	var zones: Dictionary[int, DataTypes.Zones] = {}
-	zones[Battle.player_info.player_id] = DataTypes.Zones.new(
-		DataTypes.VivosaurBattle.new(player_slot1) if player_slot1 != null else null,
-		DataTypes.VivosaurBattle.new(player_slot2) if player_slot2 != null else null,
-		DataTypes.VivosaurBattle.new(player_slot3) if player_slot3 != null else null,
+	var zones: Dictionary[int, Zones] = {}
+	zones[Battle.player_info.player_id] = Zones.new(
+		VivosaurBattle.new(player_slot1) if player_slot1 != null else null,
+		VivosaurBattle.new(player_slot2) if player_slot2 != null else null,
+		VivosaurBattle.new(player_slot3) if player_slot3 != null else null,
 	)
-	zones[Battle.opponent_info.player_id] = DataTypes.Zones.new(
-		DataTypes.VivosaurBattle.new(_opponent_slot1) if _opponent_slot1 != null else null,
-		DataTypes.VivosaurBattle.new(_opponent_slot2) if _opponent_slot2 != null else null,
-		DataTypes.VivosaurBattle.new(_opponent_slot3) if _opponent_slot3 != null else null,
+	zones[Battle.opponent_info.player_id] = Zones.new(
+		VivosaurBattle.new(_opponent_slot1) if _opponent_slot1 != null else null,
+		VivosaurBattle.new(_opponent_slot2) if _opponent_slot2 != null else null,
+		VivosaurBattle.new(_opponent_slot3) if _opponent_slot3 != null else null,
 	)
-	battlefield = DataTypes.Battlefield.new(zones, true)
+	battlefield = BattleField.new(zones, true)
 
 	battlefield.support_effects_applied.connect(display_support_effects)
 
@@ -331,7 +332,7 @@ func recharge_fp(id: int):
 	fp.text = '%d' % (old_fp + delta_fp)
 	fp_delta.visible = false
 
-func _on_vivosaur_selected(vivosaur: DataTypes.VivosaurBattle, vivosaur_sprite_btn: TextureButton, is_player_vivo: bool):
+func _on_vivosaur_selected(vivosaur: VivosaurBattle, vivosaur_sprite_btn: TextureButton, is_player_vivo: bool):
 	if currently_selected_vivosaur and currently_selected_vivosaur_sprite_btn:
 		currently_selected_vivosaur_sprite_btn.get_node('Arrow').visible = false
 
@@ -339,19 +340,19 @@ func _on_vivosaur_selected(vivosaur: DataTypes.VivosaurBattle, vivosaur_sprite_b
 	currently_selected_vivosaur_sprite_btn = vivosaur_sprite_btn
 	
 	currently_selected_vivosaur_sprite_btn.get_node('Arrow').visible = true
-	VivosaurSummary.show_vivosaur_summary(vivosaur_summary, currently_selected_vivosaur.vivosaur_info.id)
+	VivosaurUI.show_vivosaur_summary(vivosaur_summary, currently_selected_vivosaur.vivosaur_info.id)
 
 	var vivosaur_zone = battlefield.zones[Battle.player_info.player_id].get_vivosaur_zone(vivosaur)
-	if is_player_vivo and vivosaur_zone != DataTypes.Zone.EZ:
-		VivosaurSummary.update_skills_shown(
+	if is_player_vivo and vivosaur_zone != Zones.Zone.EZ:
+		VivosaurUI.update_skills_shown(
 			skills_container,
 			currently_selected_vivosaur.vivosaur_info.skills,
 			_on_skill_clicked.bind(vivosaur_zone))
 	else:
-		VivosaurSummary.clear_skills(skills_container)
+		VivosaurUI.clear_skills(skills_container)
 
 
-func _on_skill_clicked(event: InputEvent, skill: DataTypes.Skill, vivo_zone: DataTypes.Zone):
+func _on_skill_clicked(event: InputEvent, skill: Skill, vivo_zone: Zones.Zone):
 	if event is InputEventMouseButton and event.button_index == MOUSE_BUTTON_LEFT and event.pressed:
 		currently_selected_vivosaur_sprite_btn.get_node('Arrow').visible = false
 
@@ -372,7 +373,7 @@ func _on_skill_clicked(event: InputEvent, skill: DataTypes.Skill, vivo_zone: Dat
 		if opponent_sz2_cursor != null: opponent_sz2_cursor.visible = false
 
 		match skill.target:
-			DataTypes.Target.SELF:
+			Skill.Target.SELF:
 				selectable_targets = []
 				if player_zones.az_sprite_btn != null: player_zones.az_sprite_btn.self_modulate = Color.hex(0xffffff58)
 				if player_zones.sz1_sprite_btn != null: player_zones.sz1_sprite_btn.self_modulate = Color.hex(0xffffff58)
@@ -383,7 +384,7 @@ func _on_skill_clicked(event: InputEvent, skill: DataTypes.Skill, vivo_zone: Dat
 				
 				currently_selected_vivosaur_sprite_btn.get_node('Cursor').visible = true
 				currently_selected_vivosaur_sprite_btn.self_modulate = Color.hex(0xffffffff)
-			DataTypes.Target.ALL:
+			Skill.Target.ALL:
 				selectable_targets = []
 				if player_az_cursor != null: player_az_cursor.visible = true
 				if player_sz1_cursor != null: player_sz1_cursor.visible = true
@@ -391,7 +392,7 @@ func _on_skill_clicked(event: InputEvent, skill: DataTypes.Skill, vivo_zone: Dat
 				if opponent_az_cursor != null: opponent_az_cursor.visible = true
 				if opponent_sz1_cursor != null: opponent_sz1_cursor.visible = true
 				if opponent_sz2_cursor != null: opponent_sz2_cursor.visible = true
-			DataTypes.Target.ALL_ALLIES:
+			Skill.Target.ALL_ALLIES:
 				selectable_targets = []
 				if player_az_cursor != null: player_az_cursor.visible = true
 				if player_sz1_cursor != null: player_sz1_cursor.visible = true
@@ -400,7 +401,7 @@ func _on_skill_clicked(event: InputEvent, skill: DataTypes.Skill, vivo_zone: Dat
 				if opponent_zones.az_sprite_btn != null: opponent_zones.az_sprite_btn.self_modulate = Color.hex(0xffffff58)
 				if opponent_zones.sz1_sprite_btn != null: opponent_zones.sz1_sprite_btn.self_modulate = Color.hex(0xffffff58)
 				if opponent_zones.sz2_sprite_btn != null: opponent_zones.sz2_sprite_btn.self_modulate = Color.hex(0xffffff58)
-			DataTypes.Target.ALL_ENEMIES:
+			Skill.Target.ALL_ENEMIES:
 				selectable_targets = []
 				if opponent_az_cursor != null: opponent_az_cursor.visible = true
 				if opponent_sz1_cursor != null: opponent_sz1_cursor.visible = true
@@ -409,13 +410,13 @@ func _on_skill_clicked(event: InputEvent, skill: DataTypes.Skill, vivo_zone: Dat
 				if player_zones.az_sprite_btn != null: player_zones.az_sprite_btn.self_modulate = Color.hex(0xffffff58)
 				if player_zones.sz1_sprite_btn != null: player_zones.sz1_sprite_btn.self_modulate = Color.hex(0xffffff58)
 				if player_zones.sz2_sprite_btn != null: player_zones.sz2_sprite_btn.self_modulate = Color.hex(0xffffff58)
-			DataTypes.Target.ALLY:
+			Skill.Target.ALLY:
 				selectable_targets = [player_zones.az_sprite_btn, player_zones.sz1_sprite_btn, player_zones.sz2_sprite_btn]
 
 				if opponent_zones.az_sprite_btn != null: opponent_zones.az_sprite_btn.self_modulate = Color.hex(0xffffff58)
 				if opponent_zones.sz1_sprite_btn != null: opponent_zones.sz1_sprite_btn.self_modulate = Color.hex(0xffffff58)
 				if opponent_zones.sz2_sprite_btn != null: opponent_zones.sz2_sprite_btn.self_modulate = Color.hex(0xffffff58)
-			DataTypes.Target.ALLY_EXCEPT_SELF:
+			Skill.Target.ALLY_EXCEPT_SELF:
 				selectable_targets = [
 					player_zones.az_sprite_btn,
 					player_zones.sz1_sprite_btn,
@@ -425,15 +426,15 @@ func _on_skill_clicked(event: InputEvent, skill: DataTypes.Skill, vivo_zone: Dat
 				if opponent_zones.az_sprite_btn != null: opponent_zones.az_sprite_btn.self_modulate = Color.hex(0xffffff58)
 				if opponent_zones.sz1_sprite_btn != null: opponent_zones.sz1_sprite_btn.self_modulate = Color.hex(0xffffff58)
 				if opponent_zones.sz2_sprite_btn != null: opponent_zones.sz2_sprite_btn.self_modulate = Color.hex(0xffffff58)
-			DataTypes.Target.ENEMY:
+			Skill.Target.ENEMY:
 				selectable_targets = [opponent_zones.az_sprite_btn]
 				if player_zones.az_sprite_btn != null: player_zones.az_sprite_btn.self_modulate = Color.hex(0xffffff58)
 				if player_zones.sz1_sprite_btn != null: player_zones.sz1_sprite_btn.self_modulate = Color.hex(0xffffff58)
 				if player_zones.sz2_sprite_btn != null: player_zones.sz2_sprite_btn.self_modulate = Color.hex(0xffffff58)
 
-				if vivo_zone == DataTypes.Zone.AZ:
+				if vivo_zone == Zones.Zone.AZ:
 					selectable_targets += [opponent_zones.sz1_sprite_btn, opponent_zones.sz2_sprite_btn]
-				elif vivo_zone == DataTypes.Zone.SZ1 or vivo_zone == DataTypes.Zone.SZ2:
+				elif vivo_zone == Zones.Zone.SZ1 or vivo_zone == Zones.Zone.SZ2:
 					if opponent_az_cursor != null: opponent_az_cursor.visible = true
 					if opponent_zones.sz1_sprite_btn != null: opponent_zones.sz1_sprite_btn.self_modulate = Color.hex(0xffffff58)
 					if opponent_zones.sz2_sprite_btn != null: opponent_zones.sz2_sprite_btn.self_modulate = Color.hex(0xffffff58)
@@ -447,7 +448,7 @@ func _on_skill_clicked(event: InputEvent, skill: DataTypes.Skill, vivo_zone: Dat
 		skill_back.visible = true
 		skill_ok.visible = true
 
-func _on_vivosaur_hover(vivosaur: DataTypes.VivosaurBattle, vivosaur_sprite_btn: TextureButton):
+func _on_vivosaur_hover(vivosaur: VivosaurBattle, vivosaur_sprite_btn: TextureButton):
 	if is_choosing_target and vivosaur_sprite_btn in selectable_targets:
 		if currently_selected_target and currently_selected_target_sprite_btn:
 			currently_selected_target_sprite_btn.get_node('Cursor').visible = false

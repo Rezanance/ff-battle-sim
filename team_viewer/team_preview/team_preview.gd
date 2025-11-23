@@ -1,3 +1,3 @@
 extends VBoxContainer
 
-var team: DataTypes.Team
+var team: Team

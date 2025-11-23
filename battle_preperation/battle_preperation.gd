@@ -1,5 +1,6 @@
 extends TextureRect
 
+
 var MedalBtn = preload("res://team_viewer/team_editor/fossilary/medal_btn.tscn")
 
 @onready var formation_slots: TextureRect = $"FormationSlots"
@@ -158,7 +159,7 @@ func medal_btn_clicked(event: InputEvent, medal_btn: BaseButton, vivosaur_id: in
 
 		if is_player_team and event.button_index == MOUSE_BUTTON_RIGHT and event.pressed:
 			show_context_menu(event)
-		VivosaurSummary.show_vivosaur_summary(vivosaur_summary, vivosaur_id)
+		VivosaurUI.show_vivosaur_summary(vivosaur_summary, vivosaur_id)
 
 func select_current_medal_btn(medal_btn: BaseButton):
 	medal_btn.get_node('SelectedAnimation').visible = true
@@ -172,6 +173,6 @@ func _on_battle_prep_time_up():
 	MultiplayerBattles.send_new_team_info(Battle.player_team)
 
 func _on_battle_started(opponent_team_info):
-	Battle.opponent_team = DataTypes.Team.unserialize('', opponent_team_info)
+	Battle.opponent_team = Team.unserialize('', opponent_team_info)
 	
 	SceneTransition.change_scene("res://battle/Battle.tscn")

@@ -1,7 +1,7 @@
 extends Panel
 
-enum MessageType {SUCCESS, ERROR}
 
+enum MessageType {SUCCESS, ERROR}
 
 func reveal_dialog(message_type: MessageType, message: String):
 	var style_box_flat: StyleBoxFlat = theme.get_stylebox('panel', 'Panel').duplicate()

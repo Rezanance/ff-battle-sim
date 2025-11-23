@@ -1,5 +1,6 @@
 extends TextureButton
 
+
 @onready var animation_player: AnimationPlayer = $AnimationPlayer
 @onready var arrow: TextureRect = $Arrow
 @onready var cursor: AnimatedSprite2D = $Cursor

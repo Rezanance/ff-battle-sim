@@ -24,7 +24,7 @@ var statuses_json = preload("res://vivosaur/statuses.json").data
 var currently_selected_vivosaur_id: int
 var currently_selected_medal_btn: TextureButton
 var current_action: int
-var team: DataTypes.Team
+var team: Team
 var slots_selectable: Array[AnimatedSprite2D]
 var slots_medal_btns: Array = [null, null, null, null, null]
 var fossilary_medals: Dictionary[int, TextureRect] = {}
@@ -218,7 +218,7 @@ func _reset_medal_btn_pos():
 	currently_selected_medal_btn.global_position = fossilary_medals[currently_selected_medal_btn.vivosaur_id].global_position
 
 func show_vivosaur_summary(vivosaur_id: int):
-	VivosaurSummary.show_vivosaur_summary(vivosaur_summary, vivosaur_id)
+	VivosaurUI.show_vivosaur_summary(vivosaur_summary, vivosaur_id)
 		
 func _enable_disable_save_team_btn():
 	save_btn.disabled = team_name_input.text.strip_edges() == '' or not team.is_valid()

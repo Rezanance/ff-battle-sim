@@ -20,15 +20,12 @@ config/icon="uid://bb7jtyck313ds"
 
 SceneTransition="*res://autoloads/scene_transition.tscn"
 Global="*res://autoloads/global.gd"
-DataTypes="*res://autoloads/data_types.gd"
 uuid="*res://addons/uuid/uuid.gd"
 DialogPopup="*res://autoloads/dialog_popup.tscn"
 MultiplayerLobby="*res://autoloads/multiplayer_lobby.gd"
 GlobalAcceptDialog="*res://autoloads/accept_dialog.tscn"
 MultiplayerBattles="*res://autoloads/multiplayer_battles.gd"
-Logging="*res://autoloads/logging.gd"
 Battle="*res://autoloads/battle.gd"
-VivosaurSummary="*res://autoloads/vivosaur_summary.gd"
 
 [display]
 

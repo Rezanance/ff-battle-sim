@@ -13,13 +13,13 @@ func _ready() -> void:
 		for team_uuid in config.get_sections():
 			var team_preview = TeamPreviewScene.instantiate()
 			var team_dict = config.get_value(team_uuid, 'team')
-			var team: DataTypes.Team = DataTypes.Team.unserialize(team_uuid, team_dict)
+			var team: Team = Team.unserialize(team_uuid, team_dict)
 			team_preview.get_node("TeamNameBackground/TeamName").text = team.name
 			
 			var medal_container: Node = team_preview.get_node("FormationBackground/MedalContainer")
 			
-			for i in range(DataTypes.TEAM_SLOTS):
-				var vivosaur_slot: DataTypes.Vivosaur = team.slots[i]
+			for i in range(Team.TEAM_SLOTS):
+				var vivosaur_slot: VivosaurInfo = team.slots[i]
 				if vivosaur_slot != null:
 					medal_container.get_child(i).texture = load("res://vivosaur/%s/medal/%s (2).png" % [vivosaur_slot.id, vivosaur_slot.id])
 			
@@ -33,7 +33,7 @@ func _ready() -> void:
 func _add_new_team_btn():
 	add_child(NewTeamBtn.instantiate()) 
 
-func _on_team_preview_gui_input(event: InputEvent, team: DataTypes.Team) -> void:
+func _on_team_preview_gui_input(event: InputEvent, team: Team) -> void:
 	if event is InputEventMouseButton:
 		if event.button_index == MOUSE_BUTTON_LEFT and event.pressed:
 			Global.editing_team = team

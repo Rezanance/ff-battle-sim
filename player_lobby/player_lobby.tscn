@@ -1,9 +1,9 @@
 [gd_scene load_steps=30 format=3 uid="uid://b5e63667bvai4"]
 
-[ext_resource type="Texture2D" uid="uid://cdxw7nby5hr34" path="res://player_lobby/fossil-fighters-bg.webp" id="1_qohhd"]
+[ext_resource type="Texture2D" uid="uid://cdxw7nby5hr34" path="res://player_lobby/assets/fossil-fighters-bg.webp" id="1_qohhd"]
 [ext_resource type="Script" uid="uid://fnsxtd3k6nge" path="res://player_lobby/player_lobby.gd" id="2_hrceg"]
 [ext_resource type="Theme" uid="uid://qw3ckwy7bak5" path="res://theme/ui_theme.tres" id="3_hrceg"]
-[ext_resource type="Texture2D" uid="uid://b0fvobcgknonn" path="res://player_lobby/ff_logo.png" id="3_qohhd"]
+[ext_resource type="Texture2D" uid="uid://b0fvobcgknonn" path="res://player_lobby/assets/ff_logo.png" id="3_qohhd"]
 [ext_resource type="Script" uid="uid://csi8nl60mj4yq" path="res://player_lobby/team_select.gd" id="4_hmeuf"]
 [ext_resource type="Script" uid="uid://di0jpnawcxcxs" path="res://player_lobby/team_editor_btn.gd" id="4_q1g5o"]
 [ext_resource type="Script" uid="uid://ikifc5i2mrdl" path="res://player_lobby/quit.gd" id="5_gcpix"]

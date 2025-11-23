@@ -1,8 +1,9 @@
-extends Node
+class_name VivosaurUI
 
-var SkillScene = preload("res://team_viewer/team_editor/vivosaur_summary/skill.tscn")
 
-func show_vivosaur_summary(vivosaur_summary_node, vivosaur_id: int):
+static var SkillScene = preload("res://team_viewer/team_editor/vivosaur_summary/skill.tscn")
+
+static func show_vivosaur_summary(vivosaur_summary_node, vivosaur_id: int):
 	var vivosaur_summary_element = vivosaur_summary_node.get_node('ScrollContainer/VBoxContainer/HBoxContainer2/Element')
 	var vivosaur_summary_name = vivosaur_summary_node.get_node('ScrollContainer/VBoxContainer/HBoxContainer2/Name')
 	var vivosaur_summary_class = vivosaur_summary_node.get_node('ScrollContainer/VBoxContainer/Class')
@@ -23,7 +24,7 @@ func show_vivosaur_summary(vivosaur_summary_node, vivosaur_id: int):
 	var vivosaur_summary_skills_container: VBoxContainer = vivosaur_summary_node.get_node("ScrollContainer/VBoxContainer/SkillsContainer")
 	
 	vivosaur_summary_node.visible = true
-	var vivosaur: DataTypes.Vivosaur = Global.fossilary[vivosaur_id]
+	var vivosaur: VivosaurInfo = Global.fossilary[vivosaur_id]
 	vivosaur_summary_element.texture = load("res://common_assets/elements/%d.webp" % vivosaur.element)
 	vivosaur_summary_name.text = vivosaur.name
 	vivosaur_summary_class.text = vivosaur.battle_class.capitalize()
@@ -51,11 +52,11 @@ func show_vivosaur_summary(vivosaur_summary_node, vivosaur_id: int):
 	
 	update_skills_shown(vivosaur_summary_skills_container, vivosaur.skills)
 
-func clear_skills(skills_container: VBoxContainer):
+static func clear_skills(skills_container: VBoxContainer):
 	for old_skill in skills_container.get_children():
 		old_skill.queue_free()
 
-func update_skills_shown(skills_container: VBoxContainer, skills: Array[DataTypes.Skill], _on_skill_clicked = null):
+static func update_skills_shown(skills_container: VBoxContainer, skills: Array[Skill], _on_skill_clicked = null):
 	clear_skills(skills_container)
 
 	for skill in skills:
@@ -63,11 +64,11 @@ func update_skills_shown(skills_container: VBoxContainer, skills: Array[DataType
 
 		var style_box_flat: StyleBoxFlat = skill_node.theme.get_stylebox('panel', 'Panel').duplicate()
 		
-		if skill.skill_type == DataTypes.SkillType.DAMAGE or skill.skill_type == DataTypes.SkillType.NEUTRAL:
+		if skill.type == Skill.Type.DAMAGE or skill.type == Skill.Type.NEUTRAL:
 			style_box_flat.bg_color = Color.hex(0xe67538ff)
-		elif skill.skill_type == DataTypes.SkillType.HEAL or skill.skill_type == DataTypes.SkillType.ENHANCEMENT:
+		elif skill.type == Skill.Type.HEAL or skill.type == Skill.Type.ENHANCEMENT:
 			style_box_flat.bg_color = Color.hex(0x4ab444ff)
-		elif skill.skill_type == DataTypes.SkillType.TEAM_SKILL:
+		elif skill.type == Skill.Type.TEAM_SKILL:
 			style_box_flat.bg_color = Color.hex(0xcb3031ff)
 		else:
 			style_box_flat.bg_color = Color.hex(0x0eade1ff)
@@ -93,7 +94,7 @@ func update_skills_shown(skills_container: VBoxContainer, skills: Array[DataType
 			
 		skills_container.add_child(skill_node)
 
-func display_support_effect(se_label, modifier):
+static func display_support_effect(se_label, modifier):
 	if modifier > 0:
 		se_label.text = "+%d" % [modifier * 100] + "%"
 	elif modifier < 0:

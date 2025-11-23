@@ -1,5 +1,6 @@
 extends Node
 
+
 signal battle_created(battle_id: int)
 signal battle_prep_started(opponent_info, opponent_team_info)
 signal battle_prep_time_up(battle_id: int)
@@ -32,7 +33,7 @@ var battle_teams: Dictionary[int, Dictionary] = {}
 # 	},
 #   ...
 # }
-var battlefields: Dictionary[int, DataTypes.Battlefield] = {}
+var battlefields: Dictionary[int, BattleField] = {}
 var battle_timers: Dictionary[int, Timer] = {}
 var responses_to_server: Dictionary[int, Dictionary] = {} # key=battle_id, value=[players]
 
@@ -114,7 +115,7 @@ func _on_battle_prep_timeout_server(battle_id: int):
 func notify_battle_prep_time_up():
 	battle_prep_time_up.emit()
 
-func send_new_team_info(new_team_info: DataTypes.Team):
+func send_new_team_info(new_team_info: Team):
 	send_new_team_info_server.rpc_id(MultiplayerLobby.SERVER_PEER_ID, Battle.battle_id, new_team_info.serialize())
 
 @rpc("any_peer", "call_remote", "reliable")
@@ -144,19 +145,19 @@ func start_battle_server(battle_id: int):
 	var opponent_slot2 = battle_teams[battle_id][opponent_id].slots[1]
 	var opponent_slot3 = battle_teams[battle_id][opponent_id].slots[2]
 
-	var zones: Dictionary[int, DataTypes.Zones] = {}
-	zones[player_id] = DataTypes.Zones.new(
-			DataTypes.VivosaurBattle.new(Global.fossilary[player_slot1]) if player_slot1 != null else null,
-			DataTypes.VivosaurBattle.new(Global.fossilary[player_slot2]) if player_slot2 != null else null,
-			DataTypes.VivosaurBattle.new(Global.fossilary[player_slot3]) if player_slot3 != null else null,
+	var zones: Dictionary[int, Zones] = {}
+	zones[player_id] = Zones.new(
+			VivosaurBattle.new(Global.fossilary[player_slot1]) if player_slot1 != null else null,
+			VivosaurBattle.new(Global.fossilary[player_slot2]) if player_slot2 != null else null,
+			VivosaurBattle.new(Global.fossilary[player_slot3]) if player_slot3 != null else null,
 	)
-	zones[opponent_id] = DataTypes.Zones.new(
-		DataTypes.VivosaurBattle.new(Global.fossilary[opponent_slot1]) if opponent_slot1 != null else null,
-		DataTypes.VivosaurBattle.new(Global.fossilary[opponent_slot2]) if opponent_slot2 != null else null,
-		DataTypes.VivosaurBattle.new(Global.fossilary[opponent_slot3]) if opponent_slot3 != null else null,
+	zones[opponent_id] = Zones.new(
+		VivosaurBattle.new(Global.fossilary[opponent_slot1]) if opponent_slot1 != null else null,
+		VivosaurBattle.new(Global.fossilary[opponent_slot2]) if opponent_slot2 != null else null,
+		VivosaurBattle.new(Global.fossilary[opponent_slot3]) if opponent_slot3 != null else null,
 	)
 	
-	battlefields[battle_id] = DataTypes.Battlefield.new(zones, false)
+	battlefields[battle_id] = BattleField.new(zones, false)
 
 	battlefields[battle_id].support_effects_applied.connect(apply_next_support_effects.bind(battle_id))
 
@@ -184,7 +185,7 @@ func who_goes_first_server(battle_id: int):
 	responses_to_server[battle_id][multiplayer.get_remote_sender_id()] = null
 	if len(responses_to_server[battle_id].keys()) == 2:
 		responses_to_server[battle_id] = {}
-		var battlefield: DataTypes.Battlefield = battlefields[battle_id]
+		var battlefield: BattleField = battlefields[battle_id]
 		var player_id: int = battle_teams[battle_id].keys()[0]
 		var opponent_id: int = battle_teams[battle_id].keys()[1]
 
@@ -212,7 +213,7 @@ func who_goes_first_server(battle_id: int):
 			battlefield.turn_id = opponent_id
 		
 		Logging.info("Battle %d - Player %d's turn" % [battle_id, battlefield.turn_id])
-		battlefield.zones[battlefield.turn_id].fp += DataTypes.BASE_FP_RECHARGE
+		battlefield.zones[battlefield.turn_id].fp += Zones.BASE_FP_RECHARGE
 		notify_turn_start.rpc_id(player_id, battlefield.turn_id)
 		notify_turn_start.rpc_id(opponent_id, battlefield.turn_id)
 
@@ -227,7 +228,7 @@ func end_turn(battle_id: int):
 @rpc("any_peer", "call_remote", "reliable")
 func end_turn_server(battle_id: int):
 	assert(multiplayer.is_server())
-	var battlefield: DataTypes.Battlefield = battlefields[battle_id]
+	var battlefield: BattleField = battlefields[battle_id]
 
 	if multiplayer.get_remote_sender_id() == battlefield.turn_id:
 		var player_id: int = battle_teams[battle_id].keys()[0]

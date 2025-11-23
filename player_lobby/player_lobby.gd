@@ -155,7 +155,7 @@ func _on_battle_created(battle_id: int):
 
 func _on_battle_prep_started(opponent_info, opponent_team_info):
 	Battle.player_info = MultiplayerLobby.local_player_info
-	Battle.player_team = DataTypes.Team.unserialize('', load_selected_team_info())
+	Battle.player_team = Team.unserialize('', load_selected_team_info())
 	Battle.opponent_info = opponent_info
-	Battle.opponent_team = DataTypes.Team.unserialize('', opponent_team_info)
+	Battle.opponent_team = Team.unserialize('', opponent_team_info)
 	SceneTransition.change_scene("res://battle_preperation/BattlePreperation.tscn")

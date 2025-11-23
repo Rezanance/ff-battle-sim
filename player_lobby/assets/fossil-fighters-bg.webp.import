@@ -3,15 +3,15 @@
 importer="texture"
 type="CompressedTexture2D"
 uid="uid://cdxw7nby5hr34"
-path="res://.godot/imported/fossil-fighters-bg.webp-95ab4cb8bce68a79abfa252d5d4f3755.ctex"
+path="res://.godot/imported/fossil-fighters-bg.webp-e9e4b37a32f40d1a73aadb2479893025.ctex"
 metadata={
 "vram_texture": false
 }
 
 [deps]
 
-source_file="res://player_lobby/fossil-fighters-bg.webp"
-dest_files=["res://.godot/imported/fossil-fighters-bg.webp-95ab4cb8bce68a79abfa252d5d4f3755.ctex"]
+source_file="res://player_lobby/assets/fossil-fighters-bg.webp"
+dest_files=["res://.godot/imported/fossil-fighters-bg.webp-e9e4b37a32f40d1a73aadb2479893025.ctex"]
 
 [params]
 
