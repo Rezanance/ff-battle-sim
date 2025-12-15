@@ -18,14 +18,24 @@ config/icon="uid://bb7jtyck313ds"
 
 [autoload]
 
-SceneTransition="*res://autoloads/scene_transition.tscn"
-Global="*res://autoloads/global.gd"
+SceneTransition="*res://client/autoloads/scene_transition.tscn"
 uuid="*res://addons/uuid/uuid.gd"
-DialogPopup="*res://autoloads/dialog_popup.tscn"
-MultiplayerLobby="*res://autoloads/multiplayer_lobby.gd"
-GlobalAcceptDialog="*res://autoloads/accept_dialog.tscn"
-MultiplayerBattles="*res://autoloads/multiplayer_battles.gd"
-Battle="*res://autoloads/battle.gd"
+DialogPopup="*res://client/autoloads/dialog_popup.tscn"
+GlobalAcceptDialog="*res://client/autoloads/accept_dialog.tscn"
+Networking="*res://client/autoloads/networking.gd"
+Constants="*res://client/autoloads/constants.gd"
+ClientMatchMaking="*res://client/multiplayer/in/match_making.gd"
+ClientBattleSetup="*res://client/multiplayer/in/battle_setup.gd"
+ClientTurns="*res://client/multiplayer/in/turns.gd"
+ServerSetup="*res://server/setup.gd"
+ServerVariables="*res://server/common/variables.gd"
+ServerMatchMaking="*res://server/match_making/base.gd"
+ServerBattleSetup="*res://server/battle_setup/base.gd"
+ServerTurns="*res://server/turns/base.gd"
+ClientServerConnectionOUT="*res://client/multiplayer/out/server_connection.gd"
+ClientMatchMakingOUT="*res://client/multiplayer/out/match_making.gd"
+ClientBattleSetupOUT="*res://client/multiplayer/out/battle_setup.gd"
+ClientTurnsOUT="*res://client/multiplayer/out/turns.gd"
 
 [display]
 

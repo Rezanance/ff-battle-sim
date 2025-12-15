@@ -1,0 +1,33 @@
+[gd_scene load_steps=5 format=3 uid="uid://dgfwtvu2tjbq6"]
+
+[ext_resource type="Script" uid="uid://dcfu35tr26bpl" path="res://client/team_viewer/teams_container.gd" id="1_e1cs2"]
+[ext_resource type="Texture2D" uid="uid://chevdw52lcf04" path="res://client/assets/backgrounds/rock_bg.jpg" id="1_ofbxd"]
+[ext_resource type="Theme" uid="uid://qw3ckwy7bak5" path="res://client/theme/ui_theme.tres" id="3_e1cs2"]
+[ext_resource type="Script" uid="uid://byac34gvmciej" path="res://client/team_viewer/back_btn.gd" id="4_ecuqo"]
+
+[node name="TeamViewer" type="TextureRect"]
+offset_right = 1920.0
+offset_bottom = 1080.0
+texture = ExtResource("1_ofbxd")
+expand_mode = 2
+
+[node name="TeamsContainer" type="VFlowContainer" parent="."]
+layout_mode = 0
+offset_left = 346.0
+offset_top = 91.0
+offset_right = 1574.0
+offset_bottom = 989.0
+theme_override_constants/v_separation = 50
+script = ExtResource("1_e1cs2")
+
+[node name="Back" type="Button" parent="."]
+layout_mode = 0
+offset_left = 110.0
+offset_top = 944.0
+offset_right = 203.0
+offset_bottom = 985.0
+theme = ExtResource("3_e1cs2")
+text = "Back"
+script = ExtResource("4_ecuqo")
+
+[connection signal="pressed" from="Back" to="Back" method="_on_pressed"]

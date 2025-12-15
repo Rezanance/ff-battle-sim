@@ -1,0 +1,160 @@
+[gd_scene load_steps=12 format=3 uid="uid://vl2rq8bashda"]
+
+[ext_resource type="Texture2D" uid="uid://bmsqvk1yf0uxl" path="res://client/assets/vivosaurs/1/sprite/1.png" id="1_2krq1"]
+[ext_resource type="Texture2D" uid="uid://8w1gvd7l0vih" path="res://client/assets/lifebars/0.png" id="2_jgtk3"]
+[ext_resource type="Script" uid="uid://b33pu86yfdf7v" path="res://client/battle/vivosaur_sprite.gd" id="2_w7xny"]
+[ext_resource type="Texture2D" uid="uid://p8xmgjv3yqw2" path="res://client/assets/cursors/arrow.png" id="3_2krq1"]
+[ext_resource type="Texture2D" uid="uid://dilkr16w8cc3l" path="res://client/assets/cursors/5_0.png" id="6_eo74b"]
+[ext_resource type="Texture2D" uid="uid://cn0lxb3cc3rbh" path="res://client/assets/cursors/6_0.png" id="7_h0nod"]
+[ext_resource type="Texture2D" uid="uid://b1y2u2eka8ktr" path="res://client/assets/cursors/7_0.png" id="8_2t2ij"]
+
+[sub_resource type="Animation" id="Animation_jgtk3"]
+length = 0.001
+tracks/0/type = "bezier"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("Arrow:position:x")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"handle_modes": PackedInt32Array(0),
+"points": PackedFloat32Array(-78, -0.25, 0, 0.25, 0),
+"times": PackedFloat32Array(0)
+}
+tracks/1/type = "bezier"
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/path = NodePath("Arrow:position:y")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/keys = {
+"handle_modes": PackedInt32Array(0),
+"points": PackedFloat32Array(27, -0.25, 0, 0.25, 0),
+"times": PackedFloat32Array(0)
+}
+
+[sub_resource type="Animation" id="Animation_w7xny"]
+resource_name = "arrow"
+length = 0.75
+loop_mode = 1
+tracks/0/type = "bezier"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("Arrow:position:x")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"handle_modes": PackedInt32Array(0, 0, 0),
+"points": PackedFloat32Array(-78, -0.25, 0, 0.25, 0, -126, -0.0832324, 7.9999995, 0, 0, -78, -0.25, 0, 0.25, 0),
+"times": PackedFloat32Array(0, 0.43333334, 0.75)
+}
+tracks/1/type = "bezier"
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/path = NodePath("Arrow:position:y")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/keys = {
+"handle_modes": PackedInt32Array(0, 0, 0),
+"points": PackedFloat32Array(27, -0.25, 0, 0.25, 0, 27, -0.0832324, 0, 0, 0, 27, -0.25, 0, 0.25, 0),
+"times": PackedFloat32Array(0, 0.43333334, 0.75)
+}
+
+[sub_resource type="AnimationLibrary" id="AnimationLibrary_uyhtx"]
+_data = {
+&"RESET": SubResource("Animation_jgtk3"),
+&"arrow": SubResource("Animation_w7xny")
+}
+
+[sub_resource type="SpriteFrames" id="SpriteFrames_novg2"]
+animations = [{
+"frames": [{
+"duration": 1.0,
+"texture": ExtResource("6_eo74b")
+}, {
+"duration": 1.0,
+"texture": ExtResource("7_h0nod")
+}, {
+"duration": 1.0,
+"texture": ExtResource("8_2t2ij")
+}],
+"loop": true,
+"name": &"default",
+"speed": 10.0
+}]
+
+[node name="VivosaurSprite" type="TextureButton"]
+offset_left = 151.0
+offset_top = 145.0
+offset_right = 311.0
+offset_bottom = 305.0
+texture_normal = ExtResource("1_2krq1")
+stretch_mode = 0
+flip_h = true
+script = ExtResource("2_w7xny")
+
+[node name="LifeBar" type="Control" parent="."]
+anchors_preset = 0
+offset_top = 103.0
+offset_right = 40.0
+offset_bottom = 143.0
+mouse_filter = 2
+
+[node name="Bg" type="TextureRect" parent="LifeBar"]
+z_index = 10
+layout_mode = 0
+offset_right = 160.0
+offset_bottom = 80.0
+texture = ExtResource("2_jgtk3")
+expand_mode = 3
+
+[node name="Main" type="ColorRect" parent="LifeBar"]
+z_index = 10
+layout_mode = 0
+offset_left = 30.0
+offset_top = 35.0
+offset_right = 130.0
+offset_bottom = 47.5
+color = Color(0.17753157, 0.57566905, 0.75212544, 1)
+
+[node name="Shine" type="ColorRect" parent="LifeBar"]
+z_index = 10
+layout_mode = 0
+offset_left = 30.0
+offset_top = 35.0
+offset_right = 130.0
+offset_bottom = 40.0
+color = Color(1, 1, 1, 0.72156864)
+
+[node name="StatusEffects" type="TextureRect" parent="."]
+layout_mode = 0
+offset_left = 97.0
+offset_top = 79.0
+offset_right = 177.0
+offset_bottom = 159.0
+expand_mode = 3
+
+[node name="Arrow" type="TextureRect" parent="."]
+visible = false
+layout_mode = 0
+offset_left = -78.0
+offset_top = 27.0
+offset_right = -38.0
+offset_bottom = 67.0
+scale = Vector2(2, 2)
+texture = ExtResource("3_2krq1")
+
+[node name="AnimationPlayer" type="AnimationPlayer" parent="."]
+libraries = {
+&"": SubResource("AnimationLibrary_uyhtx")
+}
+
+[node name="Cursor" type="AnimatedSprite2D" parent="."]
+visible = false
+position = Vector2(-10, -10)
+scale = Vector2(2.8, 2.8)
+sprite_frames = SubResource("SpriteFrames_novg2")
+frame_progress = 0.30917466
+centered = false
+
+[connection signal="pressed" from="." to="." method="_on_pressed"]
