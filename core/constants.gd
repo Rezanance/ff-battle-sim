@@ -1,21 +1,21 @@
-extends Node
+class_name Constants
 
 
-var vivosaurs_json = preload("res://core/data/vivosaurs.json").data
-var skills_json = preload("res://core/data/skills.json").data
-var effects_json = preload("res://core/data/effects.json").data
-var statuses_json = preload("res://core/data/statuses.json").data
+static var vivosaurs_json = preload("res://core/data/vivosaurs.json").data
+static var skills_json = preload("res://core/data/skills.json").data
+static var effects_json = preload("res://core/data/effects.json").data
+static var statuses_json = preload("res://core/data/statuses.json").data
+
+static var teams_file = "user://teams.cfg"
+static var preferences_file = "user://preferences.cfg"
 
 # Data on all vivosaurs with the id as the key
-var fossilary: Dictionary[int, VivosaurInfo]
+static var fossilary: Dictionary[int, VivosaurInfo]
 
-var teams_file = "user://teams.cfg"
-var preferences_file = "user://preferences.cfg"
-
-var editing_team: Team
-var is_new_team: bool
-
-func _ready() -> void:
+static func _static_init() -> void:
+	initialize_fossilary()
+	
+static func initialize_fossilary():
 	for vivosaur_id in vivosaurs_json:
 		var vivosaur = vivosaurs_json[vivosaur_id]
 		var vivo_skills: Array[Skill] = []

@@ -36,8 +36,8 @@ func _add_new_team_btn():
 func _on_team_preview_gui_input(event: InputEvent, team: Team) -> void:
 	if event is InputEventMouseButton:
 		if event.button_index == MOUSE_BUTTON_LEFT and event.pressed:
-			Constants.editing_team = team
-			Constants.is_new_team = false
+			TeamEditing.editing_team = team
+			TeamEditing.is_new_team = false
 			SceneTransition.change_scene("res://client/team_editor/team_editor.tscn")
 
 func _delete_team(team_uuid: String, team_name: String, team_preview: Node):

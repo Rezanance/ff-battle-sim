@@ -31,7 +31,7 @@ var fossilary_medals: Dictionary[int, TextureRect] = {}
 var config = ConfigFile.new()
 
 func _ready() -> void:
-	team = Constants.editing_team
+	team = TeamEditing.editing_team
 	config.load(Constants.teams_file)
 	_initialize_selectables()
 	_initialize_team_UI()
@@ -227,7 +227,7 @@ func _enable_disable_save_team_btn():
 func _on_save_team_pressed() -> void:
 	team.name = team_name_input.text
 	
-	config.set_value(Constants.editing_team.uuid, 'team', team.serialize())
+	config.set_value(TeamEditing.editing_team.uuid, 'team', team.serialize())
 	
 	var status = config.save(Constants.teams_file)
 	
