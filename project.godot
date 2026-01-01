@@ -18,12 +18,12 @@ config/icon="uid://bb7jtyck313ds"
 
 [autoload]
 
-SceneTransition="*res://client/autoloads/scene_transition.tscn"
 uuid="*res://addons/uuid/uuid.gd"
-DialogPopup="*res://client/autoloads/dialog_popup.tscn"
-GlobalAcceptDialog="*res://client/autoloads/accept_dialog.tscn"
-Networking="*res://client/autoloads/networking.gd"
-TeamEditing="*res://client/autoloads/team_editing.gd"
+SceneTransition="*res://client/global/scene_transition.tscn"
+DialogPopup="*res://client/global/dialog_popup.tscn"
+GlobalAcceptDialog="*res://client/global/accept_dialog.tscn"
+Networking="*res://client/global/networking.gd"
+TeamEditing="*res://client/global/team_editing.gd"
 ClientMatchMaking="*res://client/multiplayer/in/match_making.gd"
 ClientBattleSetup="*res://client/multiplayer/in/battle_setup.gd"
 ClientTurns="*res://client/multiplayer/in/turns.gd"
@@ -36,6 +36,13 @@ ClientServerConnectionOUT="*res://client/multiplayer/out/server_connection.gd"
 ClientMatchMakingOUT="*res://client/multiplayer/out/match_making.gd"
 ClientBattleSetupOUT="*res://client/multiplayer/out/battle_setup.gd"
 ClientTurnsOUT="*res://client/multiplayer/out/turns.gd"
+BattleNodes="*res://client/battle/common/nodes.gd"
+BattleVariables="*res://client/battle/common/variables.gd"
+SupportEffectsUI="*res://client/battle/support_effects.gd"
+SkillSignalHandlers="*res://client/battle/ui_signal_handlers/skill.gd"
+VivosaurSignalHandlers="*res://client/battle/ui_signal_handlers/vivosaur.gd"
+TurnStartUI="*res://client/battle/turn_start.gd"
+BattleInitiationUI="*res://client/battle/battle_initiation.gd"
 
 [display]
 

@@ -218,7 +218,7 @@ func _reset_medal_btn_pos():
 	currently_selected_medal_btn.global_position = fossilary_medals[currently_selected_medal_btn.vivosaur_id].global_position
 
 func show_vivosaur_summary(vivosaur_id: int):
-	VivosaurUI.show_vivosaur_summary(vivosaur_summary, vivosaur_id)
+	UIUtils.show_vivosaur_summary(vivosaur_summary, vivosaur_id)
 		
 func _enable_disable_save_team_btn():
 	save_btn.disabled = team_name_input.text.strip_edges() == '' or not team.is_valid()
