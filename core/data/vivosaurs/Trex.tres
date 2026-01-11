@@ -1,0 +1,9 @@
+[gd_resource type="Resource" script_class="VivosaurResource" load_steps=4 format=3 uid="uid://1al4wgoon1fi"]
+
+[ext_resource type="Script" uid="uid://bj0qwk3daymcj" path="res://core/data/Vivosaur.gd" id="1_j6cbe"]
+[ext_resource type="Script" uid="uid://tfde3pcbhqpi" path="res://core/data/Skill.gd" id="2_8clsn"]
+[ext_resource type="Script" uid="uid://nubhjw6614kq" path="res://core/data/Status.gd" id="3_nx86p"]
+
+[resource]
+script = ExtResource("1_j6cbe")
+lp = 2000

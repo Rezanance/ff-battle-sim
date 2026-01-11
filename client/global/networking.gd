@@ -2,8 +2,6 @@ extends Node
 
 const SERVER_PEER_ID = 1
 
-var connected = false
-
 var battle_id: int
 var player_info: Dictionary
 var player_team: Team

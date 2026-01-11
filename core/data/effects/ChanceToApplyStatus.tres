@@ -1,0 +1,8 @@
+[gd_resource type="Resource" script_class="EffectResource" load_steps=2 format=3 uid="uid://d4kd784secs47"]
+
+[ext_resource type="Script" uid="uid://i777a5qopawq" path="res://core/data/Effect.gd" id="1_0i6hk"]
+
+[resource]
+script = ExtResource("1_0i6hk")
+description = "Heello"
+required_params = Array[int]([0, 1])

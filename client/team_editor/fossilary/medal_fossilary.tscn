@@ -1,7 +1,7 @@
 [gd_scene load_steps=3 format=3 uid="uid://bb3upnec7kd05"]
 
 [ext_resource type="Texture2D" uid="uid://b3g5wux7ntdpr" path="res://client/assets/vivosaurs/1/medal/1 (2).png" id="1_ots5d"]
-[ext_resource type="Texture2D" uid="uid://clwr8ga6i8p7e" path="res://client/team_editor/fossilary/assets/circle.png" id="2_ybtfe"]
+[ext_resource type="Texture2D" uid="uid://clwr8ga6i8p7e" path="res://client/assets/medals/circle.png" id="2_ybtfe"]
 
 [node name="MedalFossilary" type="TextureRect"]
 custom_minimum_size = Vector2(90, 90)

@@ -1,34 +1,34 @@
 [
   {
-    "id": 1,
-    "name": "Fire"
+	"id": 1,
+	"name": "Fire"
   },
   {
-    "id": 2,
-    "name": "Air"
+	"id": 2,
+	"name": "Air"
   },
   {
-    "id": 3,
-    "name": "Earth"
+	"id": 3,
+	"name": "Earth"
   },
   {
-    "id": 4,
-    "name": "Water"
+	"id": 4,
+	"name": "Water"
   },
   {
-    "id": 5,
-    "name": "Neutral"
+	"id": 5,
+	"name": "Neutral"
   },
   {
-    "id": 6,
-    "name": "Violent"
+	"id": 6,
+	"name": "Violent"
   },
   {
-    "id": 16,
-    "name": "Japanese"
+	"id": 16,
+	"name": "Japanese"
   },
   {
-    "id": 30,
-    "name": "Dinaurians"
+	"id": 30,
+	"name": "Dinaurians"
   }
 ]

@@ -1,18 +1,29 @@
-[gd_scene load_steps=30 format=3 uid="uid://b5e63667bvai4"]
+[gd_scene load_steps=41 format=3 uid="uid://b5e63667bvai4"]
 
-[ext_resource type="Texture2D" uid="uid://cdxw7nby5hr34" path="res://client/assets/player_lobby/fossil-fighters-bg.webp" id="1_qohhd"]
-[ext_resource type="Script" uid="uid://fnsxtd3k6nge" path="res://client/player_lobby/player_lobby.gd" id="2_hrceg"]
-[ext_resource type="Theme" uid="uid://qw3ckwy7bak5" path="res://client/theme/ui_theme.tres" id="3_hrceg"]
-[ext_resource type="Texture2D" uid="uid://b0fvobcgknonn" path="res://client/assets/player_lobby/ff_logo.png" id="3_qohhd"]
-[ext_resource type="Script" uid="uid://csi8nl60mj4yq" path="res://client/player_lobby/team_select.gd" id="4_hmeuf"]
-[ext_resource type="Script" uid="uid://di0jpnawcxcxs" path="res://client/player_lobby/team_editor_btn.gd" id="4_q1g5o"]
-[ext_resource type="Script" uid="uid://ikifc5i2mrdl" path="res://client/player_lobby/quit.gd" id="5_gcpix"]
-[ext_resource type="Texture2D" uid="uid://clmis5rrdxbal" path="res://client/assets/wifi-icons/wifi.png" id="8_k3aj0"]
-[ext_resource type="Script" uid="uid://d00vbqrgootmd" path="res://client/player_lobby/player_icons.gd" id="9_hrceg"]
-[ext_resource type="Texture2D" uid="uid://bkq6uevdeu7ka" path="res://client/assets/copy/copy.png" id="10_hrceg"]
-[ext_resource type="Texture2D" uid="uid://clm1h7pg528ep" path="res://client/assets/copy/copy_hover.png" id="11_q1g5o"]
-[ext_resource type="Texture2D" uid="uid://dhqinoc2txy7e" path="res://client/assets/loading/loading.png" id="12_gcpix"]
-[ext_resource type="Script" uid="uid://ccp74qdnkf5ae" path="res://client/player_lobby/connecting.gd" id="13_qohhd"]
+[ext_resource type="Texture2D" uid="uid://cdxw7nby5hr34" path="res://client/assets/player_lobby/fossil-fighters-bg.webp" id="1_8wk0s"]
+[ext_resource type="Script" uid="uid://d3ucfeoxn1738" path="res://client/player_lobby/player_lobby.gd" id="2_iehqk"]
+[ext_resource type="Texture2D" uid="uid://b0fvobcgknonn" path="res://client/assets/player_lobby/ff_logo.png" id="3_74c76"]
+[ext_resource type="Script" uid="uid://csi8nl60mj4yq" path="res://client/player_lobby/team_select.gd" id="4_g1f3s"]
+[ext_resource type="Theme" uid="uid://qw3ckwy7bak5" path="res://client/theme/ui_theme.tres" id="5_l3us5"]
+[ext_resource type="Script" uid="uid://dcec8l45dqgay" path="res://client/player_lobby/direct_challenge_btn.gd" id="6_jmccb"]
+[ext_resource type="Script" uid="uid://di0jpnawcxcxs" path="res://client/player_lobby/team_editor_btn.gd" id="7_b37o5"]
+[ext_resource type="Script" uid="uid://ikifc5i2mrdl" path="res://client/player_lobby/quit.gd" id="8_0v064"]
+[ext_resource type="Script" uid="uid://d00vbqrgootmd" path="res://client/player_icons.gd" id="9_v3dyf"]
+[ext_resource type="Script" uid="uid://io22yovymyv6" path="res://client/player_lobby/display_name_input.gd" id="10_y6vqr"]
+[ext_resource type="Script" uid="uid://dny74ynied1j1" path="res://client/player_lobby/server_ip_input.gd" id="11_vy11n"]
+[ext_resource type="Texture2D" uid="uid://clmis5rrdxbal" path="res://client/assets/wifi-icons/wifi.png" id="12_jl2hl"]
+[ext_resource type="Script" uid="uid://h3ui8s5cq1eo" path="res://client/player_lobby/go_online_btn.gd" id="13_7a56m"]
+[ext_resource type="Script" uid="uid://bbxginu07xldj" path="res://client/player_lobby/player_id.gd" id="14_nyrxe"]
+[ext_resource type="Texture2D" uid="uid://bkq6uevdeu7ka" path="res://client/assets/copy/copy.png" id="15_l2pfp"]
+[ext_resource type="Texture2D" uid="uid://clm1h7pg528ep" path="res://client/assets/copy/copy_hover.png" id="16_ml81h"]
+[ext_resource type="Script" uid="uid://de2ke2111vfo4" path="res://client/player_lobby/copy_btn.gd" id="17_537s5"]
+[ext_resource type="Texture2D" uid="uid://dhqinoc2txy7e" path="res://client/assets/loading/loading.png" id="18_0ybco"]
+[ext_resource type="Script" uid="uid://ccp74qdnkf5ae" path="res://client/player_lobby/loading_conn.gd" id="19_x4b1m"]
+[ext_resource type="Script" uid="uid://ds33w0e1ax31g" path="res://client/player_lobby/waiting_challenge.gd" id="20_7oaxv"]
+[ext_resource type="Script" uid="uid://ct1mjtdk0c6un" path="res://client/player_lobby/send_challenge_popup.gd" id="21_v4kg1"]
+[ext_resource type="Script" uid="uid://b8t8rhluplj1f" path="res://client/player_lobby/opponent_player_id.gd" id="22_wm8eu"]
+[ext_resource type="Script" uid="uid://xyhfiy4jr8cj" path="res://client/player_lobby/send_challenge_btn.gd" id="23_stu6x"]
+[ext_resource type="Script" uid="uid://bvoyi81tp6he4" path="res://client/player_lobby/accept_challenge.gd" id="24_oyn8o"]
 
 [sub_resource type="SystemFont" id="SystemFont_uvhto"]
 font_names = PackedStringArray("Futura")
@@ -47,43 +58,43 @@ font_names = PackedStringArray("Monospace")
 font_italic = true
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_qohhd"]
-atlas = ExtResource("12_gcpix")
+atlas = ExtResource("18_0ybco")
 region = Rect2(0, 0, 48, 48)
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_b45hg"]
-atlas = ExtResource("12_gcpix")
+atlas = ExtResource("18_0ybco")
 region = Rect2(48, 0, 48, 48)
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_k3aj0"]
-atlas = ExtResource("12_gcpix")
+atlas = ExtResource("18_0ybco")
 region = Rect2(96, 0, 48, 48)
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_fye4s"]
-atlas = ExtResource("12_gcpix")
+atlas = ExtResource("18_0ybco")
 region = Rect2(144, 0, 48, 48)
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_qfdgg"]
-atlas = ExtResource("12_gcpix")
+atlas = ExtResource("18_0ybco")
 region = Rect2(192, 0, 48, 48)
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_1l27s"]
-atlas = ExtResource("12_gcpix")
+atlas = ExtResource("18_0ybco")
 region = Rect2(240, 0, 48, 48)
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_8eqp2"]
-atlas = ExtResource("12_gcpix")
+atlas = ExtResource("18_0ybco")
 region = Rect2(288, 0, 48, 48)
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_ra0c6"]
-atlas = ExtResource("12_gcpix")
+atlas = ExtResource("18_0ybco")
 region = Rect2(336, 0, 48, 48)
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_w8nrr"]
-atlas = ExtResource("12_gcpix")
+atlas = ExtResource("18_0ybco")
 region = Rect2(384, 0, 48, 48)
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_n5g0v"]
-atlas = ExtResource("12_gcpix")
+atlas = ExtResource("18_0ybco")
 region = Rect2(432, 0, 48, 48)
 
 [sub_resource type="SpriteFrames" id="SpriteFrames_eaq1v"]
@@ -127,9 +138,9 @@ animations = [{
 [node name="PlayerLobby" type="TextureRect"]
 offset_right = 1920.0
 offset_bottom = 1080.0
-texture = ExtResource("1_qohhd")
+texture = ExtResource("1_8wk0s")
 expand_mode = 5
-script = ExtResource("2_hrceg")
+script = ExtResource("2_iehqk")
 
 [node name="BackgroundOverlay" type="ColorRect" parent="."]
 layout_mode = 0
@@ -150,7 +161,7 @@ layout_mode = 2
 
 [node name="FF1Logo" type="TextureRect" parent="VBoxContainer/Logo"]
 layout_mode = 2
-texture = ExtResource("3_qohhd")
+texture = ExtResource("3_74c76")
 expand_mode = 5
 
 [node name="Simulator" type="Label" parent="VBoxContainer/Logo"]
@@ -187,28 +198,29 @@ item_count = 1
 popup/item_0/text = "Team"
 popup/item_0/id = 0
 popup/item_0/disabled = true
-script = ExtResource("4_hmeuf")
+script = ExtResource("4_g1f3s")
 
 [node name="DirectChallengeBtn" type="Button" parent="VBoxContainer"]
 layout_mode = 2
-theme = ExtResource("3_hrceg")
+theme = ExtResource("5_l3us5")
 disabled = true
 text = "Direct Challenge"
+script = ExtResource("6_jmccb")
 
 [node name="TeamEditorBtn" type="Button" parent="VBoxContainer"]
 layout_mode = 2
-theme = ExtResource("3_hrceg")
+theme = ExtResource("5_l3us5")
 text = "Team Editor"
-script = ExtResource("4_q1g5o")
+script = ExtResource("7_b37o5")
 
 [node name="QuitBtn" type="Button" parent="VBoxContainer"]
 layout_mode = 2
-theme = ExtResource("3_hrceg")
+theme = ExtResource("5_l3us5")
 text = "Quit
 "
-script = ExtResource("5_gcpix")
+script = ExtResource("8_0v064")
 
-[node name="PlayerIcons" type="OptionButton" parent="."]
+[node name="PlayerIconSelect" type="OptionButton" parent="."]
 layout_mode = 1
 anchors_preset = 1
 anchor_left = 1.0
@@ -218,9 +230,9 @@ offset_top = 80.0
 offset_right = -118.0
 offset_bottom = 146.0
 grow_horizontal = 0
-script = ExtResource("9_hrceg")
+script = ExtResource("9_v3dyf")
 
-[node name="DisplayName" type="LineEdit" parent="."]
+[node name="DisplayNameInput" type="LineEdit" parent="."]
 layout_mode = 1
 anchors_preset = 1
 anchor_left = 1.0
@@ -232,8 +244,9 @@ offset_bottom = 282.0
 grow_horizontal = 0
 theme_override_styles/normal = SubResource("StyleBoxFlat_1a1kh")
 placeholder_text = "Display Name"
+script = ExtResource("10_y6vqr")
 
-[node name="ServerIP" type="LineEdit" parent="."]
+[node name="ServerIPInput" type="LineEdit" parent="."]
 layout_mode = 1
 anchors_preset = 1
 anchor_left = 1.0
@@ -246,6 +259,7 @@ grow_horizontal = 0
 theme_override_styles/normal = SubResource("StyleBoxFlat_1a1kh")
 text = "10.0.0.61"
 placeholder_text = "Server IP"
+script = ExtResource("11_vy11n")
 
 [node name="GoOnlineBtn" type="Button" parent="."]
 layout_mode = 0
@@ -255,9 +269,10 @@ offset_right = 1804.0
 offset_bottom = 471.0
 disabled = true
 text = "Go Online!"
-icon = ExtResource("8_k3aj0")
+icon = ExtResource("12_jl2hl")
 icon_alignment = 2
 expand_icon = true
+script = ExtResource("13_7a56m")
 
 [node name="Label" type="Label" parent="."]
 layout_mode = 1
@@ -277,19 +292,20 @@ theme_override_font_sizes/font_size = 36
 text = "Player ID: "
 
 [node name="PlayerID" type="Label" parent="."]
-visible = false
 layout_mode = 1
 anchors_preset = 1
 anchor_left = 1.0
 anchor_right = 1.0
-offset_left = -143.0
+offset_left = -334.0
 offset_top = 547.0
 offset_right = -103.0
-offset_bottom = 564.0
+offset_bottom = 584.0
 grow_horizontal = 0
 theme_override_colors/font_color = Color(0, 0, 0, 1)
 theme_override_fonts/font = SubResource("SystemFont_gcpix")
 theme_override_font_sizes/font_size = 36
+text = "N/A"
+script = ExtResource("14_nyrxe")
 
 [node name="CopyBtn" type="TextureButton" parent="."]
 visible = false
@@ -303,29 +319,31 @@ offset_right = 160.0
 offset_bottom = 1053.0
 grow_horizontal = 0
 scale = Vector2(0.05, 0.05)
-texture_normal = ExtResource("10_hrceg")
-texture_pressed = ExtResource("10_hrceg")
-texture_hover = ExtResource("11_q1g5o")
+texture_normal = ExtResource("15_l2pfp")
+texture_pressed = ExtResource("15_l2pfp")
+texture_hover = ExtResource("16_ml81h")
+script = ExtResource("17_537s5")
 
 [node name="LoadingConn" type="AnimatedSprite2D" parent="."]
 visible = false
 position = Vector2(1455, 449)
 sprite_frames = SubResource("SpriteFrames_eaq1v")
 frame_progress = 0.22291267
-script = ExtResource("13_qohhd")
+script = ExtResource("19_x4b1m")
 
 [node name="WaitingChallenge" type="AnimatedSprite2D" parent="."]
 visible = false
 position = Vector2(659, 664)
 sprite_frames = SubResource("SpriteFrames_eaq1v")
 frame_progress = 0.28708875
-script = ExtResource("13_qohhd")
+script = ExtResource("20_7oaxv")
 
 [node name="SendChallenge" type="PopupPanel" parent="."]
 oversampling_override = 1.0
 title = "Battle Form"
 initial_position = 2
 size = Vector2i(678, 200)
+script = ExtResource("21_v4kg1")
 
 [node name="CenterContainer" type="CenterContainer" parent="SendChallenge"]
 offset_left = 10.0
@@ -350,6 +368,7 @@ text = "Opponent's Player ID: "
 custom_minimum_size = Vector2(300, 0)
 layout_mode = 2
 placeholder_text = "1234567890"
+script = ExtResource("22_wm8eu")
 
 [node name="CenterContainer" type="CenterContainer" parent="SendChallenge/CenterContainer/VBoxContainer"]
 layout_mode = 2
@@ -358,25 +377,28 @@ layout_mode = 2
 layout_mode = 2
 disabled = true
 text = "Send Challenge!"
+script = ExtResource("23_stu6x")
 
 [node name="AcceptChallenge" type="ConfirmationDialog" parent="."]
 oversampling_override = 1.0
 title = "Battle Invitation"
 initial_position = 2
 size = Vector2i(500, 200)
-theme = ExtResource("3_hrceg")
+theme = ExtResource("5_l3us5")
 ok_button_text = "Accept"
 dialog_text = "{Player} ({id}) challenges you to a Fossil Battle. Do accept??!"
 dialog_autowrap = true
 cancel_button_text = "Decline"
+script = ExtResource("24_oyn8o")
 
-[connection signal="item_selected" from="VBoxContainer/TeamSelect" to="." method="_on_team_selected"]
-[connection signal="pressed" from="VBoxContainer/DirectChallengeBtn" to="." method="_on_battle_btn_pressed"]
+[connection signal="item_selected" from="VBoxContainer/TeamSelect" to="." method="_on_team_changed"]
+[connection signal="pressed" from="VBoxContainer/DirectChallengeBtn" to="SendChallenge" method="_on_direct_challenge_btn_pressed"]
+[connection signal="pressed" from="VBoxContainer/DirectChallengeBtn" to="SendChallenge/CenterContainer/VBoxContainer/HBoxContainer/OpponentPlayerId" method="_on_direct_challenge_btn_pressed"]
+[connection signal="pressed" from="VBoxContainer/DirectChallengeBtn" to="SendChallenge/CenterContainer/VBoxContainer/CenterContainer/SendChallengeBtn" method="_on_direct_challenge_btn_pressed"]
 [connection signal="pressed" from="VBoxContainer/TeamEditorBtn" to="VBoxContainer/TeamEditorBtn" method="_on_pressed"]
-[connection signal="pressed" from="VBoxContainer/QuitBtn" to="VBoxContainer/QuitBtn" method="_on_pressed"]
-[connection signal="pressed" from="GoOnlineBtn" to="." method="_on_go_online_btn_pressed"]
-[connection signal="pressed" from="CopyBtn" to="." method="_on_copy_btn_pressed"]
-[connection signal="text_changed" from="SendChallenge/CenterContainer/VBoxContainer/HBoxContainer/OpponentPlayerId" to="." method="_on_opponent_player_id_text_changed"]
-[connection signal="pressed" from="SendChallenge/CenterContainer/VBoxContainer/CenterContainer/SendChallengeBtn" to="." method="_on_send_challenge_btn_pressed"]
-[connection signal="canceled" from="AcceptChallenge" to="." method="_on_decline_challenge"]
-[connection signal="confirmed" from="AcceptChallenge" to="." method="_on_accept_challenge"]
+[connection signal="item_selected" from="PlayerIconSelect" to="." method="_on_icon_changed"]
+[connection signal="text_changed" from="DisplayNameInput" to="." method="_on_display_name_changed"]
+[connection signal="text_changed" from="ServerIPInput" to="." method="_on_server_ip_changed"]
+[connection signal="text_changed" from="SendChallenge/CenterContainer/VBoxContainer/HBoxContainer/OpponentPlayerId" to="SendChallenge/CenterContainer/VBoxContainer/CenterContainer/SendChallengeBtn" method="_on_opponent_player_id_text_changed"]
+[connection signal="canceled" from="AcceptChallenge" to="AcceptChallenge" method="_on_decline_challenge"]
+[connection signal="confirmed" from="AcceptChallenge" to="AcceptChallenge" method="_on_accept_challenge"]

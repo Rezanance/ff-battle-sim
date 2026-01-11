@@ -18,6 +18,9 @@ enum Target {
 	ALL_ENEMIES,
 	ALL
 }
+enum EffectParam {
+	CHANCE, LP, STATUS, 
+}
 
 class Effect:
 	var id: String

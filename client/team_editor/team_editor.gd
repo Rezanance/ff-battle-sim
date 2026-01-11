@@ -223,7 +223,6 @@ func show_vivosaur_summary(vivosaur_id: int):
 func _enable_disable_save_team_btn():
 	save_btn.disabled = team_name_input.text.strip_edges() == '' or not team.is_valid()
 
-
 func _on_save_team_pressed() -> void:
 	team.name = team_name_input.text
 	

@@ -1,0 +1,13 @@
+[gd_resource type="Resource" script_class="EffectParamsResource" load_steps=4 format=3 uid="uid://gl2wyma5a2kc"]
+
+[ext_resource type="Resource" uid="uid://d4kd784secs47" path="res://core/data/effects/ChanceToApplyStatus.tres" id="1_ox73g"]
+[ext_resource type="Resource" uid="uid://b2nmxjfxr6xyk" path="res://core/data/statuses/SuperSleep.tres" id="2_x6m8u"]
+[ext_resource type="Script" uid="uid://dkmjfk8jhivi0" path="res://core/data/EffectParams.gd" id="3_nsteh"]
+
+[resource]
+script = ExtResource("3_nsteh")
+effect = ExtResource("1_ox73g")
+params = Dictionary[int, Variant]({
+0: 30,
+2: ExtResource("2_x6m8u")
+})

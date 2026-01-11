@@ -1,0 +1,12 @@
+[gd_resource type="Resource" script_class="StatusResource" load_steps=3 format=3 uid="uid://b2nmxjfxr6xyk"]
+
+[ext_resource type="Script" uid="uid://nubhjw6614kq" path="res://core/data/Status.gd" id="1_2cvo7"]
+[ext_resource type="Texture2D" uid="uid://dy81cd6pxm6gf" path="res://client/assets/statuses/Super_Sleep.webp" id="1_acdv3"]
+
+[resource]
+script = ExtResource("1_2cvo7")
+name = "Super Sleep"
+is_negative = true
+description = "Prevents a vivosaur from using any skills and reduces evasion to 0. A sleeping vivosaur will wake up if attacked twice"
+turns_active = 2
+icon = ExtResource("1_acdv3")

@@ -1,8 +1,5 @@
 extends TextureRect
 
-
-var MedalBtn = preload("res://client/team_editor/fossilary/medal_btn.tscn")
-
 @onready var formation_slots: TextureRect = $"FormationSlots"
 
 @onready var player_slot1_selectable: AnimatedSprite2D = $"FormationSlots/Slot1"
@@ -26,12 +23,14 @@ var MedalBtn = preload("res://client/team_editor/fossilary/medal_btn.tscn")
 @onready var opp_icon: TextureRect = $TextureRect2/OppIcon
 @onready var opp_name: Label = $TextureRect2/OppName
 
-
 var currently_selected_medal_btn: TextureButton
 var selectable_slots: Array[AnimatedSprite2D]
 var opponent_slots: Array[TextureButton]
 var slots_medal_btns: Array = [null, null, null, null, null]
 var time_left = 90.0
+
+
+var MedalBtn = preload("res://client/team_editor/fossilary/medal_btn.tscn")
 
 # Called when the node enters the scene tree for the first time.
 func _ready() -> void:
@@ -45,12 +44,13 @@ func _ready() -> void:
 	ClientBattleSetup.battle_started.connect(_on_battle_started)
 
 func _process(delta: float) -> void:
-	if time_left > 0:
-		time_left -= delta
-		if time_left > 0:
-			timer.text = "%.2f" % time_left
+	if BattlePrepVariables.time_left > 0:
+		BattlePrepVariables.time_left -= delta
+		if BattlePrepVariables.time_left > 0:
+			BattlePrepNodes.timer.text = "%.2f" % BattlePrepVariables.time_left
 		else:
-			timer.text = "0"
+			BattlePrepNodes.timer.text = "0"
+
 
 func initialize_UI():
 	var icon_path = 'res://client/assets/player-icons'
@@ -59,7 +59,7 @@ func initialize_UI():
 	opp_icon.texture = load(icon_path + '/' + icon_files[Networking.opponent_info['icon_id']])
 	player_name.text = Networking.player_info['display_name']
 	opp_name.text = Networking.opponent_info['display_name']
-
+	
 func initialize_player_slots():
 	selectable_slots = [player_slot1_selectable, player_slot2_selectable, player_slot3_selectable, player_slot4_selectable, player_slot5_selectable]
 	for i in range(len(selectable_slots)):

@@ -36,13 +36,6 @@ ClientServerConnectionOUT="*res://client/multiplayer/out/server_connection.gd"
 ClientMatchMakingOUT="*res://client/multiplayer/out/match_making.gd"
 ClientBattleSetupOUT="*res://client/multiplayer/out/battle_setup.gd"
 ClientTurnsOUT="*res://client/multiplayer/out/turns.gd"
-BattleNodes="*res://client/battle/common/nodes.gd"
-BattleVariables="*res://client/battle/common/variables.gd"
-SupportEffectsUI="*res://client/battle/support_effects.gd"
-SkillSignalHandlers="*res://client/battle/ui_signal_handlers/skill.gd"
-VivosaurSignalHandlers="*res://client/battle/ui_signal_handlers/vivosaur.gd"
-TurnStartUI="*res://client/battle/turn_start.gd"
-BattleInitiationUI="*res://client/battle/battle_initiation.gd"
 
 [display]
 

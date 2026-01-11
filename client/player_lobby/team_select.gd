@@ -4,10 +4,10 @@ var config = ConfigFile.new()
 
 # Called when the node enters the scene tree for the first time.
 func _ready() -> void:
-	_add_teams_names()
+	add_teams_names()
 	selected = 0
-
-func _add_teams_names():
+	
+func add_teams_names():
 	if OS.has_feature('dedicated_server'):
 		return
 	

@@ -2,6 +2,7 @@ class_name VivosaurInfo
 
 
 enum Element {FIRE, WATER, AIR, EARTH, NEUTRAL, LEGENDARY}
+enum Class {ATTACK, LONG_RANGE, SUPPORT}
 
 var id: int
 var name: String

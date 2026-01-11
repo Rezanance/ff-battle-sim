@@ -16,8 +16,8 @@ func _ready() -> void:
 		multiplayer.server_disconnected.connect(_on_player_disconnected)
 		multiplayer.peer_disconnected.connect(_on_peer_disconnected)
 
-func go_online(server_ip: String, display_name: String, icon_id: int):
-	if not Networking.connected:
+func go_online(server_ip: String, display_name: String, icon_id: int, connected: bool):
+	if not connected:
 		var peer = ENetMultiplayerPeer.new()
 		var error = peer.create_client(server_ip, Config.PORT)
 		if error:
