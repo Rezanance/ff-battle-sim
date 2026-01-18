@@ -26,7 +26,7 @@ extends TextureRect
 var currently_selected_medal_btn: TextureButton
 var selectable_slots: Array[AnimatedSprite2D]
 var opponent_slots: Array[TextureButton]
-var slots_medal_btns: Array = [null, null, null, null, null]
+var team_slot_medal_btns: Array = [null, null, null, null, null]
 var time_left = 90.0
 
 
@@ -83,7 +83,7 @@ func add_medals(is_player_team: bool):
 			var _texture = load_medal_texture(vivosaur.id)
 			var medal_btn = create_medal_btn(_texture, vivosaur.id, is_player_team)
 			if is_player_team:
-				slots_medal_btns[slot] = medal_btn
+				team_slot_medal_btns[slot] = medal_btn
 				medal_btn.global_position = selectable_slots[slot].global_position
 			else:
 				medal_btn.global_position = opponent_slots[slot].global_position + Vector2(0, 2)
@@ -100,12 +100,12 @@ func create_medal_btn(_texture, vivosaur_id: int, is_player_team: bool):
 	return medal_btn
 
 func move_swap_slots(new_slot: int):
-	var current_slot = slots_medal_btns.find(currently_selected_medal_btn)
+	var current_slot = team_slot_medal_btns.find(currently_selected_medal_btn)
 	
 #	Swap medal btn slots 
-	var medal_btn_in_new_slot = slots_medal_btns[new_slot]
-	slots_medal_btns[new_slot] = slots_medal_btns[current_slot]
-	slots_medal_btns[current_slot] = medal_btn_in_new_slot
+	var medal_btn_in_new_slot = team_slot_medal_btns[new_slot]
+	team_slot_medal_btns[new_slot] = team_slot_medal_btns[current_slot]
+	team_slot_medal_btns[current_slot] = medal_btn_in_new_slot
 	
 	currently_selected_medal_btn.get_node("SelectedAnimation").visible = false
 			
@@ -124,17 +124,17 @@ func move_swap_slots(new_slot: int):
 	Networking.player_team.slots[current_slot] = vivosaur_in_new_slot
 	
 #	Restore input to buttons
-	for slot_medal_btn in slots_medal_btns:
+	for slot_medal_btn in team_slot_medal_btns:
 		if slot_medal_btn != null:
 			slot_medal_btn.mouse_filter = MouseFilter.MOUSE_FILTER_STOP
 
 func show_selectable_slots():
 	for i in range(len(selectable_slots)):
-		if currently_selected_medal_btn != slots_medal_btns[i]:
+		if currently_selected_medal_btn != team_slot_medal_btns[i]:
 			selectable_slots[i].visible = true
 #			Temporarily ignore input from buttons
-			if slots_medal_btns[i] != null:
-				slots_medal_btns[i].mouse_filter = MouseFilter.MOUSE_FILTER_IGNORE
+			if team_slot_medal_btns[i] != null:
+				team_slot_medal_btns[i].mouse_filter = MouseFilter.MOUSE_FILTER_IGNORE
 		else:
 			selectable_slots[i].visible = false
 

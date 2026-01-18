@@ -10,7 +10,7 @@ var crit_chance: float
 var ranged_multiplier: float
 
 func _init(_life_points: int, _attack: int, _defense: int, _accuracy: int,
-_evasion: int, _crit_chance: float, _ranged_multiplier: float):
+_evasion: int, _crit_chance: float, _ranged_multiplier: float) -> void:
 	assert(_life_points >= 0)
 	assert(_attack >= 0)
 	assert(_defense >= 0)

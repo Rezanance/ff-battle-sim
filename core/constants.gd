@@ -1,13 +1,13 @@
 class_name Constants
 
 
-static var vivosaurs_json = preload("res://core/data/vivosaurs.json").data
-static var skills_json = preload("res://core/data/skills.json").data
-static var effects_json = preload("res://core/data/effects.json").data
-static var statuses_json = preload("res://core/data/statuses.json").data
+static var vivosaurs_json: Variant = preload("res://core/data/vivosaurs.json").data
+static var skills_json: Variant = preload("res://core/data/skills.json").data
+static var effects_json: Variant = preload("res://core/data/effects.json").data
+static var statuses_json: Variant = preload("res://core/data/statuses.json").data
 
-static var teams_file = "user://teams.cfg"
-static var preferences_file = "user://preferences.cfg"
+static var teams_file: String = "user://teams.cfg"
+static var preferences_file: String = "user://preferences.cfg"
 
 # Data on all vivosaurs with the id as the key
 static var fossilary: Dictionary[int, VivosaurInfo]
@@ -15,7 +15,7 @@ static var fossilary: Dictionary[int, VivosaurInfo]
 static func _static_init() -> void:
 	initialize_fossilary()
 	
-static func initialize_fossilary():
+static func initialize_fossilary() -> void:
 	for vivosaur_id in vivosaurs_json:
 		var vivosaur = vivosaurs_json[vivosaur_id]
 		var vivo_skills: Array[Skill] = []

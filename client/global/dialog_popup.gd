@@ -3,10 +3,10 @@ extends Panel
 
 enum MessageType {SUCCESS, ERROR}
 
-func reveal_dialog(message_type: MessageType, message: String):
+func reveal_dialog(message_type: MessageType, message: String) -> void:
 	var style_box_flat: StyleBoxFlat = theme.get_stylebox('panel', 'Panel').duplicate()
 
-	var icon
+	var icon: String
 	if message_type == MessageType.SUCCESS:
 		style_box_flat.bg_color = Color.hex(0xc8ffddc8)
 		icon = "res://client/assets/dialog_popups/green-checkmark.png"

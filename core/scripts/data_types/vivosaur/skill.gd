@@ -26,7 +26,7 @@ class Effect:
 	var id: String
 	var parameters: Dictionary
 	
-	func _init(_id: String, _parameters: Dictionary):
+	func _init(_id: String, _parameters: Dictionary) -> void:
 		id = _id
 		parameters = _parameters
 
@@ -42,11 +42,11 @@ var counterable: bool
 
 func _init(_id: String, _type_str: String, _description: String, _name: String,
 _damage: int, _fp_cost: int, _target_str: String, _effects: Dictionary[String, Effect],
-_counterable: bool):
+_counterable: bool) -> void:
 	assert(damage >= 0)
 	assert(fp_cost >= 0)
 	
-	var _skill_type
+	var _skill_type: Type
 	match _type_str.to_lower().strip_edges():
 		'damage':
 			_skill_type = Type.DAMAGE
@@ -63,7 +63,7 @@ _counterable: bool):
 		_:
 			assert(false, 'Not a valid skill type')
 			
-	var _target
+	var _target: Target
 	match _target_str.to_lower().strip_edges():
 		'self':
 			_target = Target.SELF

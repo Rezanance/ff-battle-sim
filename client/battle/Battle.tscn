@@ -3,7 +3,7 @@
 [ext_resource type="Texture2D" uid="uid://bp640urtcm7u3" path="res://client/assets/battlefields/15.png" id="1_hkniu"]
 [ext_resource type="Script" uid="uid://dmtm3ded2fmjg" path="res://client/battle/battle.gd" id="2_5r4g4"]
 [ext_resource type="Texture2D" uid="uid://cqd6js1dnxjhr" path="res://client/assets/support_effects/1111.png" id="2_pjid2"]
-[ext_resource type="PackedScene" uid="uid://twprmxgwv8kw" path="res://client/team_editor/vivosaur_summary/VivosaurSummary.tscn" id="4_34q6o"]
+[ext_resource type="PackedScene" uid="uid://twprmxgwv8kw" path="res://client/common/vivosaur_summary/VivosaurSummary.tscn" id="4_34q6o"]
 [ext_resource type="PackedScene" uid="uid://vl2rq8bashda" path="res://client/battle/VivosaurSprite.tscn" id="4_dgjnm"]
 [ext_resource type="Texture2D" uid="uid://bm2l3pyiylbyo" path="res://client/assets/backgrounds/ceratops_oraange.png" id="4_v3re7"]
 [ext_resource type="PackedScene" uid="uid://cun17yo45gcvm" path="res://client/battle/TotalLp.tscn" id="5_r8nfv"]

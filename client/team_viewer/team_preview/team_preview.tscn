@@ -1,8 +1,9 @@
-[gd_scene load_steps=5 format=3 uid="uid://ctrtxlg3nby8r"]
+[gd_scene load_steps=6 format=3 uid="uid://ctrtxlg3nby8r"]
 
-[ext_resource type="Texture2D" uid="uid://dge7lrtu82fp1" path="res://client/team_viewer/assets/giant_fossil_rock.png" id="1_6v28v"]
+[ext_resource type="Texture2D" uid="uid://dge7lrtu82fp1" path="res://client/assets/fossil_rocks/giant_fossil_rock.png" id="1_6v28v"]
 [ext_resource type="Script" uid="uid://tb1a4le3y1c8" path="res://client/team_viewer/team_preview/team_preview.gd" id="1_o6ahg"]
 [ext_resource type="Texture2D" uid="uid://d3rw1bcnrd1c8" path="res://client/assets/Formation_slots.png" id="2_tvx1y"]
+[ext_resource type="Script" uid="uid://5brwamwdms18" path="res://client/team_viewer/team_preview/delete.gd" id="4_k1rtd"]
 
 [sub_resource type="SystemFont" id="SystemFont_e1cs2"]
 font_names = PackedStringArray("Monospace")
@@ -85,3 +86,4 @@ expand_mode = 3
 [node name="Delete" type="Button" parent="."]
 layout_mode = 2
 text = "Delete"
+script = ExtResource("4_k1rtd")

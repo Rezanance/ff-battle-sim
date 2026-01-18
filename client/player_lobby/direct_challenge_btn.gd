@@ -11,6 +11,6 @@ func _on_player_connected(_player_info):
 func _on_opponent_not_online():
 	disabled = false
 
-func _on_challenge_declined(opponent_info: Dictionary) -> void:
+func _on_challenge_declined(_opponent_info: Dictionary) -> void:
 	disabled = false
 	

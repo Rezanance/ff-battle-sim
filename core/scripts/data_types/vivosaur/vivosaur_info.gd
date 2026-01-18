@@ -17,8 +17,8 @@ var team_skill_groups: Array[int]
 func _init(_id: int, _name: String, _element_str: String,
 _stats: Stats, _support_effects: SupportEffects, _skills: Array[Skill],
 _battle_class: String, _status_immunities: Array[Status],
-_team_skill_groups: Array[int]):
-	var _element
+_team_skill_groups: Array[int]) -> void:
+	var _element: Element
 	match _element_str.to_lower().strip_edges():
 		'fire':
 			_element = Element.FIRE

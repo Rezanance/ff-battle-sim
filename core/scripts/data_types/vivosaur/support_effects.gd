@@ -8,7 +8,7 @@ var accuracy_modifier: float
 var evasion_modifier: float
 
 func _init(_own_az: bool, _attack_modifier: float, _defense_modifier: float,
-_accuracy_modifier: float, _evasion_modifier: float):
+_accuracy_modifier: float, _evasion_modifier: float) -> void:
 	assert(_attack_modifier >= -1 and _attack_modifier <= 1)
 	assert(_defense_modifier >= -1 and _defense_modifier <= 1)
 	assert(_accuracy_modifier >= -1 and _accuracy_modifier <= 1)

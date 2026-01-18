@@ -23,29 +23,12 @@ func _ready() -> void:
 				if vivosaur_slot != null:
 					medal_container.get_child(i).texture = load("res://client/assets/vivosaurs/%s/medal/%s (2).png" % [vivosaur_slot.id, vivosaur_slot.id])
 			
-			team_preview.get_node("Delete").pressed.connect(_delete_team.bind(team_uuid, team.name, team_preview))
-			team_preview.gui_input.connect(_on_team_preview_gui_input.bind(team))
+			var delete_btn = team_preview.get_node("Delete")
+			delete_btn.pressed.connect(delete_btn._delete_team.bind(team_uuid, team.name, team_preview))
+			team_preview.gui_input.connect(team_preview._on_gui_input.bind(team))
 			add_child(team_preview)
 			
-	_add_new_team_btn()
+	add_new_team_btn()
 	
-	
-func _add_new_team_btn():
+func add_new_team_btn():
 	add_child(NewTeamBtn.instantiate()) 
-
-func _on_team_preview_gui_input(event: InputEvent, team: Team) -> void:
-	if event is InputEventMouseButton:
-		if event.button_index == MOUSE_BUTTON_LEFT and event.pressed:
-			TeamEditing.editing_team = team
-			TeamEditing.is_new_team = false
-			SceneTransition.change_scene("res://client/team_editor/team_editor.tscn")
-
-func _delete_team(team_uuid: String, team_name: String, team_preview: Node):
-	config.erase_section(team_uuid)
-	var status = config.save(Constants.teams_file)
-	
-	if status == OK:
-		DialogPopup.reveal_dialog(DialogPopup.MessageType.SUCCESS, "\"%s\" deleted sucessfully " % team_name)
-		team_preview.queue_free()
-	else:
-		DialogPopup.reveal_dialog(DialogPopup.MessageType.ERROR, "Error deleting \"%s\"" % team_name)

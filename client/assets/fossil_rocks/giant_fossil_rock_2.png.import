@@ -3,15 +3,15 @@
 importer="texture"
 type="CompressedTexture2D"
 uid="uid://0rslbu47ytjt"
-path="res://.godot/imported/giant_fossil_rock_2.png-63a3d660bf3d889f67431a1703ce2d09.ctex"
+path="res://.godot/imported/giant_fossil_rock_2.png-0409c3208ca1ceeed31634f72c514d9a.ctex"
 metadata={
 "vram_texture": false
 }
 
 [deps]
 
-source_file="res://client/team_viewer/assets/giant_fossil_rock_2.png"
-dest_files=["res://.godot/imported/giant_fossil_rock_2.png-63a3d660bf3d889f67431a1703ce2d09.ctex"]
+source_file="res://client/assets/fossil_rocks/giant_fossil_rock_2.png"
+dest_files=["res://.godot/imported/giant_fossil_rock_2.png-0409c3208ca1ceeed31634f72c514d9a.ctex"]
 
 [params]
 

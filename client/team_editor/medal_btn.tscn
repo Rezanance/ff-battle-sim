@@ -1,6 +1,6 @@
 [gd_scene load_steps=8 format=3 uid="uid://d1onejqadwhw8"]
 
-[ext_resource type="Script" uid="uid://cexbj051wwqj2" path="res://client/team_editor/fossilary/medal_btn.gd" id="1_f6uvh"]
+[ext_resource type="Script" uid="uid://d36j0m7yb05dh" path="res://client/team_editor/medal_btn.gd" id="1_f6uvh"]
 [ext_resource type="Texture2D" uid="uid://cobhs474gbevu" path="res://client/assets/hud/selected.png" id="2_j8164"]
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_ncb4d"]
