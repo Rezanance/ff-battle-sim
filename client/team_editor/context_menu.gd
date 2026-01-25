@@ -1,17 +1,35 @@
 extends PopupMenu
+class_name ContextMenu
 
-@onready var team_editor: TeamEditor = $'..'
-@onready var fossilary_container: FossilaryContainer = $'../TextureRect/ScrollContainer/FossilaryContainer'
-@onready var team_name_input: LineEdit = $'../TeamNameInput'
-@onready var team_slots: TeamSlots = $'../TeamSlots'
+var menu_items: Array[MenuItem]
 
+enum Action {ASSIGN, MOVE_SWAP, REMOVE}
+
+class MenuItem:
+	var name: String
+	var can_show: Callable
+	var action: Callable
+	
+	func _init(_name: String, _can_show: Callable, _action: Callable) -> void:
+		name = _name
+		can_show = _can_show	
+		action = _action
+
+func init(_menu_items: Array[MenuItem]) -> void:
+	menu_items = _menu_items
+	
 func _on_id_pressed(context_menu_id: int) -> void:
-	team_slots.hide_selectable_slots()
-	if context_menu_id == 0 or context_menu_id == 1:
-		team_slots.show_selectable_slots(context_menu_id)
-	else:
-		team_slots.remove_medal()
-	team_editor.current_action = context_menu_id
+	menu_items[context_menu_id].action.call()
 
-func _reset_medal_btn_pos() -> void:
-	team_editor.currently_selected_medal_btn.global_position = fossilary_container.medal_placeholders[team_editor.currently_selected_medal_btn.vivosaur_id].global_position
+func show_menu(
+	mouse_position: Vector2, 
+	medal_btn: MedalBtn
+) -> void:
+	clear()
+	var id: int = 0
+	for item: MenuItem in menu_items:
+		if item.can_show.call(medal_btn):
+			add_item(item.name, id)
+		id += 1
+	position = mouse_position
+	visible = true

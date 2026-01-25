@@ -1,6 +1,6 @@
 [gd_scene load_steps=8 format=3 uid="uid://csf7xfx46ynyt"]
 
-[ext_resource type="Script" uid="uid://g5ap1jc7ukjy" path="res://client/global/dialog_popup.gd" id="1_txnc8"]
+[ext_resource type="Script" uid="uid://g5ap1jc7ukjy" path="res://client/autoloads/dialog_popup.gd" id="1_txnc8"]
 
 [sub_resource type="StyleBoxFlat" id="StyleBoxFlat_txnc8"]
 bg_color = Color(0.101960786, 0.61960787, 0.36078432, 0.78431374)

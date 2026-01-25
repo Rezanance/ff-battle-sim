@@ -1,21 +1,21 @@
 extends OptionButton
 
-var config = ConfigFile.new()
+var config: ConfigFile = ConfigFile.new()
 
 # Called when the node enters the scene tree for the first time.
 func _ready() -> void:
 	add_teams_names()
 	selected = 0
 	
-func add_teams_names():
+func add_teams_names() -> void:
 	if OS.has_feature('dedicated_server'):
 		return
 	
-	var status = config.load(Constants.teams_file)
+	var status: Error = config.load(Constants.teams_file)
 	if status == OK:
-		var id = 0
-		for team_uuid in config.get_sections():
-			var team_dict = config.get_value(team_uuid, 'team')
+		var id: int = 0
+		for team_uuid: String in config.get_sections():
+			var team_dict: Dictionary = config.get_value(team_uuid, 'team')
 			var team: Team = Team.unserialize(team_uuid, team_dict)
 			add_item(team.name, id)
 			id += 1

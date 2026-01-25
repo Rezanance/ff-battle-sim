@@ -5,7 +5,7 @@ extends TextureButton
 func _ready() -> void:
 	ClientServerConnectionOUT.player_connected.connect(_on_player_connected)
 
-func _on_player_connected(_player_info):
+func _on_player_connected(_player_info: Dictionary) -> void:
 	show()
 
 func _on_copy_btn_pressed() -> void:

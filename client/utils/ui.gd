@@ -1,7 +1,7 @@
 class_name UIUtils
 
 
-static var SkillScene: Resource = preload("res://client/common/skill_button/skill.tscn")
+static var SkillScene: Resource = preload("res://client/common/skill_button/skill_button.tscn")
 
 static func update_skills_shown(skills_container: VBoxContainer, skills: Array[Skill], _on_skill_clicked: Callable) -> void:
 	clear_skills(skills_container)

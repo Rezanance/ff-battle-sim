@@ -1,8 +1,6 @@
 extends Panel
 class_name VivosaurSummary
 
-var SkillScene: Resource = preload("res://client/common/skill_button/skill.tscn")
-
 @onready var element: TextureRect = $ScrollContainer/VBoxContainer/HBoxContainer2/Element
 @onready var vivosaur_name: Label = $ScrollContainer/VBoxContainer/HBoxContainer2/Name
 @onready var battle_class: Label = $ScrollContainer/VBoxContainer/Class
@@ -48,17 +46,14 @@ func update_summary(vivosaur_id: int, skills_included: bool = true) -> void:
 	display_support_effect(eva_support, vivosaur.support_effects.evasion_modifier)
 	
 	var status_immunites_begin: String = "Status Immunities: "
-	status_immunities.text = status_immunites_begin + "%s" % ", ".join(vivosaur.status_immunities.map(
-		func(status: Status) -> String: 
-			return status.name)) if len(vivosaur.status_immunities) > 0 else status_immunites_begin + "None"
-	
+	status_immunities.text = status_immunites_begin + ", ".join(vivosaur.status_immunities.map(func(status: Status) -> String: return status.name)) if len(vivosaur.status_immunities) > 0 else status_immunites_begin + "None"
 	team_skill_groups.text = "Team Skill Groups: " + ", ".join(vivosaur.team_skill_groups)
 	
 	if skills_included:
-		
+		UIUtils.clear_skills(skills_container)
+		UIUtils.update_skills_shown(skills_container, vivosaur.skills, func() -> void: return )
 		size.y = HEIGHT_WITH_SKILLS
 		return
-	
 	size.y = BASE_HEIGHT
 	
 

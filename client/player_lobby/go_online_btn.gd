@@ -14,24 +14,24 @@ func _ready() -> void:
 	ClientServerConnectionOUT.player_connect_failed.connect(_on_player_disconnected)
 	ClientServerConnectionOUT.player_disconnecting.connect(_on_player_disconnecting)
 
-func _on_can_connect(can_connect: bool):
+func _on_can_connect(can_connect: bool) -> void:
 	disabled = not can_connect
 	
-func _on_pressed():
+func _on_pressed() -> void:
 	ClientServerConnectionOUT.go_online(
 		server_ip_input.text.strip_edges(), 
 		display_name_input.text.strip_edges(), 
 		player_icon_select.selected,
 		player_lobby.connected)
 
-func _on_player_connecting():
+func _on_player_connecting() -> void:
 	disabled = true
 
-func _on_player_connected(_player_info):
+func _on_player_connected(_player_info: Dictionary) -> void:
 	disabled = false
 	
-func _on_player_disconnecting():
+func _on_player_disconnecting() -> void:
 	disabled = true
 	
-func _on_player_disconnected():
+func _on_player_disconnected() -> void:
 	disabled = false

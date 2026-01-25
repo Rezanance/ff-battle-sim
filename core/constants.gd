@@ -6,7 +6,6 @@ static var skills_json: Variant = preload("res://core/data/skills.json").data
 static var effects_json: Variant = preload("res://core/data/effects.json").data
 static var statuses_json: Variant = preload("res://core/data/statuses.json").data
 
-static var teams_file: String = "user://teams.cfg"
 static var preferences_file: String = "user://preferences.cfg"
 
 # Data on all vivosaurs with the id as the key

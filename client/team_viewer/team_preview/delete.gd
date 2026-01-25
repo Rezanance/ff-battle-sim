@@ -1,9 +1,9 @@
 extends Button
-
+class_name Delete
 	
-func _delete_team(team_uuid: String, team_name: String, team_preview: Node, config: ConfigFile):
+func _on_pressed(team_uuid: String, team_name: String, team_preview: Node, config: ConfigFile) -> void:
 	config.erase_section(team_uuid)
-	var status = config.save(Constants.teams_file)
+	var status: Error = config.save(Constants.teams_file)
 	
 	if status == OK:
 		DialogPopup.reveal_dialog(DialogPopup.MessageType.SUCCESS, "\"%s\" deleted sucessfully " % team_name)

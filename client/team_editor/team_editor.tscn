@@ -1,4 +1,4 @@
-[gd_scene load_steps=25 format=3 uid="uid://myvsxwydumrn"]
+[gd_scene load_steps=26 format=3 uid="uid://myvsxwydumrn"]
 
 [ext_resource type="Texture2D" uid="uid://chevdw52lcf04" path="res://client/assets/backgrounds/rock_bg.jpg" id="1_8l4op"]
 [ext_resource type="Script" uid="uid://bori47il5bpkl" path="res://client/team_editor/team_editor.gd" id="2_3jt0u"]
@@ -7,6 +7,7 @@
 [ext_resource type="PackedScene" uid="uid://twprmxgwv8kw" path="res://client/common/vivosaur_summary/VivosaurSummary.tscn" id="5_de5v4"]
 [ext_resource type="Script" uid="uid://dy3irhtipbde7" path="res://client/team_editor/team_name.gd" id="6_ddgwi"]
 [ext_resource type="Script" uid="uid://c6s5x8olm8aid" path="res://client/team_editor/save_team_btn.gd" id="7_ady3e"]
+[ext_resource type="PackedScene" uid="uid://dbs6tjyh02kb" path="res://client/common/components/SaveComponent.tscn" id="8_28uo3"]
 [ext_resource type="Theme" uid="uid://qw3ckwy7bak5" path="res://client/theme/ui_theme.tres" id="8_emnmx"]
 [ext_resource type="Script" uid="uid://i0tyv84emqjl" path="res://client/team_editor/back.gd" id="9_6uyc6"]
 [ext_resource type="Texture2D" uid="uid://d3rw1bcnrd1c8" path="res://client/assets/Formation_slots.png" id="10_8tvrq"]
@@ -94,7 +95,7 @@ visible = false
 layout_mode = 0
 offset_left = 1222.0
 offset_top = 308.0
-offset_right = 1822.0
+offset_right = 1847.0
 offset_bottom = 1028.0
 
 [node name="TeamNameInput" type="LineEdit" parent="."]
@@ -116,6 +117,8 @@ offset_bottom = 188.0
 disabled = true
 text = "Save team"
 script = ExtResource("7_ady3e")
+
+[node name="SaveComponent" parent="SaveTeamBtn" instance=ExtResource("8_28uo3")]
 
 [node name="BackBtn" type="Button" parent="."]
 layout_mode = 0
@@ -232,10 +235,7 @@ theme_override_styles/focus = SubResource("StyleBoxEmpty_qk5ds")
 [node name="ContextMenu" type="PopupMenu" parent="."]
 script = ExtResource("14_djknn")
 
-[connection signal="sort_children" from="TextureRect/ScrollContainer/FossilaryContainer" to="." method="_position_team_medals"]
-[connection signal="text_changed" from="TeamNameInput" to="TeamNameInput" method="_on_text_changed"]
-[connection signal="pressed" from="SaveTeamBtn" to="SaveTeamBtn" method="_on_pressed"]
+[connection signal="text_changed" from="TeamNameInput" to="." method="_on_team_name_changed"]
 [connection signal="pressed" from="BackBtn" to="BackBtn" method="_on_pressed"]
-[connection signal="team_modified" from="TeamSlots" to="SaveTeamBtn" method="_on_team_modified"]
-[connection signal="team_slots_loaded" from="TeamSlots" to="TextureRect/ScrollContainer/FossilaryContainer" method="_on_team_slots_loaded"]
+[connection signal="team_modified" from="TeamSlots" to="." method="_on_team_slots_team_modified"]
 [connection signal="id_pressed" from="ContextMenu" to="ContextMenu" method="_on_id_pressed"]

@@ -396,6 +396,7 @@ script = ExtResource("24_oyn8o")
 [connection signal="pressed" from="VBoxContainer/DirectChallengeBtn" to="SendChallenge/CenterContainer/VBoxContainer/HBoxContainer/OpponentPlayerId" method="_on_direct_challenge_btn_pressed"]
 [connection signal="pressed" from="VBoxContainer/DirectChallengeBtn" to="SendChallenge/CenterContainer/VBoxContainer/CenterContainer/SendChallengeBtn" method="_on_direct_challenge_btn_pressed"]
 [connection signal="pressed" from="VBoxContainer/TeamEditorBtn" to="VBoxContainer/TeamEditorBtn" method="_on_pressed"]
+[connection signal="pressed" from="VBoxContainer/QuitBtn" to="VBoxContainer/QuitBtn" method="_on_pressed"]
 [connection signal="item_selected" from="PlayerIconSelect" to="." method="_on_icon_changed"]
 [connection signal="text_changed" from="DisplayNameInput" to="." method="_on_display_name_changed"]
 [connection signal="text_changed" from="ServerIPInput" to="." method="_on_server_ip_changed"]

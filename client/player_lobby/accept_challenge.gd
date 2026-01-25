@@ -3,7 +3,7 @@ extends ConfirmationDialog
 func _ready() -> void:
 	ClientMatchMaking.challenge_requested.connect(_on_challenge_requested)
 
-func _on_challenge_requested(opponent_info: Dictionary):
+func _on_challenge_requested(opponent_info: Dictionary) -> void:
 	dialog_text = '%s (%d) challenges you to a Fossil Networking. Do you accept??!' % [opponent_info['display_name'], opponent_info['player_id']] 
 	show()
 
