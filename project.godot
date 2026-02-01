@@ -8,22 +8,26 @@
 
 config_version=5
 
+[animation]
+
+compatibility/default_parent_skeleton_in_mesh_instance_3d=true
+
 [application]
 
 config/name="FF Battle Sim"
 run/main_scene="uid://b5e63667bvai4"
 config/use_custom_user_dir=true
-config/features=PackedStringArray("4.5", "Forward Plus")
+config/features=PackedStringArray("4.6", "Forward Plus")
 config/icon="uid://bb7jtyck313ds"
 
 [autoload]
 
 uuid="*res://addons/uuid/uuid.gd"
-SceneTransition="*res://client/autoloads/scene_transition.tscn"
-DialogPopup="*res://client/autoloads/dialog_popup.tscn"
-GlobalAcceptDialog="*res://client/autoloads/accept_dialog.tscn"
-Networking="*res://client/autoloads/networking.gd"
-TeamEditing="*res://client/autoloads/team_editing.gd"
+SceneTransition="*res://client/autoloads/scenes/scene_transition.tscn"
+StatusNotification="*res://client/autoloads/scenes/status_notification.tscn"
+GlobalAcceptDialog="*res://client/autoloads/scenes/accept_dialog.tscn"
+Networking="*res://client/autoloads/singletons/networking.gd"
+TeamEditing="*res://client/autoloads/singletons/team_editing.gd"
 ClientMatchMaking="*res://client/multiplayer/in/match_making.gd"
 ClientBattleSetup="*res://client/multiplayer/in/battle_setup.gd"
 ClientTurns="*res://client/multiplayer/in/turns.gd"

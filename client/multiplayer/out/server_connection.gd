@@ -21,7 +21,7 @@ func go_online(server_ip: String, display_name: String, icon_id: int, connected:
 		var peer = ENetMultiplayerPeer.new()
 		var error = peer.create_client(server_ip, Config.PORT)
 		if error:
-			DialogPopup.reveal_dialog(DialogPopup.MessageType.ERROR, 'Error connecting to server (%d)' % error)
+			#StatusNotification.push(StatusNotification.MessageType.ERROR, 'Error connecting to server (%d)' % error)
 			return FAILED
 		Networking.player_info['player_id'] = peer.get_unique_id()
 		Networking.player_info['display_name'] = display_name

@@ -1,5 +1,4 @@
-extends VBoxContainer
-class_name TeamPreview
+class_name TeamPreview extends VBoxContainer
 
 func _on_gui_input(event: InputEvent, team: Team) -> void:
 	if event is InputEventMouseButton:

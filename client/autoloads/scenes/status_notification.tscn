@@ -1,6 +1,6 @@
 [gd_scene load_steps=8 format=3 uid="uid://csf7xfx46ynyt"]
 
-[ext_resource type="Script" uid="uid://g5ap1jc7ukjy" path="res://client/autoloads/dialog_popup.gd" id="1_txnc8"]
+[ext_resource type="Script" uid="uid://g5ap1jc7ukjy" path="res://client/autoloads/scenes/status_notification.gd" id="1_txnc8"]
 
 [sub_resource type="StyleBoxFlat" id="StyleBoxFlat_txnc8"]
 bg_color = Color(0.101960786, 0.61960787, 0.36078432, 0.78431374)
@@ -28,7 +28,7 @@ tracks/0/keys = {
 }
 
 [sub_resource type="Animation" id="Animation_ahpik"]
-resource_name = "reveal_dialog"
+resource_name = "push"
 length = 5.0
 tracks/0/type = "value"
 tracks/0/imported = false
@@ -46,14 +46,14 @@ tracks/0/keys = {
 [sub_resource type="AnimationLibrary" id="AnimationLibrary_d1nmm"]
 _data = {
 &"RESET": SubResource("Animation_i4m7f"),
-&"reveal_dialog": SubResource("Animation_ahpik")
+&"push": SubResource("Animation_ahpik")
 }
 
 [sub_resource type="SystemFont" id="SystemFont_oaxae"]
 font_names = PackedStringArray("Monospace")
 subpixel_positioning = 0
 
-[node name="Dialog" type="Panel"]
+[node name="StatusNotification" type="Panel"]
 z_index = 1000
 z_as_relative = false
 layout_direction = 3

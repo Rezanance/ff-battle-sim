@@ -1,6 +1,6 @@
 [gd_scene load_steps=12 format=3 uid="uid://twprmxgwv8kw"]
 
-[ext_resource type="Script" uid="uid://cfud0gcft3vmb" path="res://client/common/vivosaur_summary/vivosaur_summary.gd" id="1_rx6lf"]
+[ext_resource type="Script" uid="uid://cfud0gcft3vmb" path="res://client/components/ui/VivosaurSumary/vivosaur_summary.gd" id="1_rx6lf"]
 [ext_resource type="Texture2D" uid="uid://donnyydh3q13f" path="res://client/assets/stats/LP_2.webp" id="2_1v7sl"]
 [ext_resource type="Texture2D" uid="uid://tr5e4ixd3lvn" path="res://client/assets/stats/Attack_2.webp" id="3_yatd4"]
 [ext_resource type="Texture2D" uid="uid://c8ixrbey1td8j" path="res://client/assets/stats/Defense_2.webp" id="4_ls88g"]

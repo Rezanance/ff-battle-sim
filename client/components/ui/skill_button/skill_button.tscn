@@ -1,6 +1,6 @@
 [gd_scene load_steps=6 format=3 uid="uid://b8x1fx1pjiwla"]
 
-[ext_resource type="Script" uid="uid://6e23qixj52db" path="res://client/common/skill_button/skill_button.gd" id="1_rpgpk"]
+[ext_resource type="Script" uid="uid://6e23qixj52db" path="res://client/components/ui/skill_button/skill_button.gd" id="1_rpgpk"]
 
 [sub_resource type="StyleBoxFlat" id="StyleBoxFlat_bkltg"]
 bg_color = Color(0.9350212, 0.37525955, 0.57574844, 1)

@@ -1,0 +1,77 @@
+[gd_scene format=3 uid="uid://caowtdwsvm75b"]
+
+[ext_resource type="Texture2D" uid="uid://dyvy3f6afttu2" path="res://client/assets/hud/selectable.png" id="1_obrv4"]
+[ext_resource type="Script" uid="uid://xb8o7or3bpw" path="res://client/components/ui/TeamSlots/components/Slot/slot.gd" id="2_uigq1"]
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_wfc57"]
+atlas = ExtResource("1_obrv4")
+region = Rect2(0, 0, 32, 32)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_tbraw"]
+atlas = ExtResource("1_obrv4")
+region = Rect2(32, 0, 32, 32)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_6odcm"]
+atlas = ExtResource("1_obrv4")
+region = Rect2(64, 0, 32, 32)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_qk5ds"]
+atlas = ExtResource("1_obrv4")
+region = Rect2(96, 0, 32, 32)
+
+[sub_resource type="SpriteFrames" id="SpriteFrames_7x253"]
+animations = [{
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_wfc57")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_tbraw")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_6odcm")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_qk5ds")
+}],
+"loop": true,
+"name": &"default",
+"speed": 5.0
+}]
+
+[sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_obrv4"]
+
+[sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_uigq1"]
+
+[sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_7x253"]
+
+[sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_qwjr5"]
+
+[sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_xvrro"]
+
+[node name="Slot" type="AnimatedSprite2D" unique_id=974492916]
+scale = Vector2(2.8, 2.8)
+sprite_frames = SubResource("SpriteFrames_7x253")
+speed_scale = 2.0
+centered = false
+script = ExtResource("2_uigq1")
+
+[node name="Button" type="Button" parent="." unique_id=676867535]
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -16.0
+offset_top = -16.0
+offset_right = 16.0
+offset_bottom = 16.0
+grow_horizontal = 2
+grow_vertical = 2
+theme_override_styles/normal = SubResource("StyleBoxEmpty_obrv4")
+theme_override_styles/pressed = SubResource("StyleBoxEmpty_uigq1")
+theme_override_styles/hover = SubResource("StyleBoxEmpty_7x253")
+theme_override_styles/disabled = SubResource("StyleBoxEmpty_qwjr5")
+theme_override_styles/focus = SubResource("StyleBoxEmpty_xvrro")
+
+[connection signal="pressed" from="Button" to="." method="_on_button_pressed"]

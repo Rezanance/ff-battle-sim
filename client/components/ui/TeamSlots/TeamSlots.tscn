@@ -1,0 +1,32 @@
+[gd_scene format=3 uid="uid://cclkat5sd0msm"]
+
+[ext_resource type="Texture2D" uid="uid://d3rw1bcnrd1c8" path="res://client/assets/Formation_slots.png" id="1_rxqut"]
+[ext_resource type="Script" uid="uid://d15qefmnljxfp" path="res://client/components/ui/TeamSlots/team_slots.gd" id="2_wrxqr"]
+[ext_resource type="PackedScene" uid="uid://caowtdwsvm75b" path="res://client/components/ui/TeamSlots/components/Slot/Slot.tscn" id="3_rxqut"]
+
+[node name="TeamSlots" type="TextureRect" unique_id=1067584925]
+offset_right = 525.0
+offset_bottom = 105.0
+texture = ExtResource("1_rxqut")
+expand_mode = 3
+script = ExtResource("2_wrxqr")
+
+[node name="AZ" parent="." unique_id=679695341 instance=ExtResource("3_rxqut")]
+visible = false
+position = Vector2(22.000017, 6.000004)
+
+[node name="SZ1" parent="." unique_id=1368472695 instance=ExtResource("3_rxqut")]
+visible = false
+position = Vector2(127, 6.000004)
+
+[node name="SZ2" parent="." unique_id=470590182 instance=ExtResource("3_rxqut")]
+visible = false
+position = Vector2(217.00003, 6.000004)
+
+[node name="Extra1" parent="." unique_id=1455749556 instance=ExtResource("3_rxqut")]
+visible = false
+position = Vector2(332, 6.000004)
+
+[node name="Extra2" parent="." unique_id=601023436 instance=ExtResource("3_rxqut")]
+visible = false
+position = Vector2(422, 6.000004)

@@ -10,4 +10,6 @@ func _on_player_connected(_player_info: Dictionary) -> void:
 
 func _on_copy_btn_pressed() -> void:
 	DisplayServer.clipboard_set(player_id.text)
-	DialogPopup.reveal_dialog(DialogPopup.MessageType.SUCCESS, 'Copied ID to clipboard!')
+	# FIXME
+	#StatusNotification.push(StatusNotification.MessageType.SUCCESS, 'Copied ID to clipboard!')
+	

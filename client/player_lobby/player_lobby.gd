@@ -17,7 +17,7 @@ var server_ip: String
 var connected: bool = false
 
 func _ready() -> void:
-	config.load(Constants.teams_file)
+	config.load('user://abc.cfg')
 	server_ip = server_ip_input.text
 	
 	ClientServerConnectionOUT.player_connected.connect(_on_player_connected)
@@ -47,16 +47,24 @@ func _on_server_ip_changed(new_ip: String) -> void:
 	emit_connect_status()
 
 func _on_player_connected(_player_info: Dictionary) -> void:
-	DialogPopup.reveal_dialog(DialogPopup.MessageType.SUCCESS, 'Successfully connected to server!')
+	# FIXME
+	pass
+	#StatusNotification.push(StatusNotification.MessageType.SUCCESS, 'Successfully connected to server!')
 
 func _on_player_connect_failed() -> void:
-	DialogPopup.reveal_dialog(DialogPopup.MessageType.ERROR, 'Error connecting to server')
+	# FIXME
+	#StatusNotification.push(StatusNotification.MessageType.ERROR, 'Error connecting to server')
+	pass
 	
 func _on_player_disconnected() -> void:
-	DialogPopup.reveal_dialog(DialogPopup.MessageType.SUCCESS, 'Successfully Disconnected from server')
+	# FIXME
+	#StatusNotification.push(StatusNotification.MessageType.SUCCESS, 'Successfully Disconnected from server')
+	pass
 
 func _on_opponent_not_online() -> void:
-	DialogPopup.reveal_dialog(DialogPopup.MessageType.ERROR, 'Opponent is no longer online or the id is incorrect')
+	# FIXME
+	#StatusNotification.push(StatusNotification.MessageType.ERROR, 'Opponent is no longer online or the id is incorrect')
+	pass
 
 func _on_challenge_requested(opponent_info: Dictionary) -> void:
 	Networking.opponent_info = opponent_info

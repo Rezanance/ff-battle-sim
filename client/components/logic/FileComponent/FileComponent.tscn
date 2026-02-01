@@ -1,0 +1,6 @@
+[gd_scene format=3 uid="uid://dbs6tjyh02kb"]
+
+[ext_resource type="Script" uid="uid://bwii70biv0mth" path="res://client/components/logic/FileComponent/file_component.gd" id="1_5b05c"]
+
+[node name="FileComponent" type="Node" unique_id=1726560236]
+script = ExtResource("1_5b05c")

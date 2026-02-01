@@ -8,7 +8,7 @@
 [ext_resource type="Script" uid="uid://dcec8l45dqgay" path="res://client/player_lobby/direct_challenge_btn.gd" id="6_jmccb"]
 [ext_resource type="Script" uid="uid://di0jpnawcxcxs" path="res://client/player_lobby/team_editor_btn.gd" id="7_b37o5"]
 [ext_resource type="Script" uid="uid://ikifc5i2mrdl" path="res://client/player_lobby/quit.gd" id="8_0v064"]
-[ext_resource type="Script" uid="uid://d00vbqrgootmd" path="res://client/player_icons.gd" id="9_v3dyf"]
+[ext_resource type="Script" uid="uid://d00vbqrgootmd" path="res://client/player_lobby/player_icons.gd" id="9_v3dyf"]
 [ext_resource type="Script" uid="uid://io22yovymyv6" path="res://client/player_lobby/display_name_input.gd" id="10_y6vqr"]
 [ext_resource type="Script" uid="uid://dny74ynied1j1" path="res://client/player_lobby/server_ip_input.gd" id="11_vy11n"]
 [ext_resource type="Texture2D" uid="uid://clmis5rrdxbal" path="res://client/assets/wifi-icons/wifi.png" id="12_jl2hl"]

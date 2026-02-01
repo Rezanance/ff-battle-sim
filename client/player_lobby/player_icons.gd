@@ -1,6 +1,5 @@
 extends OptionButton
 
-
 func _ready() -> void:
 	add_icon_options()
 	ClientServerConnectionOUT.player_connecting.connect(_on_player_connecting)

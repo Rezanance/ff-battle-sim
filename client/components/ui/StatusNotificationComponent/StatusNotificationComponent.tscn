@@ -1,0 +1,8 @@
+[gd_scene format=3 uid="uid://csbr3ywp24w7j"]
+
+[ext_resource type="Script" uid="uid://b0u1g5m7rliel" path="res://client/components/ui/StatusNotificationComponent/status_notification_component.gd" id="1_oecyr"]
+
+[node name="StatusNotificationComponent" type="Node" unique_id=1543335512]
+script = ExtResource("1_oecyr")
+success_bg_color = Color(0.78431374, 1, 0.8666667, 0.78431374)
+error_bg_color = Color(0.99215686, 0.92156863, 0.9137255, 0.78431374)

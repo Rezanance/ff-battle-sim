@@ -11,7 +11,7 @@ func add_teams_names() -> void:
 	if OS.has_feature('dedicated_server'):
 		return
 	
-	var status: Error = config.load(Constants.teams_file)
+	var status: Error = config.load("user://def.cfg")
 	if status == OK:
 		var id: int = 0
 		for team_uuid: String in config.get_sections():

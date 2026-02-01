@@ -1,5 +1,4 @@
 extends TextureRect
-class_name TeamSlots
 
 signal team_modified(team: Team)
 

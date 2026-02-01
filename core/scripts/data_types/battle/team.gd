@@ -1,6 +1,6 @@
 class_name Team
 
-
+enum Zone {AZ, SZ1, SZ2, EXTRA1, EXTRA2}
 const TEAM_SLOTS = 5
 
 var uuid: String

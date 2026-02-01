@@ -1,13 +1,8 @@
 extends Node
 
-const TeamPreviewScene: Resource = preload("res://client/team_viewer/team_preview/team_preview.tscn")
-const NewTeamBtn: Resource = preload("res://client/team_viewer/new_team_btn.tscn")
-
-var config: ConfigFile = ConfigFile.new()
-
 func _ready() -> void:
 	
-	var status: Error = config.load(Constants.teams_file)
+	var status: Error = config.load("user://agw.cfg")
 	
 	if status == OK :
 		for team_uuid: String in config.get_sections():

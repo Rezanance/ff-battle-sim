@@ -3,8 +3,6 @@ class_name ContextMenu
 
 var menu_items: Array[MenuItem]
 
-enum Action {ASSIGN, MOVE_SWAP, REMOVE}
-
 class MenuItem:
 	var name: String
 	var can_show: Callable
@@ -12,7 +10,7 @@ class MenuItem:
 	
 	func _init(_name: String, _can_show: Callable, _action: Callable) -> void:
 		name = _name
-		can_show = _can_show	
+		can_show = _can_show
 		action = _action
 
 func init(_menu_items: Array[MenuItem]) -> void:

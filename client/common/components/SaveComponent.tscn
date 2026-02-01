@@ -1,6 +1,0 @@
-[gd_scene load_steps=2 format=3 uid="uid://dbs6tjyh02kb"]
-
-[ext_resource type="Script" uid="uid://bwii70biv0mth" path="res://client/common/components/SaveComponent.gd" id="1_5b05c"]
-
-[node name="SaveComponent" type="Node"]
-script = ExtResource("1_5b05c")
