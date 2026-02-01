@@ -1,0 +1,6 @@
+[gd_scene format=3 uid="uid://be8r3sxklp4sq"]
+
+[ext_resource type="Script" uid="uid://d0rlrgo2uhj7c" path="res://client/components/ui/TeamManager/team_manager.gd" id="1_7uwjc"]
+
+[node name="TeamManager" type="Node" unique_id=485059551]
+script = ExtResource("1_7uwjc")

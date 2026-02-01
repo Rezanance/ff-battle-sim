@@ -4,11 +4,10 @@ enum SelectableSlots {ALL_EMPTY, ALL_EXCEPT_ONE}
 enum Action {ASSIGN, MOVE_SWAP, REMOVE}
 
 signal team_modified(team: Team)
-signal vivosaur_removed_from_team(vivosaur_id: int)
 signal slot_clicked(team_slot: int)
 
 @onready var slots: Array[Slot] = [$AZ, $SZ1, $SZ2, $Extra1, $Extra2]
-@export var allowed_actions: Array[Action]
+var allowed_actions: Array[Action]
 var team: Team
 var _on_medal_gui_input: Callable
 
@@ -19,9 +18,22 @@ func _ready() -> void:
 func _on_slot_clicked(team_slot: int) -> void:
 	slot_clicked.emit(team_slot)
 
-func init(_team: Team, __on_medal_gui_input: Callable) -> void:
+func init(_team: Team, __on_medal_gui_input: Callable, _allowed_actions: Array[Action], create_medal_btn: Callable) -> void:
 	team = _team
+	allowed_actions = _allowed_actions
 	_on_medal_gui_input = __on_medal_gui_input
+	
+	add_team_slot_medals(_team, create_medal_btn)
+
+func add_team_slot_medals(_team: Team, create_medal_btn: Callable) -> void:
+	for slot: int in range(len(_team.slots)):
+		if _team.slots[slot] == null:
+			continue
+		var vivosaur_id: int = _team.slots[slot].id
+		var _texture: Resource = UIUtils.load_medal_texture(vivosaur_id)
+		var medal_btn: MedalBtn = create_medal_btn.call(_texture, vivosaur_id)
+		add_child(medal_btn)
+		medal_btn.global_position = slots[slot].global_position
 
 func show_selectable_slots(current_action: Action, selected_medal: MedalBtn) -> void:
 	assert(current_action in allowed_actions, "Action not allowed")
@@ -108,6 +120,7 @@ func __remove_medal(selected_medal_btn: MedalBtn) -> void:
 	selected_medal_btn.queue_free()
 		
 	var selected_medal_team_slot: int = team.slots_vivosaur_ids().find(selected_medal_btn.vivosaur_id)
+	slots[selected_medal_team_slot].medal_btn = null
 	team.slots[selected_medal_team_slot] = null
 	
 	team_modified.emit(team)
