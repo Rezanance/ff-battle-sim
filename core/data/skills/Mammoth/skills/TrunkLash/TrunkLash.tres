@@ -1,0 +1,13 @@
+[gd_resource type="Resource" script_class="SkillResource" format=3 uid="uid://b48kfvirjjuuf"]
+
+[ext_resource type="Script" uid="uid://tfde3pcbhqpi" path="res://core/data/SkillResource.gd" id="1_61m1i"]
+[ext_resource type="Script" uid="uid://dkmjfk8jhivi0" path="res://core/data/SkillEffectResource.gd" id="2_xkjpw"]
+
+[resource]
+script = ExtResource("1_61m1i")
+name = "Trunk Lash"
+damage = 62
+fp_cost = 30
+target = 3
+counterable = true
+metadata/_custom_type_script = "uid://tfde3pcbhqpi"

@@ -24,6 +24,8 @@ func _on_context_menu_item_clicked(action: TeamSlots.Action) -> void:
 	if action == TeamSlots.Action.REMOVE:
 		assert(fossilary_container != null)
 		team_slots.perform_action(action, currently_selected_medal_btn, -1)
+#		FIXME find a way to remove this
+		await get_tree().create_timer(1).timeout
 		vivosaur_removed.emit(currently_selected_medal_btn.vivosaur_id)
 		return
 	team_slots.show_selectable_slots(action, currently_selected_medal_btn)

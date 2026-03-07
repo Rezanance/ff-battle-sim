@@ -1,0 +1,12 @@
+[gd_resource type="Resource" script_class="SkillResource" format=3 uid="uid://b7u7dx3c6uhd4"]
+
+[ext_resource type="Script" uid="uid://tfde3pcbhqpi" path="res://core/data/SkillResource.gd" id="1_qbgpp"]
+[ext_resource type="Script" uid="uid://dkmjfk8jhivi0" path="res://core/data/SkillEffectResource.gd" id="2_6va4n"]
+
+[resource]
+script = ExtResource("1_qbgpp")
+name = "Mammoth Cannon"
+damage = 84
+fp_cost = 120
+target = 3
+metadata/_custom_type_script = "uid://tfde3pcbhqpi"

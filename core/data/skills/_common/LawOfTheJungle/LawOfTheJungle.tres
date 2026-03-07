@@ -1,0 +1,15 @@
+[gd_resource type="Resource" script_class="SkillResource" format=3 uid="uid://ctiaqgk8ser01"]
+
+[ext_resource type="Script" uid="uid://tfde3pcbhqpi" path="res://core/data/SkillResource.gd" id="1_7ffi7"]
+[ext_resource type="Script" uid="uid://dkmjfk8jhivi0" path="res://core/data/SkillEffectResource.gd" id="2_5q6br"]
+[ext_resource type="Resource" uid="uid://bnsn2bs3saxsf" path="res://core/data/skills/_common/LawOfTheJungle/effects/DrainLPFromAlly.tres" id="3_5q6br"]
+
+[resource]
+script = ExtResource("1_7ffi7")
+name = "Law of the Jungle"
+description = "Recover LP using ally LP"
+skill_type = 2
+fp_cost = 200
+target = 4
+skill_effects = Array[ExtResource("2_5q6br")]([ExtResource("3_5q6br")])
+metadata/_custom_type_script = "uid://tfde3pcbhqpi"

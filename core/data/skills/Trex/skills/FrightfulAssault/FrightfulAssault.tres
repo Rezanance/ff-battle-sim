@@ -1,0 +1,16 @@
+[gd_resource type="Resource" script_class="SkillResource" format=3 uid="uid://bsxpdfqelb104"]
+
+[ext_resource type="Script" uid="uid://tfde3pcbhqpi" path="res://core/data/SkillResource.gd" id="1_77f7m"]
+[ext_resource type="Script" uid="uid://dkmjfk8jhivi0" path="res://core/data/SkillEffectResource.gd" id="2_gqogb"]
+[ext_resource type="Resource" uid="uid://dtplahhwjn0h" path="res://core/data/skills/Trex/skills/FrightfulAssault/effects/ApplySuperScare.tres" id="3_gqogb"]
+
+[resource]
+script = ExtResource("1_77f7m")
+name = "Frightful Assault"
+description = "Scare [img=24,center,center]res://client/assets/statuses/Super_Scare.webp[/img] Success rate: 100%"
+damage = 189
+fp_cost = 300
+target = 3
+skill_effects = Array[ExtResource("2_gqogb")]([ExtResource("3_gqogb")])
+counterable = true
+metadata/_custom_type_script = "uid://tfde3pcbhqpi"

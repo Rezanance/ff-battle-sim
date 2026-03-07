@@ -1,0 +1,13 @@
+[gd_resource type="Resource" script_class="SkillResource" format=3 uid="uid://bcxdx6l3jwv64"]
+
+[ext_resource type="Script" uid="uid://tfde3pcbhqpi" path="res://core/data/SkillResource.gd" id="1_feh04"]
+[ext_resource type="Script" uid="uid://dkmjfk8jhivi0" path="res://core/data/SkillEffectResource.gd" id="2_30qmm"]
+
+[resource]
+script = ExtResource("1_feh04")
+name = "Tyrant's Roar"
+description = "Special: Attack both AZ and SZ"
+damage = 100
+fp_cost = 100
+target = 5
+metadata/_custom_type_script = "uid://tfde3pcbhqpi"

@@ -63,7 +63,7 @@ placeholder_text = "Team name"
 caret_blink = true
 script = ExtResource("6_ddgwi")
 
-[node name="SaveTeamBtn" type="Button" parent="." unique_id=129844292]
+[node name="SaveTeamBtn" type="Button" parent="." unique_id=129844292 node_paths=PackedStringArray("file_component", "status_notification_component")]
 layout_mode = 0
 offset_left = 1430.0
 offset_top = 141.0
@@ -72,12 +72,20 @@ offset_bottom = 188.0
 disabled = true
 text = "Save team"
 script = ExtResource("7_ady3e")
+file_component = NodePath("FileComponent")
+status_notification_component = NodePath("StatusNotificationComponent")
 
 [node name="FileComponent" parent="SaveTeamBtn" unique_id=452649736 instance=ExtResource("8_28uo3")]
 
-[node name="StatusNotificationComponent" parent="SaveTeamBtn" unique_id=1162529731 instance=ExtResource("9_r1skf")]
-success_message = "Team Saved"
-error_message = "Error saving team"
+[node name="StatusNotificationComponent" parent="SaveTeamBtn" unique_id=1543335512 instance=ExtResource("9_r1skf")]
+success_messages = Dictionary[String, String]({
+"TEAM_SAVED": "Team '%s' saved successfully!",
+"default": "Success!"
+})
+error_messages = Dictionary[String, String]({
+"ERROR_SAVING_TEAM": "Error saving team",
+"default": "Error"
+})
 
 [node name="BackBtn" type="Button" parent="." unique_id=1818415698]
 layout_mode = 0

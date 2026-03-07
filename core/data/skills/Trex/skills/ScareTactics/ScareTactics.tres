@@ -1,0 +1,16 @@
+[gd_resource type="Resource" script_class="SkillResource" format=3 uid="uid://cp1g8q1fynyw7"]
+
+[ext_resource type="Script" uid="uid://tfde3pcbhqpi" path="res://core/data/SkillResource.gd" id="1_8o6xj"]
+[ext_resource type="Script" uid="uid://dkmjfk8jhivi0" path="res://core/data/SkillEffectResource.gd" id="2_sxnys"]
+[ext_resource type="Resource" uid="uid://hcx5r7owm7da" path="res://core/data/skills/Trex/skills/ScareTactics/effects/ApplyScare.tres" id="3_sxnys"]
+
+[resource]
+script = ExtResource("1_8o6xj")
+name = "Scare Tactics"
+description = "Scare [img=24,center,center]res://client/assets/statuses/Scare.webp[/img] Success rate: 50%"
+damage = 166
+fp_cost = 200
+target = 3
+skill_effects = Array[ExtResource("2_sxnys")]([ExtResource("3_sxnys")])
+counterable = true
+metadata/_custom_type_script = "uid://tfde3pcbhqpi"

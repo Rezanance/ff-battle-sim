@@ -1,0 +1,32 @@
+[gd_resource type="Resource" script_class="VivosaurResource" format=3 uid="uid://ddto5u2ebnl07"]
+
+[ext_resource type="Texture2D" uid="uid://v4bw57rvn66u" path="res://client/assets/vivosaurs/Brachio/medal.png" id="1_7kjbb"]
+[ext_resource type="Script" uid="uid://bj0qwk3daymcj" path="res://core/data/VivosaurResource.gd" id="2_u8ti0"]
+[ext_resource type="Script" uid="uid://tfde3pcbhqpi" path="res://core/data/SkillResource.gd" id="3_yafhp"]
+[ext_resource type="Resource" uid="uid://8pybw8hhrcjr" path="res://core/data/skills/Brachio/skills/MightyStomp/MightyStomp.tres" id="4_hst4b"]
+[ext_resource type="Texture2D" uid="uid://boxoe2ewmerpr" path="res://client/assets/vivosaurs/Brachio/sprite.png" id="4_x841l"]
+[ext_resource type="Script" uid="uid://nubhjw6614kq" path="res://core/data/StatusResource.gd" id="5_0fxc5"]
+[ext_resource type="Resource" uid="uid://bbgm1ar607dbe" path="res://core/data/skills/Brachio/skills/MountainWave/MountainWave.tres" id="5_dqjsn"]
+[ext_resource type="Resource" uid="uid://xta4s0r2nhko" path="res://core/data/skills/Brachio/skills/EarthCrush/EarthCrush.tres" id="6_rns3q"]
+[ext_resource type="Resource" uid="uid://cpymhh6m480y1" path="res://core/data/skills/_common/PowerScale/PowerScale.tres" id="7_w25yx"]
+[ext_resource type="Resource" uid="uid://2c4stsjmu1r1" path="res://core/data/skills/Trex/skills/TyrantsBreath/TyrantsBreath.tres" id="8_vtije"]
+
+[resource]
+script = ExtResource("2_u8ti0")
+name = "Mammoth"
+medal = ExtResource("1_7kjbb")
+sprite = ExtResource("4_x841l")
+element = 4
+battle_class = 1
+lp = 660
+atk = 65
+def = 27
+acc = 44
+eva = 10
+range_multiplier = 1.4
+crit = 15
+own_az = true
+se_atk = -30
+se_acc = -30
+skills = Array[ExtResource("3_yafhp")]([ExtResource("4_hst4b"), ExtResource("5_dqjsn"), ExtResource("6_rns3q"), ExtResource("7_w25yx"), ExtResource("8_vtije")])
+metadata/_custom_type_script = "uid://bj0qwk3daymcj"

@@ -1,6 +1,6 @@
-[gd_scene load_steps=12 format=3 uid="uid://vl2rq8bashda"]
+[gd_scene format=3 uid="uid://vl2rq8bashda"]
 
-[ext_resource type="Texture2D" uid="uid://bmsqvk1yf0uxl" path="res://client/assets/vivosaurs/1/sprite/1.png" id="1_2krq1"]
+[ext_resource type="Texture2D" uid="uid://bmsqvk1yf0uxl" path="res://client/assets/vivosaurs/Trex/sprite.png" id="1_2krq1"]
 [ext_resource type="Texture2D" uid="uid://8w1gvd7l0vih" path="res://client/assets/lifebars/0.png" id="2_jgtk3"]
 [ext_resource type="Script" uid="uid://b33pu86yfdf7v" path="res://client/battle/vivosaur_sprite.gd" id="2_w7xny"]
 [ext_resource type="Texture2D" uid="uid://p8xmgjv3yqw2" path="res://client/assets/cursors/arrow.png" id="3_2krq1"]

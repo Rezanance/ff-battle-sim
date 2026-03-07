@@ -1,15 +1,20 @@
 extends TextureRect
 class_name PlayerLobby
 
+const PLAYER_CONNECTED: String = 'PLAYER_CONNECTED'
+const PLAYER_DISCONNECTED: String = 'PLAYER_DISCONNECTED'
+const PLAYER_CONNECT_FAILED: String = 'PLAYER_CONNECT_FAILED'
+const OPPONENT_NOT_ONLINE: String = 'OPPONENT_NOT_ONLINE'
 
-@onready var team_select: OptionButton = $'VBoxContainer/TeamSelect'
-@onready var player_icon_select: OptionButton = $'PlayerIconSelect'
-@onready var display_name_input: LineEdit = $'DisplayNameInput'
-@onready var server_ip_input: LineEdit = $'ServerIPInput' 
+@export var file_component: FileComponent
+@export var team_select: OptionButton
+@export var player_icon_select: OptionButton
+@export var display_name_input: LineEdit
+@export var server_ip_input: LineEdit
+@export var status_notification_component: StatusNotificationComponent
 
 signal can_connect(can_connect: bool)
 
-var config: ConfigFile = ConfigFile.new()
 var team_index: int = 0
 var icon_id: int = 0
 var display_name: String = ''
@@ -17,7 +22,6 @@ var server_ip: String
 var connected: bool = false
 
 func _ready() -> void:
-	config.load('user://abc.cfg')
 	server_ip = server_ip_input.text
 	
 	ClientServerConnectionOUT.player_connected.connect(_on_player_connected)
@@ -47,24 +51,16 @@ func _on_server_ip_changed(new_ip: String) -> void:
 	emit_connect_status()
 
 func _on_player_connected(_player_info: Dictionary) -> void:
-	# FIXME
-	pass
-	#StatusNotification.push(StatusNotification.MessageType.SUCCESS, 'Successfully connected to server!')
+	status_notification_component.push(OK, PLAYER_CONNECTED)
 
 func _on_player_connect_failed() -> void:
-	# FIXME
-	#StatusNotification.push(StatusNotification.MessageType.ERROR, 'Error connecting to server')
-	pass
+	status_notification_component.push(ERR_CANT_CONNECT, PLAYER_CONNECTED)
 	
 func _on_player_disconnected() -> void:
-	# FIXME
-	#StatusNotification.push(StatusNotification.MessageType.SUCCESS, 'Successfully Disconnected from server')
-	pass
+	status_notification_component.push(OK, PLAYER_DISCONNECTED)
 
 func _on_opponent_not_online() -> void:
-	# FIXME
-	#StatusNotification.push(StatusNotification.MessageType.ERROR, 'Opponent is no longer online or the id is incorrect')
-	pass
+	status_notification_component.push(ERR_BUSY, OPPONENT_NOT_ONLINE)
 
 func _on_challenge_requested(opponent_info: Dictionary) -> void:
 	Networking.opponent_info = opponent_info
@@ -81,7 +77,7 @@ func _on_battle_prep_started(opponent_info: Dictionary, opponent_team_info: Dict
 	Networking.opponent_info = opponent_info
 	Networking.opponent_team = Team.unserialize('', opponent_team_info)
 	SceneTransition.change_scene("res://client/battle_preperation/BattlePreperation.tscn")
-	
+
 func emit_connect_status() -> void:
 	can_connect.emit(can_go_online())
 
@@ -91,6 +87,6 @@ func can_go_online() -> bool:
 	var server_ip_correct_format: bool = len(server_ip.split('.')) == 4
 	return is_team_selected and display_name_not_empty and server_ip_correct_format
 
-func load_selected_team_info() -> Variant:
-	var team_uuid: String = config.get_sections()[team_select.selected - 1]
-	return config.get_value(team_uuid, 'team')
+func load_selected_team_info() -> Dictionary:
+	var team_uuid: String = file_component.read_all()[team_select.selected - 1]
+	return file_component.read(team_uuid, 'team')

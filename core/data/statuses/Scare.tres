@@ -1,0 +1,13 @@
+[gd_resource type="Resource" script_class="StatusResource" format=3 uid="uid://c5cbk4aocwdao"]
+
+[ext_resource type="Texture2D" uid="uid://dmyi7y2jusydl" path="res://client/assets/statuses/Scare.webp" id="1_0ixb0"]
+[ext_resource type="Script" uid="uid://nubhjw6614kq" path="res://core/data/StatusResource.gd" id="1_4wwi3"]
+
+[resource]
+script = ExtResource("1_4wwi3")
+name = "Scare"
+is_negative = true
+description = "Skillseal any 2 random skills"
+turns_active = 2
+icon = ExtResource("1_0ixb0")
+metadata/_custom_type_script = "uid://nubhjw6614kq"

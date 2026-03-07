@@ -1,0 +1,14 @@
+[gd_resource type="Resource" script_class="SkillResource" format=3 uid="uid://2c4stsjmu1r1"]
+
+[ext_resource type="Script" uid="uid://tfde3pcbhqpi" path="res://core/data/SkillResource.gd" id="1_he2bh"]
+[ext_resource type="Script" uid="uid://dkmjfk8jhivi0" path="res://core/data/SkillEffectResource.gd" id="2_xgn1m"]
+
+[resource]
+script = ExtResource("1_he2bh")
+name = "Tyrant's Breath"
+description = "Team Skill: Attack both AZ and SZ"
+skill_type = 5
+damage = 164
+fp_cost = 280
+target = 5
+metadata/_custom_type_script = "uid://tfde3pcbhqpi"

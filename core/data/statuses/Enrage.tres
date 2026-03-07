@@ -1,0 +1,13 @@
+[gd_resource type="Resource" script_class="StatusResource" format=3 uid="uid://b1bgmueali15y"]
+
+[ext_resource type="Texture2D" uid="uid://dms5caavc8era" path="res://client/assets/statuses/Enrage.webp" id="1_4h01y"]
+[ext_resource type="Script" uid="uid://nubhjw6614kq" path="res://core/data/StatusResource.gd" id="1_pjk00"]
+
+[resource]
+script = ExtResource("1_pjk00")
+name = "Enrage"
+is_negative = true
+description = "Reduces the vivosaur's Accuracy by 30 points, but raises its Attack by 10 points"
+turns_active = 2
+icon = ExtResource("1_4h01y")
+metadata/_custom_type_script = "uid://nubhjw6614kq"

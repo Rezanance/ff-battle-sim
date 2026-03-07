@@ -1,0 +1,14 @@
+[gd_resource type="Resource" script_class="SkillResource" format=3 uid="uid://8pybw8hhrcjr"]
+
+[ext_resource type="Script" uid="uid://dkmjfk8jhivi0" path="res://core/data/SkillEffectResource.gd" id="1_84ya8"]
+[ext_resource type="Script" uid="uid://tfde3pcbhqpi" path="res://core/data/SkillResource.gd" id="2_aowhb"]
+[ext_resource type="Resource" uid="uid://y08cexocpq7m" path="res://core/data/skills/Brachio/skills/MightyStomp/effects/ShuffleEnemyTeam.tres" id="3_aowhb"]
+
+[resource]
+script = ExtResource("2_aowhb")
+name = "Mighty Stomp"
+description = "Swap zones Success rate: 100%"
+fp_cost = 100
+target = 5
+skill_effects = Array[ExtResource("1_84ya8")]([ExtResource("3_aowhb")])
+metadata/_custom_type_script = "uid://tfde3pcbhqpi"

@@ -1,0 +1,8 @@
+[gd_resource type="Resource" script_class="EffectResource" format=3 uid="uid://cbjni082k02x8"]
+
+[ext_resource type="Script" uid="uid://i777a5qopawq" path="res://core/data/EffectResource.gd" id="1_2gdoy"]
+
+[resource]
+script = ExtResource("1_2gdoy")
+effect = "EQUALIZE_FP"
+description = "Equalize FP"

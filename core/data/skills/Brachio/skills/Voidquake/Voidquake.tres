@@ -1,0 +1,14 @@
+[gd_resource type="Resource" script_class="SkillResource" format=3 uid="uid://mfns01vim63r"]
+
+[ext_resource type="Script" uid="uid://tfde3pcbhqpi" path="res://core/data/SkillResource.gd" id="1_yrojk"]
+[ext_resource type="Script" uid="uid://dkmjfk8jhivi0" path="res://core/data/SkillEffectResource.gd" id="2_xmp1a"]
+
+[resource]
+script = ExtResource("1_yrojk")
+name = "Voidquake"
+description = "Team Skill: Attack both AZ and SZ"
+skill_type = 5
+damage = 157
+fp_cost = 400
+target = 5
+metadata/_custom_type_script = "uid://tfde3pcbhqpi"

@@ -1,0 +1,12 @@
+[gd_resource type="Resource" script_class="SkillEffectResource" format=3 uid="uid://cygncof6fsqvf"]
+
+[ext_resource type="Resource" uid="uid://d2eom7yknm0vj" path="res://core/data/effects/RecoverLP.tres" id="1_shr7b"]
+[ext_resource type="Script" uid="uid://dkmjfk8jhivi0" path="res://core/data/SkillEffectResource.gd" id="1_xelfv"]
+
+[resource]
+script = ExtResource("1_xelfv")
+effect = ExtResource("1_shr7b")
+params = Dictionary[int, Variant]({
+1: 0.1
+})
+metadata/_custom_type_script = "uid://dkmjfk8jhivi0"

@@ -1,0 +1,13 @@
+[gd_resource type="Resource" script_class="SkillResource" format=3 uid="uid://bbgm1ar607dbe"]
+
+[ext_resource type="Script" uid="uid://tfde3pcbhqpi" path="res://core/data/SkillResource.gd" id="1_jfk6l"]
+[ext_resource type="Script" uid="uid://dkmjfk8jhivi0" path="res://core/data/SkillEffectResource.gd" id="2_38e1q"]
+
+[resource]
+script = ExtResource("1_jfk6l")
+name = "Mountain Wave"
+damage = 110
+fp_cost = 180
+target = 3
+counterable = true
+metadata/_custom_type_script = "uid://tfde3pcbhqpi"

@@ -1,0 +1,12 @@
+[gd_resource type="Resource" script_class="SkillEffectResource" format=3 uid="uid://bnsn2bs3saxsf"]
+
+[ext_resource type="Resource" uid="uid://yy7y3uvj5n33" path="res://core/data/effects/DrainHP.tres" id="1_q8d74"]
+[ext_resource type="Script" uid="uid://dkmjfk8jhivi0" path="res://core/data/SkillEffectResource.gd" id="2_t8ab0"]
+
+[resource]
+script = ExtResource("2_t8ab0")
+effect = ExtResource("1_q8d74")
+params = Dictionary[int, Variant]({
+1: "LAW_OF_THE_JUNGLE"
+})
+metadata/_custom_type_script = "uid://dkmjfk8jhivi0"

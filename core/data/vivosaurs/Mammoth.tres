@@ -1,0 +1,9 @@
+[gd_resource type="Resource" script_class="VivosaurResource" format=3 uid="uid://cs8ipevoksukj"]
+
+[ext_resource type="Script" uid="uid://bj0qwk3daymcj" path="res://core/data/VivosaurResource.gd" id="1_orkmv"]
+[ext_resource type="Script" uid="uid://tfde3pcbhqpi" path="res://core/data/SkillResource.gd" id="2_etiqg"]
+[ext_resource type="Script" uid="uid://nubhjw6614kq" path="res://core/data/StatusResource.gd" id="3_hl1t6"]
+
+[resource]
+script = ExtResource("1_orkmv")
+metadata/_custom_type_script = "uid://bj0qwk3daymcj"

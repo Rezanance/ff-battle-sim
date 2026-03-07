@@ -1,4 +1,4 @@
-[gd_scene load_steps=8 format=3 uid="uid://csf7xfx46ynyt"]
+[gd_scene format=3 uid="uid://csf7xfx46ynyt"]
 
 [ext_resource type="Script" uid="uid://g5ap1jc7ukjy" path="res://client/autoloads/scenes/status_notification.gd" id="1_txnc8"]
 
@@ -53,7 +53,7 @@ _data = {
 font_names = PackedStringArray("Monospace")
 subpixel_positioning = 0
 
-[node name="StatusNotification" type="Panel"]
+[node name="StatusNotification" type="Panel" unique_id=748898847]
 z_index = 1000
 z_as_relative = false
 layout_direction = 3
@@ -69,12 +69,10 @@ offset_bottom = 100.31999
 theme = SubResource("Theme_txnc8")
 script = ExtResource("1_txnc8")
 
-[node name="AnimationPlayer" type="AnimationPlayer" parent="."]
-libraries = {
-&"": SubResource("AnimationLibrary_d1nmm")
-}
+[node name="AnimationPlayer" type="AnimationPlayer" parent="." unique_id=1664103475]
+libraries/ = SubResource("AnimationLibrary_d1nmm")
 
-[node name="RichTextLabel" type="RichTextLabel" parent="."]
+[node name="RichTextLabel" type="RichTextLabel" parent="." unique_id=219561712]
 layout_mode = 0
 offset_left = 24.99997
 offset_right = 474.99997
@@ -84,5 +82,5 @@ theme_override_fonts/bold_font = SubResource("SystemFont_oaxae")
 theme_override_font_sizes/normal_font_size = 24
 theme_override_font_sizes/bold_font_size = 24
 bbcode_enabled = true
-text = "[img=48,center,center]res://client/assets/dialog_popups/green-checkmark.png[/img]  	[b]Team saved [/b]"
+text = "[img=48,center,center]res://client/assets/notification_icons/green-checkmark.png[/img]  	[b]Team saved [/b]"
 vertical_alignment = 1

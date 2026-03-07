@@ -1,0 +1,11 @@
+[gd_resource type="Resource" script_class="SkillResource" format=3 uid="uid://b6162smh2l2ry"]
+
+[ext_resource type="Script" uid="uid://tfde3pcbhqpi" path="res://core/data/SkillResource.gd" id="1_rjjkj"]
+[ext_resource type="Script" uid="uid://dkmjfk8jhivi0" path="res://core/data/SkillEffectResource.gd" id="2_3awtj"]
+
+[resource]
+script = ExtResource("1_rjjkj")
+name = "Glacial Barrage"
+description = "Team Skill: Attack both AZ and SZ"
+damage = 84
+fp_cost = 130

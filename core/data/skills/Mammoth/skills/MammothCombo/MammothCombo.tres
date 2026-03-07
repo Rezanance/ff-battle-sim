@@ -1,0 +1,16 @@
+[gd_resource type="Resource" script_class="SkillResource" format=3 uid="uid://b5oxixvaflpew"]
+
+[ext_resource type="Script" uid="uid://tfde3pcbhqpi" path="res://core/data/SkillResource.gd" id="1_37ie1"]
+[ext_resource type="Script" uid="uid://dkmjfk8jhivi0" path="res://core/data/SkillEffectResource.gd" id="2_3s1we"]
+[ext_resource type="Resource" uid="uid://nxx1x3ikco1y" path="res://core/data/skills/Mammoth/skills/MammothCombo/effects/ApplyEnrage.tres" id="3_3s1we"]
+
+[resource]
+script = ExtResource("1_37ie1")
+name = "Mammoth Combo"
+description = "Enrage [img=24,center,center]res://client/assets/statuses/Enrage.webp[/img] Success rate: 50%"
+damage = 74
+fp_cost = 90
+target = 3
+skill_effects = Array[ExtResource("2_3s1we")]([ExtResource("3_3s1we")])
+counterable = true
+metadata/_custom_type_script = "uid://tfde3pcbhqpi"

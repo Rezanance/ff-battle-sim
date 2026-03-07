@@ -1,0 +1,9 @@
+[gd_resource type="Resource" script_class="EffectResource" format=3 uid="uid://d2eom7yknm0vj"]
+
+[ext_resource type="Script" uid="uid://i777a5qopawq" path="res://core/data/EffectResource.gd" id="1_kx87r"]
+
+[resource]
+script = ExtResource("1_kx87r")
+effect = "RECOVER_LP"
+description = "Heal target(s)"
+required_params = Array[int]([1])

@@ -1,0 +1,9 @@
+[gd_resource type="Resource" script_class="EffectResource" format=3 uid="uid://yy7y3uvj5n33"]
+
+[ext_resource type="Script" uid="uid://i777a5qopawq" path="res://core/data/EffectResource.gd" id="1_nhp5t"]
+
+[resource]
+script = ExtResource("1_nhp5t")
+effect = "DRAIN_LP"
+description = "Drain HP from the target"
+required_params = Array[int]([1])

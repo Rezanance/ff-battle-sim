@@ -1,5 +1,7 @@
 extends TextureRect
 
+const TEAM_DELETED: String = 'TEAM_DELETED'
+
 const TeamPreviewScene: Resource = preload("res://client/team_viewer/team_preview/team_preview.tscn")
 const NewTeamBtn: Resource = preload("res://client/team_viewer/new_team_btn.tscn")
 
@@ -31,10 +33,12 @@ func _ready() -> void:
 
 func _on_delete_pressed(team_uuid: String, team_name: String, team_preview: Node) -> void:
 	var status: Error = file_component.delete(team_uuid)
-	status_notification_component.push(status, [team_name])
 	
 	if status == OK:
+		status_notification_component.push(status, TEAM_DELETED, [team_name])
 		team_preview.queue_free()
+		return
+	status_notification_component.push(status)
 	
 	
 	

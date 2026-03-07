@@ -1,0 +1,14 @@
+[gd_resource type="Resource" script_class="SkillEffectResource" format=3 uid="uid://nxx1x3ikco1y"]
+
+[ext_resource type="Resource" uid="uid://d4kd784secs47" path="res://core/data/effects/ChanceToApplyStatus.tres" id="1_11cot"]
+[ext_resource type="Script" uid="uid://dkmjfk8jhivi0" path="res://core/data/SkillEffectResource.gd" id="1_gwqu5"]
+[ext_resource type="Resource" uid="uid://b1bgmueali15y" path="res://core/data/statuses/Enrage.tres" id="2_lwcm7"]
+
+[resource]
+script = ExtResource("1_gwqu5")
+effect = ExtResource("1_11cot")
+params = Dictionary[int, Variant]({
+0: 50.0,
+2: ExtResource("2_lwcm7")
+})
+metadata/_custom_type_script = "uid://dkmjfk8jhivi0"

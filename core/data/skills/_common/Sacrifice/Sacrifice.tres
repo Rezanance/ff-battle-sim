@@ -1,0 +1,15 @@
+[gd_resource type="Resource" script_class="SkillResource" format=3 uid="uid://71xbkjiix3l7"]
+
+[ext_resource type="Script" uid="uid://tfde3pcbhqpi" path="res://core/data/SkillResource.gd" id="1_0neup"]
+[ext_resource type="Script" uid="uid://dkmjfk8jhivi0" path="res://core/data/SkillEffectResource.gd" id="2_k8q3n"]
+[ext_resource type="Resource" uid="uid://cuioybmxe5fp2" path="res://core/data/skills/_common/Sacrifice/effects/DonateAllLP.tres" id="3_k8q3n"]
+
+[resource]
+script = ExtResource("1_0neup")
+name = "Sacrifice"
+description = "Give LP to allies Success rate: 100%"
+skill_type = 3
+fp_cost = 50
+target = 4
+skill_effects = Array[ExtResource("2_k8q3n")]([ExtResource("3_k8q3n")])
+metadata/_custom_type_script = "uid://tfde3pcbhqpi"

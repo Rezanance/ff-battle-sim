@@ -38,7 +38,8 @@ script = ExtResource("4_ecuqo")
 [node name="FileComponent" parent="." unique_id=271923126 instance=ExtResource("5_lo4ju")]
 
 [node name="StatusNotificationComponent" parent="." unique_id=839011983 instance=ExtResource("7_bvwyg")]
-success_message = "%s deleted sucessfully"
-error_message = "Error deleting %s"
+success_messages = Dictionary[String, String]({
+"TEAM_DELETED": "Team '%s' deleted successfully!"
+})
 
 [connection signal="pressed" from="Back" to="Back" method="_on_pressed"]

@@ -1,9 +1,31 @@
-[gd_resource type="Resource" script_class="VivosaurResource" load_steps=4 format=3 uid="uid://1al4wgoon1fi"]
+[gd_resource type="Resource" script_class="VivosaurResource" format=3 uid="uid://1al4wgoon1fi"]
 
-[ext_resource type="Script" uid="uid://bj0qwk3daymcj" path="res://core/data/Vivosaur.gd" id="1_j6cbe"]
-[ext_resource type="Script" uid="uid://tfde3pcbhqpi" path="res://core/data/Skill.gd" id="2_8clsn"]
-[ext_resource type="Script" uid="uid://nubhjw6614kq" path="res://core/data/Status.gd" id="3_nx86p"]
+[ext_resource type="Script" uid="uid://bj0qwk3daymcj" path="res://core/data/VivosaurResource.gd" id="1_8clsn"]
+[ext_resource type="Texture2D" uid="uid://b3g5wux7ntdpr" path="res://client/assets/vivosaurs/Trex/medal.png" id="1_mhpi6"]
+[ext_resource type="Script" uid="uid://tfde3pcbhqpi" path="res://core/data/SkillResource.gd" id="2_nx86p"]
+[ext_resource type="Script" uid="uid://nubhjw6614kq" path="res://core/data/StatusResource.gd" id="3_unt6e"]
+[ext_resource type="Resource" uid="uid://bcxdx6l3jwv64" path="res://core/data/skills/Trex/skills/TyrantsRoar/TyrantsRoar.tres" id="4_o12u6"]
+[ext_resource type="Resource" uid="uid://cp1g8q1fynyw7" path="res://core/data/skills/Trex/skills/ScareTactics/ScareTactics.tres" id="5_petcr"]
+[ext_resource type="Resource" uid="uid://bsxpdfqelb104" path="res://core/data/skills/Trex/skills/FrightfulAssault/FrightfulAssault.tres" id="6_fdd88"]
+[ext_resource type="Resource" uid="uid://ctiaqgk8ser01" path="res://core/data/skills/_common/LawOfTheJungle/LawOfTheJungle.tres" id="7_j6hla"]
+[ext_resource type="Resource" uid="uid://2c4stsjmu1r1" path="res://core/data/skills/Trex/skills/TyrantsBreath/TyrantsBreath.tres" id="8_y3q4g"]
+[ext_resource type="Texture2D" uid="uid://bmsqvk1yf0uxl" path="res://client/assets/vivosaurs/Trex/sprite.png" id="9_sbk0n"]
 
 [resource]
-script = ExtResource("1_j6cbe")
-lp = 2000
+script = ExtResource("1_8clsn")
+name = "T-Rex"
+medal = ExtResource("1_mhpi6")
+sprite = ExtResource("9_sbk0n")
+team_skill_groups = Array[int]([0, 6])
+lp = 600
+atk = 99
+def = 50
+acc = 43
+eva = 18
+crit = 15
+own_az = true
+se_atk = -30
+se_def = -30
+se_acc = -30
+se_eva = -30
+skills = Array[ExtResource("2_nx86p")]([ExtResource("4_o12u6"), ExtResource("5_petcr"), ExtResource("6_fdd88"), ExtResource("7_j6hla"), ExtResource("8_y3q4g")])

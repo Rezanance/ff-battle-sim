@@ -1,0 +1,9 @@
+[gd_resource type="Resource" script_class="EffectResource" format=3 uid="uid://didg56k5pxgvp"]
+
+[ext_resource type="Script" uid="uid://i777a5qopawq" path="res://core/data/EffectResource.gd" id="1_7ux1b"]
+
+[resource]
+script = ExtResource("1_7ux1b")
+effect = "DONATE_LP"
+description = "Donate LP equally to target(s)"
+required_params = Array[int]([1])
