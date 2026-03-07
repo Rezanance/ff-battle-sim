@@ -2,8 +2,8 @@ extends TextureRect
 
 const TEAM_DELETED: String = 'TEAM_DELETED'
 
-const TeamPreviewScene: Resource = preload("res://client/team_viewer/team_preview/team_preview.tscn")
-const NewTeamBtn: Resource = preload("res://client/team_viewer/new_team_btn.tscn")
+const TeamPreviewScene: Resource = preload("res://client/team_viewer/scenes/team_preview/team_preview.tscn")
+const NewTeamBtn: Resource = preload("res://client/team_viewer/scenes/new_team_btn/new_team_btn.tscn")
 
 @export var file_component: FileComponent
 @export var status_notification_component: StatusNotificationComponent
@@ -21,7 +21,7 @@ func _ready() -> void:
 		for i: int in range(Team.TEAM_SLOTS):
 			var vivosaur_slot: VivosaurInfo = team.slots[i]
 			if vivosaur_slot != null:
-				medal_container.get_child(i).texture = load("res://client/assets/vivosaurs/%s/medal/%s (2).png" % [vivosaur_slot.id, vivosaur_slot.id])
+				medal_container.get_child(i).texture =  UIUtils.load_medal_texture(vivosaur_slot.id)
 		
 		var delete_btn: Delete = team_preview.get_node("Delete")
 		delete_btn.pressed.connect(_on_delete_pressed.bind(team_uuid, team.name, team_preview))

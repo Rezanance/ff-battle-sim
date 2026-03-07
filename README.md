@@ -1,7 +1,7 @@
-# Fossil Fighters: Champions battle sim
+# Fossil Fighters battle sim
 
-A battle simulator for the game Fossil Fighters: Champions released on the Nintendo DS
-in 2011.
+A battle simulator for the game Fossil Fighters released on the Nintendo DS
+in 2008.
 
 ## Useful scripts/commands
 
@@ -12,9 +12,6 @@ cd ~/ffc-battle-sim
 scp server.x86_64 ffc-battle-sim-server:~
 ssh ffc-battle-sim-server -t '~/run_server.sh'
 ```
-
-### SSH into server
-`ssh ffc-battle-sim-server`
 
 ### Run server remotely
 1. Export project

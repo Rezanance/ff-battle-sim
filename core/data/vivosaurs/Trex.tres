@@ -12,6 +12,7 @@
 [ext_resource type="Texture2D" uid="uid://bmsqvk1yf0uxl" path="res://client/assets/vivosaurs/Trex/sprite.png" id="9_sbk0n"]
 
 [resource]
+resource_name = "Trex"
 script = ExtResource("1_8clsn")
 name = "T-Rex"
 medal = ExtResource("1_mhpi6")

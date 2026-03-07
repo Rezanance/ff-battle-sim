@@ -1,9 +1,9 @@
 class_name UIUtils
 
-static var SkillScene: Resource = preload("res://client/components/ui/skill_button/skill_button.tscn")
+static var SkillScene: Resource = preload("res://client/modules/ui/skill_button/skill_button.tscn")
 
-static func load_medal_texture(vivosaur_id: int) -> Resource:
-	return load("res://client/assets/vivosaurs/%d/medal/%d (2).png" % [vivosaur_id, vivosaur_id])
+static func load_medal_texture(vivosaur_id: String) -> Resource:
+	return load("res://client/assets/vivosaurs/%s/medal.png" % vivosaur_id)
 
 static func update_skills_shown(skills_container: VBoxContainer, skills: Array[Skill], _on_skill_clicked: Callable) -> void:
 	clear_skills(skills_container)

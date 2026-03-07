@@ -2,11 +2,12 @@
 
 [ext_resource type="Script" uid="uid://tfde3pcbhqpi" path="res://core/data/SkillResource.gd" id="1_rj676"]
 [ext_resource type="Script" uid="uid://dkmjfk8jhivi0" path="res://core/data/SkillEffectResource.gd" id="2_jm2va"]
+[ext_resource type="Resource" uid="uid://cygncof6fsqvf" path="res://core/data/skills/_common/AutoLPRecovery/effects/RecoverLP.tres" id="3_jm2va"]
 
 [resource]
 script = ExtResource("1_rj676")
 name = "Auto LP Recovery"
 description = "Automatically recovers LP every turn"
 skill_type = 4
-skill_effects = Array[ExtResource("2_jm2va")]([null])
+skill_effects = Array[ExtResource("2_jm2va")]([ExtResource("3_jm2va")])
 metadata/_custom_type_script = "uid://tfde3pcbhqpi"

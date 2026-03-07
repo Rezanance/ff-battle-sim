@@ -4,9 +4,9 @@ static func create_player_formation(battle_id: int, player_id: int) -> Formation
 	var player_slot3 = ServerVariables.battle_teams[battle_id][player_id].slots[2]
 	
 	return Formation.new(
-		VivosaurBattle.new(Constants.fossilary[player_slot1]) if player_slot1 != null else null,
-		VivosaurBattle.new(Constants.fossilary[player_slot2]) if player_slot2 != null else null,
-		VivosaurBattle.new(Constants.fossilary[player_slot3]) if player_slot3 != null else null
+		VivosaurBattle.new(VivosaurInfo.new(load("res://core/data/vivosaurs/%s.tres" % player_slot1)))  if player_slot1 != null else null,
+		VivosaurBattle.new(VivosaurInfo.new(load("res://core/data/vivosaurs/%s.tres" % player_slot2))) if player_slot2 != null else null,
+		VivosaurBattle.new(VivosaurInfo.new(load("res://core/data/vivosaurs/%s.tres" % player_slot3))) if player_slot3 != null else null
 	)
 	
 	

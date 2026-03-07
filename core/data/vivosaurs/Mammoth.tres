@@ -1,9 +1,36 @@
 [gd_resource type="Resource" script_class="VivosaurResource" format=3 uid="uid://cs8ipevoksukj"]
 
+[ext_resource type="Texture2D" uid="uid://gr8riqdqxrcd" path="res://client/assets/vivosaurs/Mammoth/medal.png" id="1_hl1t6"]
 [ext_resource type="Script" uid="uid://bj0qwk3daymcj" path="res://core/data/VivosaurResource.gd" id="1_orkmv"]
 [ext_resource type="Script" uid="uid://tfde3pcbhqpi" path="res://core/data/SkillResource.gd" id="2_etiqg"]
 [ext_resource type="Script" uid="uid://nubhjw6614kq" path="res://core/data/StatusResource.gd" id="3_hl1t6"]
+[ext_resource type="Resource" uid="uid://b48kfvirjjuuf" path="res://core/data/skills/Mammoth/skills/TrunkLash/TrunkLash.tres" id="4_8ab61"]
+[ext_resource type="Texture2D" uid="uid://b2igymvsgq86y" path="res://client/assets/vivosaurs/Mammoth/sprite.png" id="4_bv676"]
+[ext_resource type="Resource" uid="uid://b5oxixvaflpew" path="res://core/data/skills/Mammoth/skills/MammothCombo/MammothCombo.tres" id="5_guqy8"]
+[ext_resource type="Resource" uid="uid://b7u7dx3c6uhd4" path="res://core/data/skills/Mammoth/skills/MammothCannon/MammothCannon.tres" id="6_63mkf"]
+[ext_resource type="Resource" uid="uid://b6162smh2l2ry" path="res://core/data/skills/Mammoth/skills/GlacialBarrage/GlacialBarrage.tres" id="7_hjj0y"]
+[ext_resource type="Resource" uid="uid://71xbkjiix3l7" path="res://core/data/skills/_common/Sacrifice/Sacrifice.tres" id="8_k7a1p"]
+[ext_resource type="Resource" uid="uid://evqrkdb46448" path="res://core/data/skills/_common/AutoLPRecovery/AutoLPRecovery.tres" id="9_t0eu8"]
 
 [resource]
+resource_name = "Mammoth"
 script = ExtResource("1_orkmv")
+name = "Mammoth"
+medal = ExtResource("1_hl1t6")
+sprite = ExtResource("4_bv676")
+element = 1
+team_skill_groups = Array[int]([4, 14, 15])
+battle_class = 2
+lp = 280
+atk = 54
+def = 32
+acc = 45
+eva = 21
+crit = 20
+own_az = true
+se_atk = 10
+se_def = 10
+se_acc = 10
+se_eva = 10
+skills = Array[ExtResource("2_etiqg")]([ExtResource("4_8ab61"), ExtResource("5_guqy8"), ExtResource("6_63mkf"), ExtResource("7_hjj0y"), ExtResource("8_k7a1p"), ExtResource("9_t0eu8")])
 metadata/_custom_type_script = "uid://bj0qwk3daymcj"

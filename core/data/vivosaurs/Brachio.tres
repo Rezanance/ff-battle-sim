@@ -12,11 +12,13 @@
 [ext_resource type="Resource" uid="uid://2c4stsjmu1r1" path="res://core/data/skills/Trex/skills/TyrantsBreath/TyrantsBreath.tres" id="8_vtije"]
 
 [resource]
+resource_name = "Brachio"
 script = ExtResource("2_u8ti0")
 name = "Mammoth"
 medal = ExtResource("1_7kjbb")
 sprite = ExtResource("4_x841l")
 element = 4
+team_skill_groups = Array[int]([5, 14])
 battle_class = 1
 lp = 660
 atk = 65

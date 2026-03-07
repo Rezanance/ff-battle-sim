@@ -24,8 +24,8 @@
 [ext_resource type="Script" uid="uid://b8t8rhluplj1f" path="res://client/player_lobby/opponent_player_id.gd" id="22_wm8eu"]
 [ext_resource type="Script" uid="uid://xyhfiy4jr8cj" path="res://client/player_lobby/send_challenge_btn.gd" id="23_stu6x"]
 [ext_resource type="Script" uid="uid://bvoyi81tp6he4" path="res://client/player_lobby/accept_challenge.gd" id="24_oyn8o"]
-[ext_resource type="PackedScene" uid="uid://dbs6tjyh02kb" path="res://client/components/logic/FileComponent/FileComponent.tscn" id="25_8h101"]
-[ext_resource type="PackedScene" uid="uid://csbr3ywp24w7j" path="res://client/components/ui/StatusNotificationComponent/StatusNotificationComponent.tscn" id="26_75qco"]
+[ext_resource type="PackedScene" uid="uid://dbs6tjyh02kb" path="res://client/modules/logic/FileComponent/FileComponent.tscn" id="25_8h101"]
+[ext_resource type="PackedScene" uid="uid://csbr3ywp24w7j" path="res://client/modules/ui/StatusNotificationComponent/StatusNotificationComponent.tscn" id="26_75qco"]
 
 [sub_resource type="SystemFont" id="SystemFont_uvhto"]
 font_names = PackedStringArray("Futura")
