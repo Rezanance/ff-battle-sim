@@ -26,7 +26,7 @@ var HEIGHT_WITH_SKILLS: int = 720
 func update_summary(vivosaur_id: String, skills_included: bool = true) -> void:
 	visible = true
 	
-	var vivosaur: VivosaurInfo = VivosaurInfo.new(load('res://core/data/vivosaurs/%s.tres' % vivosaur_id))
+	var vivosaur: VivosaurInfo = DataLoader.load_vivosaur_info(vivosaur_id)
 	element.texture = load("res://client/assets/elements/%d.webp" % vivosaur.element)
 	vivosaur_name.text = vivosaur.name
 	battle_class.text = vivosaur.battle_class.capitalize()

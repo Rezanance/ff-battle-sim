@@ -14,9 +14,12 @@ enum Target {
 	ALLY,
 	ALLY_EXCEPT_SELF,
 	ENEMY,
+	ALLY_AZ_AND_SZ,
+	ENEMY_AZ_AND_SZ,
+	ALL,
+#	For unique skills like Mighty stomp
 	ALL_ALLIES,
 	ALL_ENEMIES,
-	ALL
 }
 enum EffectParam {
 	CHANCE, LP, STATUS, 

@@ -38,7 +38,7 @@ static func unserialize(team_uuid: String, team_dict: Dictionary) -> Team:
 #		String | null
 		var vivosaur_id: Variant = team_dict.slots[i]
 		if vivosaur_id != null:
-			_slots.append(VivosaurInfo.new(load('res://core/data/vivosaurs/%s.tres' % vivosaur_id)))
+			_slots.append(DataLoader.load_vivosaur_info(vivosaur_id))
 		else:
 			_slots.append(null)
 	

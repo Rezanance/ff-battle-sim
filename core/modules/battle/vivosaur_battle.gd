@@ -7,7 +7,7 @@ var statuses: Array[Status]
 var can_attack: bool
 var is_support_effects_applied: bool
 
-func _init(_vivosaur_info: VivosaurInfo):
+func _init(_vivosaur_info: VivosaurInfo) -> void:
 	assert(_vivosaur_info != null)
 	
 	vivosaur_info = _vivosaur_info

@@ -1,2 +1,2 @@
-const PORT = 7000
-const MAX_PLAYERS = 10
+const PORT: int = 38019
+const MAX_PLAYERS: int = 20

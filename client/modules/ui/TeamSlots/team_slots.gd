@@ -83,7 +83,7 @@ func __assign_slot(selected_medal_btn: MedalBtn, team_slot: int) -> void:
 	
 	hide_selectable_slots()
 	
-	team.slots[team_slot] = VivosaurInfo.new(load('res://core/data/vivosaurs/%s.tres' % selected_medal_btn.vivosaur_id))
+	team.slots[team_slot] = DataLoader.load_vivosaur_info(selected_medal_btn.vivosaur_id)
 	slots[team_slot].medal_btn = duplicate_medal_btn
 	
 	team_modified.emit(team)
@@ -100,12 +100,12 @@ func __move_swap_slots(selected_medal_btn: MedalBtn, team_slot: int) -> void:
 	if medal_btn_in_new_slot != null: 
 		medal_btn_in_new_slot.move(tween, slots[selected_medal_team_slot].global_position)
 		tween.set_parallel() 
-		team.slots[selected_medal_team_slot] = VivosaurInfo.new(load('res://core/data/vivosaurs/%s.tres' % medal_btn_in_new_slot.vivosaur_id))
+		team.slots[selected_medal_team_slot] = DataLoader.load_vivosaur_info(medal_btn_in_new_slot.vivosaur_id)
 		medal_btn_in_new_slot.mouse_filter = Control.MOUSE_FILTER_STOP
 	else:
 		team.slots[selected_medal_team_slot] = null
 	selected_medal_btn.move(tween, slots[team_slot].global_position)
-	team.slots[team_slot] = VivosaurInfo.new(load('res://core/data/vivosaurs/%s.tres' % selected_medal_btn.vivosaur_id))
+	team.slots[team_slot] = DataLoader.load_vivosaur_info(selected_medal_btn.vivosaur_id)
 	selected_medal_btn.mouse_filter = Control.MOUSE_FILTER_STOP
 	
 	hide_selectable_slots()
@@ -119,7 +119,7 @@ func __remove_medal(selected_medal_btn: MedalBtn) -> void:
 	var tween: Tween = create_tween()
 	await selected_medal_btn.move(tween, OFFSCREEN_POSITION).finished
 	selected_medal_btn.queue_free()
-		
+
 	var selected_medal_team_slot: int = team.slots_vivosaur_ids().find(selected_medal_btn.vivosaur_id)
 	slots[selected_medal_team_slot].medal_btn = null
 	team.slots[selected_medal_team_slot] = null
