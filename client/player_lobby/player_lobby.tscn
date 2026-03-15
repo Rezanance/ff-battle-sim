@@ -26,9 +26,9 @@
 [ext_resource type="Script" uid="uid://bvoyi81tp6he4" path="res://client/player_lobby/scenes/accept_challenge.gd" id="24_oyn8o"]
 [ext_resource type="PackedScene" uid="uid://dbs6tjyh02kb" path="res://client/modules/logic/FileComponent/FileComponent.tscn" id="25_8h101"]
 [ext_resource type="PackedScene" uid="uid://csbr3ywp24w7j" path="res://client/modules/ui/StatusNotificationComponent/StatusNotificationComponent.tscn" id="26_75qco"]
-[ext_resource type="Script" uid="uid://5a8j2x2h64qn" path="res://client/modules/logic/multiplayer/server_connection.gd" id="27_quskw"]
-[ext_resource type="Script" uid="uid://cqoecpnxfktkf" path="res://client/modules/logic/multiplayer/challenge_player.gd" id="28_ya1go"]
-[ext_resource type="Script" uid="uid://dso4mo1k8unh8" path="res://client/modules/logic/multiplayer/battle_setup.gd" id="29_rymbj"]
+[ext_resource type="Script" uid="uid://5a8j2x2h64qn" path="res://client/modules/logic/multiplayer_components/server_connection_component.gd" id="27_quskw"]
+[ext_resource type="Script" uid="uid://cqoecpnxfktkf" path="res://client/modules/logic/multiplayer_components/challenge_player_component.gd" id="28_ya1go"]
+[ext_resource type="Script" uid="uid://dso4mo1k8unh8" path="res://client/modules/logic/multiplayer_components/battle_setup_component.gd" id="29_rymbj"]
 
 [sub_resource type="SystemFont" id="SystemFont_uvhto"]
 font_names = PackedStringArray("Futura")
@@ -140,7 +140,7 @@ animations = [{
 "speed": 10.0
 }]
 
-[node name="PlayerLobby" type="TextureRect" unique_id=1190702545 node_paths=PackedStringArray("file_component", "team_select", "player_icon_select", "display_name_input", "server_ip_input", "status_notification_component", "server_connection_component", "challenge_component", "battle_setup_component")]
+[node name="PlayerLobby" type="TextureRect" unique_id=1190702545 node_paths=PackedStringArray("file_component", "team_select", "player_icon_select", "display_name_input", "server_ip_input", "status_notification_component", "challenge_component", "battle_setup_component")]
 offset_right = 1920.0
 offset_bottom = 1080.0
 texture = ExtResource("1_8wk0s")
@@ -152,7 +152,6 @@ player_icon_select = NodePath("PlayerIconSelect")
 display_name_input = NodePath("DisplayNameInput")
 server_ip_input = NodePath("ServerIPInput")
 status_notification_component = NodePath("StatusNotificationComponent")
-server_connection_component = NodePath("ServerConnectionComponent")
 challenge_component = NodePath("ChallengePlayerComponent")
 battle_setup_component = NodePath("BattleSetupComponent")
 
@@ -283,7 +282,7 @@ placeholder_text = "Server IP"
 script = ExtResource("11_vy11n")
 server_connection_component = NodePath("../ServerConnectionComponent")
 
-[node name="GoOnlineBtn" type="Button" parent="." unique_id=15830818 node_paths=PackedStringArray("player_lobby", "player_icon_select", "display_name_input", "server_ip_input", "server_connection_component")]
+[node name="GoOnlineBtn" type="Button" parent="." unique_id=15830818 node_paths=PackedStringArray("player_lobby", "player_icon_select", "display_name_input", "server_ip_input", "send_challenge_btn", "server_connection_component")]
 layout_mode = 0
 offset_left = 1504.0
 offset_top = 430.0
@@ -299,6 +298,7 @@ player_lobby = NodePath("..")
 player_icon_select = NodePath("../PlayerIconSelect")
 display_name_input = NodePath("../DisplayNameInput")
 server_ip_input = NodePath("../ServerIPInput")
+send_challenge_btn = NodePath("../SendChallenge/CenterContainer/VBoxContainer/CenterContainer/SendChallengeBtn")
 server_connection_component = NodePath("../ServerConnectionComponent")
 
 [node name="Label" type="Label" parent="." unique_id=1539104068]
@@ -459,6 +459,13 @@ script = ExtResource("29_rymbj")
 [connection signal="text_changed" from="ServerIPInput" to="." method="_on_server_ip_changed"]
 [connection signal="pressed" from="CopyBtn" to="CopyBtn" method="_on_copy_btn_pressed"]
 [connection signal="text_changed" from="SendChallenge/CenterContainer/VBoxContainer/HBoxContainer/OpponentPlayerId" to="SendChallenge/CenterContainer/VBoxContainer/CenterContainer/SendChallengeBtn" method="_on_opponent_player_id_text_changed"]
+[connection signal="pressed" from="SendChallenge/CenterContainer/VBoxContainer/CenterContainer/SendChallengeBtn" to="VBoxContainer/DirectChallengeBtn" method="_on_send_challenge_btn_pressed"]
+[connection signal="pressed" from="SendChallenge/CenterContainer/VBoxContainer/CenterContainer/SendChallengeBtn" to="GoOnlineBtn" method="_on_send_challenge_btn_pressed"]
+[connection signal="pressed" from="SendChallenge/CenterContainer/VBoxContainer/CenterContainer/SendChallengeBtn" to="WaitingChallenge" method="_on_send_challenge_btn_pressed"]
+[connection signal="pressed" from="SendChallenge/CenterContainer/VBoxContainer/CenterContainer/SendChallengeBtn" to="SendChallenge" method="_on_send_challenge_pressed"]
 [connection signal="pressed" from="SendChallenge/CenterContainer/VBoxContainer/CenterContainer/SendChallengeBtn" to="SendChallenge/CenterContainer/VBoxContainer/CenterContainer/SendChallengeBtn" method="_on_pressed"]
 [connection signal="canceled" from="AcceptChallenge" to="AcceptChallenge" method="_on_decline_challenge"]
 [connection signal="confirmed" from="AcceptChallenge" to="AcceptChallenge" method="_on_accept_challenge"]
+[connection signal="player_connect_failed" from="ServerConnectionComponent" to="." method="_on_player_connect_failed"]
+[connection signal="player_connected" from="ServerConnectionComponent" to="." method="_on_player_connected"]
+[connection signal="player_disconnected" from="ServerConnectionComponent" to="." method="_on_player_disconnected"]

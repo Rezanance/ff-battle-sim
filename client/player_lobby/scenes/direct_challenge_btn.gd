@@ -16,3 +16,6 @@ func _on_opponent_not_online() -> void:
 
 func _on_challenge_declined(_opponent_info: PlayerInfo) -> void:
 	disabled = false
+
+func _on_send_challenge_btn_pressed() -> void:
+	disabled = true

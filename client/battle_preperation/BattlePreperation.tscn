@@ -2,17 +2,18 @@
 
 [ext_resource type="Texture2D" uid="uid://chevdw52lcf04" path="res://client/assets/backgrounds/rock_bg.jpg" id="1_6ey1f"]
 [ext_resource type="Script" uid="uid://dr7tvwyodgr5e" path="res://client/battle_preperation/controller.gd" id="2_7xb3l"]
-[ext_resource type="Texture2D" uid="uid://d3rw1bcnrd1c8" path="res://client/assets/Formation_slots.png" id="3_qcvb5"]
 [ext_resource type="Texture2D" uid="uid://cno2wvkx7jgu4" path="res://client/assets/player-icons/33.png" id="5_0p6ue"]
-[ext_resource type="Texture2D" uid="uid://dyvy3f6afttu2" path="res://client/assets/hud/selectable.png" id="6_e8n63"]
 [ext_resource type="Texture2D" uid="uid://ccgqkhafdclrf" path="res://client/assets/player-icons/13.png" id="7_adkwj"]
 [ext_resource type="PackedScene" uid="uid://dwnjdkuyiwb1l" path="res://client/team_editor/scenes/context_menu/context_menu.tscn" id="7_e8n63"]
 [ext_resource type="PackedScene" uid="uid://twprmxgwv8kw" path="res://client/modules/ui/VivosaurSumary/VivosaurSummary.tscn" id="8_php66"]
 [ext_resource type="Texture2D" uid="uid://dp10ms3w7gjx2" path="res://client/assets/fossil_rocks/blue.png" id="9_adkwj"]
 [ext_resource type="Script" uid="uid://po6nm7x6vf8w" path="res://client/battle_preperation/ReadyBtn.gd" id="10_0p6ue"]
 [ext_resource type="Texture2D" uid="uid://1tn25ylxybmn" path="res://client/assets/fossil_rocks/red.png" id="11_bx747"]
+[ext_resource type="PackedScene" uid="uid://cclkat5sd0msm" path="res://client/modules/ui/TeamSlots/TeamSlots.tscn" id="11_en2ru"]
+[ext_resource type="Script" uid="uid://dso4mo1k8unh8" path="res://client/modules/logic/multiplayer_components/battle_setup_component.gd" id="11_karci"]
 
 [sub_resource type="StyleBoxFlat" id="StyleBoxFlat_adkwj"]
+content_margin_top = 5.0
 content_margin_right = 5.0
 bg_color = Color(0, 0, 0, 0.67058825)
 corner_radius_top_left = 10
@@ -23,117 +24,22 @@ corner_radius_bottom_left = 10
 [sub_resource type="SystemFont" id="SystemFont_adkwj"]
 font_names = PackedStringArray("Monospace")
 
-[sub_resource type="AtlasTexture" id="AtlasTexture_wfc57"]
-atlas = ExtResource("6_e8n63")
-region = Rect2(0, 0, 32, 32)
-
-[sub_resource type="AtlasTexture" id="AtlasTexture_tbraw"]
-atlas = ExtResource("6_e8n63")
-region = Rect2(32, 0, 32, 32)
-
-[sub_resource type="AtlasTexture" id="AtlasTexture_6odcm"]
-atlas = ExtResource("6_e8n63")
-region = Rect2(64, 0, 32, 32)
-
-[sub_resource type="AtlasTexture" id="AtlasTexture_qk5ds"]
-atlas = ExtResource("6_e8n63")
-region = Rect2(96, 0, 32, 32)
-
-[sub_resource type="SpriteFrames" id="SpriteFrames_bx747"]
-animations = [{
-"frames": [{
-"duration": 1.0,
-"texture": SubResource("AtlasTexture_wfc57")
-}, {
-"duration": 1.0,
-"texture": SubResource("AtlasTexture_tbraw")
-}, {
-"duration": 1.0,
-"texture": SubResource("AtlasTexture_6odcm")
-}, {
-"duration": 1.0,
-"texture": SubResource("AtlasTexture_qk5ds")
-}],
-"loop": true,
-"name": &"default",
-"speed": 5.0
-}]
-
-[sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_miyuu"]
-
-[sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_xkaqj"]
-
-[sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_ebvfy"]
-
-[sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_0ad1w"]
-
-[sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_iw6l8"]
-
-[node name="BattlePreperation" type="TextureRect"]
+[node name="BattlePreperation" type="TextureRect" unique_id=1268188202]
 offset_right = 1920.0
 offset_bottom = 1080.0
 texture = ExtResource("1_6ey1f")
 expand_mode = 3
 script = ExtResource("2_7xb3l")
 
-[node name="OpponentFormation" type="TextureRect" parent="."]
+[node name="TextureRect" type="TextureRect" parent="." unique_id=1308662092]
 layout_mode = 0
-offset_left = 1348.0
-offset_top = 536.0
-offset_right = 1848.0
-offset_bottom = 641.0
-texture = ExtResource("3_qcvb5")
-expand_mode = 3
-
-[node name="Slot1" type="TextureButton" parent="OpponentFormation"]
-layout_mode = 0
-offset_left = 17.0
-offset_top = 4.0
-offset_right = 107.0
-offset_bottom = 94.0
-stretch_mode = 0
-
-[node name="Slot2" type="TextureButton" parent="OpponentFormation"]
-layout_mode = 0
-offset_left = 128.0
-offset_top = 4.0
-offset_right = 218.0
-offset_bottom = 94.0
-stretch_mode = 0
-
-[node name="Slot3" type="TextureButton" parent="OpponentFormation"]
-layout_mode = 0
-offset_left = 219.0
-offset_top = 4.0
-offset_right = 309.0
-offset_bottom = 94.0
-stretch_mode = 0
-
-[node name="Slot4" type="TextureButton" parent="OpponentFormation"]
-layout_mode = 0
-offset_left = 332.0
-offset_top = 4.0
-offset_right = 422.0
-offset_bottom = 94.0
-stretch_mode = 0
-
-[node name="Slot5" type="TextureButton" parent="OpponentFormation"]
-layout_mode = 0
-offset_left = 423.0
-offset_top = 4.0
-offset_right = 513.0
-offset_bottom = 94.0
-stretch_mode = 0
-
-[node name="TextureRect" type="TextureRect" parent="."]
-layout_mode = 0
-offset_left = 58.0
+offset_left = 38.0
 offset_top = 329.0
-offset_right = 570.0
+offset_right = 550.0
 offset_bottom = 521.0
 texture = ExtResource("9_adkwj")
 
-[node name="PlayerIcon" type="TextureRect" parent="TextureRect"]
+[node name="PlayerIcon" type="TextureRect" parent="TextureRect" unique_id=1545896330]
 layout_mode = 0
 offset_left = 80.0
 offset_top = 53.0
@@ -142,7 +48,7 @@ offset_bottom = 117.0
 texture = ExtResource("5_0p6ue")
 flip_h = true
 
-[node name="PlayerName" type="Label" parent="TextureRect"]
+[node name="PlayerName" type="Label" parent="TextureRect" unique_id=1146887583]
 layout_mode = 0
 offset_left = 175.0
 offset_top = 53.0
@@ -151,16 +57,16 @@ offset_bottom = 82.0
 theme_type_variation = &"HeaderLarge"
 text = "Rez"
 
-[node name="TextureRect2" type="TextureRect" parent="."]
+[node name="TextureRect2" type="TextureRect" parent="." unique_id=1999468594]
 layout_mode = 0
-offset_left = 1367.0
+offset_left = 1360.0
 offset_top = 329.0
-offset_right = 1879.0
+offset_right = 1872.0
 offset_bottom = 521.0
 texture = ExtResource("11_bx747")
 flip_h = true
 
-[node name="OppIcon" type="TextureRect" parent="TextureRect2"]
+[node name="OppIcon" type="TextureRect" parent="TextureRect2" unique_id=1251377205]
 layout_mode = 0
 offset_left = 367.0
 offset_top = 53.0
@@ -168,7 +74,7 @@ offset_right = 431.0
 offset_bottom = 117.0
 texture = ExtResource("7_adkwj")
 
-[node name="OppName" type="Label" parent="TextureRect2"]
+[node name="OppName" type="Label" parent="TextureRect2" unique_id=612586432]
 custom_minimum_size = Vector2(400, 0)
 layout_mode = 0
 offset_left = -63.0
@@ -179,25 +85,36 @@ theme_type_variation = &"HeaderLarge"
 text = "Opp"
 horizontal_alignment = 2
 
-[node name="ContextMenu" parent="." instance=ExtResource("7_e8n63")]
-item_count = 0
+[node name="ContextMenu" parent="." unique_id=1762061355 instance=ExtResource("7_e8n63")]
 
-[node name="VivosaurSummary" parent="." instance=ExtResource("8_php66")]
-layout_mode = 0
-offset_left = 690.0
-offset_top = 208.0
-offset_right = 1290.0
-offset_bottom = 928.0
+[node name="VivosaurSummary" parent="." unique_id=1025268508 instance=ExtResource("8_php66")]
+layout_mode = 1
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -300.0
+offset_top = -360.0
+offset_right = 300.0
+offset_bottom = 360.0
+grow_horizontal = 2
+grow_vertical = 2
 
-[node name="PanelContainer" type="PanelContainer" parent="."]
+[node name="HBoxContainer" type="HBoxContainer" parent="." unique_id=1217836096]
 layout_mode = 0
-offset_left = 821.0
-offset_top = 93.0
-offset_right = 986.0
-offset_bottom = 148.0
+offset_left = 782.0
+offset_top = 94.0
+offset_right = 1123.0
+offset_bottom = 149.0
+theme_override_constants/separation = 60
+alignment = 1
+
+[node name="PanelContainer" type="PanelContainer" parent="HBoxContainer" unique_id=1198345134]
+layout_mode = 2
 theme_override_styles/panel = SubResource("StyleBoxFlat_adkwj")
 
-[node name="Timer" type="RichTextLabel" parent="PanelContainer"]
+[node name="Timer" type="RichTextLabel" parent="HBoxContainer/PanelContainer" unique_id=996119077]
 custom_minimum_size = Vector2(160, 50)
 layout_mode = 2
 theme_override_fonts/normal_font = SubResource("SystemFont_adkwj")
@@ -205,110 +122,29 @@ theme_override_font_sizes/normal_font_size = 48
 text = "90"
 horizontal_alignment = 2
 
-[node name="ReadyBtn" type="Button" parent="."]
-layout_mode = 0
-offset_left = 1050.0
-offset_top = 99.0
-offset_right = 1166.0
-offset_bottom = 140.0
+[node name="ReadyBtn" type="Button" parent="HBoxContainer" unique_id=1828165754 node_paths=PackedStringArray("battle_setup_component")]
+layout_mode = 2
 toggle_mode = true
 text = "Ready"
 script = ExtResource("10_0p6ue")
+battle_setup_component = NodePath("../../BattleSetupComponent")
 
-[node name="FormationSlots" type="TextureRect" parent="."]
+[node name="TeamSlots" parent="." unique_id=1067584925 instance=ExtResource("11_en2ru")]
 layout_mode = 0
-offset_left = 88.0
-offset_top = 536.0
-offset_right = 613.0
-offset_bottom = 641.0
-size_flags_horizontal = 3
-texture = ExtResource("3_qcvb5")
-expand_mode = 3
+offset_left = 38.0
+offset_top = 533.0
+offset_right = 563.0
+offset_bottom = 638.0
 
-[node name="Slot1" type="AnimatedSprite2D" parent="FormationSlots"]
-visible = false
-position = Vector2(21.999998, 4.9999995)
-scale = Vector2(2.8, 2.8)
-sprite_frames = SubResource("SpriteFrames_bx747")
-speed_scale = 2.0
-centered = false
+[node name="OpponentTeamSlots" parent="." unique_id=202687987 instance=ExtResource("11_en2ru")]
+layout_mode = 0
+offset_left = 1360.0
+offset_top = 533.0
+offset_right = 1885.0
+offset_bottom = 638.0
 
-[node name="Button" type="Button" parent="FormationSlots/Slot1"]
-offset_right = 32.0
-offset_bottom = 32.0
-theme_override_styles/normal = SubResource("StyleBoxEmpty_miyuu")
-theme_override_styles/pressed = SubResource("StyleBoxEmpty_xkaqj")
-theme_override_styles/hover = SubResource("StyleBoxEmpty_ebvfy")
-theme_override_styles/disabled = SubResource("StyleBoxEmpty_0ad1w")
-theme_override_styles/focus = SubResource("StyleBoxEmpty_iw6l8")
-
-[node name="Slot2" type="AnimatedSprite2D" parent="FormationSlots"]
-visible = false
-position = Vector2(127.99999, 4.9999995)
-scale = Vector2(2.8, 2.8)
-sprite_frames = SubResource("SpriteFrames_bx747")
-speed_scale = 2.0
-centered = false
-
-[node name="Button" type="Button" parent="FormationSlots/Slot2"]
-offset_right = 32.0
-offset_bottom = 32.0
-theme_override_styles/normal = SubResource("StyleBoxEmpty_miyuu")
-theme_override_styles/pressed = SubResource("StyleBoxEmpty_xkaqj")
-theme_override_styles/hover = SubResource("StyleBoxEmpty_ebvfy")
-theme_override_styles/disabled = SubResource("StyleBoxEmpty_0ad1w")
-theme_override_styles/focus = SubResource("StyleBoxEmpty_iw6l8")
-
-[node name="Slot3" type="AnimatedSprite2D" parent="FormationSlots"]
-visible = false
-position = Vector2(214.99998, 4.9999995)
-scale = Vector2(2.8, 2.8)
-sprite_frames = SubResource("SpriteFrames_bx747")
-speed_scale = 2.0
-centered = false
-
-[node name="Button" type="Button" parent="FormationSlots/Slot3"]
-offset_right = 32.0
-offset_bottom = 32.0
-theme_override_styles/normal = SubResource("StyleBoxEmpty_miyuu")
-theme_override_styles/pressed = SubResource("StyleBoxEmpty_xkaqj")
-theme_override_styles/hover = SubResource("StyleBoxEmpty_ebvfy")
-theme_override_styles/disabled = SubResource("StyleBoxEmpty_0ad1w")
-theme_override_styles/focus = SubResource("StyleBoxEmpty_iw6l8")
-
-[node name="Slot4" type="AnimatedSprite2D" parent="FormationSlots"]
-visible = false
-position = Vector2(333.99997, 4.9999995)
-scale = Vector2(2.8, 2.8)
-sprite_frames = SubResource("SpriteFrames_bx747")
-speed_scale = 2.0
-centered = false
-
-[node name="Button" type="Button" parent="FormationSlots/Slot4"]
-offset_right = 32.0
-offset_bottom = 32.0
-theme_override_styles/normal = SubResource("StyleBoxEmpty_miyuu")
-theme_override_styles/pressed = SubResource("StyleBoxEmpty_xkaqj")
-theme_override_styles/hover = SubResource("StyleBoxEmpty_ebvfy")
-theme_override_styles/disabled = SubResource("StyleBoxEmpty_0ad1w")
-theme_override_styles/focus = SubResource("StyleBoxEmpty_iw6l8")
-
-[node name="Slot5" type="AnimatedSprite2D" parent="FormationSlots"]
-visible = false
-position = Vector2(420.99997, 4.9999995)
-scale = Vector2(2.8, 2.8)
-sprite_frames = SubResource("SpriteFrames_bx747")
-speed_scale = 2.0
-centered = false
-
-[node name="Button" type="Button" parent="FormationSlots/Slot5"]
-offset_right = 32.0
-offset_bottom = 32.0
-theme_override_styles/normal = SubResource("StyleBoxEmpty_miyuu")
-theme_override_styles/pressed = SubResource("StyleBoxEmpty_xkaqj")
-theme_override_styles/hover = SubResource("StyleBoxEmpty_ebvfy")
-theme_override_styles/disabled = SubResource("StyleBoxEmpty_0ad1w")
-theme_override_styles/focus = SubResource("StyleBoxEmpty_iw6l8")
+[node name="BattleSetupComponent" type="Node" parent="." unique_id=2086111785]
+script = ExtResource("11_karci")
 
 [connection signal="id_pressed" from="ContextMenu" to="." method="context_menu_item_pressed"]
-[connection signal="toggled" from="ReadyBtn" to="ReadyBtn" method="_on_toggled"]
+[connection signal="toggled" from="HBoxContainer/ReadyBtn" to="HBoxContainer/ReadyBtn" method="_on_toggled"]

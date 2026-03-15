@@ -1,6 +1,7 @@
 extends Button
 
+@export var battle_setup_component: BattleSetupComponent
 
 func _on_toggled(_toggled_on: bool) -> void:
 	disabled = true
-	ClientBattleSetupOUT.ready_early(Networking.battle_id)
+	battle_setup_component.ready_early(Networking.battle_id)

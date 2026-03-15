@@ -5,6 +5,9 @@ func _ready() -> void:
 	ClientChallengePlayer.opponent_not_online.connect(_on_opponent_not_online)
 	ClientChallengePlayer.challenge_declined.connect(_on_challenge_declined)
 
+func _on_send_challenge_btn_pressed() -> void:
+	show()
+
 func _on_opponent_not_online() -> void:
 	hide()
 

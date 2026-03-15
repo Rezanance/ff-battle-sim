@@ -173,6 +173,6 @@ func _on_battle_prep_time_up():
 	ClientBattleSetupOUT.send_new_team_info(Networking.player_team)
 
 func _on_battle_started(opponent_team_info):
-	Networking.opponent_team = Team.unserialize('', opponent_team_info)
+	Networking.opponent_team = Team.deserialize('', opponent_team_info)
 	
 	SceneTransition.change_scene("res://client/battle/Battle.tscn")

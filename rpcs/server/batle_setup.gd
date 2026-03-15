@@ -19,10 +19,14 @@ func register_team_initial(battle_id: int, team_info: Dictionary) -> void:
 	assert(multiplayer.is_server())
 	
 	Common.register_team(battle_id, multiplayer.get_remote_sender_id(), team_info)
-	if len(ServerVariables.responses_to_server[battle_id].keys()) < 2:
+	var battle_info: BattleInfo = ServerVariables.battles[battle_id]
+	var player1: int = battle_info.player1_id
+	var player2: int = battle_info.player2_id
+	if (player1 in battle_info.responses_to_server and 
+	player2 in battle_info.responses_to_server):
 		return
 	
-	ServerVariables.responses_to_server[battle_id] = {}
+	ServerVariables.battles[battle_id].responses_to_server = []
 	RegisterTeamInitial.start_battle_setup_timer(battle_id)
 	RegisterTeamInitial.notify_battle_prep_started(battle_id)
 
@@ -30,28 +34,34 @@ func register_team_initial(battle_id: int, team_info: Dictionary) -> void:
 func ready_early(battle_id: int) -> void:
 	assert(multiplayer.is_server())
 	
-	ServerVariables.responses_to_server[battle_id][multiplayer.get_remote_sender_id()] = null
-	if len(ServerVariables.responses_to_server[battle_id].keys()) < 2:
+	ServerVariables.battles[battle_id].responses_to_server.append(multiplayer.get_remote_sender_id())
+	var battle_info: BattleInfo = ServerVariables.battles[battle_id]
+	var player1: int = battle_info.player1_id
+	var player2: int = battle_info.player2_id
+	if (player1 in battle_info.responses_to_server and 
+	player2 in battle_info.responses_to_server):
 		return
 	
-	ServerVariables.responses_to_server[battle_id] = {}
-	ServerVariables.battle_timers[battle_id].stop()
-	ServerVariables.battle_timers[battle_id].timeout.emit()
+	ServerVariables.battles[battle_id].responses_to_server = []
+	ServerVariables.battles[battle_id].timer.stop()
+	ServerVariables.battles[battle_id].timer.timeout.emit()
 	
 @rpc("any_peer", "call_remote", "reliable")
 func start_battle(battle_id: int, team_info_final: Dictionary) -> void:
 	assert(multiplayer.is_server())
 	
 	Common.register_team(battle_id, multiplayer.get_remote_sender_id(), team_info_final)
-	if len(ServerVariables.responses_to_server[battle_id].keys()) < 2:
+	var battle_info: BattleInfo = ServerVariables.battles[battle_id]
+	var player1: int = battle_info.player1_id
+	var player2: int = battle_info.player2_id
+	if (player1 in battle_info.responses_to_server and 
+	player2 in battle_info.responses_to_server):
 		return
 	
-	ServerVariables.responses_to_server[battle_id] = {}
-	var player_1: int = ServerVariables.battle_teams[battle_id].keys()[0]
-	var player_2: int = ServerVariables.battle_teams[battle_id].keys()[1]
-	var player_1_formation: Formation = StartBattle.create_player_formation(battle_id, player_1)
-	var player_2_formation: Formation = StartBattle.create_player_formation(battle_id, player_2)
-	StartBattle.create_battle_field(battle_id, player_1, player_1_formation, player_2, player_2_formation)
+	ServerVariables.battles[battle_id].responses_to_server = []
+	var player1_formation: Formation = StartBattle.create_player_formation(battle_id, player1)
+	var player2_formation: Formation = StartBattle.create_player_formation(battle_id, player2)
+	StartBattle.create_battle_field(battle_id, player1, player1_formation, player2, player2_formation)
 	
-	ClientBattleSetup.notify_battle_start.rpc_id(player_1, ServerVariables.battle_teams[battle_id][player_2])
-	ClientBattleSetup.notify_battle_start.rpc_id(player_2, ServerVariables.battle_teams[battle_id][player_1])
+	ClientBattleSetup.notify_battle_start.rpc_id(player1, ServerVariables.battle_teams[battle_id][player2])
+	ClientBattleSetup.notify_battle_start.rpc_id(player2, ServerVariables.battle_teams[battle_id][player1])

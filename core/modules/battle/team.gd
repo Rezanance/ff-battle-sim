@@ -22,24 +22,24 @@ func is_valid() -> bool:
 	
 	return slots[0] != null
 
+func slots_vivosaur_ids() -> Array[Variant]:
+	@warning_ignore("incompatible_ternary")
+	return slots.map(func(vivosaur: VivosaurInfo) -> Variant: return vivosaur.id if vivosaur != null else null)
+
 func serialize() -> Dictionary:
 	return {
 		'name': name,
 		'slots': slots_vivosaur_ids()
 	}
 
-func slots_vivosaur_ids() -> Array[Variant]:
-	@warning_ignore("incompatible_ternary")
-	return slots.map(func(vivosaur: VivosaurInfo) -> Variant: return vivosaur.id if vivosaur != null else null)
-
-static func unserialize(team_uuid: String, team_dict: Dictionary) -> Team:
+static func deserialize(team_uuid: String, team_info: Dictionary) -> Team:
 	var _slots: Array[VivosaurInfo] = []
 	for i: int in range(TEAM_SLOTS):
 #		String | null
-		var vivosaur_id: Variant = team_dict.slots[i]
+		var vivosaur_id: Variant = team_info.slots[i]
 		if vivosaur_id != null:
 			_slots.append(DataLoader.load_vivosaur_info(vivosaur_id))
 		else:
 			_slots.append(null)
 	
-	return Team.new(team_uuid, team_dict['name'], _slots)
+	return Team.new(team_uuid, team_info['name'], _slots)

@@ -13,7 +13,7 @@ func _ready() -> void:
 	for team_uuid: String in file_component.read_all():
 		var team_preview: TeamPreview = TeamPreviewScene.instantiate()
 		var team_dict: Dictionary = file_component.read(team_uuid, 'team')
-		var team: Team = Team.unserialize(team_uuid, team_dict)
+		var team: Team = Team.deserialize(team_uuid, team_dict)
 		team_preview.get_node("TeamNameBackground/TeamName").text = team.name
 		
 		var medal_container: Node = team_preview.get_node("FormationBackground/MedalContainer")

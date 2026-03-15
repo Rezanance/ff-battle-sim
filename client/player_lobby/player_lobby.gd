@@ -13,7 +13,6 @@ const OPPONENT_NOT_ONLINE: String = 'OPPONENT_NOT_ONLINE'
 @export var server_ip_input: LineEdit
 
 @export var status_notification_component: StatusNotificationComponent
-@export var server_connection_component: ServerConnectionComponent
 @export var challenge_component: ChallengePlayerComponent
 @export var battle_setup_component: BattleSetupComponent
 
@@ -26,10 +25,6 @@ var server_ip: String
 
 func _ready() -> void:
 	server_ip = server_ip_input.text
-	
-	server_connection_component.player_connected.connect(_on_player_connected)
-	server_connection_component.player_connect_failed.connect(_on_player_connect_failed)
-	server_connection_component.player_disconnected.connect(_on_player_disconnected)
 
 	ClientChallengePlayer.opponent_not_online.connect(_on_opponent_not_online)
 	ClientChallengePlayer.battle_requested.connect(_on_challenge_requested)
@@ -76,9 +71,9 @@ func _on_battle_created(battle_id: int) -> void:
 	battle_setup_component.send_team_info(battle_id, load_selected_team_info())
 
 func _on_battle_prep_started(opponent_info: PlayerInfo, opponent_team_info: Dictionary) -> void:
-	Networking.player_team = Team.unserialize('', load_selected_team_info())
+	Networking.player_team = Team.deserialize('', load_selected_team_info())
 	Networking.opponent_info = opponent_info
-	Networking.opponent_team = Team.unserialize('', opponent_team_info)
+	Networking.opponent_team = Team.deserialize('', opponent_team_info)
 	SceneTransition.change_scene("res://client/battle_preperation/BattlePreperation.tscn")
 
 func emit_connect_status() -> void:

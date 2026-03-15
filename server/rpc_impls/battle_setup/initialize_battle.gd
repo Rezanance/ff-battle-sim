@@ -10,14 +10,8 @@ static func initialize_global_vars(
 	player1_id: int, 
 	player2_id: int
 ) -> void:
-	ServerVariables.player_battles[player1_id] = battle_id
-	ServerVariables.player_battles[player2_id] = battle_id
-	ServerVariables.battle_teams[battle_id] = {}
-	ServerVariables.responses_to_server[battle_id] = {}
-	ServerVariables.used_battle_ids[battle_id] = null
-	ServerVariables.challenge_requests.erase(player1_id)
-	ServerVariables.battle_timers[battle_id] = Timer.new()
-	ServerVariables.add_child(ServerVariables.battle_timers[battle_id])
+	ServerVariables.battles[battle_id] = BattleInfo.new(battle_id, player1_id, player2_id, Timer.new())
+	ServerVariables.add_child(ServerVariables.battles[battle_id].timer)
 	
 static func notify_contenders(battle_id: int, player1_id: int, player2_id: int) -> void:
 	Logging.info("%d - Battle created (%d vs. %d)" % [battle_id, player1_id, player2_id])
