@@ -1,6 +1,5 @@
 extends Node
 
-
 var is_transitioning: bool = false
 var new_scene_path: String
 

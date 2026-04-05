@@ -1,0 +1,8 @@
+extends Node
+class_name BattlingComponent
+
+func who_goes_first(battle_id: int) -> void:
+	ServerTurns.who_goes_first_server.rpc_id(Networking.SERVER_PEER_ID, battle_id)
+
+func end_turn(battle_id: int) -> void:
+	ServerTurns.end_turn_server.rpc_id(Networking.SERVER_PEER_ID, battle_id)

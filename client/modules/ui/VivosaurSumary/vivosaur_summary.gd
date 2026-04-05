@@ -51,7 +51,11 @@ func update_summary(vivosaur_id: String, skills_included: bool = true) -> void:
 	
 	if skills_included:
 		UIUtils.clear_skills(skills_container)
-		UIUtils.update_skills_shown(skills_container, vivosaur.skills, func() -> void: return )
+		UIUtils.update_skills_shown(
+			skills_container, 
+			vivosaur.skills, 
+			func(_event: InputEvent, _skill: Skill) -> void: return 
+		)
 		size.y = HEIGHT_WITH_SKILLS
 		return
 	size.y = BASE_HEIGHT

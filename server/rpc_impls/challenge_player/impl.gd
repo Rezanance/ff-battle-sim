@@ -1,3 +1,5 @@
+const Utils = preload("res://server/rpc_impls/utils.gd")
+
 static func register_player(
 	multiplayer: MultiplayerAPI, 
 	player_info: PlayerInfo
@@ -16,7 +18,7 @@ static func forward_challenge(
 	if not ServerVariables.all_player_info.has(opponent_id):
 		Logging.info("Player %d is not online" % opponent_id)
 		ClientChallengePlayer.forward_opponent_not_online.rpc_id(_challenger_id)
-	elif ServerVariables.challenge_requests.has(opponent_id) or ServerVariables.player_battles.has(opponent_id):
+	elif ServerVariables.challenge_requests.has(opponent_id) or Utils.get_battle_id_from_player(opponent_id) != -1:
 		Logging.info("Player %d wanted to challenge %d BUT they're already busy (already has a challenge request or currently in battle)" % [_challenger_id, opponent_id])
 		ClientChallengePlayer.forward_opponent_busy.rpc_id(_challenger_id)
 	else:

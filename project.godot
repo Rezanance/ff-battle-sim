@@ -28,14 +28,15 @@ StatusNotification="*res://client/autoloads/scenes/status_notification.tscn"
 GlobalAcceptDialog="*res://client/autoloads/scenes/accept_dialog.tscn"
 Networking="*res://client/autoloads/singletons/networking.gd"
 TeamEditing="*res://client/autoloads/singletons/team_editing.gd"
+Battling="*uid://dqbpbpsm8uucs"
 ClientChallengePlayer="*res://rpcs/client/challenge_player.gd"
 ClientBattleSetup="*res://rpcs/client/battle_setup.gd"
-ClientTurns="*res://rpcs/client/turns.gd"
+ClientBattle="*res://rpcs/client/battling.gd"
 ServerSetup="*res://server/setup.gd"
 ServerVariables="*res://server/variables.gd"
 ServerChallengePlayer="*res://rpcs/server/challenge_player.gd"
 ServerBattleSetup="*res://rpcs/server/batle_setup.gd"
-ServerTurns="*res://rpcs/server/turns.gd"
+ServerBattle="*res://rpcs/server/battling.gd"
 
 [debug]
 
@@ -46,7 +47,6 @@ gdscript/warnings/inferred_declaration=1
 
 window/size/viewport_width=1920
 window/size/viewport_height=1080
-window/size/mode=3
 window/stretch/mode="canvas_items"
 
 [editor_plugins]

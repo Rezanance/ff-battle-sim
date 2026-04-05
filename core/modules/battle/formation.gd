@@ -2,59 +2,46 @@ class_name Formation
 
 
 enum Zone {AZ, SZ1, SZ2, EZ}
-enum SupportZone {SZ1, SZ2}
 const BASE_FP_RECHARGE: int = 180
 const MAX_FP: int = 500
 const FP_GAIN_AFTER_KNOCKOUT: int = BASE_FP_RECHARGE * 2
 
-class AZSupportEffects:
-	var atk: float
-	var def: float
-	var acc: float
-	var eva: float
-
-	func _init() -> void:
-		atk = 0
-		def = 0
-		acc = 0
-		eva = 0
-		
-# VivosaurBattle | null
-var az: VivosaurBattle
-var sz1: VivosaurBattle
-var sz2: VivosaurBattle
-var ez: VivosaurBattle
-# TextureButton | null
-var az_sprite_btn: TextureButton
-var sz1_sprite_btn: TextureButton
-var sz2_sprite_btn: TextureButton
-var ez_sprite_btn: TextureButton
+# Vivosaur | null
+var az: Vivosaur
+var sz1: Vivosaur
+var sz2: Vivosaur
+var ez: Vivosaur
 
 var fp: int
 
-var az_support_effects: AZSupportEffects
-
-func _init(_az: VivosaurBattle, _sz1: VivosaurBattle, _sz2: VivosaurBattle) -> void:
+func _init(_az: Vivosaur, _sz1: Vivosaur = null, _sz2: Vivosaur= null) -> void:
 	az = _az
-	az_sprite_btn = null
 	sz1 = _sz1
-	sz1_sprite_btn = null
 	sz2 = _sz2
-	sz2_sprite_btn = null
 	ez = null
-	ez_sprite_btn = null
-
 	fp = 0
 
-	az_support_effects = AZSupportEffects.new()
+# Server shouldn't send the whole formation data since it can be computed on client side
+# Just for initial formation
+func serialize() -> Dictionary[String, Variant]:
+	@warning_ignore("incompatible_ternary")
+	return {
+		'az': az.serialize(),
+		'sz1': sz1.serialize() if sz1 else null,
+		'sz2': sz2.serialize() if sz2 else null,
+	}
 
-func get_sz_vivosaurs() -> Array[VivosaurBattle]:
+static func deserialize(formation_dict: Dictionary[String, Variant]) -> Formation:
+	return Formation.new(
+		Vivosaur.deserialize(formation_dict['az']),
+		Vivosaur.deserialize(formation_dict['sz1']) if formation_dict['sz1'] else null,
+		Vivosaur.deserialize(formation_dict['sz2']) if formation_dict['sz2'] else null,
+	)
+
+func get_sz_vivosaurs() -> Array[Vivosaur]:
 	return [sz1, sz2]
 
-func get_support_zones_sprite_btns() -> Array:
-	return [sz1_sprite_btn, sz2_sprite_btn]
-
-func get_total_lp() -> int:
+func calculate_total_lp() -> int:
 	var az_lp: int = az.get('current_lp') if az != null else 0
 	var sz1_lp : int= sz1.get('current_lp') if sz1 != null else 0
 	var sz2_lp: int = sz2.get('current_lp') if sz2 != null else 0
@@ -67,7 +54,7 @@ func recharge_fp() -> void:
 	else:
 		fp += BASE_FP_RECHARGE
 
-func get_vivosaur_zone(vivo: VivosaurBattle) -> Zone:
+func get_vivosaur_zone(vivo: Vivosaur) -> Zone:
 	var az_id: String = az.get('vivosaur_info').get('id')
 	var sz1_id: String = sz1.get('vivosaur_info').get('id')
 	var sz2_id: String = sz2.get('vivosaur_info').get('id')
@@ -81,3 +68,6 @@ func get_vivosaur_zone(vivo: VivosaurBattle) -> Zone:
 			return Zone.SZ2
 		_:
 			return Zone.EZ
+
+func swap_to_ez(sz_vivosaur: Vivosaur) -> void:
+	return

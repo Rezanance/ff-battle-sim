@@ -19,3 +19,9 @@ ssh ffc-battle-sim-server -t '~/run_server.sh'
 
 ### Copy game to pc
 `scp ~/ffc-battle-sim/FF\ Battle\ Sim\ (Linux).x86_64 cachyos-pc:~/Desktop`
+
+### Todo
+- Add "fossil liscence" style card in player lobby scene
+- Make icon select a modal popup
+- Make buttons silve with screws in corner
+- Add announcer 

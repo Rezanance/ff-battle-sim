@@ -32,7 +32,7 @@ func _on_context_menu_item_clicked(action: TeamSlots.Action) -> void:
 
 func _on_medal_gui_input(event: InputEvent, medal_btn: MedalBtn) -> void:
 	if event is InputEventMouseButton:
-		if event.button_index == MOUSE_BUTTON_RIGHT and event.pressed:
+		if event.button_index == MOUSE_BUTTON_RIGHT and event.pressed and context_menu != null:
 			context_menu.show_menu(event.global_position, medal_btn)
 		unselect_previous_medal_btn()
 		select_current_medal_btn(medal_btn)
@@ -63,11 +63,15 @@ func init_context_menu() -> void:
 			show_remove,
 			_on_context_menu_item_clicked.bind(TeamSlots.Action.REMOVE)
 		))
-	context_menu.init(menu_items)
+	if context_menu != null:
+		context_menu.init(menu_items)
 
 func init_team_slots(team: Team) -> void:
 	team_slots.slot_clicked.connect(_on_team_slot_clicked)
-	team_slots.init(team, _on_medal_gui_input, allowed_actions, create_medal_btn)
+	if context_menu != null:
+		team_slots.init(team, _on_medal_gui_input, allowed_actions, create_medal_btn)
+	else:
+		team_slots.init(team, func () -> void: return, allowed_actions, create_medal_btn)
 
 func init_fossilary_container(team: Team) -> void:
 	if fossilary_container != null:

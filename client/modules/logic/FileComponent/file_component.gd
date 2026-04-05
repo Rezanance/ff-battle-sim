@@ -10,11 +10,14 @@ const files : Dictionary[File, String]= {
 signal file_saved(status: Error)
 
 @export var file: File = File.TEAMS
-@onready var file_path: String = files[file]
+var file_path: String
 var config: ConfigFile = ConfigFile.new()
 
 func _ready() -> void:
-	config.load(file_path)
+	file_path = files[file]
+	var err: Error = config.load(file_path)
+	if err != Error.OK:
+		pass
 
 func save(section: String, key: String, value: Variant ) -> Error:
 	config.set_value(section, key, value)
@@ -29,5 +32,5 @@ func delete(section: String) -> Error:
 func read_all() -> PackedStringArray:
 	return config.get_sections()
 
-func read(section: String, key: String) -> Dictionary:
-	return config.get_value(section, key)
+func read(section: String, key: String) -> Variant:
+	return config.get_value(section, key, false)

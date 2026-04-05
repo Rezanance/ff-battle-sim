@@ -1,5 +1,6 @@
 extends Node
 
+const Utils = preload("res://server/rpc_impls/utils.gd")
 const ServerConfig = preload("res://server/config.gd")
 
 func _ready() -> void:
@@ -18,15 +19,7 @@ func _on_client_disconnected(id: int) -> void:
 	Logging.info('%d disconnected' % id)
 	ServerVariables.all_player_info.erase(id)
 	
-	if ServerVariables.player_battles.has(id):
-		var battle_id: int = ServerVariables.player_battles[id]
-		var opponent_id: int = ServerVariables.battle_teams[battle_id].keys().filter(
-			func (player_id: int) -> bool: return player_id != id)[0]
-		
-		ServerVariables.player_battles.erase(id)
-		ServerVariables.player_battles.erase(opponent_id)
-		ServerVariables.battle_teams.erase(battle_id)
-		ServerVariables.battle_timers.erase(battle_id)
-		ServerVariables.battlefields.erase(battle_id)
-		ServerVariables.responses_to_server.erase(battle_id)
+	var battle_id: int = Utils.get_battle_id_from_player(id)
+	if battle_id != -1:
+		ServerVariables.battles.erase(battle_id)
 		ServerVariables.used_battle_ids.erase(battle_id)

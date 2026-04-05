@@ -14,7 +14,7 @@
 [resource]
 resource_name = "Brachio"
 script = ExtResource("2_u8ti0")
-name = "Mammoth"
+name = "Brachio"
 medal = ExtResource("1_7kjbb")
 sprite = ExtResource("4_x841l")
 element = 4
