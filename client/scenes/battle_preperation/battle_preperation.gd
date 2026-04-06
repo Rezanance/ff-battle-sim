@@ -51,7 +51,6 @@ func initialize_teams() -> void:
 func _on_battle_prep_time_up() -> void:
 	battle_setup_component.send_new_team_info(Networking.player_team)
 
-func _on_battle_started(player_formation: Formation, opponent_formation: Formation) -> void:
-	Battling.player_formation = player_formation
-	Battling.opponent_formation = opponent_formation
+func _on_battle_started(formations: Dictionary[int, Formation]) -> void:
+	Battling.formations = formations
 	SceneTransition.change_scene("res://client/scenes/battle/Battle.tscn")

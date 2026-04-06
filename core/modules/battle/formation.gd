@@ -1,10 +1,23 @@
 class_name Formation
 
-
 enum Zone {AZ, SZ1, SZ2, EZ}
 const BASE_FP_RECHARGE: int = 180
 const MAX_FP: int = 500
 const FP_GAIN_AFTER_KNOCKOUT: int = BASE_FP_RECHARGE * 2
+
+class PlayerZone:
+	var player_id: int
+	var zone: Zone
+	
+	func _init(_player_id: int, _zone: Zone) -> void:
+		player_id = _player_id
+		zone = _zone
+	
+	func equals(player_zone: PlayerZone) -> bool:
+		return (
+			self.player_id == player_zone.player_id and 
+			self.zone == player_zone.zone
+		)
 
 # Vivosaur | null
 var az: Vivosaur

@@ -3,7 +3,7 @@ extends Node
 signal battle_created(battle_id: int)
 signal battle_prep_started(opponent_info: PlayerInfo, opponent_team_info: Team)
 signal battle_prep_time_up(battle_id: int)
-signal battle_started(player_formation: Formation, opponent_formation: Formation)
+signal battle_started(formations: Dictionary[int, Formation])
 
 @rpc('authority', "call_remote", 'reliable')
 func notify_battle_created_server(battle_id: int) -> void:
@@ -19,10 +19,10 @@ func notify_battle_prep_time_up() -> void:
 
 @rpc("authority", "call_remote", "reliable")
 func notify_battle_start(
-	player_formation: Dictionary[String, Variant],
-	opponent_formation: Dictionary[String, Variant]
+	formations_serialized: Dictionary[int, Dictionary]
 ) -> void:
-	battle_started.emit(
-		Formation.deserialize(player_formation),
-		Formation.deserialize(opponent_formation)
-	)
+	var formations: Dictionary[int, Formation] = {}
+	for player_id: int in formations_serialized.keys():
+		formations[player_id] = Formation.deserialize(formations_serialized[player_id])
+	
+	battle_started.emit(formations)

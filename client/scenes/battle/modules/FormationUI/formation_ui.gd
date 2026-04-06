@@ -24,29 +24,34 @@ class_name FormationUI
 
 @export var is_player_formation: bool = true
 
-var az_vivosaur_sprite: VivosaurSprite
-var sz1_vivosaur_sprite: VivosaurSprite
-var sz2_vivosaur_sprite: VivosaurSprite
-var ez_vivosaur_sprite: VivosaurSprite = null
+var vivosaur_sprite_zones: Array[VivosaurSprite] = [null, null, null, null]
 
-func _ready() -> void:
-	await get_tree().create_timer(0.2).timeout
+#func _ready() -> void:
+	#initialize_vivosaur_sprites()
+	#animate_vivosaur_entrance()
+
+func initialize() -> void:
 	initialize_vivosaur_sprites()
-	animate_vivosaur_entrance()
-	
+	await animate_vivosaur_entrance()
+
 func initialize_vivosaur_sprites() -> void:
-	var formation: Formation = Battling.player_formation if is_player_formation else Battling.opponent_formation
+	var formation: Formation
+	if  is_player_formation :
+		formation = Battling.formations[Networking.player_info.player_id] 
+	else:
+		formation=  Battling.formations[Networking.opponent_info.player_id] 
+		
 	var az: Vivosaur = formation.az
 	var sz1: Vivosaur = formation.sz1
 	var sz2: Vivosaur = formation.sz2
 	
-	az_vivosaur_sprite = vivosaur_sprite_1
-	sz1_vivosaur_sprite = vivosaur_sprite_2
-	sz2_vivosaur_sprite = vivosaur_sprite_3
+	vivosaur_sprite_zones[Formation.Zone.AZ] = vivosaur_sprite_1
+	vivosaur_sprite_zones[Formation.Zone.SZ1] = vivosaur_sprite_2
+	vivosaur_sprite_zones[Formation.Zone.SZ2] = vivosaur_sprite_3
 	
-	_initialize_sprite(az, az_vivosaur_sprite)
-	_initialize_sprite(sz1, sz1_vivosaur_sprite)
-	_initialize_sprite(sz2, sz2_vivosaur_sprite)
+	_initialize_sprite(az, vivosaur_sprite_1)
+	_initialize_sprite(sz1, vivosaur_sprite_2)
+	_initialize_sprite(sz2, vivosaur_sprite_3)
 
 func _initialize_sprite(vivosaur: Vivosaur, sprite: VivosaurSprite) -> void:
 	if vivosaur:
@@ -57,24 +62,29 @@ func _initialize_sprite(vivosaur: Vivosaur, sprite: VivosaurSprite) -> void:
 		sprite.queue_free()
 
 func animate_vivosaur_entrance() -> void:
+	var az_sprite: VivosaurSprite = vivosaur_sprite_zones[Formation.Zone.AZ]
+	var sz1_sprite: VivosaurSprite = vivosaur_sprite_zones[Formation.Zone.SZ1]
+	var sz2_sprite: VivosaurSprite = vivosaur_sprite_zones[Formation.Zone.SZ2]
 	var tween: Tween = create_tween()
-	tween.tween_property(
-		vivosaur_sprite_2, 
-		'global_position', 
-		sz1_position.global_position, 
-		0.2
-	)
+	if is_instance_valid(sz1_sprite):
+		tween.tween_property(
+			sz1_sprite, 
+			'global_position', 
+			sz1_position.global_position, 
+			0.2
+		)
 	tween.set_parallel()
 	tween.tween_property(
-		vivosaur_sprite_1, 
+		az_sprite, 
 		'global_position', 
 		az_position.global_position, 
 		0.2
 	).set_delay(0.1)
-	tween.tween_property(
-		vivosaur_sprite_3, 
-		'global_position', 
-		sz2_position.global_position, 
-		0.2
-	).set_delay(0.2)
+	if is_instance_valid(sz2_sprite):
+		tween.tween_property(
+			sz2_sprite, 
+			'global_position', 
+			sz2_position.global_position, 
+			0.2
+		).set_delay(0.2)
 	await tween.finished

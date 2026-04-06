@@ -8,3 +8,7 @@ class_name VivosaurSprite
 func _ready() -> void:
 	animation_player.play("arrow")
 	cursor.play()
+
+func pulse() -> void:
+	animation_player.play("pulse")
+	await animation_player.animation_finished

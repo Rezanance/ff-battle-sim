@@ -32,6 +32,18 @@ tracks/1/keys = {
 "points": PackedFloat32Array(27, -0.25, 0, 0.25, 0),
 "times": PackedFloat32Array(0)
 }
+tracks/2/type = "value"
+tracks/2/imported = false
+tracks/2/enabled = true
+tracks/2/path = NodePath(".:scale")
+tracks/2/interp = 1
+tracks/2/loop_wrap = true
+tracks/2/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [Vector2(1, 1)]
+}
 
 [sub_resource type="Animation" id="Animation_w7xny"]
 resource_name = "arrow"
@@ -60,10 +72,27 @@ tracks/1/keys = {
 "times": PackedFloat32Array(0, 0.43333334, 0.75)
 }
 
+[sub_resource type="Animation" id="Animation_w1ead"]
+resource_name = "pulse"
+length = 0.4
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath(".:scale")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0, 0.2, 0.4),
+"transitions": PackedFloat32Array(1, 1, 1),
+"update": 0,
+"values": [Vector2(1, 1), Vector2(2, 2), Vector2(1, 1)]
+}
+
 [sub_resource type="AnimationLibrary" id="AnimationLibrary_uyhtx"]
 _data = {
 &"RESET": SubResource("Animation_jgtk3"),
-&"arrow": SubResource("Animation_w7xny")
+&"arrow": SubResource("Animation_w7xny"),
+&"pulse": SubResource("Animation_w1ead")
 }
 
 [sub_resource type="SpriteFrames" id="SpriteFrames_novg2"]
@@ -86,16 +115,24 @@ animations = [{
 [node name="VivosaurSprite" type="TextureButton" unique_id=1226815371]
 offset_right = 160.0
 offset_bottom = 160.0
+pivot_offset_ratio = Vector2(0.5, 0.5)
 texture_normal = ExtResource("1_2krq1")
 stretch_mode = 0
 flip_h = true
 script = ExtResource("2_w7xny")
 
 [node name="LifeBar" type="Control" parent="." unique_id=1408213578]
-anchors_preset = 0
-offset_top = 103.0
-offset_right = 40.0
-offset_bottom = 143.0
+layout_mode = 1
+anchors_preset = 7
+anchor_left = 0.5
+anchor_top = 1.0
+anchor_right = 0.5
+anchor_bottom = 1.0
+offset_left = -80.0
+offset_top = -40.0
+offset_right = -40.0
+grow_horizontal = 2
+grow_vertical = 0
 mouse_filter = 2
 
 [node name="Bg" type="TextureRect" parent="LifeBar" unique_id=1402620521]

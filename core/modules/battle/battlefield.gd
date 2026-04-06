@@ -64,6 +64,6 @@ func apply_support_effects(player_id: int) -> void:
 	var opponent_az: Vivosaur = formations[get_opponent_id(player_id)].az
 	
 	if sz1:
-		sz1.apply_support_effects(Formation.Zone.SZ1, player_az, opponent_az)
+		sz1.apply_support_effects(player_id, Formation.Zone.SZ1, player_az, opponent_az)
 	if sz2:
-		sz2.apply_support_effects(Formation.Zone.SZ2, player_az, opponent_az)
+		sz2.apply_support_effects(player_id, Formation.Zone.SZ2, player_az, opponent_az)

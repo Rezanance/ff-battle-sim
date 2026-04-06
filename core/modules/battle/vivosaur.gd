@@ -7,7 +7,7 @@ var vivosaur_info: VivosaurInfo
 
 var statuses: Array[Status]
 var can_attack: bool
-var support_received: Array[Formation.Zone]
+var support_received: Array[Formation.PlayerZone]
 
 var current_lp: int
 var attack_modifier: float
@@ -49,10 +49,12 @@ func move_to_zone(zone: Formation.Zone = Formation.Zone.EZ) -> void:
 	return
 
 func apply_support_effects(
+	_player_id: int,
 	support_zone: Formation.Zone,
 	player_az: Vivosaur, 
-	opponent_az: Vivosaur
+	opponent_az: Vivosaur,
 ) -> void:
+	var player_zone: Formation.PlayerZone = Formation.PlayerZone.new(_player_id, support_zone)
 	var support_effects: SupportEffects = vivosaur_info.support_effects
 	var target_player_id: int
 	if support_effects.own_az:
@@ -60,14 +62,14 @@ func apply_support_effects(
 		player_az.defense_modifier += support_effects.defense_modifier
 		player_az.accuracy_modifier += support_effects.accuracy_modifier
 		player_az.evasion_modifier += support_effects.evasion_modifier
-		player_az.support_received.append(support_zone)
+		player_az.support_received.append(player_zone)
 		target_player_id = player_az.player_id
 	else:
 		opponent_az.attack_modifier += support_effects.attack_modifier
 		opponent_az.defense_modifier += support_effects.defense_modifier
 		opponent_az.accuracy_modifier += support_effects.accuracy_modifier
 		opponent_az.evasion_modifier += support_effects.evasion_modifier
-		opponent_az.support_received.append(support_zone)
+		opponent_az.support_received.append(player_zone)
 		target_player_id = opponent_az.player_id
 		
 	support_effects_applied.emit(SupportEffectsAppliedEvent.new(

@@ -21,6 +21,7 @@
 [ext_resource type="Texture2D" uid="uid://bwfb6qqm38exu" path="res://client/assets/ok/ok.png" id="16_bgkx4"]
 [ext_resource type="Texture2D" uid="uid://c5krceuxlhv2n" path="res://client/assets/ok/ok_pressed.png" id="17_xha48"]
 [ext_resource type="Texture2D" uid="uid://cyuvw6spt0cwv" path="res://client/assets/ok/ok_hover.png" id="18_dmge3"]
+[ext_resource type="Script" uid="uid://c8my2a42qmla1" path="res://client/modules/logic/multiplayer_components/battling_component.gd" id="22_2k6mw"]
 
 [sub_resource type="SystemFont" id="SystemFont_d0b6a"]
 font_names = PackedStringArray("Sans-Serif")
@@ -38,11 +39,14 @@ font_italic = true
 bg_color = Color(0.9160458, 0.70603096, 0.4494692, 1)
 border_blend = true
 
-[node name="Battle" type="ColorRect" unique_id=972273508]
+[node name="Battle" type="ColorRect" unique_id=972273508 node_paths=PackedStringArray("battling_component", "player_formation_ui", "opponent_formation_ui")]
 offset_right = 1920.0
 offset_bottom = 1080.0
 color = Color(0.8786593, 0.5368116, 0.35264778, 1)
 script = ExtResource("1_1vng8")
+battling_component = NodePath("BattlingComponent")
+player_formation_ui = NodePath("BattleWindow/PlayerFormation")
+opponent_formation_ui = NodePath("BattleWindow/OpponentFormation")
 
 [node name="BattleWindow" type="TextureRect" parent="." unique_id=309800834]
 layout_mode = 1
@@ -86,9 +90,9 @@ offset_bottom = 185.0
 
 [node name="SZ1" type="Control" parent="BattleWindow/PlayerFormation" unique_id=704399495]
 anchors_preset = 0
-offset_left = 86.0
+offset_left = 64.0
 offset_top = 13.0
-offset_right = 126.0
+offset_right = 104.0
 offset_bottom = 53.0
 
 [node name="SZ2" type="Control" parent="BattleWindow/PlayerFormation" unique_id=443563278]
@@ -653,6 +657,9 @@ offset_bottom = 1075.0
 
 [node name="VBoxContainer" type="VBoxContainer" parent="EventLogBg/ScrollContainer" unique_id=1262127518]
 layout_mode = 2
+
+[node name="BattlingComponent" type="Node" parent="." unique_id=1713040053]
+script = ExtResource("22_2k6mw")
 
 [connection signal="pressed" from="BattleWindow/Back" to="." method="on_back_pressed"]
 [connection signal="pressed" from="BattleWindow/Ok" to="." method="on_ok_pressed"]

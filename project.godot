@@ -31,12 +31,12 @@ TeamEditing="*res://client/autoloads/singletons/team_editing.gd"
 Battling="*uid://dqbpbpsm8uucs"
 ClientChallengePlayer="*res://rpcs/client/challenge_player.gd"
 ClientBattleSetup="*res://rpcs/client/battle_setup.gd"
-ClientBattle="*res://rpcs/client/battling.gd"
+ClientBattling="*res://rpcs/client/battling.gd"
 ServerSetup="*res://server/setup.gd"
 ServerVariables="*res://server/variables.gd"
 ServerChallengePlayer="*res://rpcs/server/challenge_player.gd"
 ServerBattleSetup="*res://rpcs/server/batle_setup.gd"
-ServerBattle="*res://rpcs/server/battling.gd"
+ServerBattling="*res://rpcs/server/battling.gd"
 
 [debug]
 
