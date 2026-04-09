@@ -26,10 +26,6 @@ class_name FormationUI
 
 var vivosaur_sprite_zones: Array[VivosaurSprite] = [null, null, null, null]
 
-#func _ready() -> void:
-	#initialize_vivosaur_sprites()
-	#animate_vivosaur_entrance()
-
 func initialize() -> void:
 	initialize_vivosaur_sprites()
 	await animate_vivosaur_entrance()
@@ -88,3 +84,11 @@ func animate_vivosaur_entrance() -> void:
 			0.2
 		).set_delay(0.2)
 	await tween.finished
+
+func update_support_effects() -> void:
+#	TODO
+	return
+
+func show_who_goes_first() -> void:
+#	TODO
+	return

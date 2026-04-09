@@ -36,8 +36,8 @@ func who_goes_first() -> int:
 	first_player_determined.emit(FirstPlayerDeterminedEvent.new(
 		first_player_id,
 		player1_id,
-		player_1_total_lp,
 		player2_id,
+		player_1_total_lp,
 		player_2_total_lp
 	))
 	return first_player_id
