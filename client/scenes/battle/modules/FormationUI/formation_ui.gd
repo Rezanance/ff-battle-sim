@@ -1,6 +1,9 @@
 extends Node
 class_name FormationUI
 
+signal support_effects_updated()
+signal first_player_revealed()
+
 @export var total_lp_panel: TextureRect
 @export var total_lp_panel_position: Control
 
@@ -85,10 +88,62 @@ func animate_vivosaur_entrance() -> void:
 		).set_delay(0.2)
 	await tween.finished
 
-func update_support_effects() -> void:
-#	TODO
-	return
+func update_support_effects(
+	target_az: Vivosaur
+) -> void:
+	_format_support_modifier('Atk', target_az.attack_modifier)
+	_format_support_modifier('Def', target_az.defense_modifier)
+	_format_support_modifier('Acc', target_az.accuracy_modifier)
+	_format_support_modifier('Eva', target_az.evasion_modifier)
+	
+	support_effects_updated.emit()
 
-func show_who_goes_first() -> void:
-#	TODO
-	return
+func _format_support_modifier(
+	node: String, 
+	modifier: float
+) -> void:
+	var text: String
+	var color: Color
+	var percent: float = modifier * 100
+	if percent >= 1:
+		text = '+%d' % percent
+		color = Color.AQUA
+	elif percent <= -1:
+		text = '%d' % percent
+		color = Color.INDIAN_RED
+	else:
+		text = '-'
+		color = Color.WHITE_SMOKE
+	
+	var modifier_label: Label = support_effects.get_node(node)
+	modifier_label.text = text
+	modifier_label.add_theme_color_override("font_color", color)
+	
+
+func show_who_goes_first(total_lp: int, is_first: bool) -> void:
+	total_lp_panel.get_node('Lp').text = '%d' % total_lp
+	total_lp_panel.visible = true
+	
+	var tween: Tween = create_tween()
+	tween.tween_property(
+		total_lp_panel,
+		"global_position", 
+		total_lp_panel_position.global_position, 
+		0.33
+	)
+	await tween.finished
+	
+	var timeout: float = 0.5
+	if is_first:
+		timeout = 0.3
+		tween = create_tween()
+		var first_attack: TextureRect = total_lp_panel.get_node('FirstAttack')
+		tween.tween_property(first_attack, "modulate", Color(1, 1, 1, 1), 0.1)
+		tween.set_parallel()
+		tween.tween_property(first_attack, "scale", Vector2(2, 2), 0.2)
+
+		await tween.finished
+		
+	await get_tree().create_timer(timeout).timeout
+	total_lp_panel.queue_free()
+	first_player_revealed.emit()
