@@ -16,6 +16,7 @@ func _ready() -> void:
 	ClientBattling.support_effects_applied.connect(queue_event.bind(update_support_effects))
 	ClientBattling.first_player_determined.connect(queue_event.bind(show_who_goes_first))
 	ClientBattling.turn_started.connect(queue_event.bind(start_turn))
+	ClientBattling.fp_gained.connect(queue_event.bind(gain_fp))
 	
 	await get_tree().create_timer(0.25).timeout
 	player_formation_ui.initialize()
@@ -79,4 +80,8 @@ func start_turn(event: TurnStartedEvent) -> void:
 	opponent_formation_ui.change_fp_banner(not is_player_turn)
 	
 	await formation_ui.animate_turn_start()
+	
+func gain_fp(event: FpGainedEvent) -> void:
+	await formations_ui[event.player_id].animate_fp_gain(event)
+	
 	  

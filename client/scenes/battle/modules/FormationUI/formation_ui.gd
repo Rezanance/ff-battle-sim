@@ -175,3 +175,16 @@ func animate_turn_start() -> void:
 	await get_tree().create_timer(0.33).timeout
 	
 	turn_banner.position = turn_banner_start.position
+
+func animate_fp_gain(event: FpGainedEvent) -> void:
+	fp_delta.visible = true
+	fp_delta.text = '+%d' % event.fp_diff
+	
+	var old_fp: int = event.current_fp - event.fp_diff
+	const TIME_BETWEEN_INCREMENTS: float = 0.0056
+	for i: int in range(1, event.fp_diff + 1, 5):
+		fp.text = '%d' % (old_fp + i)
+		await get_tree().create_timer(TIME_BETWEEN_INCREMENTS).timeout
+	
+	fp.text = '%d' % (old_fp + event.fp_diff)
+	fp_delta.visible = false
