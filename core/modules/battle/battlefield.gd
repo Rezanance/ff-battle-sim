@@ -1,13 +1,14 @@
 class_name BattleField
 
 signal first_player_determined(first_player_determined_event: FirstPlayerDeterminedEvent)
-signal turn_started(player_id: int)
-signal turn_ended(player_id: int)
+signal turn_started(turn_started_event: TurnStartedEvent)
+signal fp_gained(fp_gained_event: FpGainedEvent)
+signal turn_ended(turn_ended_event: TurnEndedEvent)
 
 var player1_id: int
 var player2_id: int
 var formations: Dictionary[int, Formation]
-var turn: int
+var turn_id: int
 
 func _init(
 	_formations: Dictionary[int, Formation], 
@@ -17,9 +18,16 @@ func _init(
 	assert(len(_formations.keys()) == 2)
 
 	formations = _formations
-	turn = -1
+	turn_id = -1
 	player1_id = _player1_id
 	player2_id = _player2_id
+	
+	formations[player1_id].fp_gained.connect(func (fp_diff: int, current_fp: int) -> void: 
+		fp_gained.emit(FpGainedEvent.new(player1_id, fp_diff, current_fp))
+	)
+	formations[player2_id].fp_gained.connect(func (fp_diff: int, current_fp: int) -> void: 
+		fp_gained.emit(FpGainedEvent.new(player2_id, fp_diff, current_fp))
+	)
 
 func who_goes_first() -> int:
 	var player_1_total_lp: int = formations[player1_id].calculate_total_lp()
@@ -40,11 +48,16 @@ func who_goes_first() -> int:
 		player_1_total_lp,
 		player_2_total_lp
 	))
+	
+	turn_id = first_player_id
 	return first_player_id
 
 func start_turn() -> void:
-#	TODO
-	return
+	turn_started.emit(TurnStartedEvent.new(turn_id))
+	
+#	TODO activate skills like Auto LP and FP plus
+	
+	formations[turn_id].recharge_fp()
 
 func end_turn() -> void:
 #	TODO

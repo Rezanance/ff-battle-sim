@@ -18,3 +18,5 @@ func client_battle_scene_loaded(battle_id: int) -> void:
 	battlefield.apply_support_effects(player2)
 	
 	battlefield.who_goes_first()
+	
+	battlefield.start_turn()

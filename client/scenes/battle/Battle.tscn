@@ -22,6 +22,7 @@
 [ext_resource type="Texture2D" uid="uid://c5krceuxlhv2n" path="res://client/assets/ok/ok_pressed.png" id="17_xha48"]
 [ext_resource type="Texture2D" uid="uid://cyuvw6spt0cwv" path="res://client/assets/ok/ok_hover.png" id="18_dmge3"]
 [ext_resource type="Script" uid="uid://c8my2a42qmla1" path="res://client/modules/logic/multiplayer_components/battling_component.gd" id="22_2k6mw"]
+[ext_resource type="Script" uid="uid://cmamxc3gkd5v0" path="res://client/scenes/battle/modules/TextureManager/texture_manager.gd" id="23_8ltw3"]
 
 [sub_resource type="SystemFont" id="SystemFont_d0b6a"]
 font_names = PackedStringArray("Sans-Serif")
@@ -30,10 +31,12 @@ subpixel_positioning = 0
 
 [sub_resource type="SystemFont" id="SystemFont_4km6a"]
 font_names = PackedStringArray("Sans-Serif")
+subpixel_positioning = 0
 
 [sub_resource type="SystemFont" id="SystemFont_sc7kr"]
 font_names = PackedStringArray("Sans-Serif")
 font_italic = true
+subpixel_positioning = 0
 
 [sub_resource type="StyleBoxFlat" id="StyleBoxFlat_dgjnm"]
 bg_color = Color(0.9160458, 0.70603096, 0.4494692, 1)
@@ -55,7 +58,7 @@ offset_right = 1375.0
 offset_bottom = 540.0
 texture = ExtResource("1_hkniu")
 
-[node name="PlayerFormation" type="Control" parent="BattleWindow" unique_id=1004944074 node_paths=PackedStringArray("total_lp_panel", "total_lp_panel_position", "az_position", "sz1_position", "sz2_position", "ez_position", "vivosaur_sprite_1", "vivosaur_sprite_2", "vivosaur_sprite_3", "support_effects", "fp_bg", "fp", "fp_delta", "turn_banner", "turn_banner_start")]
+[node name="PlayerFormation" type="Control" parent="BattleWindow" unique_id=1004944074 node_paths=PackedStringArray("total_lp_panel", "total_lp_panel_position", "az_position", "sz1_position", "sz2_position", "ez_position", "vivosaur_sprite_1", "vivosaur_sprite_2", "vivosaur_sprite_3", "support_effects", "fp_bg", "fp", "fp_delta", "turn_banner", "turn_banner_start", "texture_manager")]
 anchors_preset = 0
 script = ExtResource("2_jdafm")
 total_lp_panel = NodePath("TotalLpPanel")
@@ -73,6 +76,7 @@ fp = NodePath("FP")
 fp_delta = NodePath("FPDelta")
 turn_banner = NodePath("TurnBanner")
 turn_banner_start = NodePath("TurnBannerStart")
+texture_manager = NodePath("../../TextureManager")
 
 [node name="AZ" type="Control" parent="BattleWindow/PlayerFormation" unique_id=1772682345]
 anchors_preset = 0
@@ -314,7 +318,7 @@ offset_left = -334.0
 offset_right = -294.0
 offset_bottom = 40.0
 
-[node name="OpponentFormation" type="Control" parent="BattleWindow" unique_id=1592345933 node_paths=PackedStringArray("total_lp_panel", "total_lp_panel_position", "az_position", "sz1_position", "sz2_position", "ez_position", "vivosaur_sprite_1", "vivosaur_sprite_2", "vivosaur_sprite_3", "support_effects", "fp_bg", "fp", "fp_delta", "turn_banner", "turn_banner_start")]
+[node name="OpponentFormation" type="Control" parent="BattleWindow" unique_id=1592345933 node_paths=PackedStringArray("total_lp_panel", "total_lp_panel_position", "az_position", "sz1_position", "sz2_position", "ez_position", "vivosaur_sprite_1", "vivosaur_sprite_2", "vivosaur_sprite_3", "support_effects", "fp_bg", "fp", "fp_delta", "turn_banner", "turn_banner_start", "texture_manager")]
 anchors_preset = 0
 offset_right = 40.0
 offset_bottom = 40.0
@@ -332,9 +336,10 @@ support_effects = NodePath("SupportEffects")
 fp_bg = NodePath("FPBg")
 fp = NodePath("FP")
 fp_delta = NodePath("FPDelta")
-turn_banner = NodePath("../PlayerFormation/TurnBanner")
-turn_banner_start = NodePath("../PlayerFormation/TurnBannerStart")
+turn_banner = NodePath("TurnBanner")
+turn_banner_start = NodePath("TurnBannerStart")
 is_player_formation = false
+texture_manager = NodePath("../../TextureManager")
 
 [node name="AZ" type="Control" parent="BattleWindow/OpponentFormation" unique_id=1250343978]
 anchors_preset = 0
@@ -660,6 +665,9 @@ layout_mode = 2
 
 [node name="BattlingComponent" type="Node" parent="." unique_id=1713040053]
 script = ExtResource("22_2k6mw")
+
+[node name="TextureManager" type="Node" parent="." unique_id=2098311641]
+script = ExtResource("23_8ltw3")
 
 [connection signal="pressed" from="BattleWindow/Back" to="." method="on_back_pressed"]
 [connection signal="pressed" from="BattleWindow/Ok" to="." method="on_ok_pressed"]

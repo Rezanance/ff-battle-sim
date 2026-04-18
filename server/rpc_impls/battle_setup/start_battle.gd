@@ -1,7 +1,7 @@
 static func create_player_formation(
 	battle_id: int, 
 	player_id: int, 
-	support_effect_applied_callback: Callable
+	support_effect_applied_callback: Callable,
 ) -> Formation:
 	var battle_info: BattleInfo = ServerVariables.battles[battle_id]
 	var team: Team = battle_info.teams[player_id]
@@ -22,7 +22,9 @@ static func create_player_formation(
 	if sz2:
 		sz2.support_effects_applied.connect(support_effect_applied_callback)
 	
-	return Formation.new(az, sz1, sz2)
+	var formation: Formation = Formation.new(az, sz1, sz2)
+	
+	return formation
 
 static func create_battle_field(
 	battle_id: int, 
@@ -30,7 +32,9 @@ static func create_battle_field(
 	player_1_formation: Formation,
 	player2: int,
 	player_2_formation: Formation,
-	first_player_determined_callback: Callable
+	first_player_determined_callback: Callable,
+	turn_started_callback: Callable,
+	fp_gained_callback: Callable,
 ) -> BattleField:
 	var all_zones: Dictionary[int, Formation] = {}
 	all_zones[player1] = player_1_formation
@@ -42,6 +46,8 @@ static func create_battle_field(
 	)
 	var battlefield: BattleField = ServerVariables.battles[battle_id].battlefield
 	battlefield.first_player_determined.connect(first_player_determined_callback)
+	battlefield.turn_started.connect(turn_started_callback)
+	battlefield.fp_gained.connect(fp_gained_callback)
 	return battlefield
 	
 	

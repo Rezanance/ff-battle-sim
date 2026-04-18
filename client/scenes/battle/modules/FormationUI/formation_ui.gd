@@ -27,6 +27,8 @@ signal first_player_revealed()
 
 @export var is_player_formation: bool = true
 
+@export var texture_manager: TextureManager
+
 var vivosaur_sprite_zones: Array[VivosaurSprite] = [null, null, null, null]
 
 func initialize() -> void:
@@ -59,6 +61,12 @@ func _initialize_sprite(vivosaur: Vivosaur, sprite: VivosaurSprite) -> void:
 		sprite.get_node('LifeBar/Bg').texture = load('res://client/assets/lifebars/%d.png' % vivosaur.vivosaur_info.element)
 	else:
 		sprite.queue_free()
+
+func initialize_turn_banner() -> void:
+	var icon_id: int = Networking.player_info.icon_id if is_player_formation else Networking.opponent_info.icon_id
+	var display_name: String = Networking.player_info.display_name if is_player_formation else Networking.opponent_info.display_name
+	turn_banner.get_node('Icon').texture = load('res://client/assets/player-icons/%d.png' % icon_id)
+	turn_banner.get_node('Name').text = display_name
 
 func animate_vivosaur_entrance() -> void:
 	var az_sprite: VivosaurSprite = vivosaur_sprite_zones[Formation.Zone.AZ]
@@ -147,3 +155,23 @@ func show_who_goes_first(total_lp: int, is_first: bool) -> void:
 	await get_tree().create_timer(timeout).timeout
 	total_lp_panel.queue_free()
 	first_player_revealed.emit()
+	
+func change_fp_banner(is_player_turn: bool) -> void:
+	if is_player_turn and is_player_formation:
+		fp_bg.texture = texture_manager.player_fp_bg_turn 
+	elif is_player_turn and not is_player_formation:
+		fp_bg.texture = texture_manager.opponent_fp_bg_turn
+	elif not is_player_turn and is_player_formation:
+		fp_bg.texture = texture_manager.player_fp_bg_not_turn
+	else:
+		fp_bg.texture = texture_manager.opponent_fp_bg_not_turn
+		
+
+func animate_turn_start() -> void:
+	var tween: Tween = create_tween()
+	tween.tween_property(turn_banner, "position", Vector2(0, 0), 0.2)
+	await tween.finished
+	
+	await get_tree().create_timer(0.33).timeout
+	
+	turn_banner.position = turn_banner_start.position

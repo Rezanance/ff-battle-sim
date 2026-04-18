@@ -1,5 +1,7 @@
 class_name Formation
 
+signal fp_gained(fp_diff: int, current_fp: int)
+
 enum Zone {AZ, SZ1, SZ2, EZ}
 const BASE_FP_RECHARGE: int = 180
 const MAX_FP: int = 500
@@ -62,11 +64,16 @@ func calculate_total_lp() -> int:
 	return az_lp + sz1_lp + sz2_lp
 
 func recharge_fp() -> void:
+	var fp_diff: int
 	if fp + BASE_FP_RECHARGE > MAX_FP:
-		fp += MAX_FP - fp
+		fp_diff = MAX_FP - fp
+		fp += fp_diff
 	else:
-		fp += BASE_FP_RECHARGE
-
+		fp_diff = BASE_FP_RECHARGE
+		fp += fp_diff
+	
+	fp_gained.emit(fp_diff, fp)
+	
 func get_vivosaur_zone(vivo: Vivosaur) -> Zone:
 	var az_id: String = az.get('vivosaur_info').get('id')
 	var sz1_id: String = sz1.get('vivosaur_info').get('id')

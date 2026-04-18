@@ -80,7 +80,9 @@ func start_battle(battle_id: int, team_info_final: Dictionary) -> void:
 		player1_formation, 
 		player2, 
 		player2_formation,
-		BattlingImpl.notify_first_player_determined.bind(player1, player2)
+		BattlingImpl.notify_first_player_determined.bind(player1, player2),
+		BattlingImpl.notify_turn_started.bind(player1, player2),
+		BattlingImpl.notify_fp_gained.bind(player1, player2),
 	)
 	ClientBattleSetup.notify_battle_start.rpc_id(
 		player1,
