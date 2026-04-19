@@ -17,6 +17,10 @@ const OPPONENT_NOT_ONLINE: String = 'OPPONENT_NOT_ONLINE'
 @export var challenge_component: ChallengePlayerComponent
 @export var battle_setup_component: BattleSetupComponent
 
+# Dev mode only
+@export var go_online_btn: Button
+@export var copy_id_btn: TextureButton
+
 signal can_connect(can_connect: bool)
 
 var team_index: int = 0
@@ -44,6 +48,10 @@ func _ready() -> void:
 	
 	ClientBattleSetup.battle_created.connect(_on_battle_created)
 	ClientBattleSetup.battle_prep_started.connect(_on_battle_prep_started)
+	
+	var args: PackedStringArray = OS.get_cmdline_args()
+	if '--client1' in args or '--client2' in args:
+		dev_mode(args)
 
 func _on_team_changed(new_team: int) -> void:
 	team_index = new_team
@@ -109,3 +117,30 @@ func can_go_online() -> bool:
 func load_selected_team_info() -> Dictionary:
 	var team_uuid: String = teams_file_component.read_all()[team_select.selected - 1]
 	return teams_file_component.read(team_uuid, 'team')
+
+func dev_mode(args: PackedStringArray) -> void:
+	var is_client1: bool = '--client1' in args
+	
+	if is_client1:
+		team_select.select(1)
+		display_name_input.text = 'Rez'
+	else:
+		team_select.select(2)
+		player_icon_select.select(5)
+		display_name_input.text = 'Echo'
+	
+	go_online_btn.pressed.emit()
+	
+	await get_tree().create_timer(0.75).timeout
+	
+	if is_client1:
+		await get_tree().create_timer(0.2).timeout
+		var opponent_id: String = DisplayServer.clipboard_get()
+		challenge_component.send_challenge(int(opponent_id))
+	else:
+		copy_id_btn.pressed.emit()
+		await get_tree().create_timer(0.2).timeout
+		challenge_component.accept_challenge()
+		
+	 
+	

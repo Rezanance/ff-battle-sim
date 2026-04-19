@@ -1,34 +1,34 @@
 [gd_scene format=3 uid="uid://b5e63667bvai4"]
 
-[ext_resource type="Texture2D" uid="uid://cdxw7nby5hr34" path="res://client/assets/player_lobby/fossil-fighters-bg.webp" id="1_8wk0s"]
-[ext_resource type="Script" uid="uid://d3ucfeoxn1738" path="res://client/scenes/player_lobby/player_lobby.gd" id="2_iehqk"]
-[ext_resource type="Texture2D" uid="uid://b0fvobcgknonn" path="res://client/assets/player_lobby/ff_logo.png" id="3_74c76"]
-[ext_resource type="Script" uid="uid://csi8nl60mj4yq" path="res://client/scenes/player_lobby/scenes/team_select.gd" id="4_g1f3s"]
-[ext_resource type="Theme" uid="uid://qw3ckwy7bak5" path="res://client/theme/ui_theme.tres" id="5_l3us5"]
-[ext_resource type="Script" uid="uid://dcec8l45dqgay" path="res://client/scenes/player_lobby/scenes/direct_challenge_btn.gd" id="6_jmccb"]
-[ext_resource type="Script" uid="uid://di0jpnawcxcxs" path="res://client/scenes/player_lobby/scenes/team_editor_btn.gd" id="7_b37o5"]
-[ext_resource type="Script" uid="uid://ikifc5i2mrdl" path="res://client/scenes/player_lobby/scenes/quit.gd" id="8_0v064"]
-[ext_resource type="Script" uid="uid://d00vbqrgootmd" path="res://client/scenes/player_lobby/scenes/player_icons.gd" id="9_v3dyf"]
-[ext_resource type="Script" uid="uid://io22yovymyv6" path="res://client/scenes/player_lobby/scenes/display_name_input.gd" id="10_y6vqr"]
-[ext_resource type="Script" uid="uid://dny74ynied1j1" path="res://client/scenes/player_lobby/scenes/server_ip_input.gd" id="11_vy11n"]
-[ext_resource type="Texture2D" uid="uid://clmis5rrdxbal" path="res://client/assets/wifi-icons/wifi.png" id="12_jl2hl"]
-[ext_resource type="Script" uid="uid://h3ui8s5cq1eo" path="res://client/scenes/player_lobby/scenes/go_online_btn.gd" id="13_7a56m"]
-[ext_resource type="Script" uid="uid://bbxginu07xldj" path="res://client/scenes/player_lobby/scenes/player_id.gd" id="14_nyrxe"]
-[ext_resource type="Texture2D" uid="uid://bkq6uevdeu7ka" path="res://client/assets/copy/copy.png" id="15_l2pfp"]
-[ext_resource type="Texture2D" uid="uid://clm1h7pg528ep" path="res://client/assets/copy/copy_hover.png" id="16_ml81h"]
-[ext_resource type="Script" uid="uid://de2ke2111vfo4" path="res://client/scenes/player_lobby/scenes/copy_btn.gd" id="17_537s5"]
-[ext_resource type="Texture2D" uid="uid://dhqinoc2txy7e" path="res://client/assets/loading/loading.png" id="18_0ybco"]
-[ext_resource type="Script" uid="uid://ccp74qdnkf5ae" path="res://client/scenes/player_lobby/scenes/loading_conn.gd" id="19_x4b1m"]
-[ext_resource type="Script" uid="uid://ds33w0e1ax31g" path="res://client/scenes/player_lobby/scenes/waiting_challenge.gd" id="20_7oaxv"]
-[ext_resource type="Script" uid="uid://ct1mjtdk0c6un" path="res://client/scenes/player_lobby/scenes/send_challenge_popup.gd" id="21_v4kg1"]
-[ext_resource type="Script" uid="uid://b8t8rhluplj1f" path="res://client/scenes/player_lobby/scenes/opponent_player_id.gd" id="22_wm8eu"]
-[ext_resource type="Script" uid="uid://xyhfiy4jr8cj" path="res://client/scenes/player_lobby/scenes/send_challenge_btn.gd" id="23_stu6x"]
-[ext_resource type="Script" uid="uid://bvoyi81tp6he4" path="res://client/scenes/player_lobby/scenes/accept_challenge.gd" id="24_oyn8o"]
-[ext_resource type="PackedScene" uid="uid://dbs6tjyh02kb" path="res://client/modules/logic/FileComponent/FileComponent.tscn" id="25_8h101"]
-[ext_resource type="PackedScene" uid="uid://csbr3ywp24w7j" path="res://client/modules/ui/StatusNotificationComponent/StatusNotificationComponent.tscn" id="26_75qco"]
-[ext_resource type="Script" uid="uid://5a8j2x2h64qn" path="res://client/modules/logic/multiplayer_components/server_connection_component.gd" id="27_quskw"]
-[ext_resource type="Script" uid="uid://cqoecpnxfktkf" path="res://client/modules/logic/multiplayer_components/challenge_player_component.gd" id="28_ya1go"]
-[ext_resource type="Script" uid="uid://dso4mo1k8unh8" path="res://client/modules/logic/multiplayer_components/battle_setup_component.gd" id="29_rymbj"]
+[ext_resource type="Texture2D" uid="uid://cdxw7nby5hr34" path="res://client/assets/player_lobby/fossil-fighters-bg.webp" id="1_r8cds"]
+[ext_resource type="Script" uid="uid://d3ucfeoxn1738" path="res://client/scenes/player_lobby/player_lobby.gd" id="2_ja70s"]
+[ext_resource type="Texture2D" uid="uid://b0fvobcgknonn" path="res://client/assets/player_lobby/ff_logo.png" id="3_thf0l"]
+[ext_resource type="Script" uid="uid://csi8nl60mj4yq" path="res://client/scenes/player_lobby/scenes/team_select.gd" id="4_kl8bw"]
+[ext_resource type="PackedScene" uid="uid://dbs6tjyh02kb" path="res://client/modules/logic/FileComponent/FileComponent.tscn" id="5_d80ev"]
+[ext_resource type="Theme" uid="uid://qw3ckwy7bak5" path="res://client/theme/ui_theme.tres" id="6_e732w"]
+[ext_resource type="Script" uid="uid://dcec8l45dqgay" path="res://client/scenes/player_lobby/scenes/direct_challenge_btn.gd" id="7_6k1yi"]
+[ext_resource type="Script" uid="uid://di0jpnawcxcxs" path="res://client/scenes/player_lobby/scenes/team_editor_btn.gd" id="8_rulf8"]
+[ext_resource type="Script" uid="uid://ikifc5i2mrdl" path="res://client/scenes/player_lobby/scenes/quit.gd" id="9_stqfd"]
+[ext_resource type="Script" uid="uid://d00vbqrgootmd" path="res://client/scenes/player_lobby/scenes/player_icons.gd" id="10_8oeyg"]
+[ext_resource type="Script" uid="uid://io22yovymyv6" path="res://client/scenes/player_lobby/scenes/display_name_input.gd" id="11_6wwod"]
+[ext_resource type="Texture2D" uid="uid://bkq6uevdeu7ka" path="res://client/assets/copy/copy.png" id="12_pdybu"]
+[ext_resource type="Texture2D" uid="uid://clm1h7pg528ep" path="res://client/assets/copy/copy_hover.png" id="13_b1u7x"]
+[ext_resource type="Script" uid="uid://de2ke2111vfo4" path="res://client/scenes/player_lobby/scenes/copy_btn.gd" id="14_f4y75"]
+[ext_resource type="Script" uid="uid://bbxginu07xldj" path="res://client/scenes/player_lobby/scenes/player_id.gd" id="15_pxehj"]
+[ext_resource type="Script" uid="uid://dny74ynied1j1" path="res://client/scenes/player_lobby/scenes/server_ip_input.gd" id="16_3u2ep"]
+[ext_resource type="Texture2D" uid="uid://clmis5rrdxbal" path="res://client/assets/wifi-icons/wifi.png" id="17_kd1ka"]
+[ext_resource type="Script" uid="uid://h3ui8s5cq1eo" path="res://client/scenes/player_lobby/scenes/go_online_btn.gd" id="18_ibs2o"]
+[ext_resource type="Texture2D" uid="uid://dhqinoc2txy7e" path="res://client/assets/loading/loading.png" id="19_orsv5"]
+[ext_resource type="Script" uid="uid://ccp74qdnkf5ae" path="res://client/scenes/player_lobby/scenes/loading_conn.gd" id="20_kgkfr"]
+[ext_resource type="Script" uid="uid://ds33w0e1ax31g" path="res://client/scenes/player_lobby/scenes/waiting_challenge.gd" id="21_uhgt5"]
+[ext_resource type="Script" uid="uid://ct1mjtdk0c6un" path="res://client/scenes/player_lobby/scenes/send_challenge_popup.gd" id="22_8emwl"]
+[ext_resource type="Script" uid="uid://b8t8rhluplj1f" path="res://client/scenes/player_lobby/scenes/opponent_player_id.gd" id="23_fkc3m"]
+[ext_resource type="Script" uid="uid://xyhfiy4jr8cj" path="res://client/scenes/player_lobby/scenes/send_challenge_btn.gd" id="24_w0162"]
+[ext_resource type="Script" uid="uid://bvoyi81tp6he4" path="res://client/scenes/player_lobby/scenes/accept_challenge.gd" id="25_e47wa"]
+[ext_resource type="PackedScene" uid="uid://csbr3ywp24w7j" path="res://client/modules/ui/StatusNotificationComponent/StatusNotificationComponent.tscn" id="26_fiifi"]
+[ext_resource type="Script" uid="uid://5a8j2x2h64qn" path="res://client/modules/logic/multiplayer_components/server_connection_component.gd" id="27_syppv"]
+[ext_resource type="Script" uid="uid://cqoecpnxfktkf" path="res://client/modules/logic/multiplayer_components/challenge_player_component.gd" id="28_e0dwl"]
+[ext_resource type="Script" uid="uid://dso4mo1k8unh8" path="res://client/modules/logic/multiplayer_components/battle_setup_component.gd" id="29_tjt5k"]
 
 [sub_resource type="SystemFont" id="SystemFont_uvhto"]
 font_names = PackedStringArray("Futura")
@@ -60,43 +60,43 @@ font_names = PackedStringArray("Monospace")
 font_italic = true
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_qohhd"]
-atlas = ExtResource("18_0ybco")
+atlas = ExtResource("19_orsv5")
 region = Rect2(0, 0, 48, 48)
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_b45hg"]
-atlas = ExtResource("18_0ybco")
+atlas = ExtResource("19_orsv5")
 region = Rect2(48, 0, 48, 48)
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_k3aj0"]
-atlas = ExtResource("18_0ybco")
+atlas = ExtResource("19_orsv5")
 region = Rect2(96, 0, 48, 48)
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_fye4s"]
-atlas = ExtResource("18_0ybco")
+atlas = ExtResource("19_orsv5")
 region = Rect2(144, 0, 48, 48)
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_qfdgg"]
-atlas = ExtResource("18_0ybco")
+atlas = ExtResource("19_orsv5")
 region = Rect2(192, 0, 48, 48)
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_1l27s"]
-atlas = ExtResource("18_0ybco")
+atlas = ExtResource("19_orsv5")
 region = Rect2(240, 0, 48, 48)
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_8eqp2"]
-atlas = ExtResource("18_0ybco")
+atlas = ExtResource("19_orsv5")
 region = Rect2(288, 0, 48, 48)
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_ra0c6"]
-atlas = ExtResource("18_0ybco")
+atlas = ExtResource("19_orsv5")
 region = Rect2(336, 0, 48, 48)
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_w8nrr"]
-atlas = ExtResource("18_0ybco")
+atlas = ExtResource("19_orsv5")
 region = Rect2(384, 0, 48, 48)
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_n5g0v"]
-atlas = ExtResource("18_0ybco")
+atlas = ExtResource("19_orsv5")
 region = Rect2(432, 0, 48, 48)
 
 [sub_resource type="SpriteFrames" id="SpriteFrames_eaq1v"]
@@ -137,18 +137,20 @@ animations = [{
 "speed": 10.0
 }]
 
-[node name="PlayerLobby" type="TextureRect" unique_id=1190702545 node_paths=PackedStringArray("teams_file_component", "preferences_file_component", "team_select", "player_icon_select", "display_name_input", "server_ip_input", "status_notification_component", "challenge_component", "battle_setup_component")]
+[node name="PlayerLobby" type="TextureRect" unique_id=1190702545 node_paths=PackedStringArray("teams_file_component", "preferences_file_component", "team_select", "player_icon_select", "display_name_input", "server_ip_input", "go_online_btn", "copy_id_btn", "status_notification_component", "challenge_component", "battle_setup_component")]
 offset_right = 1920.0
 offset_bottom = 1080.0
-texture = ExtResource("1_8wk0s")
+texture = ExtResource("1_r8cds")
 expand_mode = 5
-script = ExtResource("2_iehqk")
+script = ExtResource("2_ja70s")
 teams_file_component = NodePath("VBoxContainer/TeamSelect/TeamsFileComponent")
 preferences_file_component = NodePath("PreferencesFileComponent")
 team_select = NodePath("VBoxContainer/TeamSelect")
 player_icon_select = NodePath("Panel/PlayerInfo/PlayerIconSelect")
 display_name_input = NodePath("Panel/PlayerInfo/DisplayNameInput")
 server_ip_input = NodePath("Panel2/Connection/ServerIPInput")
+go_online_btn = NodePath("Panel2/Connection/GoOnlineBtn")
+copy_id_btn = NodePath("Panel/PlayerInfo/HBoxContainer/CopyBtn")
 status_notification_component = NodePath("StatusNotificationComponent")
 challenge_component = NodePath("ChallengePlayerComponent")
 battle_setup_component = NodePath("BattleSetupComponent")
@@ -173,7 +175,7 @@ layout_mode = 2
 
 [node name="FF1Logo" type="TextureRect" parent="VBoxContainer/Logo" unique_id=892372717]
 layout_mode = 2
-texture = ExtResource("3_74c76")
+texture = ExtResource("3_thf0l")
 expand_mode = 5
 
 [node name="Battle Simulator" type="Label" parent="VBoxContainer/Logo" unique_id=1105411132]
@@ -210,31 +212,32 @@ item_count = 1
 popup/item_0/text = "Team"
 popup/item_0/id = 0
 popup/item_0/disabled = true
-script = ExtResource("4_g1f3s")
+script = ExtResource("4_kl8bw")
 file_component = NodePath("TeamsFileComponent")
 
-[node name="TeamsFileComponent" parent="VBoxContainer/TeamSelect" unique_id=1726560236 instance=ExtResource("25_8h101")]
+[node name="TeamsFileComponent" parent="VBoxContainer/TeamSelect" unique_id=1726560236 instance=ExtResource("5_d80ev")]
 
 [node name="DirectChallengeBtn" type="Button" parent="VBoxContainer" unique_id=1979209120 node_paths=PackedStringArray("server_connection_component")]
 layout_mode = 2
-theme = ExtResource("5_l3us5")
+theme = ExtResource("6_e732w")
 disabled = true
 text = "Direct Challenge"
-script = ExtResource("6_jmccb")
+script = ExtResource("7_6k1yi")
 server_connection_component = NodePath("../../ServerConnectionComponent")
 
-[node name="TeamEditorBtn" type="Button" parent="VBoxContainer" unique_id=391082786]
+[node name="TeamEditorBtn" type="Button" parent="VBoxContainer" unique_id=391082786 node_paths=PackedStringArray("server_connection_component")]
 layout_mode = 2
-theme = ExtResource("5_l3us5")
+theme = ExtResource("6_e732w")
 text = "Team Editor"
-script = ExtResource("7_b37o5")
+script = ExtResource("8_rulf8")
+server_connection_component = NodePath("../../ServerConnectionComponent")
 
 [node name="QuitBtn" type="Button" parent="VBoxContainer" unique_id=297330187]
 layout_mode = 2
-theme = ExtResource("5_l3us5")
+theme = ExtResource("6_e732w")
 text = "Quit
 "
-script = ExtResource("8_0v064")
+script = ExtResource("9_stqfd")
 
 [node name="Panel" type="Panel" parent="." unique_id=3660776]
 layout_mode = 0
@@ -257,14 +260,14 @@ theme_override_constants/separation = 34
 [node name="PlayerIconSelect" type="OptionButton" parent="Panel/PlayerInfo" unique_id=804322061 node_paths=PackedStringArray("server_connection_component")]
 layout_mode = 2
 size_flags_horizontal = 8
-script = ExtResource("9_v3dyf")
+script = ExtResource("10_8oeyg")
 server_connection_component = NodePath("../../../ServerConnectionComponent")
 
 [node name="DisplayNameInput" type="LineEdit" parent="Panel/PlayerInfo" unique_id=683675482 node_paths=PackedStringArray("server_connection_component")]
 layout_mode = 2
 theme_override_styles/normal = SubResource("StyleBoxFlat_1a1kh")
 placeholder_text = "Display Name"
-script = ExtResource("10_y6vqr")
+script = ExtResource("11_6wwod")
 server_connection_component = NodePath("../../../ServerConnectionComponent")
 
 [node name="HBoxContainer" type="HBoxContainer" parent="Panel/PlayerInfo" unique_id=1536237443]
@@ -277,12 +280,12 @@ custom_minimum_size = Vector2(30, 30)
 layout_mode = 2
 size_flags_horizontal = 4
 size_flags_vertical = 4
-texture_normal = ExtResource("15_l2pfp")
-texture_pressed = ExtResource("15_l2pfp")
-texture_hover = ExtResource("16_ml81h")
+texture_normal = ExtResource("12_pdybu")
+texture_pressed = ExtResource("12_pdybu")
+texture_hover = ExtResource("13_b1u7x")
 ignore_texture_size = true
 stretch_mode = 4
-script = ExtResource("17_537s5")
+script = ExtResource("14_f4y75")
 player_id = NodePath("../PlayerID")
 server_connection_component = NodePath("../../../../ServerConnectionComponent")
 status_notification_component = NodePath("../../../../StatusNotificationComponent")
@@ -293,7 +296,7 @@ theme_override_colors/font_color = Color(0, 0, 0, 1)
 theme_override_fonts/font = SubResource("SystemFont_gcpix")
 theme_override_font_sizes/font_size = 36
 text = "Player ID: N/A"
-script = ExtResource("14_nyrxe")
+script = ExtResource("15_pxehj")
 server_connection_component = NodePath("../../../../ServerConnectionComponent")
 
 [node name="Panel2" type="Panel" parent="." unique_id=240285878]
@@ -316,17 +319,17 @@ layout_mode = 2
 theme_override_styles/normal = SubResource("StyleBoxFlat_1a1kh")
 text = "127.0.0.1"
 placeholder_text = "Server IP"
-script = ExtResource("11_vy11n")
+script = ExtResource("16_3u2ep")
 server_connection_component = NodePath("../../../ServerConnectionComponent")
 
 [node name="GoOnlineBtn" type="Button" parent="Panel2/Connection" unique_id=15830818 node_paths=PackedStringArray("player_lobby", "player_icon_select", "display_name_input", "server_ip_input", "send_challenge_btn", "server_connection_component")]
 layout_mode = 2
 disabled = true
 text = "Go Online!"
-icon = ExtResource("12_jl2hl")
+icon = ExtResource("17_kd1ka")
 icon_alignment = 2
 expand_icon = true
-script = ExtResource("13_7a56m")
+script = ExtResource("18_ibs2o")
 player_lobby = NodePath("../../..")
 player_icon_select = NodePath("../../../Panel/PlayerInfo/PlayerIconSelect")
 display_name_input = NodePath("../../../Panel/PlayerInfo/DisplayNameInput")
@@ -339,7 +342,7 @@ visible = false
 position = Vector2(1455, 449)
 sprite_frames = SubResource("SpriteFrames_eaq1v")
 frame_progress = 0.22291267
-script = ExtResource("19_x4b1m")
+script = ExtResource("20_kgkfr")
 server_connection_component = NodePath("../ServerConnectionComponent")
 
 [node name="WaitingChallenge" type="AnimatedSprite2D" parent="." unique_id=413518744]
@@ -347,14 +350,14 @@ visible = false
 position = Vector2(659, 664)
 sprite_frames = SubResource("SpriteFrames_eaq1v")
 frame_progress = 0.28708875
-script = ExtResource("20_7oaxv")
+script = ExtResource("21_uhgt5")
 
 [node name="SendChallenge" type="PopupPanel" parent="." unique_id=1792975108]
 oversampling_override = 1.0
 title = "Battle Form"
 initial_position = 2
 size = Vector2i(678, 200)
-script = ExtResource("21_v4kg1")
+script = ExtResource("22_8emwl")
 
 [node name="CenterContainer" type="CenterContainer" parent="SendChallenge" unique_id=504304806]
 offset_left = 10.0
@@ -379,7 +382,7 @@ text = "Opponent's Player ID: "
 custom_minimum_size = Vector2(300, 0)
 layout_mode = 2
 placeholder_text = "1234567890"
-script = ExtResource("22_wm8eu")
+script = ExtResource("23_fkc3m")
 
 [node name="CenterContainer" type="CenterContainer" parent="SendChallenge/CenterContainer/VBoxContainer" unique_id=821947990]
 layout_mode = 2
@@ -388,7 +391,7 @@ layout_mode = 2
 layout_mode = 2
 disabled = true
 text = "Send Challenge!"
-script = ExtResource("23_stu6x")
+script = ExtResource("24_w0162")
 opponent_id_input = NodePath("../../HBoxContainer/OpponentPlayerId")
 challenge_player_component = NodePath("../../../../../ChallengePlayerComponent")
 
@@ -397,18 +400,18 @@ oversampling_override = 1.0
 title = "Battle Invitation"
 initial_position = 2
 size = Vector2i(500, 200)
-theme = ExtResource("5_l3us5")
+theme = ExtResource("6_e732w")
 ok_button_text = "Accept"
 dialog_text = "{Player} ({id}) challenges you to a Fossil Battle. Do accept??!"
 dialog_autowrap = true
 cancel_button_text = "Decline"
-script = ExtResource("24_oyn8o")
+script = ExtResource("25_e47wa")
 challenge_component = NodePath("../ChallengePlayerComponent")
 
-[node name="PreferencesFileComponent" parent="." unique_id=1227142022 instance=ExtResource("25_8h101")]
+[node name="PreferencesFileComponent" parent="." unique_id=1227142022 instance=ExtResource("5_d80ev")]
 file = 1
 
-[node name="StatusNotificationComponent" parent="." unique_id=1543335512 instance=ExtResource("26_75qco")]
+[node name="StatusNotificationComponent" parent="." unique_id=1543335512 instance=ExtResource("26_fiifi")]
 success_messages = Dictionary[String, String]({
 "ID_COPIED": "Copied ID to clipboard!",
 "PLAYER_CONNECTED": "Successfully connected to server!",
@@ -422,13 +425,13 @@ error_messages = Dictionary[String, String]({
 })
 
 [node name="ServerConnectionComponent" type="Node" parent="." unique_id=172208534]
-script = ExtResource("27_quskw")
+script = ExtResource("27_syppv")
 
 [node name="ChallengePlayerComponent" type="Node" parent="." unique_id=600262961]
-script = ExtResource("28_ya1go")
+script = ExtResource("28_e0dwl")
 
 [node name="BattleSetupComponent" type="Node" parent="." unique_id=1280032006]
-script = ExtResource("29_rymbj")
+script = ExtResource("29_tjt5k")
 
 [connection signal="item_selected" from="VBoxContainer/TeamSelect" to="." method="_on_team_changed"]
 [connection signal="item_selected" from="VBoxContainer/TeamSelect" to="VBoxContainer/DirectChallengeBtn" method="_on_team_selected"]

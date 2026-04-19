@@ -1,4 +1,6 @@
-extends OptionButton
+class_name PlayerIcons extends OptionButton
+
+signal icons_loaded
 
 @export var server_connection_component: ServerConnectionComponent
 
@@ -7,7 +9,8 @@ func _ready() -> void:
 	server_connection_component.player_connecting.connect(_on_player_connecting)
 	server_connection_component.player_disconnected.connect(_on_player_disconnected)
 	server_connection_component.player_connect_failed.connect(_on_player_disconnected)
-
+	icons_loaded.emit()
+	
 func _on_player_connecting() -> void:
 	disabled = true
 	

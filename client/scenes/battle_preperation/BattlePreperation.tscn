@@ -25,7 +25,7 @@ corner_radius_bottom_left = 10
 [sub_resource type="SystemFont" id="SystemFont_adkwj"]
 font_names = PackedStringArray("Monospace")
 
-[node name="BattlePreperation" type="TextureRect" unique_id=1268188202 node_paths=PackedStringArray("team_slots", "opponent_team_slots", "context_menu", "vivosaur_summary", "timer", "player_icon", "player_name", "opp_icon", "opp_name", "battle_setup_component", "team_mananger", "opp_team_mananger")]
+[node name="BattlePreperation" type="TextureRect" unique_id=1268188202 node_paths=PackedStringArray("team_slots", "opponent_team_slots", "context_menu", "vivosaur_summary", "timer", "player_icon", "player_name", "opp_icon", "opp_name", "battle_setup_component", "team_mananger", "opp_team_mananger", "ready_btn")]
 offset_right = 1920.0
 offset_bottom = 1080.0
 texture = ExtResource("1_6ey1f")
@@ -43,6 +43,7 @@ opp_name = NodePath("TextureRect2/OppName")
 battle_setup_component = NodePath("BattleSetupComponent")
 team_mananger = NodePath("TeamManager")
 opp_team_mananger = NodePath("OpponentTeamManager")
+ready_btn = NodePath("HBoxContainer/ReadyBtn")
 
 [node name="TextureRect" type="TextureRect" parent="." unique_id=1308662092]
 layout_mode = 0

@@ -16,6 +16,9 @@ extends TextureRect
 @export var team_mananger: TeamManager
 @export var opp_team_mananger: TeamManager
 
+# Dev mode only
+@export var ready_btn: Button
+
 var currently_selected_medal_btn: MedalBtn
 var current_action: TeamSlots.Action
 
@@ -27,6 +30,10 @@ func _ready() -> void:
 	
 	ClientBattleSetup.battle_prep_time_up.connect(_on_battle_prep_time_up)
 	ClientBattleSetup.battle_started.connect(_on_battle_started)
+	
+	var args: PackedStringArray = OS.get_cmdline_args()
+	if '--client1' in args or '--client2' in args:
+		dev_mode()
 
 func _process(delta: float) -> void:
 	if time_left > 0:
@@ -54,3 +61,6 @@ func _on_battle_prep_time_up() -> void:
 func _on_battle_started(formations: Dictionary[int, Formation]) -> void:
 	Battling.formations = formations
 	SceneTransition.change_scene("res://client/scenes/battle/Battle.tscn")
+
+func dev_mode() -> void:
+	ready_btn.toggled.emit(true)
