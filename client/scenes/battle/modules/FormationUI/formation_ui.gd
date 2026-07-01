@@ -3,6 +3,8 @@ class_name FormationUI
 
 signal support_effects_updated()
 signal first_player_revealed()
+signal vivosaur_selected(zone: Formation.Zone)
+signal skill_clicked(skill: Skill)
 
 @export var total_lp_panel: TextureRect
 @export var total_lp_panel_position: Control
@@ -28,6 +30,8 @@ signal first_player_revealed()
 @export var is_player_formation: bool = true
 
 @export var texture_manager: TextureManager
+@export var vivosaur_summary: VivosaurSummary
+@export var skills: VBoxContainer
 
 var vivosaur_sprite_zones: Array[VivosaurSprite] = [null, null, null, null]
 
@@ -36,12 +40,7 @@ func initialize() -> void:
 	await animate_vivosaur_entrance()
 
 func initialize_vivosaur_sprites() -> void:
-	var formation: Formation
-	if  is_player_formation :
-		formation = Battling.formations[Networking.player_info.player_id] 
-	else:
-		formation=  Battling.formations[Networking.opponent_info.player_id] 
-		
+	var formation: Formation = get_formation()
 	var az: Vivosaur = formation.az
 	var sz1: Vivosaur = formation.sz1
 	var sz2: Vivosaur = formation.sz2
@@ -54,14 +53,54 @@ func initialize_vivosaur_sprites() -> void:
 	_initialize_sprite(sz1, vivosaur_sprite_2)
 	_initialize_sprite(sz2, vivosaur_sprite_3)
 
+func get_formation() -> Formation:
+	if is_player_formation:
+		return Battling.formations[Networking.player_info.player_id]
+	else:
+		return Battling.formations[Networking.opponent_info.player_id]
+		
+
 func _initialize_sprite(vivosaur: Vivosaur, sprite: VivosaurSprite) -> void:
 	if vivosaur:
-		var vivosaur_resource: VivosaurResource = load("res://core/data/vivosaurs/%s.tres" % vivosaur.vivosaur_info.id)
+		var vivosaur_info: VivosaurInfo = vivosaur.vivosaur_info
+		var vivosaur_resource: VivosaurResource = load("res://core/data/vivosaurs/%s.tres" % vivosaur_info.id)
+		sprite.id = vivosaur_info.id
 		sprite.texture_normal = vivosaur_resource.sprite
-		sprite.get_node('LifeBar/Bg').texture = load('res://client/assets/lifebars/%d.png' % vivosaur.vivosaur_info.element)
+		sprite.get_node('LifeBar/Bg').texture = load('res://client/assets/lifebars/%d.png' % vivosaur_info.element)
+		sprite.pressed.connect(_update_vivosaur_summary.bind(vivosaur))
+		sprite.pressed.connect(_notify_vivosaur_selected.bind(vivosaur))
 	else:
 		sprite.queue_free()
 
+func _update_vivosaur_summary(vivosaur: Vivosaur) -> void:
+	vivosaur_summary.update_summary(vivosaur.vivosaur_info.id)
+	if is_player_formation:
+		UIUtils.update_skills_shown(
+			skills,
+			vivosaur.vivosaur_info.skills,
+			_on_skill_clicked,
+			false
+		)
+	else:
+		UIUtils.clear_skills(skills)
+
+func _notify_vivosaur_selected(vivosaur: Vivosaur) -> void:
+	vivosaur_selected.emit(get_vivosaur_zone(vivosaur))
+
+func get_vivosaur_zone(vivosaur: Vivosaur) -> Formation.Zone:
+	for zone: int in Formation.Zone.values():
+		var vivo_sprite: VivosaurSprite = vivosaur_sprite_zones[zone]
+		if vivo_sprite != null and vivo_sprite.id == vivosaur.vivosaur_info.id:
+			return zone as Formation.Zone
+		
+	return Formation.Zone.AZ
+	
+func _on_skill_clicked(event: InputEvent, skill: Skill) -> void:
+	if (event is InputEventMouseButton and event.button_index == MOUSE_BUTTON_LEFT and
+	event.pressed and is_player_formation):
+		UIUtils.clear_skills(skills)
+		skill_clicked.emit(skill)
+	
 func initialize_turn_banner() -> void:
 	var icon_id: int = Networking.player_info.icon_id if is_player_formation else Networking.opponent_info.icon_id
 	var display_name: String = Networking.player_info.display_name if is_player_formation else Networking.opponent_info.display_name
@@ -75,23 +114,23 @@ func animate_vivosaur_entrance() -> void:
 	var tween: Tween = create_tween()
 	if is_instance_valid(sz1_sprite):
 		tween.tween_property(
-			sz1_sprite, 
-			'global_position', 
-			sz1_position.global_position, 
+			sz1_sprite,
+			'global_position',
+			sz1_position.global_position,
 			0.2
 		)
 	tween.set_parallel()
 	tween.tween_property(
-		az_sprite, 
-		'global_position', 
-		az_position.global_position, 
+		az_sprite,
+		'global_position',
+		az_position.global_position,
 		0.2
 	).set_delay(0.1)
 	if is_instance_valid(sz2_sprite):
 		tween.tween_property(
-			sz2_sprite, 
-			'global_position', 
-			sz2_position.global_position, 
+			sz2_sprite,
+			'global_position',
+			sz2_position.global_position,
 			0.2
 		).set_delay(0.2)
 	await tween.finished
@@ -107,7 +146,7 @@ func update_support_effects(
 	support_effects_updated.emit()
 
 func _format_support_modifier(
-	node: String, 
+	node: String,
 	modifier: float
 ) -> void:
 	var text: String
@@ -118,7 +157,7 @@ func _format_support_modifier(
 		color = Color.AQUA
 	elif percent <= -1:
 		text = '%d' % percent
-		color = Color.INDIAN_RED
+		color = Color.DEEP_PINK
 	else:
 		text = '-'
 		color = Color.WHITE_SMOKE
@@ -135,8 +174,8 @@ func show_who_goes_first(total_lp: int, is_first: bool) -> void:
 	var tween: Tween = create_tween()
 	tween.tween_property(
 		total_lp_panel,
-		"global_position", 
-		total_lp_panel_position.global_position, 
+		"global_position",
+		total_lp_panel_position.global_position,
 		0.33
 	)
 	await tween.finished
@@ -158,7 +197,7 @@ func show_who_goes_first(total_lp: int, is_first: bool) -> void:
 	
 func change_fp_banner(is_player_turn: bool) -> void:
 	if is_player_turn and is_player_formation:
-		fp_bg.texture = texture_manager.player_fp_bg_turn 
+		fp_bg.texture = texture_manager.player_fp_bg_turn
 	elif is_player_turn and not is_player_formation:
 		fp_bg.texture = texture_manager.opponent_fp_bg_turn
 	elif not is_player_turn and is_player_formation:

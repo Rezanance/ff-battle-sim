@@ -1,6 +1,7 @@
 extends Panel
 class_name VivosaurSummary
 
+@onready var scroll_container: ScrollContainer = $ScrollContainer
 @onready var element: TextureRect = $ScrollContainer/VBoxContainer/HBoxContainer2/Element
 @onready var vivosaur_name: Label = $ScrollContainer/VBoxContainer/HBoxContainer2/Name
 @onready var battle_class: Label = $ScrollContainer/VBoxContainer/Class
@@ -22,6 +23,9 @@ class_name VivosaurSummary
 
 var BASE_HEIGHT: int = 320
 var HEIGHT_WITH_SKILLS: int = 720
+
+func _ready() -> void:
+	scroll_container.size = Vector2(scroll_container.size.x, size.y - 10)
 
 func update_summary(vivosaur_id: String, skills_included: bool = true) -> void:
 	visible = true
@@ -56,9 +60,9 @@ func update_summary(vivosaur_id: String, skills_included: bool = true) -> void:
 			vivosaur.skills, 
 			func(_event: InputEvent, _skill: Skill) -> void: return 
 		)
-		size.y = HEIGHT_WITH_SKILLS
+		#size.y = HEIGHT_WITH_SKILLS
 		return
-	size.y = BASE_HEIGHT
+	#size.y = BASE_HEIGHT
 	
 
 func display_support_effect(se_label: Label, modifier: float) -> void:

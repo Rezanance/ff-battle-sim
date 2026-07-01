@@ -6,3 +6,9 @@ func notify_battle_scene_loaded() -> void:
 		Networking.SERVER_PEER_ID, 
 		Networking.battle_id
 	)
+
+func notify_ending_turn() -> void:
+	ServerBattling.end_turn.rpc_id(
+		Networking.SERVER_PEER_ID, 
+		Networking.battle_id
+	)

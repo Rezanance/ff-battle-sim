@@ -54,14 +54,14 @@ func who_goes_first() -> int:
 
 func start_turn() -> void:
 	turn_started.emit(TurnStartedEvent.new(turn_id))
-	
+	apply_support_effects(turn_id)
 #	TODO activate skills like Auto LP and FP plus
 	
 	formations[turn_id].recharge_fp()
 
 func end_turn() -> void:
-#	TODO
-	return
+	turn_ended.emit(TurnEndedEvent.new(turn_id))
+	turn_id = player1_id if turn_id == player2_id else player2_id
 
 func determine_winner() -> Variant:
 #	TODO

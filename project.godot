@@ -17,7 +17,7 @@ compatibility/default_parent_skeleton_in_mesh_instance_3d=true
 config/name="FF Battle Sim"
 run/main_scene="uid://b5e63667bvai4"
 config/use_custom_user_dir=true
-config/features=PackedStringArray("4.6", "Forward Plus")
+config/features=PackedStringArray("4.7", "Forward Plus")
 config/icon="uid://bb7jtyck313ds"
 
 [autoload]

@@ -2,7 +2,7 @@
 
 [ext_resource type="Texture2D" uid="uid://bmsqvk1yf0uxl" path="res://client/assets/vivosaurs/Trex/sprite.png" id="1_2krq1"]
 [ext_resource type="Texture2D" uid="uid://8w1gvd7l0vih" path="res://client/assets/lifebars/0.png" id="2_jgtk3"]
-[ext_resource type="Script" uid="uid://b33pu86yfdf7v" path="res://client/scenes/battle/scenes/vivosaur_sprite/vivosaur_sprite.gd" id="2_w7xny"]
+[ext_resource type="Script" uid="uid://b33pu86yfdf7v" path="res://client/scenes/battle/scenes/total_lp/vivosaur_sprite/vivosaur_sprite.gd" id="2_w7xny"]
 [ext_resource type="Texture2D" uid="uid://p8xmgjv3yqw2" path="res://client/assets/cursors/arrow.png" id="3_2krq1"]
 [ext_resource type="Texture2D" uid="uid://dilkr16w8cc3l" path="res://client/assets/cursors/5_0.png" id="6_eo74b"]
 [ext_resource type="Texture2D" uid="uid://cn0lxb3cc3rbh" path="res://client/assets/cursors/6_0.png" id="7_h0nod"]
@@ -43,6 +43,18 @@ tracks/2/keys = {
 "transitions": PackedFloat32Array(1),
 "update": 0,
 "values": [Vector2(1, 1)]
+}
+tracks/3/type = "value"
+tracks/3/imported = false
+tracks/3/enabled = true
+tracks/3/path = NodePath(".:self_modulate")
+tracks/3/interp = 1
+tracks/3/loop_wrap = true
+tracks/3/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [Color(1, 1, 1, 1)]
 }
 
 [sub_resource type="Animation" id="Animation_w7xny"]
@@ -88,11 +100,29 @@ tracks/0/keys = {
 "values": [Vector2(1, 1), Vector2(2, 2), Vector2(1, 1)]
 }
 
+[sub_resource type="Animation" id="Animation_qca3e"]
+resource_name = "pulse_modulate"
+length = 0.5
+loop_mode = 1
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath(".:self_modulate")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0, 0.23333333, 0.5),
+"transitions": PackedFloat32Array(1, 1, 1),
+"update": 0,
+"values": [Color(1, 1, 1, 1), Color(2.454227, 2.454227, 2.454227, 1), Color(1, 1, 1, 1)]
+}
+
 [sub_resource type="AnimationLibrary" id="AnimationLibrary_uyhtx"]
 _data = {
 &"RESET": SubResource("Animation_jgtk3"),
 &"arrow": SubResource("Animation_w7xny"),
-&"pulse": SubResource("Animation_w1ead")
+&"pulse": SubResource("Animation_w1ead"),
+&"pulse_modulate": SubResource("Animation_qca3e")
 }
 
 [sub_resource type="SpriteFrames" id="SpriteFrames_novg2"]
@@ -107,15 +137,17 @@ animations = [{
 "duration": 1.0,
 "texture": ExtResource("8_2t2ij")
 }],
-"loop": true,
+"loop": 1,
 "name": &"default",
 "speed": 10.0
 }]
 
 [node name="VivosaurSprite" type="TextureButton" unique_id=1226815371]
-offset_right = 160.0
-offset_bottom = 160.0
+z_index = 10
+offset_right = 130.0
+offset_bottom = 130.0
 pivot_offset_ratio = Vector2(0.5, 0.5)
+mouse_default_cursor_shape = 2
 texture_normal = ExtResource("1_2krq1")
 stretch_mode = 0
 flip_h = true
@@ -184,10 +216,8 @@ libraries/ = SubResource("AnimationLibrary_uyhtx")
 
 [node name="Cursor" type="AnimatedSprite2D" parent="." unique_id=1793772808]
 visible = false
-position = Vector2(-10, -10)
+position = Vector2(-20, -24)
 scale = Vector2(2.8, 2.8)
 sprite_frames = SubResource("SpriteFrames_novg2")
 frame_progress = 0.30917466
 centered = false
-
-[connection signal="pressed" from="." to="." method="_on_pressed"]

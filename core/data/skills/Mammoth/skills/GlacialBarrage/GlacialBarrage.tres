@@ -7,5 +7,7 @@
 script = ExtResource("1_rjjkj")
 name = "Glacial Barrage"
 description = "Team Skill: Attack both AZ and SZ"
+skill_type = 5
 damage = 84
 fp_cost = 130
+target = 5

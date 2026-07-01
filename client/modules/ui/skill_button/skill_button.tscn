@@ -19,14 +19,15 @@ color = Color(1, 1, 1, 1)
 color = Color(1, 1, 1, 1)
 vertical = true
 
-[node name="Skill" type="Panel"]
+[node name="Skill" type="Panel" unique_id=1939031860]
 custom_minimum_size = Vector2(595, 90)
 offset_right = 595.0
 offset_bottom = 90.0
+mouse_default_cursor_shape = 2
 theme = SubResource("Theme_5b2wm")
 script = ExtResource("1_rpgpk")
 
-[node name="HBoxContainer" type="HBoxContainer" parent="."]
+[node name="HBoxContainer" type="HBoxContainer" parent="." unique_id=189762461]
 custom_minimum_size = Vector2(200, 0)
 layout_mode = 0
 offset_left = 6.0
@@ -35,50 +36,55 @@ offset_right = 588.0
 offset_bottom = 62.0
 theme_override_constants/separation = 14
 
-[node name="VBoxContainer" type="VBoxContainer" parent="HBoxContainer"]
+[node name="VBoxContainer" type="VBoxContainer" parent="HBoxContainer" unique_id=669623382]
 custom_minimum_size = Vector2(200, 0)
 layout_mode = 2
 
-[node name="Name" type="Label" parent="HBoxContainer/VBoxContainer"]
+[node name="Name" type="Label" parent="HBoxContainer/VBoxContainer" unique_id=1200540013]
 layout_mode = 2
 size_flags_vertical = 6
+mouse_filter = 1
 text = "Skill Name"
 
-[node name="HSeparator" type="HSeparator" parent="HBoxContainer/VBoxContainer"]
+[node name="HSeparator" type="HSeparator" parent="HBoxContainer/VBoxContainer" unique_id=1467003483]
 layout_mode = 2
+mouse_filter = 1
 theme_override_styles/separator = SubResource("StyleBoxLine_5b2wm")
 
-[node name="HBoxContainer" type="HBoxContainer" parent="HBoxContainer/VBoxContainer"]
+[node name="HBoxContainer" type="HBoxContainer" parent="HBoxContainer/VBoxContainer" unique_id=1279222797]
 layout_mode = 2
 size_flags_vertical = 3
 
-[node name="Damage" type="Label" parent="HBoxContainer/VBoxContainer/HBoxContainer"]
+[node name="Damage" type="Label" parent="HBoxContainer/VBoxContainer/HBoxContainer" unique_id=1360140319]
 layout_mode = 2
 text = "Dmg: 35"
 
-[node name="FpCost" type="Label" parent="HBoxContainer/VBoxContainer/HBoxContainer"]
+[node name="FpCost" type="Label" parent="HBoxContainer/VBoxContainer/HBoxContainer" unique_id=1339728442]
 layout_mode = 2
 size_flags_horizontal = 3
 text = "50 FP"
 horizontal_alignment = 2
 
-[node name="HSeparator2" type="HSeparator" parent="HBoxContainer/VBoxContainer"]
+[node name="HSeparator2" type="HSeparator" parent="HBoxContainer/VBoxContainer" unique_id=96424722]
 layout_mode = 2
+mouse_filter = 1
 theme_override_styles/separator = SubResource("StyleBoxLine_5b2wm")
 
-[node name="Counterable" type="Label" parent="HBoxContainer/VBoxContainer"]
+[node name="Counterable" type="Label" parent="HBoxContainer/VBoxContainer" unique_id=462158816]
 layout_mode = 2
 size_flags_vertical = 6
 text = "Counterable: yes"
 
-[node name="VSeparator" type="VSeparator" parent="HBoxContainer"]
+[node name="VSeparator" type="VSeparator" parent="HBoxContainer" unique_id=33280951]
 layout_mode = 2
+mouse_filter = 1
 theme_override_styles/separator = SubResource("StyleBoxLine_jreqq")
 
-[node name="Description" type="RichTextLabel" parent="HBoxContainer"]
+[node name="Description" type="RichTextLabel" parent="HBoxContainer" unique_id=1030224614]
 custom_minimum_size = Vector2(325, 0)
 layout_mode = 2
 size_flags_horizontal = 3
+mouse_filter = 1
 bbcode_enabled = true
 text = "Attack Enemy AZ and SZ simultanously; 30% chance to apply Super Scare"
 autowrap_mode = 2

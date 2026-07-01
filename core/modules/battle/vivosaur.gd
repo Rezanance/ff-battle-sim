@@ -47,6 +47,9 @@ func take_damage(damage: int, is_critical: bool) -> void:
 
 func move_to_zone(zone: Formation.Zone = Formation.Zone.EZ) -> void:
 	return
+	
+func zones_equal(zone1: Formation.PlayerZone, zone2: Formation.PlayerZone) -> bool: 
+	return zone1.player_id == zone2.player_id and zone1.zone == zone2.zone
 
 func apply_support_effects(
 	_player_id: int,
@@ -57,20 +60,23 @@ func apply_support_effects(
 	var player_zone: Formation.PlayerZone = Formation.PlayerZone.new(_player_id, support_zone)
 	var support_effects: SupportEffects = vivosaur_info.support_effects
 	var target_player_id: int
-	if support_effects.own_az:
+	
+	if support_effects.own_az and player_az.support_received.find_custom(zones_equal.bind(player_zone)) == -1:
 		player_az.attack_modifier += support_effects.attack_modifier
 		player_az.defense_modifier += support_effects.defense_modifier
 		player_az.accuracy_modifier += support_effects.accuracy_modifier
 		player_az.evasion_modifier += support_effects.evasion_modifier
 		player_az.support_received.append(player_zone)
 		target_player_id = player_az.player_id
-	else:
+	elif not support_effects.own_az and opponent_az.support_received.find_custom(zones_equal.bind(player_zone)) == -1:
 		opponent_az.attack_modifier += support_effects.attack_modifier
 		opponent_az.defense_modifier += support_effects.defense_modifier
 		opponent_az.accuracy_modifier += support_effects.accuracy_modifier
 		opponent_az.evasion_modifier += support_effects.evasion_modifier
 		opponent_az.support_received.append(player_zone)
 		target_player_id = opponent_az.player_id
+	else:
+		return
 		
 	support_effects_applied.emit(SupportEffectsAppliedEvent.new(
 		player_id, 

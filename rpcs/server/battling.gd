@@ -20,3 +20,17 @@ func client_battle_scene_loaded(battle_id: int) -> void:
 	battlefield.who_goes_first()
 	
 	battlefield.start_turn()
+
+@rpc("any_peer", "call_remote", "reliable")
+func end_turn(battle_id: int) -> void:
+	assert(multiplayer.is_server())
+	var sender_player_id: int = multiplayer.get_remote_sender_id()
+	var battle_info: BattleInfo = ServerVariables.battles[battle_id]
+	var battlefield: BattleField = battle_info.battlefield
+	if sender_player_id != battlefield.turn_id:
+		return
+	
+	battlefield.end_turn()
+	battlefield.start_turn()
+	
+	

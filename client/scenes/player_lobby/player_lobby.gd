@@ -71,8 +71,8 @@ func _on_server_ip_changed(new_ip: String) -> void:
 func _on_player_connected(_player_info: PlayerInfo) -> void:
 	status_notification_component.push(OK, PLAYER_CONNECTED)
 	preferences_file_component.save(
-		'Preferences', 
-		'Lobby Preferences', 
+		'Preferences',
+		'Lobby Preferences',
 		LobbyPreferences.new(
 			icon_id,
 			display_name,
@@ -131,7 +131,7 @@ func dev_mode(args: PackedStringArray) -> void:
 	
 	go_online_btn.pressed.emit()
 	
-	await get_tree().create_timer(0.75).timeout
+	await get_tree().create_timer(0.9).timeout
 	
 	if is_client1:
 		await get_tree().create_timer(0.2).timeout
@@ -141,6 +141,3 @@ func dev_mode(args: PackedStringArray) -> void:
 		copy_id_btn.pressed.emit()
 		await get_tree().create_timer(0.2).timeout
 		challenge_component.accept_challenge()
-		
-	 
-	
