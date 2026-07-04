@@ -75,13 +75,14 @@ func recharge_fp() -> void:
 	
 	fp_gained.emit(fp_diff, fp)
 
-func spend_fp(fp_cost: int) -> void:
+func spend_fp(fp_cost: int) -> bool:
 	if fp - fp_cost < 0:
-		return
+		return false
 
 	fp -= fp_cost
 
 	fp_spent.emit(fp_cost, fp)
+	return true
 	
 func get_vivosaur_zone(vivo: Vivosaur) -> Zone:
 	var az_id: String = az.vivosaur_info.id

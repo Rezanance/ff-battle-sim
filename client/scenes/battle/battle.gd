@@ -127,12 +127,14 @@ func show_skill_targets(skill: Skill) -> void:
 	var enemy_sz2: VivosaurSprite = opponent_formation_ui.vivosaur_sprite_zones[Zone.SZ2]
 	var enemy_ez: VivosaurSprite = opponent_formation_ui.vivosaur_sprite_zones[Zone.EZ]
 
+	var initiator_sprite: VivosaurSprite = player_formation_ui.vivosaur_sprite_zones[Battling.initiator]
+	initiator_sprite.set_instance_shader_parameter('is_on', true)
+
 	var ally_modulate: Color = Color(0, 0, 1, 1)
 	var enemy_modulate: Color = Color(1, 0.5, 0.5, 1)
 
 	Battling.initiator = Battling.selection.zone
 	Battling.skill_id_selected = skill.id
-	player_formation_ui.vivosaur_sprite_zones[Battling.initiator].self_modulate.a = 0.5
 	back_btn.visible = true
 	ok_btn.visible = true
 	reset_targets()
@@ -207,14 +209,15 @@ func show_skill_targets(skill: Skill) -> void:
 			if enemy_sz2:
 				enemy_sz2.self_modulate = enemy_modulate
 				enemy_sz2.is_targetable = true
-
 		Target.SELF:
-			player_formation_ui.vivosaur_sprite_zones[Battling.initiator].cursor.visible = true
+			initiator_sprite.cursor.visible = true
 
 func go_back_from_skill_step() -> void:
 	reset_targets()
+	var initiator_sprite: VivosaurSprite = player_formation_ui.vivosaur_sprite_zones[Battling.initiator]
+	initiator_sprite.set_instance_shader_parameter('is_on', false)
+	
 	Battling.target = null
-	player_formation_ui.vivosaur_sprite_zones[Battling.initiator].self_modulate.a = 1
 	back_btn.visible = false
 	ok_btn.visible = false
 

@@ -6,7 +6,7 @@ var player_id: int
 var vivosaur_info: VivosaurInfo
 
 var statuses: Array[Status]
-var can_attack: bool
+var can_use_skill: bool
 var support_received: Array[Formation.PlayerZone]
 
 var current_lp: int
@@ -22,7 +22,7 @@ func _init(_player_id: int, _vivosaur_info: VivosaurInfo) -> void:
 	vivosaur_info = _vivosaur_info
 	current_lp = _vivosaur_info.stats.life_points
 	statuses = []
-	can_attack = false
+	can_use_skill = false
 	support_received = []
 	
 # Server shouldn't send all the vivosaurs data since it can be computed on client side
@@ -39,22 +39,19 @@ static func deserialize(vivosaur_dict: Dictionary[String, Variant]) -> Vivosaur:
 		DataLoader.load_vivosaur_info(vivosaur_dict['vivosaur_id']),
 	)
 
-func use_skill(skill: Skill, target: Vivosaur) -> void:
-	return 
-
 func take_damage(damage: int, is_critical: bool) -> void:
 	return
 
 func move_to_zone(zone: Formation.Zone = Formation.Zone.EZ) -> void:
 	return
 	
-func zones_equal(zone1: Formation.PlayerZone, zone2: Formation.PlayerZone) -> bool: 
+func zones_equal(zone1: Formation.PlayerZone, zone2: Formation.PlayerZone) -> bool:
 	return zone1.player_id == zone2.player_id and zone1.zone == zone2.zone
 
 func apply_support_effects(
 	_player_id: int,
 	support_zone: Formation.Zone,
-	player_az: Vivosaur, 
+	player_az: Vivosaur,
 	opponent_az: Vivosaur,
 ) -> void:
 	var player_zone: Formation.PlayerZone = Formation.PlayerZone.new(_player_id, support_zone)
@@ -79,8 +76,8 @@ func apply_support_effects(
 		return
 		
 	support_effects_applied.emit(SupportEffectsAppliedEvent.new(
-		player_id, 
-		support_zone, 
+		player_id,
+		support_zone,
 		target_player_id,
 		support_effects.attack_modifier,
 		support_effects.defense_modifier,

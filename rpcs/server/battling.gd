@@ -43,10 +43,18 @@ func use_skill(battle_id: int, initiator_zone: int, skill_id: String, target_pla
 	var battlefield: BattleField = battle_info.battlefield
 	
 	if battlefield.turn_id != initiator_player_id:
+		Logging.error('Player %d can\'t use a skill now. Not their turn' % initiator_player_id)
 		return
+	
+	if [Formation.Zone.SZ1, Formation.Zone.SZ2].has(initiator_zone) and [Formation.Zone.SZ1, Formation.Zone.SZ2].has(target_zone):
+		Logging.error('A vivosaur in the SZ cannot target another vivosaur in the enemy SZ, only the AZ')
 	
 	var initiator: Vivosaur = battlefield.formations[initiator_player_id].get_vivosaur_from_zone(initiator_zone)
 	if not initiator:
+		Logging.error('Vivosaur does not exist')
+		return
+	if not initiator.can_use_skill:
+		Logging.error('This vivosaur already used a skill this turn')
 		return
 	
 	var initiator_skill: Skill = initiator.vivosaur_info.skills.filter(func(skill: Skill) -> bool: return skill.id == skill_id)[0]
@@ -54,10 +62,17 @@ func use_skill(battle_id: int, initiator_zone: int, skill_id: String, target_pla
 	var target: Vivosaur = (battlefield.formations[target_player_id].get_vivosaur_from_zone(target_zone)
 		if target_player_id != -1 and target_zone != -1 else null)
 	
-	battlefield.formations[initiator_player_id].spend_fp(initiator_skill.fp_cost)
+	if not battlefield.formations[initiator_player_id].spend_fp(initiator_skill.fp_cost):
+		Logging.error('Not enough FP use skill')
+		return
 
-	Logging.info('%d - %d uses %s' % [battle_id, initiator_player_id, initiator_skill.name])
+	Logging.info('%d - Player %d\'s %s uses %s' % [battle_id, initiator_player_id, initiator.vivosaur_info.name, initiator_skill.name])
 	
 	match initiator_skill.target:
 		Skill.Target.ENEMY:
+			if not target:
+				Logging.error('Single enemy target skills must specify a target')
+				return
 			battlefield.calculate_damage(initiator_player_id, initiator, target, initiator_skill)
+	
+	initiator.can_use_skill = false

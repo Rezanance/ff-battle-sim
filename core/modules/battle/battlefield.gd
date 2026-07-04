@@ -69,10 +69,18 @@ func start_turn() -> void:
 	apply_support_effects(turn_id)
 #	TODO activate skills like Auto LP and FP plus
 	
+	if formations[turn_id].az: formations[turn_id].az.can_use_skill = true
+	if formations[turn_id].sz1: formations[turn_id].sz1.can_use_skill = true
+	if formations[turn_id].sz2: formations[turn_id].sz2.can_use_skill = true
+
 	formations[turn_id].recharge_fp()
 
 func end_turn() -> void:
 	turn_ended.emit(TurnEndedEvent.new(turn_id))
+	if formations[turn_id].az: formations[turn_id].az.can_use_skill = false
+	if formations[turn_id].sz1: formations[turn_id].sz1.can_use_skill = false
+	if formations[turn_id].sz2: formations[turn_id].sz2.can_use_skill = false
+	
 	turn_id = player1_id if turn_id == player2_id else player2_id
 
 func determine_winner() -> Variant:
@@ -137,3 +145,4 @@ func calculate_damage(initiator_player_id: int, initiator: Vivosaur, target: Viv
 			target_formation.get_vivosaur_zone(target),
 			critical_hit_multiplier == 1.5,
 		))
+		initiator.current_lp -= damage
