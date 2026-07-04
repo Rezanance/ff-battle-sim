@@ -15,8 +15,8 @@ var formations: Dictionary[int, Formation] = {
 	)
 }
 
-var previous_selection: VivosaurSelection
-var current_selection: VivosaurSelection
-
-var target: VivosaurSprite
+var selection: VivosaurSelection
+var initiator: Formation.Zone
+var skill_id_selected: String
+var target: VivosaurSelection
 var ui_step: UI_STEP = UI_STEP.WAIT_FOR_OPPONENT

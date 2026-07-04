@@ -1,6 +1,7 @@
 class_name Formation
 
 signal fp_gained(fp_diff: int, current_fp: int)
+signal fp_spent(fp_cost: int, current_fp: int)
 
 enum Zone {AZ, SZ1, SZ2, EZ}
 const BASE_FP_RECHARGE: int = 180
@@ -17,7 +18,7 @@ class PlayerZone:
 	
 	func equals(player_zone: PlayerZone) -> bool:
 		return (
-			self.player_id == player_zone.player_id and 
+			self.player_id == player_zone.player_id and
 			self.zone == player_zone.zone
 		)
 
@@ -29,7 +30,7 @@ var ez: Vivosaur
 
 var fp: int
 
-func _init(_az: Vivosaur, _sz1: Vivosaur = null, _sz2: Vivosaur= null) -> void:
+func _init(_az: Vivosaur, _sz1: Vivosaur = null, _sz2: Vivosaur = null) -> void:
 	az = _az
 	sz1 = _sz1
 	sz2 = _sz2
@@ -58,7 +59,7 @@ func get_sz_vivosaurs() -> Array[Vivosaur]:
 
 func calculate_total_lp() -> int:
 	var az_lp: int = az.get('current_lp') if az != null else 0
-	var sz1_lp : int= sz1.get('current_lp') if sz1 != null else 0
+	var sz1_lp: int = sz1.get('current_lp') if sz1 != null else 0
 	var sz2_lp: int = sz2.get('current_lp') if sz2 != null else 0
 
 	return az_lp + sz1_lp + sz2_lp
@@ -73,11 +74,19 @@ func recharge_fp() -> void:
 		fp += fp_diff
 	
 	fp_gained.emit(fp_diff, fp)
+
+func spend_fp(fp_cost: int) -> void:
+	if fp - fp_cost < 0:
+		return
+
+	fp -= fp_cost
+
+	fp_spent.emit(fp_cost, fp)
 	
 func get_vivosaur_zone(vivo: Vivosaur) -> Zone:
-	var az_id: String = az.get('vivosaur_info').get('id')
-	var sz1_id: String = sz1.get('vivosaur_info').get('id')
-	var sz2_id: String = sz2.get('vivosaur_info').get('id')
+	var az_id: String = az.vivosaur_info.id
+	var sz1_id: String = sz1.vivosaur_info.id if sz1 else ''
+	var sz2_id: String = sz2.vivosaur_info.id if sz2 else ''
 
 	match vivo.vivosaur_info.id:
 		az_id:
@@ -88,6 +97,17 @@ func get_vivosaur_zone(vivo: Vivosaur) -> Zone:
 			return Zone.SZ2
 		_:
 			return Zone.EZ
+
+func get_vivosaur_from_zone(zone: Zone) -> Vivosaur:
+	match zone:
+		Zone.AZ:
+			return az
+		Zone.SZ1:
+			return sz1
+		Zone.SZ2:
+			return sz2
+	return ez
+		
 
 func swap_to_ez(sz_vivosaur: Vivosaur) -> void:
 	return

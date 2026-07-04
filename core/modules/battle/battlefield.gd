@@ -1,9 +1,14 @@
 class_name BattleField
 
+const Element = VivosaurInfo.Element
+const Zone = Formation.Zone
+
 signal first_player_determined(first_player_determined_event: FirstPlayerDeterminedEvent)
 signal turn_started(turn_started_event: TurnStartedEvent)
 signal fp_gained(fp_gained_event: FpGainedEvent)
+signal fp_spent(fp_spent_event: FpSpentEvent)
 signal turn_ended(turn_ended_event: TurnEndedEvent)
+signal vivosaur_damaged(vivosaur_damaged_event: VivosaurDamagedEvent)
 
 var player1_id: int
 var player2_id: int
@@ -11,8 +16,8 @@ var formations: Dictionary[int, Formation]
 var turn_id: int
 
 func _init(
-	_formations: Dictionary[int, Formation], 
-	_player1_id: int, 
+	_formations: Dictionary[int, Formation],
+	_player1_id: int,
 	_player2_id: int
 ) -> void:
 	assert(len(_formations.keys()) == 2)
@@ -22,11 +27,18 @@ func _init(
 	player1_id = _player1_id
 	player2_id = _player2_id
 	
-	formations[player1_id].fp_gained.connect(func (fp_diff: int, current_fp: int) -> void: 
+	formations[player1_id].fp_gained.connect(func(fp_diff: int, current_fp: int) -> void:
 		fp_gained.emit(FpGainedEvent.new(player1_id, fp_diff, current_fp))
 	)
-	formations[player2_id].fp_gained.connect(func (fp_diff: int, current_fp: int) -> void: 
+	formations[player2_id].fp_gained.connect(func(fp_diff: int, current_fp: int) -> void:
 		fp_gained.emit(FpGainedEvent.new(player2_id, fp_diff, current_fp))
+	)
+
+	formations[player1_id].fp_spent.connect(func(fp_cost: int, current_fp: int) -> void:
+		fp_spent.emit(FpSpentEvent.new(player1_id, fp_cost, current_fp))
+	)
+	formations[player2_id].fp_spent.connect(func(fp_cost: int, current_fp: int) -> void:
+		fp_spent.emit(FpSpentEvent.new(player2_id, fp_cost, current_fp))
 	)
 
 func who_goes_first() -> int:
@@ -80,3 +92,48 @@ func apply_support_effects(player_id: int) -> void:
 		sz1.apply_support_effects(player_id, Formation.Zone.SZ1, player_az, opponent_az)
 	if sz2:
 		sz2.apply_support_effects(player_id, Formation.Zone.SZ2, player_az, opponent_az)
+
+func calculate_damage(initiator_player_id: int, initiator: Vivosaur, target: Vivosaur, skill: Skill) -> void:
+	var initiator_formation: Formation = self.formations[initiator_player_id]
+	var target_formation: Formation = self.formations[target.player_id]
+	var element_multiplier: float = 1
+	var initiator_element: Element = initiator.vivosaur_info.element
+	var target_element: Element = target.vivosaur_info.element
+	var range_multiplier: float = (initiator.vivosaur_info.stats.ranged_multiplier if
+			(initiator_formation.get_vivosaur_zone(initiator) == Zone.AZ and [Zone.SZ1, Zone.SZ2].has(target_formation.get_vivosaur_zone(target)))
+			or ([Zone.SZ1, Zone.SZ2].has(initiator_formation.get_vivosaur_zone(initiator)) and target_formation.get_vivosaur_zone(target) == Zone.AZ)
+		else 1.0)
+	var critical_hit_multiplier: float = 1.5 if randf() <= initiator.vivosaur_info.stats.crit_chance else 1.0
+
+	# Favorable matchup
+	if ((initiator_element == Element.AIR and target_element == Element.WATER)
+			or (initiator_element == Element.EARTH and target_element == Element.AIR)
+			or (initiator_element == Element.FIRE and target_element == Element.EARTH)
+			or (initiator_element == Element.WATER and target_element == Element.FIRE)):
+		element_multiplier = 1.5
+	elif ((initiator_element == Element.AIR and target_element == Element.EARTH)
+			or (initiator_element == Element.EARTH and target_element == Element.FIRE)
+			or (initiator_element == Element.FIRE and target_element == Element.WATER)
+			or (initiator_element == Element.WATER and target_element == Element.AIR)):
+		element_multiplier = 0.75
+
+	var damage: int = ((((initiator.vivosaur_info.stats.attack + skill.damage) * (1 + initiator.attack_modifier))
+			- (target.vivosaur_info.stats.defense - (1 + target.defense_modifier)))
+			* randfn(1.0, 0.025)
+			* element_multiplier
+			* range_multiplier
+			* critical_hit_multiplier) as int
+			# TODO: add parting blow modifier
+	
+	Logging.info('Damage info - atk: %d, skill dmg: %d, atk mod: %f, def: %d, def mod: %f, element mod: %f, range mod: %d, crit mod: %f' % [
+		initiator.vivosaur_info.stats.attack, skill.damage, initiator.attack_modifier, target.vivosaur_info.stats.defense,
+		target.defense_modifier, element_multiplier, range_multiplier, critical_hit_multiplier
+	])
+
+	if damage > 0:
+		vivosaur_damaged.emit(VivosaurDamagedEvent.new(
+			damage,
+			target.player_id,
+			target_formation.get_vivosaur_zone(target),
+			critical_hit_multiplier == 1.5,
+		))

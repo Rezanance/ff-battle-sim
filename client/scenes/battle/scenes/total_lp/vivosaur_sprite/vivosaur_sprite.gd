@@ -20,9 +20,6 @@ func pulse() -> void:
 
 func _on_pressed() -> void:
 	if is_targetable:
-		if Battling.target:
-			Battling.target.cursor.visible = false
 		cursor.visible = true
-		Battling.target = self
 	animation_player.play("arrow")
 	arrow.visible = true

@@ -4,6 +4,8 @@ signal support_effects_applied(event: SupportEffectsAppliedEvent)
 signal first_player_determined(event: FirstPlayerDeterminedEvent)
 signal turn_started(event: TurnStartedEvent)
 signal fp_gained(event: FpGainedEvent)
+signal fp_spent(event: FpSpentEvent)
+signal vivosaur_damaged(event: VivosaurDamagedEvent)
 
 @rpc("authority", "call_remote", "reliable")
 func notify_support_effects_applied(event_dict: Dictionary[String, Variant]) -> void:
@@ -20,3 +22,11 @@ func notify_turn_start(event_dict: Dictionary[String, int]) -> void:
 @rpc("authority", "call_remote", "reliable")
 func notify_fp_gained(event_dict: Dictionary[String, int]) -> void:
 	fp_gained.emit(FpGainedEvent.deserialize(event_dict))
+
+@rpc("authority", "call_remote", "reliable")
+func notify_fp_spent(event_dict: Dictionary[String, int]) -> void:
+	fp_spent.emit(FpSpentEvent.deserialize(event_dict))
+
+@rpc("authority", "call_remote", "reliable")
+func notify_vivosaur_damaged(event_dict: Dictionary[String, Variant]) -> void:
+	vivosaur_damaged.emit(VivosaurDamagedEvent.deserialize(event_dict))

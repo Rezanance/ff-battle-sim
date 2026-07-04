@@ -22,7 +22,7 @@ enum Target {
 	ALL_ENEMIES,
 }
 enum EffectParam {
-	CHANCE, LP, STATUS, 
+	CHANCE, LP, STATUS,
 }
 
 class Effect:
@@ -47,12 +47,12 @@ var effects: Array[Effect]
 var counterable: bool
 
 func _init(skill: SkillResource) -> void:
-	id = skill.resource_name
+	id = '%d' % skill.name.hash()
 	type = skill.skill_type
 	description = skill.description
 	name = skill.name
 	damage = skill.damage
 	fp_cost = skill.fp_cost
 	target = skill.target
-	effects.assign(skill.skill_effects.map(func (skill_effect_res: SkillEffectResource) -> Effect: return Effect.new(skill_effect_res)))
+	effects.assign(skill.skill_effects.map(func(skill_effect_res: SkillEffectResource) -> Effect: return Effect.new(skill_effect_res)))
 	counterable = skill.counterable

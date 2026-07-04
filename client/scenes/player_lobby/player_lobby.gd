@@ -131,7 +131,7 @@ func dev_mode(args: PackedStringArray) -> void:
 	
 	go_online_btn.pressed.emit()
 	
-	await get_tree().create_timer(0.9).timeout
+	await get_tree().create_timer(1).timeout
 	
 	if is_client1:
 		await get_tree().create_timer(0.2).timeout

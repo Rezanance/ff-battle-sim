@@ -227,3 +227,16 @@ func animate_fp_gain(event: FpGainedEvent) -> void:
 	
 	fp.text = '%d' % (old_fp + event.fp_diff)
 	fp_delta.visible = false
+
+func animate_fp_spent(event: FpSpentEvent) -> void:
+	fp_delta.visible = true
+	fp_delta.text = '-%d' % event.fp_cost
+	
+	var old_fp: int = event.current_fp + event.fp_cost
+	const TIME_BETWEEN_INCREMENTS: float = 0.0056
+	for i: int in range(1, event.fp_cost + 1, +5):
+		fp.text = '%d' % (old_fp - i)
+		await get_tree().create_timer(TIME_BETWEEN_INCREMENTS).timeout
+	
+	fp.text = '%d' % (old_fp - event.fp_cost)
+	fp_delta.visible = false

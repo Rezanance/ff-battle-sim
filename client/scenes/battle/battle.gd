@@ -29,11 +29,14 @@ func _ready() -> void:
 	end_turn_btn.pressed.connect(battling_component.notify_ending_turn)
 
 	back_btn.pressed.connect(go_back_from_skill_step)
+	ok_btn.pressed.connect(use_skill)
 	
 	ClientBattling.support_effects_applied.connect(queue_event.bind(update_support_effects))
 	ClientBattling.first_player_determined.connect(queue_event.bind(show_who_goes_first))
 	ClientBattling.turn_started.connect(queue_event.bind(start_turn))
 	ClientBattling.fp_gained.connect(queue_event.bind(gain_fp))
+	ClientBattling.fp_spent.connect(queue_event.bind(spend_fp))
+	ClientBattling.vivosaur_damaged.connect(queue_event.bind(show_damage_taken))
 	
 	await get_tree().create_timer(0.25).timeout
 	player_formation_ui.initialize()
@@ -100,14 +103,19 @@ func start_turn(event: TurnStartedEvent) -> void:
 	
 func gain_fp(event: FpGainedEvent) -> void:
 	await formations_ui[event.player_id].animate_fp_gain(event)
+
+func spend_fp(event: FpSpentEvent) -> void:
+	await formations_ui[event.player_id].animate_fp_spent(event)
 	
 func select_vivosaur(zone: Formation.Zone, player_id: int) -> void:
-	var selection: VivosaurSelection = Battling.current_selection
-	if selection:
-		formations_ui[selection.player_id].vivosaur_sprite_zones[selection.zone].arrow.visible = false
-	Battling.previous_selection = selection
-	Battling.current_selection = VivosaurSelection.new(zone, player_id)
-
+	var previous_selection: VivosaurSelection = Battling.selection
+	if previous_selection:
+		var previous_vivosaur_sprite_selected: VivosaurSprite = formations_ui[previous_selection.player_id].vivosaur_sprite_zones[previous_selection.zone]
+		previous_vivosaur_sprite_selected.arrow.visible = false
+		previous_vivosaur_sprite_selected.cursor.visible = false
+	Battling.selection = VivosaurSelection.new(zone, player_id)
+	Battling.target = VivosaurSelection.new(zone, player_id)
+	
 func show_skill_targets(skill: Skill) -> void:
 	var ally_az: VivosaurSprite = player_formation_ui.vivosaur_sprite_zones[Zone.AZ]
 	var ally_sz1: VivosaurSprite = player_formation_ui.vivosaur_sprite_zones[Zone.SZ1]
@@ -120,8 +128,11 @@ func show_skill_targets(skill: Skill) -> void:
 	var enemy_ez: VivosaurSprite = opponent_formation_ui.vivosaur_sprite_zones[Zone.EZ]
 
 	var ally_modulate: Color = Color(0, 0, 1, 1)
-	var enemy_modulate: Color = Color(1, 0.5, 0.5, 0.5)
+	var enemy_modulate: Color = Color(1, 0.5, 0.5, 1)
 
+	Battling.initiator = Battling.selection.zone
+	Battling.skill_id_selected = skill.id
+	player_formation_ui.vivosaur_sprite_zones[Battling.initiator].self_modulate.a = 0.5
 	back_btn.visible = true
 	ok_btn.visible = true
 	reset_targets()
@@ -198,10 +209,12 @@ func show_skill_targets(skill: Skill) -> void:
 				enemy_sz2.is_targetable = true
 
 		Target.SELF:
-			player_formation_ui.vivosaur_sprite_zones[Battling.current_selection.zone].cursor.visible = true
+			player_formation_ui.vivosaur_sprite_zones[Battling.initiator].cursor.visible = true
 
 func go_back_from_skill_step() -> void:
 	reset_targets()
+	Battling.target = null
+	player_formation_ui.vivosaur_sprite_zones[Battling.initiator].self_modulate.a = 1
 	back_btn.visible = false
 	ok_btn.visible = false
 
@@ -249,3 +262,19 @@ func reset_targets() -> void:
 		enemy_ez.self_modulate = Color.WHITE
 		enemy_ez.is_targetable = false
 		enemy_ez.cursor.visible = false
+
+func use_skill() -> void:
+	battling_component.notify_skill_used(
+		Battling.initiator,
+		Battling.skill_id_selected,
+		Battling.target.player_id,
+		Battling.target.zone,
+	)
+
+func show_damage_taken(event: VivosaurDamagedEvent) -> void:
+	go_back_from_skill_step()
+
+	print("Target vivo player id %d" % event.player_id)
+	print("Target vivo zone %s" % event.zone)
+	print("Is critical hit %s" % event.is_critical_hit)
+	print("Damage taken %d" % event.damage)
