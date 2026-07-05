@@ -139,10 +139,11 @@ func calculate_damage(initiator_player_id: int, initiator: Vivosaur, target: Viv
 	])
 
 	if damage > 0:
+		target.current_lp -= damage
 		vivosaur_damaged.emit(VivosaurDamagedEvent.new(
 			damage,
+			target.current_lp / (target.vivosaur_info.stats.life_points as float) * 100,
 			target.player_id,
 			target_formation.get_vivosaur_zone(target),
 			critical_hit_multiplier == 1.5,
 		))
-		initiator.current_lp -= damage

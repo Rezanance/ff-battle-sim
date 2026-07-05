@@ -6,9 +6,12 @@ const UI_STEP = Battling.UI_STEP
 @onready var animation_player: AnimationPlayer = $AnimationPlayer
 @onready var arrow: TextureRect = $Arrow
 @onready var cursor: AnimatedSprite2D = $Cursor
+@onready var damage: Label = $Damage
+@onready var life_bar: ColorRect = $LifeBar/Main
 
 var id: String
 var is_targetable: bool = false
+var used_skill: bool = false
 
 func _ready() -> void:
 	cursor.play()

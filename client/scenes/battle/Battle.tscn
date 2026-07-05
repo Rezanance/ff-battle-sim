@@ -5,7 +5,7 @@
 [ext_resource type="Script" uid="uid://cw2hcn3ef7wxj" path="res://client/scenes/battle/modules/FormationUI/formation_ui.gd" id="2_jdafm"]
 [ext_resource type="Texture2D" uid="uid://cqd6js1dnxjhr" path="res://client/assets/support_effects/1111.png" id="2_pjid2"]
 [ext_resource type="PackedScene" uid="uid://twprmxgwv8kw" path="res://client/modules/ui/VivosaurSumary/VivosaurSummary.tscn" id="4_34q6o"]
-[ext_resource type="PackedScene" uid="uid://vl2rq8bashda" path="res://client/scenes/battle/scenes/total_lp/vivosaur_sprite/VivosaurSprite.tscn" id="4_dgjnm"]
+[ext_resource type="PackedScene" uid="uid://vl2rq8bashda" path="res://client/scenes/battle/scenes/vivosaur_sprite/VivosaurSprite.tscn" id="4_dgjnm"]
 [ext_resource type="Texture2D" uid="uid://bm2l3pyiylbyo" path="res://client/assets/backgrounds/ceratops_oraange.png" id="4_v3re7"]
 [ext_resource type="PackedScene" uid="uid://cun17yo45gcvm" path="res://client/scenes/battle/scenes/total_lp/TotalLp.tscn" id="5_r8nfv"]
 [ext_resource type="Texture2D" uid="uid://f62xf1rve0k1" path="res://client/assets/total_lp/total_lp_blue.png" id="6_jhxqk"]
@@ -28,6 +28,8 @@
 [ext_resource type="Script" uid="uid://c8my2a42qmla1" path="res://client/modules/logic/multiplayer_components/battling_component.gd" id="22_2k6mw"]
 [ext_resource type="Script" uid="uid://cmamxc3gkd5v0" path="res://client/scenes/battle/modules/TextureManager/texture_manager.gd" id="23_8ltw3"]
 [ext_resource type="Texture2D" uid="uid://cgwvau3ftmscn" path="res://client/assets/battle/actions/swap_az_hover.png" id="24_ird6i"]
+[ext_resource type="Texture2D" uid="uid://dhqinoc2txy7e" path="res://client/assets/loading/loading.png" id="27_fwcbx"]
+[ext_resource type="Script" uid="uid://ccp74qdnkf5ae" path="res://client/scenes/player_lobby/scenes/loading_conn.gd" id="28_8p5wy"]
 
 [sub_resource type="SystemFont" id="SystemFont_d0b6a"]
 font_names = PackedStringArray("Sans-Serif")
@@ -47,7 +49,88 @@ subpixel_positioning = 0
 bg_color = Color(0.9160458, 0.70603096, 0.4494692, 1)
 border_blend = true
 
-[node name="Battle" type="ColorRect" unique_id=972273508 node_paths=PackedStringArray("battling_component", "player_formation_ui", "opponent_formation_ui", "swap_to_ez_btn", "end_turn_btn", "back_btn", "ok_btn")]
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_vxbgf"]
+bg_color = Color(0, 0, 0, 0.5882353)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_qohhd"]
+atlas = ExtResource("27_fwcbx")
+region = Rect2(0, 0, 48, 48)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_b45hg"]
+atlas = ExtResource("27_fwcbx")
+region = Rect2(48, 0, 48, 48)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_k3aj0"]
+atlas = ExtResource("27_fwcbx")
+region = Rect2(96, 0, 48, 48)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_fye4s"]
+atlas = ExtResource("27_fwcbx")
+region = Rect2(144, 0, 48, 48)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_qfdgg"]
+atlas = ExtResource("27_fwcbx")
+region = Rect2(192, 0, 48, 48)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_1l27s"]
+atlas = ExtResource("27_fwcbx")
+region = Rect2(240, 0, 48, 48)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_8eqp2"]
+atlas = ExtResource("27_fwcbx")
+region = Rect2(288, 0, 48, 48)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_ra0c6"]
+atlas = ExtResource("27_fwcbx")
+region = Rect2(336, 0, 48, 48)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_w8nrr"]
+atlas = ExtResource("27_fwcbx")
+region = Rect2(384, 0, 48, 48)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_n5g0v"]
+atlas = ExtResource("27_fwcbx")
+region = Rect2(432, 0, 48, 48)
+
+[sub_resource type="SpriteFrames" id="SpriteFrames_g3aik"]
+animations = [{
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_qohhd")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_b45hg")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_k3aj0")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_fye4s")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_qfdgg")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_1l27s")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_8eqp2")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_ra0c6")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_w8nrr")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_n5g0v")
+}],
+"loop": 1,
+"name": &"default",
+"speed": 10.0
+}]
+
+[node name="Battle" type="ColorRect" unique_id=972273508 node_paths=PackedStringArray("battling_component", "player_formation_ui", "opponent_formation_ui", "swap_to_ez_btn", "end_turn_btn", "back_btn", "ok_btn", "waiting_for_server_overlay")]
 offset_right = 1920.0
 offset_bottom = 1080.0
 color = Color(0.8786593, 0.5368116, 0.35264778, 1)
@@ -59,6 +142,7 @@ swap_to_ez_btn = NodePath("BattleWindow/SwapAZ")
 end_turn_btn = NodePath("BattleWindow/EndTurn")
 back_btn = NodePath("BattleWindow/Back")
 ok_btn = NodePath("BattleWindow/Ok")
+waiting_for_server_overlay = NodePath("WaitingForServerOverlay")
 
 [node name="BattleWindow" type="TextureRect" parent="." unique_id=309800834]
 layout_mode = 1
@@ -700,6 +784,23 @@ offset_bottom = 1075.0
 
 [node name="VBoxContainer" type="VBoxContainer" parent="EventLogBg/ScrollContainer" unique_id=1262127518]
 layout_mode = 2
+
+[node name="WaitingForServerOverlay" type="Panel" parent="." unique_id=1527071223]
+visible = false
+z_index = 100
+layout_mode = 0
+offset_left = 655.0
+offset_top = 540.0
+offset_right = 1375.0
+offset_bottom = 1080.0
+theme_override_styles/panel = SubResource("StyleBoxFlat_vxbgf")
+
+[node name="LoadingAnim" type="AnimatedSprite2D" parent="WaitingForServerOverlay" unique_id=1062342192]
+position = Vector2(360, 270)
+scale = Vector2(3, 3)
+sprite_frames = SubResource("SpriteFrames_g3aik")
+frame_progress = 0.68198436
+script = ExtResource("28_8p5wy")
 
 [node name="BattlingComponent" type="Node" parent="." unique_id=1713040053]
 script = ExtResource("22_2k6mw")

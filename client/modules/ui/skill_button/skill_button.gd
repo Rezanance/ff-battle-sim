@@ -1,7 +1,7 @@
 extends Panel
 class_name SkillButton
 
-func initialize(skill: Skill, _on_skill_clicked: Callable, is_disabled: bool ) -> void:
+func initialize(skill: Skill, _on_skill_clicked: Callable, is_disabled: bool) -> void:
 	var disabled_saturation: float = 0.3 if is_disabled else 0.0
 	var style_box: StyleBox = theme.get_stylebox('panel', 'Panel')
 	var style_box_flat: StyleBoxFlat = style_box.duplicate()
@@ -18,7 +18,7 @@ func initialize(skill: Skill, _on_skill_clicked: Callable, is_disabled: bool ) -
 	
 	$HBoxContainer/VBoxContainer/Name.text = skill.name
 	$HBoxContainer/VBoxContainer/HBoxContainer/Damage.text = "Dmg: %d" % skill.damage
-	$HBoxContainer/VBoxContainer/HBoxContainer/FpCost.text = "%d FP" % skill.fp_cost	
+	$HBoxContainer/VBoxContainer/HBoxContainer/FpCost.text = "%d FP" % skill.fp_cost
 	$HBoxContainer/VBoxContainer/Counterable.text = "Counterable: yes" if skill.counterable else "Counterable: no"
 	$HBoxContainer/Description.text = skill.description
 

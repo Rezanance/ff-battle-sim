@@ -132,12 +132,12 @@ animations = [{
 "duration": 1.0,
 "texture": SubResource("AtlasTexture_n5g0v")
 }],
-"loop": true,
+"loop": 1,
 "name": &"default",
 "speed": 10.0
 }]
 
-[node name="PlayerLobby" type="TextureRect" unique_id=1190702545 node_paths=PackedStringArray("teams_file_component", "preferences_file_component", "team_select", "player_icon_select", "display_name_input", "server_ip_input", "go_online_btn", "copy_id_btn", "status_notification_component", "challenge_component", "battle_setup_component")]
+[node name="PlayerLobby" type="TextureRect" unique_id=1190702545 node_paths=PackedStringArray("teams_file_component", "preferences_file_component", "team_select", "player_icon_select", "display_name_input", "server_ip_input", "status_notification_component", "challenge_component", "battle_setup_component", "go_online_btn", "copy_id_btn")]
 offset_right = 1920.0
 offset_bottom = 1080.0
 texture = ExtResource("1_r8cds")
@@ -149,11 +149,11 @@ team_select = NodePath("VBoxContainer/TeamSelect")
 player_icon_select = NodePath("Panel/PlayerInfo/PlayerIconSelect")
 display_name_input = NodePath("Panel/PlayerInfo/DisplayNameInput")
 server_ip_input = NodePath("Panel2/Connection/ServerIPInput")
-go_online_btn = NodePath("Panel2/Connection/GoOnlineBtn")
-copy_id_btn = NodePath("Panel/PlayerInfo/HBoxContainer/CopyBtn")
 status_notification_component = NodePath("StatusNotificationComponent")
 challenge_component = NodePath("ChallengePlayerComponent")
 battle_setup_component = NodePath("BattleSetupComponent")
+go_online_btn = NodePath("Panel2/Connection/GoOnlineBtn")
+copy_id_btn = NodePath("Panel/PlayerInfo/HBoxContainer/CopyBtn")
 
 [node name="BackgroundOverlay" type="ColorRect" parent="." unique_id=1403994775]
 visible = false
