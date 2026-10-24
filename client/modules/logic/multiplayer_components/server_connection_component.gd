@@ -1,8 +1,6 @@
 extends Node
 class_name ServerConnectionComponent
 
-const ServerConfig = preload("res://server/config.gd")
-
 signal player_connecting()
 signal player_connected(player_info: PlayerInfo)
 signal player_connect_failed()
@@ -36,9 +34,9 @@ func go_online(server_ip: String, display_name: String, icon_id: int) -> Error:
 		return OK
 
 func _on_player_connected() -> void:
-	ServerChallengePlayer.register_player.rpc_id(
-		Networking.SERVER_PEER_ID, 
-		Networking.player_info.serialize()
+	ServerRPCs.register_player.rpc_id(
+		Networking.SERVER_PEER_ID,
+		Serializer.serialize(Networking.player_info)
 	)
 	connected = true
 	player_connected.emit(Networking.player_info)

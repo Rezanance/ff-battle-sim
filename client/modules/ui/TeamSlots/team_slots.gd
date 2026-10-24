@@ -29,7 +29,7 @@ func add_team_slot_medals(_team: Team, create_medal_btn: Callable) -> void:
 	for slot: int in range(len(_team.slots)):
 		if _team.slots[slot] == null:
 			continue
-		var vivosaur_id: String = _team.slots[slot].id
+		var vivosaur_id: String = _team.slots[slot]
 		var _texture: Resource = UIUtils.load_medal_texture(vivosaur_id)
 		var medal_btn: MedalBtn = create_medal_btn.call(_texture, vivosaur_id)
 		add_child(medal_btn)
@@ -69,21 +69,21 @@ func __assign_slot(selected_medal_btn: MedalBtn, team_slot: int) -> void:
 	var duplicate_medal_btn: MedalBtn = selected_medal_btn.duplicate()
 	add_child(duplicate_medal_btn)
 	duplicate_medal_btn.init(
-		selected_medal_btn.vivosaur_id, 
+		selected_medal_btn.vivosaur_id,
 		selected_medal_btn.screen,
-		selected_medal_btn.medal_owner 
+		selected_medal_btn.medal_owner
 	)
 	duplicate_medal_btn.global_position = selected_medal_btn.global_position
 	duplicate_medal_btn.selected_animation.visible = false
 	duplicate_medal_btn.gui_input.connect(_on_medal_gui_input.bind(duplicate_medal_btn))
 	selected_medal_btn.queue_free()
 	
-	var tween: Tween = create_tween() 
+	var tween: Tween = create_tween()
 	duplicate_medal_btn.move(tween, slots[team_slot].global_position)
 	
 	hide_selectable_slots()
 	
-	team.slots[team_slot] = DataLoader.load_vivosaur_info(selected_medal_btn.vivosaur_id)
+	team.slots[team_slot] = VivosaurInfo.load(selected_medal_btn.vivosaur_id)
 	slots[team_slot].medal_btn = duplicate_medal_btn
 	
 	team_modified.emit(team)
@@ -97,15 +97,15 @@ func __move_swap_slots(selected_medal_btn: MedalBtn, team_slot: int) -> void:
 	selected_medal_btn.selected_animation.visible = false
 	
 	var tween: Tween = create_tween()
-	if medal_btn_in_new_slot != null: 
+	if medal_btn_in_new_slot != null:
 		medal_btn_in_new_slot.move(tween, slots[selected_medal_team_slot].global_position)
-		tween.set_parallel() 
-		team.slots[selected_medal_team_slot] = DataLoader.load_vivosaur_info(medal_btn_in_new_slot.vivosaur_id)
+		tween.set_parallel()
+		team.slots[selected_medal_team_slot] = VivosaurInfo.load(medal_btn_in_new_slot.vivosaur_id)
 		medal_btn_in_new_slot.mouse_filter = Control.MOUSE_FILTER_STOP
 	else:
 		team.slots[selected_medal_team_slot] = null
 	selected_medal_btn.move(tween, slots[team_slot].global_position)
-	team.slots[team_slot] = DataLoader.load_vivosaur_info(selected_medal_btn.vivosaur_id)
+	team.slots[team_slot] = VivosaurInfo.load(selected_medal_btn.vivosaur_id)
 	selected_medal_btn.mouse_filter = Control.MOUSE_FILTER_STOP
 	
 	hide_selectable_slots()

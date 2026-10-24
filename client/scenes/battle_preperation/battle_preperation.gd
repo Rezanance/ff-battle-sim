@@ -1,7 +1,7 @@
 extends TextureRect
 
-@export var team_slots: TeamSlots 
-@export var opponent_team_slots: TeamSlots 
+@export var team_slots: TeamSlots
+@export var opponent_team_slots: TeamSlots
 
 @export var context_menu: PopupMenu
 @export var vivosaur_summary: VivosaurSummary
@@ -28,8 +28,7 @@ func _ready() -> void:
 	initialize_UI()
 	initialize_teams()
 	
-	ClientBattleSetup.battle_prep_time_up.connect(_on_battle_prep_time_up)
-	ClientBattleSetup.battle_started.connect(_on_battle_started)
+	ClientRPCs.battle_started.connect(_on_battle_started)
 	
 	var args: PackedStringArray = OS.get_cmdline_args()
 	if '--client1' in args or '--client2' in args:
@@ -54,9 +53,6 @@ func initialize_UI() -> void:
 func initialize_teams() -> void:
 	team_mananger.init(Networking.player_team)
 	opp_team_mananger.init(Networking.opponent_team)
-
-func _on_battle_prep_time_up() -> void:
-	battle_setup_component.send_new_team_info(Networking.player_team)
 
 func _on_battle_started(formations: Dictionary[int, Formation]) -> void:
 	Battling.formations = formations

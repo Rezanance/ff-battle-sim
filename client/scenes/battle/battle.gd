@@ -1,7 +1,7 @@
 extends Node
 
 const Target = Skill.Target
-const Zone = Formation.Zone
+const Zone = PlayerZone.Zone
 
 signal event_queued()
 
@@ -35,21 +35,19 @@ func _ready() -> void:
 	back_btn.pressed.connect(go_back)
 	ok_btn.pressed.connect(ok_btn_pressed)
 	
-	ClientBattling.support_effects_applied.connect(queue_event.bind(update_support_effects))
-	ClientBattling.first_player_determined.connect(queue_event.bind(show_who_goes_first))
-	ClientBattling.turn_started.connect(queue_event.bind(start_turn))
-	ClientBattling.fp_gained.connect(queue_event.bind(gain_fp))
-	ClientBattling.fp_spent.connect(queue_event.bind(spend_fp))
-	ClientBattling.vivosaur_damaged.connect(queue_event.bind(show_damage_taken))
-	ClientBattling.vivosaur_swapped_to_ez.connect(queue_event.bind(swap_to_ez))
-	ClientBattling.skill_missed.connect(queue_event.bind(show_skill_missed))
-	ClientBattling.vivosaur_back_to_sz.connect(queue_event.bind(back_to_sz))
+	ClientRPCs.support_effects_applied.connect(queue_event.bind(update_support_effects))
+	ClientRPCs.first_player_determined.connect(queue_event.bind(show_who_goes_first))
+	ClientRPCs.turn_started.connect(queue_event.bind(start_turn))
+	ClientRPCs.fp_gained.connect(queue_event.bind(gain_fp))
+	ClientRPCs.fp_spent.connect(queue_event.bind(spend_fp))
+	ClientRPCs.vivosaur_damaged.connect(queue_event.bind(show_damage_taken))
+	ClientRPCs.vivosaur_swapped_to_ez.connect(queue_event.bind(swap_to_ez))
+	ClientRPCs.skill_missed.connect(queue_event.bind(show_skill_missed))
+	ClientRPCs.vivosaur_back_to_sz.connect(queue_event.bind(back_to_sz))
 	
 	await get_tree().create_timer(0.25).timeout
 	player_formation_ui.initialize()
 	await opponent_formation_ui.initialize()
-	
-	battling_component.notify_battle_scene_loaded()
 	
 	process_events()
 
@@ -72,7 +70,7 @@ func update_support_effects(event: SupportEffectsAppliedEvent) -> void:
 	
 	await formation_ui.vivosaur_sprite_zones[event.support_zone].pulse()
 	
-	var target_az: Vivosaur = target_formation.az
+	var target_az: VivosaurState = target_formation.az
 	target_az.attack_modifier += event.attack_modifier
 	target_az.defense_modifier += event.defense_modifier
 	target_az.accuracy_modifier += event.accuracy_modifier
@@ -107,24 +105,24 @@ func start_turn(event: TurnStartedEvent) -> void:
 	opponent_formation_ui.change_fp_banner(not is_player_turn)
 
 	if is_player_turn:
-		for zone: Formation.Zone in Formation.Zone.values():
-			var vivosaur: Vivosaur = Battling.formations[Networking.player_info.player_id].get_vivosaur_from_zone(zone)
+		for zone: PlayerZone.Zone in PlayerZone.Zone.values():
+			var vivosaur: VivosaurState = Battling.formations[Networking.player_info.player_id].get_vivosaur_from_zone(zone)
 			if vivosaur:
 				vivosaur.can_use_skill = true
 	
 	await formation_ui.animate_turn_start()
 
 	end_turn_btn.disabled = event.player_id != Networking.player_info.player_id
-	swap_to_ez_btn.disabled = event.player_id != Networking.player_info.player_id or player_formation_ui.vivosaur_sprite_zones[Formation.Zone.EZ] != null
+	swap_to_ez_btn.disabled = event.player_id != Networking.player_info.player_id or player_formation_ui.vivosaur_sprite_zones[PlayerZone.Zone.EZ] != null
 
 func end_turn() -> void:
 	battling_component.notify_ending_turn()
 	
-	for zone: Formation.Zone in Formation.Zone.values():
-		if zone == Formation.Zone.EZ:
+	for zone: PlayerZone.Zone in PlayerZone.Zone.values():
+		if zone == PlayerZone.Zone.EZ:
 			continue
 
-		var vivosaur: Vivosaur = Battling.formations[Networking.player_info.player_id].get_vivosaur_from_zone(zone)
+		var vivosaur: VivosaurState = Battling.formations[Networking.player_info.player_id].get_vivosaur_from_zone(zone)
 		var sprite: VivosaurSprite = player_formation_ui.vivosaur_sprite_zones[zone]
 		if sprite:
 			sprite.set_instance_shader_parameter('used_skill', false)
@@ -142,7 +140,7 @@ func spend_fp(event: FpSpentEvent) -> void:
 	Battling.formations[event.player_id].fp = event.current_fp
 	await formations_ui[event.player_id].animate_fp_spent(event)
 	
-func select_vivosaur(zone: Formation.Zone, player_id: int) -> void:
+func select_vivosaur(zone: PlayerZone.Zone, player_id: int) -> void:
 	var previous_selection: VivosaurSelection = Battling.selection
 	if previous_selection and not previous_selection.equals(VivosaurSelection.new(zone, player_id)):
 		var previous_vivosaur_sprite_selected: VivosaurSprite = formations_ui[previous_selection.player_id].vivosaur_sprite_zones[previous_selection.zone]
@@ -151,7 +149,7 @@ func select_vivosaur(zone: Formation.Zone, player_id: int) -> void:
 		var previous_vivosaur_sprite_target: VivosaurSprite = formations_ui[Battling.target.player_id].vivosaur_sprite_zones[Battling.target.zone]
 		previous_vivosaur_sprite_target.cursor.visible = false
 		if Battling.ui_step == Battling.UI_STEP.CHOOSE_SWAP_TARGET:
-			if Battling.target.zone == Formation.Zone.SZ1:
+			if Battling.target.zone == PlayerZone.Zone.SZ1:
 				player_formation_ui.get_node('EZ SZ1 Arrow').visible = false
 				player_formation_ui.get_node('EZ SZ2 Arrow').visible = true
 			else:
@@ -251,11 +249,11 @@ func show_skill_targets(skill: Skill) -> void:
 				enemy_az.self_modulate = enemy_modulate
 				enemy_az.is_targetable = true
 				enemy_az.cursor.visible = true
-				Battling.target = VivosaurSelection.new(Formation.Zone.AZ, Networking.opponent_info.player_id)
-			if enemy_sz1 and Battling.initiator == Formation.Zone.AZ:
+				Battling.target = VivosaurSelection.new(PlayerZone.Zone.AZ, Networking.opponent_info.player_id)
+			if enemy_sz1 and Battling.initiator == PlayerZone.Zone.AZ:
 				enemy_sz1.self_modulate = enemy_modulate
 				enemy_sz1.is_targetable = true
-			if enemy_sz2 and Battling.initiator == Formation.Zone.AZ:
+			if enemy_sz2 and Battling.initiator == PlayerZone.Zone.AZ:
 				enemy_sz2.self_modulate = enemy_modulate
 				enemy_sz2.is_targetable = true
 		Target.SELF:
@@ -347,7 +345,7 @@ func show_damage_taken(event: VivosaurDamagedEvent) -> void:
 	waiting_for_server_overlay.visible = false
 
 	var vivo_sprite_damaged: VivosaurSprite = formations_ui[event.player_id].vivosaur_sprite_zones[event.zone]
-	var vivosaur: Vivosaur = Battling.formations[event.player_id].get_vivosaur_from_zone(event.zone)
+	var vivosaur: VivosaurState = Battling.formations[event.player_id].get_vivosaur_from_zone(event.zone)
 	vivosaur.current_lp -= event.damage
 	vivo_sprite_damaged.current_lp_bubble.get_node('HBox').get_node('CurrentLp').text = '%d' % vivosaur.current_lp
 
@@ -389,14 +387,14 @@ func choose_swap_target() -> void:
 		ally_sz1.is_targetable = true
 		ally_sz1.cursor.visible = true
 		player_formation_ui.get_node('EZ SZ1 Arrow').visible = true
-		Battling.target = VivosaurSelection.new(Formation.Zone.SZ1, Networking.player_info.player_id)
+		Battling.target = VivosaurSelection.new(PlayerZone.Zone.SZ1, Networking.player_info.player_id)
 
 	if ally_sz2:
 		ally_sz2.self_modulate = Color.BLUE
 		ally_sz2.is_targetable = true
 		ally_sz2.cursor.visible = not ally_sz1
 		player_formation_ui.get_node('EZ SZ2 Arrow').visible = not ally_sz1
-		Battling.target = VivosaurSelection.new(Formation.Zone.SZ2, Networking.player_info.player_id) if not ally_sz1 else Battling.target
+		Battling.target = VivosaurSelection.new(PlayerZone.Zone.SZ2, Networking.player_info.player_id) if not ally_sz1 else Battling.target
 
 	back_btn.visible = true
 	ok_btn.visible = true
@@ -409,7 +407,7 @@ func swap_to_ez(event: VivosaurSwappedToEZEvent) -> void:
 
 	var target_formation_ui: FormationUI = formations_ui[event.player_id]
 	var target_formation: Formation = Battling.formations[event.player_id]
-	var target_az: Vivosaur = target_formation.az
+	var target_az: VivosaurState = target_formation.az
 	target_az.attack_modifier = 0
 	target_az.defense_modifier = 0
 	target_az.accuracy_modifier = 0

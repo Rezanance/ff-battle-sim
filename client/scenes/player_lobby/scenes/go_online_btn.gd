@@ -2,7 +2,7 @@ extends Button
 
 @export var player_lobby: PlayerLobby
 @export var player_icon_select: OptionButton
-@export var display_name_input: LineEdit 
+@export var display_name_input: LineEdit
 @export var server_ip_input: LineEdit
 @export var send_challenge_btn: Button
 @export var server_connection_component: ServerConnectionComponent
@@ -20,15 +20,15 @@ func _ready() -> void:
 	server_connection_component.player_disconnected.connect(_on_player_disconnected)
 	server_connection_component.player_disconnecting.connect(_on_player_disconnecting)
 	
-	ClientChallengePlayer.challenge_declined.connect(_on_challenge_declined)
+	ClientRPCs.challenge_declined.connect(_on_challenge_declined)
 	
 func _on_can_connect(can_connect: bool) -> void:
 	disabled = not can_connect
 	
 func _on_pressed() -> void:
 	server_connection_component.go_online(
-		server_ip_input.text.strip_edges(), 
-		display_name_input.text.strip_edges(), 
+		server_ip_input.text.strip_edges(),
+		display_name_input.text.strip_edges(),
 		player_icon_select.selected
 	)
 

@@ -30,7 +30,7 @@ func _ready() -> void:
 func update_summary(vivosaur_id: String, skills_included: bool = true) -> void:
 	visible = true
 	
-	var vivosaur: VivosaurInfo = DataLoader.load_vivosaur_info(vivosaur_id)
+	var vivosaur: VivosaurInfo = VivosaurInfo.load(vivosaur_id)
 	element.texture = load("res://client/assets/elements/%d.webp" % vivosaur.element)
 	vivosaur_name.text = vivosaur.name
 	battle_class.text = vivosaur.battle_class.capitalize()
@@ -56,9 +56,9 @@ func update_summary(vivosaur_id: String, skills_included: bool = true) -> void:
 	if skills_included:
 		UIUtils.clear_skills(skills_container)
 		UIUtils.update_skills_shown(
-			skills_container, 
-			vivosaur.skills, 
-			func(_event: InputEvent, _skill: Skill) -> void: return 
+			skills_container,
+			vivosaur.skills,
+			func(_event: InputEvent, _skill: Skill) -> void: return
 		)
 		#size.y = HEIGHT_WITH_SKILLS
 		return

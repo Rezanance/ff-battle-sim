@@ -3,13 +3,13 @@
 [ext_resource type="Texture2D" uid="uid://v4bw57rvn66u" path="res://client/assets/vivosaurs/Brachio/medal.png" id="1_7kjbb"]
 [ext_resource type="Script" uid="uid://bj0qwk3daymcj" path="res://core/data/VivosaurResource.gd" id="2_u8ti0"]
 [ext_resource type="Script" uid="uid://tfde3pcbhqpi" path="res://core/data/SkillResource.gd" id="3_yafhp"]
-[ext_resource type="Resource" uid="uid://8pybw8hhrcjr" path="res://core/data/skills/Brachio/skills/MightyStomp/MightyStomp.tres" id="4_hst4b"]
+[ext_resource type="Resource" uid="uid://8pybw8hhrcjr" path="res://core/data/skills/Brachio/MightyStomp/MightyStomp.tres" id="4_hst4b"]
 [ext_resource type="Texture2D" uid="uid://boxoe2ewmerpr" path="res://client/assets/vivosaurs/Brachio/sprite.png" id="4_x841l"]
 [ext_resource type="Script" uid="uid://nubhjw6614kq" path="res://core/data/StatusResource.gd" id="5_0fxc5"]
-[ext_resource type="Resource" uid="uid://bbgm1ar607dbe" path="res://core/data/skills/Brachio/skills/MountainWave/MountainWave.tres" id="5_dqjsn"]
-[ext_resource type="Resource" uid="uid://xta4s0r2nhko" path="res://core/data/skills/Brachio/skills/EarthCrush/EarthCrush.tres" id="6_rns3q"]
+[ext_resource type="Resource" uid="uid://bbgm1ar607dbe" path="res://core/data/skills/Brachio/MountainWave/MountainWave.tres" id="5_dqjsn"]
+[ext_resource type="Resource" uid="uid://xta4s0r2nhko" path="res://core/data/skills/Brachio/EarthCrush/EarthCrush.tres" id="6_rns3q"]
 [ext_resource type="Resource" uid="uid://cpymhh6m480y1" path="res://core/data/skills/_common/PowerScale/PowerScale.tres" id="7_w25yx"]
-[ext_resource type="Resource" uid="uid://mfns01vim63r" path="res://core/data/skills/Brachio/skills/Voidquake/Voidquake.tres" id="8_hst4b"]
+[ext_resource type="Resource" uid="uid://mfns01vim63r" path="res://core/data/skills/Brachio/Voidquake/Voidquake.tres" id="8_hst4b"]
 
 [resource]
 resource_name = "Brachio"

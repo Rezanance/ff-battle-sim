@@ -4,4 +4,4 @@ extends Button
 
 func _on_toggled(_toggled_on: bool) -> void:
 	disabled = true
-	battle_setup_component.ready_early(Networking.battle_id)
+	battle_setup_component.submit_formation(Networking.player_team)

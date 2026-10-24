@@ -42,12 +42,12 @@ func _ready() -> void:
 	else:
 		server_ip = server_ip_input.text
 	
-	ClientChallengePlayer.opponent_not_online.connect(_on_opponent_not_online)
-	ClientChallengePlayer.battle_requested.connect(_on_challenge_requested)
-	ClientChallengePlayer.challenge_accepted.connect(_on_challenge_accepted)
+	ClientRPCs.opponent_not_online.connect(_on_opponent_not_online)
+	ClientRPCs.battle_requested.connect(_on_challenge_requested)
+	ClientRPCs.challenge_accepted.connect(_on_challenge_accepted)
 	
-	ClientBattleSetup.battle_created.connect(_on_battle_created)
-	ClientBattleSetup.battle_prep_started.connect(_on_battle_prep_started)
+	ClientRPCs.battle_created.connect(_on_battle_created)
+	ClientRPCs.battle_prep_started.connect(_on_battle_prep_started)
 	
 	var args: PackedStringArray = OS.get_cmdline_args()
 	if '--client1' in args or '--client2' in args:
@@ -92,17 +92,17 @@ func _on_opponent_not_online() -> void:
 func _on_challenge_requested(opponent_info: PlayerInfo) -> void:
 	Networking.opponent_info = opponent_info
 
-func _on_challenge_accepted(challenger_id: int) -> void:
-	battle_setup_component.create_battle(challenger_id)
+func _on_challenge_accepted(opponent_info: PlayerInfo) -> void:
+	Networking.opponent_info = opponent_info
+	battle_setup_component.create_battle(opponent_info.player_id)
 
 func _on_battle_created(battle_id: int) -> void:
 	Networking.battle_id = battle_id
 	battle_setup_component.send_team_info(battle_id, load_selected_team_info())
 
-func _on_battle_prep_started(opponent_info: PlayerInfo, opponent_team: Team) -> void:
-	Networking.player_team = Team.deserialize('', load_selected_team_info())
-	Networking.opponent_info = opponent_info
-	Networking.opponent_team = opponent_team
+func _on_battle_prep_started(event: BattlePrepStartedEvent) -> void:
+	Networking.player_team = Team.deserialize(load_selected_team_info())
+	Networking.opponent_team = Team.deserialize(event.team1) if Networking.player_info.player_id == event.player1 else Team.deserialize(event.team2)
 	SceneTransition.change_scene("res://client/scenes/battle_preperation/BattlePreperation.tscn")
 
 func emit_connect_status() -> void:

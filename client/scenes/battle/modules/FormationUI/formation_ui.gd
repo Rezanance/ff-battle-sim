@@ -3,7 +3,7 @@ class_name FormationUI
 
 signal support_effects_updated()
 signal first_player_revealed()
-signal vivosaur_selected(zone: Formation.Zone)
+signal vivosaur_selected(zone: PlayerZone.Zone)
 signal skill_clicked(skill: Skill)
 
 @export var total_lp_panel: TextureRect
@@ -41,44 +41,45 @@ func initialize() -> void:
 
 func initialize_vivosaur_sprites() -> void:
 	var formation: Formation = get_formation()
-	var az: Vivosaur = formation.az
-	var sz1: Vivosaur = formation.sz1
-	var sz2: Vivosaur = formation.sz2
+	var az: VivosaurState = formation.vivosaurs[Team.Zone.AZ]
+	var sz1: VivosaurState = formation.vivosaurs[Team.Zone.SZ1]
+	var sz2: VivosaurState = formation.vivosaurs[Team.Zone.SZ2]
 	
-	vivosaur_sprite_zones[Formation.Zone.AZ] = vivosaur_sprite_1
-	vivosaur_sprite_zones[Formation.Zone.SZ1] = vivosaur_sprite_2
-	vivosaur_sprite_zones[Formation.Zone.SZ2] = vivosaur_sprite_3
+	vivosaur_sprite_zones[PlayerZone.Zone.AZ] = vivosaur_sprite_1
+	vivosaur_sprite_zones[PlayerZone.Zone.SZ1] = vivosaur_sprite_2
+	vivosaur_sprite_zones[PlayerZone.Zone.SZ2] = vivosaur_sprite_3
 	
 	_initialize_sprite(az, vivosaur_sprite_1)
 	_initialize_sprite(sz1, vivosaur_sprite_2)
 	_initialize_sprite(sz2, vivosaur_sprite_3)
 
 func get_formation() -> Formation:
+	Logging.info(Networking.opponent_info.player_id)
 	if is_player_formation:
 		return Battling.formations[Networking.player_info.player_id]
 	else:
 		return Battling.formations[Networking.opponent_info.player_id]
 		
 
-func _initialize_sprite(vivosaur: Vivosaur, sprite: VivosaurSprite) -> void:
+func _initialize_sprite(vivosaur: VivosaurState, sprite: VivosaurSprite) -> void:
 	if vivosaur:
-		var vivosaur_info: VivosaurInfo = vivosaur.vivosaur_info
-		var vivosaur_resource: VivosaurResource = load("res://core/data/vivosaurs/%s.tres" % vivosaur_info.id)
-		sprite.id = vivosaur_info.id
+		var info: VivosaurInfo = vivosaur.info
+		var vivosaur_resource: VivosaurResource = load("res://core/data/vivosaurs/%s.tres"%info.id)
+		sprite.id = info.id
 		sprite.texture_normal = vivosaur_resource.sprite
-		sprite.get_node('LifeBar/Bg').texture = load('res://client/assets/lifebars/%d.png' % vivosaur_info.element)
+		sprite.get_node('LifeBar/Bg').texture = load('res://client/assets/lifebars/%d.png'%info.element)
 		sprite.pressed.connect(_update_vivosaur_summary.bind(vivosaur))
 		sprite.pressed.connect(_notify_vivosaur_selected.bind(vivosaur))
 		sprite.current_lp_bubble.get_node('HBox').get_node('CurrentLp').text = '%d' % vivosaur.current_lp
 	else:
 		sprite.queue_free()
 
-func _update_vivosaur_summary(vivosaur: Vivosaur) -> void:
-	vivosaur_summary.update_summary(vivosaur.vivosaur_info.id)
+func _update_vivosaur_summary(vivosaur: VivosaurState) -> void:
+	vivosaur_summary.update_summary(vivosaur.info.id)
 	if is_player_formation:
 		UIUtils.update_skills_shown(
 			skills,
-			vivosaur.vivosaur_info.skills,
+			vivosaur.info.skills,
 			_on_skill_clicked,
 			false,
 			vivosaur.can_use_skill
@@ -86,16 +87,16 @@ func _update_vivosaur_summary(vivosaur: Vivosaur) -> void:
 	else:
 		UIUtils.clear_skills(skills)
 
-func _notify_vivosaur_selected(vivosaur: Vivosaur) -> void:
+func _notify_vivosaur_selected(vivosaur: VivosaurState) -> void:
 	vivosaur_selected.emit(get_vivosaur_zone(vivosaur))
 
-func get_vivosaur_zone(vivosaur: Vivosaur) -> Formation.Zone:
-	for zone: int in Formation.Zone.values():
+func get_vivosaur_zone(vivosaur: VivosaurState) -> PlayerZone.Zone:
+	for zone: int in PlayerZone.Zone.values():
 		var vivo_sprite: VivosaurSprite = vivosaur_sprite_zones[zone]
-		if vivo_sprite != null and vivo_sprite.id == vivosaur.vivosaur_info.id:
-			return zone as Formation.Zone
+		if vivo_sprite != null and vivo_sprite.id == vivosaur.info.id:
+			return zone as PlayerZone.Zone
 		
-	return Formation.Zone.AZ
+	return PlayerZone.Zone.AZ
 	
 func _on_skill_clicked(event: InputEvent, skill: Skill) -> void:
 	if (event is InputEventMouseButton and event.button_index == MOUSE_BUTTON_LEFT and
@@ -110,9 +111,9 @@ func initialize_turn_banner() -> void:
 	turn_banner.get_node('Name').text = display_name
 
 func animate_vivosaur_entrance() -> void:
-	var az_sprite: VivosaurSprite = vivosaur_sprite_zones[Formation.Zone.AZ]
-	var sz1_sprite: VivosaurSprite = vivosaur_sprite_zones[Formation.Zone.SZ1]
-	var sz2_sprite: VivosaurSprite = vivosaur_sprite_zones[Formation.Zone.SZ2]
+	var az_sprite: VivosaurSprite = vivosaur_sprite_zones[PlayerZone.Zone.AZ]
+	var sz1_sprite: VivosaurSprite = vivosaur_sprite_zones[PlayerZone.Zone.SZ1]
+	var sz2_sprite: VivosaurSprite = vivosaur_sprite_zones[PlayerZone.Zone.SZ2]
 	var tween: Tween = create_tween()
 	if is_instance_valid(sz1_sprite):
 		tween.tween_property(
@@ -138,7 +139,7 @@ func animate_vivosaur_entrance() -> void:
 	await tween.finished
 
 func update_support_effects(
-	target_az: Vivosaur
+	target_az: VivosaurState
 ) -> void:
 	_format_support_modifier('Atk', target_az.attack_modifier)
 	_format_support_modifier('Def', target_az.defense_modifier)
@@ -246,7 +247,7 @@ func animate_fp_spent(event: FpSpentEvent) -> void:
 func animate_swap_to_ez(event: VivosaurSwappedToEZEvent) -> void:
 	var tween: Tween = create_tween()
 	var duration: float = 0.5
-	var az_sprite: VivosaurSprite = vivosaur_sprite_zones[Formation.Zone.AZ]
+	var az_sprite: VivosaurSprite = vivosaur_sprite_zones[PlayerZone.Zone.AZ]
 
 	tween.tween_property(az_sprite, 'position', ez_position.position, duration)
 	tween.parallel()
@@ -254,8 +255,8 @@ func animate_swap_to_ez(event: VivosaurSwappedToEZEvent) -> void:
 
 	az_sprite.set_instance_shader_parameter('used_skill', true)
 
-	vivosaur_sprite_zones[Formation.Zone.EZ] = az_sprite
-	vivosaur_sprite_zones[Formation.Zone.AZ] = vivosaur_sprite_zones[event.support_zone]
+	vivosaur_sprite_zones[PlayerZone.Zone.EZ] = az_sprite
+	vivosaur_sprite_zones[PlayerZone.Zone.AZ] = vivosaur_sprite_zones[event.support_zone]
 	vivosaur_sprite_zones[event.support_zone] = null
 
 	await tween.finished
@@ -263,16 +264,16 @@ func animate_swap_to_ez(event: VivosaurSwappedToEZEvent) -> void:
 func animate_back_to_ez() -> void:
 	var tween: Tween = create_tween()
 	var duration: float = 0.5
-	var ez_sprite: VivosaurSprite = vivosaur_sprite_zones[Formation.Zone.EZ]
+	var ez_sprite: VivosaurSprite = vivosaur_sprite_zones[PlayerZone.Zone.EZ]
 
-	var position: Vector2 = sz1_position.position if vivosaur_sprite_zones[Formation.Zone.SZ1] == null else sz2_position.position
-	var zone: Formation.Zone = Formation.Zone.SZ1 if vivosaur_sprite_zones[Formation.Zone.SZ1] == null else Formation.Zone.SZ2
+	var position: Vector2 = sz1_position.position if vivosaur_sprite_zones[PlayerZone.Zone.SZ1] == null else sz2_position.position
+	var zone: PlayerZone.Zone = PlayerZone.Zone.SZ1 if vivosaur_sprite_zones[PlayerZone.Zone.SZ1] == null else PlayerZone.Zone.SZ2
 	tween.tween_property(ez_sprite, 'position', position, duration)
 
 	ez_sprite.set_instance_shader_parameter('used_skill', false)
 
-	vivosaur_sprite_zones[zone] = vivosaur_sprite_zones[Formation.Zone.EZ]
-	vivosaur_sprite_zones[Formation.Zone.EZ] = null
+	vivosaur_sprite_zones[zone] = vivosaur_sprite_zones[PlayerZone.Zone.EZ]
+	vivosaur_sprite_zones[PlayerZone.Zone.EZ] = null
 
 	await tween.finished
 
