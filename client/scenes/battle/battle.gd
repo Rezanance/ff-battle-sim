@@ -19,8 +19,12 @@ var event_queue: Array[EventCallback] = []
 var formations_ui: Dictionary[int, FormationUI] = {}
 
 func _ready() -> void:
+	battling_component.notify_scene_loaded()
+
 	var player_id: int = Networking.player_info.player_id
 	var opponent_id: int = Networking.opponent_info.player_id
+	Logging.info(player_id)
+	Logging.info(opponent_id)
 	formations_ui[player_id] = player_formation_ui
 	formations_ui[opponent_id] = opponent_formation_ui
 
@@ -70,7 +74,7 @@ func update_support_effects(event: SupportEffectsAppliedEvent) -> void:
 	
 	await formation_ui.vivosaur_sprite_zones[event.support_zone].pulse()
 	
-	var target_az: VivosaurState = target_formation.az
+	var target_az: VivosaurState = target_formation.vivosaurs[Team.Zone.AZ]
 	target_az.attack_modifier += event.attack_modifier
 	target_az.defense_modifier += event.defense_modifier
 	target_az.accuracy_modifier += event.accuracy_modifier
@@ -106,7 +110,10 @@ func start_turn(event: TurnStartedEvent) -> void:
 
 	if is_player_turn:
 		for zone: PlayerZone.Zone in PlayerZone.Zone.values():
-			var vivosaur: VivosaurState = Battling.formations[Networking.player_info.player_id].get_vivosaur_from_zone(zone)
+			if zone == PlayerZone.Zone.EZ:
+				continue
+			
+			var vivosaur: VivosaurState = Battling.formations[Networking.player_info.player_id].vivosaurs[zone]
 			if vivosaur:
 				vivosaur.can_use_skill = true
 	

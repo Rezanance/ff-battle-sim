@@ -31,7 +31,7 @@ func forward_challenge_accepted(opponent_id: int, challenger_id: int) -> void:
 		ClientRPCs.forward_opponent_not_online.rpc_id(opponent_id)
 	else:
 		Logging.info("Player %d ACCEPTED %d's challenge" % [opponent_id, challenger_id])
-		ClientRPCs.forward_accept_challenge.rpc_id(challenger_id, Serializer.serialize(ServerVariables.all_player_info[challenger_id]))
+		ClientRPCs.forward_accept_challenge.rpc_id(challenger_id, Serializer.serialize(ServerVariables.all_player_info[opponent_id]))
 
 @rpc('any_peer', "call_remote", "reliable")
 func forward_challenge_declined(opponent_id: int, challenger_id: int) -> void:
@@ -59,7 +59,6 @@ func initialize_battle(player1_id: int) -> void:
 	engine.turn_started.connect(ServerUtils.notify_event.bind(player_ids, ClientRPCs.notify_turn_start.rpc_id))
 	engine.vivosaur_swapped_to_ez.connect(ServerUtils.notify_event.bind(player_ids, ClientRPCs.notify_vivosaur_swapped_to_ez.rpc_id))
 	engine.vivosaur_back_to_sz.connect(ServerUtils.notify_event.bind(player_ids, ClientRPCs.notify_vivosaur_swapped_to_ez.rpc_id))
-	# TODO Add rpc 
 	# engine.skill_used.connect(ServerUtils.notify_event.bind(player_ids, ClientRPCs.notify_skill_used.rpc_id))
 	engine.skill_missed.connect(ServerUtils.notify_event.bind(player_ids, ClientRPCs.notify_skill_missed.rpc_id))
 	
@@ -80,3 +79,9 @@ func submit_formation(battle_id: int, new_team_info: Dictionary) -> void:
 	assert(multiplayer.is_server())
 	var player_id: int = multiplayer.get_remote_sender_id()
 	BattleActions.submit_formation(ServerVariables.battle_engines[battle_id], player_id, Team.deserialize(new_team_info))
+
+@rpc("any_peer", 'call_remote', "reliable")
+func notify_battle_scene_loaded(battle_id: int) -> void:
+	assert(multiplayer.is_server())
+	var player_id: int = multiplayer.get_remote_sender_id()
+	BattleActions.client_scene_loaded(ServerVariables.battle_engines[battle_id], player_id)

@@ -14,6 +14,7 @@ var phase: Phase
 var player_ids: Array[int]
 var teams: Dictionary[int, Team]
 var formations: Dictionary[int, Formation]
+var client_scenes_loaded: Dictionary[int, Variant]
 var turn_id: int
 var winner: Variant
 

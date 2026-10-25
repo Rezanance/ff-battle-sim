@@ -94,7 +94,7 @@ func _on_challenge_requested(opponent_info: PlayerInfo) -> void:
 
 func _on_challenge_accepted(opponent_info: PlayerInfo) -> void:
 	Networking.opponent_info = opponent_info
-	battle_setup_component.create_battle(opponent_info.player_id)
+	battle_setup_component.create_battle(Networking.player_info.player_id)
 
 func _on_battle_created(battle_id: int) -> void:
 	Networking.battle_id = battle_id

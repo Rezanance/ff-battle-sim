@@ -54,7 +54,6 @@ func initialize_vivosaur_sprites() -> void:
 	_initialize_sprite(sz2, vivosaur_sprite_3)
 
 func get_formation() -> Formation:
-	Logging.info(Networking.opponent_info.player_id)
 	if is_player_formation:
 		return Battling.formations[Networking.player_info.player_id]
 	else:

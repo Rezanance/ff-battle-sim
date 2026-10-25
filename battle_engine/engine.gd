@@ -7,6 +7,7 @@ const Element = VivosaurInfo.Element
 signal initial_teams_registered()
 signal battle_prep_started(event: BattlePrepStartedEvent)
 signal formations_submitted()
+signal all_client_scenes_loaded()
 signal battle_started(event: BattleStartedEvent)
 signal support_effects_applied(event: SupportEffectsAppliedEvent)
 signal first_player_determined(event: FirstPlayerDeterminedEvent)
@@ -38,6 +39,9 @@ func start() -> void:
 	await formations_submitted
 
 	_start_battle()
+
+	await all_client_scenes_loaded
+	
 	for id: int in state.player_ids:
 		_apply_support_effects(id)
 	_determine_who_goes_first()
@@ -172,6 +176,7 @@ func _recharge_fp() -> void:
 		formation.fp += fp_diff
 	
 	var event: FpGainedEvent = FpGainedEvent.new()
+	event.player_id = state.turn_id
 	event.fp_diff = fp_diff
 	event.current_fp = formation.fp
 	fp_gained.emit(event)

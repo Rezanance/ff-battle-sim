@@ -1,6 +1,12 @@
 extends Node
 class_name BattlingComponent
 
+func notify_scene_loaded() -> void:
+	ServerRPCs.notify_battle_scene_loaded.rpc_id(
+		Networking.SERVER_PEER_ID,
+		Networking.battle_id
+	)
+
 func notify_ending_turn() -> void:
 	ServerRPCs.end_turn.rpc_id(
 		Networking.SERVER_PEER_ID,

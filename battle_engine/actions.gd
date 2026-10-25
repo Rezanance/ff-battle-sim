@@ -34,6 +34,16 @@ static func submit_formation(engine: BattleEngine, player_id: int, team: Team) -
 	if len(state.formations.keys()) == len(state.player_ids):
 		engine.formations_submitted.emit()
 
+static func client_scene_loaded(engine: BattleEngine, player_id: int) -> void:
+	var state: BattleState = engine.state
+	if player_id not in state.player_ids or player_id in state.client_scenes_loaded:
+		return
+
+	state.client_scenes_loaded[player_id] = true
+	if state.client_scenes_loaded.size() == state.player_ids.size():
+		engine.all_client_scenes_loaded.emit()
+
+
 static func end_turn(engine: BattleEngine, action: EndTurnAction) -> void:
 	if engine.state.phase != Phase.SELECT_ACTION or engine.state.turn_id != action.player_id:
 		return
