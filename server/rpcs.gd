@@ -61,6 +61,7 @@ func initialize_battle(player1_id: int) -> void:
 	engine.vivosaur_back_to_sz.connect(ServerUtils.notify_event.bind(player_ids, ClientRPCs.notify_vivosaur_swapped_to_ez.rpc_id))
 	# engine.skill_used.connect(ServerUtils.notify_event.bind(player_ids, ClientRPCs.notify_skill_used.rpc_id))
 	engine.skill_missed.connect(ServerUtils.notify_event.bind(player_ids, ClientRPCs.notify_skill_missed.rpc_id))
+	engine.vivosaur_damaged.connect(ServerUtils.notify_event.bind(player_ids, ClientRPCs.notify_vivosaur_damaged.rpc_id))
 	
 	ServerVariables.battle_engines[battle_id] = engine
 	ServerVariables.battle_engines[battle_id].start()
@@ -85,3 +86,31 @@ func notify_battle_scene_loaded(battle_id: int) -> void:
 	assert(multiplayer.is_server())
 	var player_id: int = multiplayer.get_remote_sender_id()
 	BattleActions.client_scene_loaded(ServerVariables.battle_engines[battle_id], player_id)
+
+@rpc("any_peer", 'call_remote', "reliable")
+func use_skill(battle_id: int, initiator_zone: PlayerZone.Zone, skill_id: String, target_player_id: int, target_zone: PlayerZone.Zone) -> void:
+	assert(multiplayer.is_server())
+	var player_id: int = multiplayer.get_remote_sender_id()
+	var use_skill_action: UseSkillAction = UseSkillAction.new()
+	use_skill_action.player_id = player_id
+	use_skill_action.zone = initiator_zone
+	use_skill_action.skill_id = skill_id
+	use_skill_action.target = PlayerZone.new(target_player_id, target_zone)
+	BattleActions.use_skill(ServerVariables.battle_engines[battle_id], use_skill_action)
+
+@rpc("any_peer", 'call_remote', "reliable")
+func swap_to_ez(battle_id: int, target_zone: PlayerZone.Zone) -> void:
+	assert(multiplayer.is_server())
+	var player_id: int = multiplayer.get_remote_sender_id()
+	var swap_to_ez_action: SwapToEzAction = SwapToEzAction.new()
+	swap_to_ez_action.player_id = player_id
+	swap_to_ez_action.sz = target_zone
+	BattleActions.swap_to_ez(ServerVariables.battle_engines[battle_id], swap_to_ez_action)
+
+@rpc("any_peer", 'call_remote', "reliable")
+func end_turn(battle_id: int) -> void:
+	assert(multiplayer.is_server())
+	var player_id: int = multiplayer.get_remote_sender_id()
+	var end_turn_action: EndTurnAction = EndTurnAction.new()
+	end_turn_action.player_id = player_id
+	BattleActions.end_turn(ServerVariables.battle_engines[battle_id], end_turn_action)

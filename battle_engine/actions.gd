@@ -46,24 +46,27 @@ static func client_scene_loaded(engine: BattleEngine, player_id: int) -> void:
 
 static func end_turn(engine: BattleEngine, action: EndTurnAction) -> void:
 	if engine.state.phase != Phase.SELECT_ACTION or engine.state.turn_id != action.player_id:
+		Logging.error('Player %d can\'t perform this action. Not their turn' % action.player_id)
 		return
 	
-	var action_callback: ActionCallback = ActionCallback.new(action, engine._end_turn)
+	var action_callback: ActionCallback = ActionCallback.new(action, engine.end_turn)
 	engine.action_queue.append(action_callback)
 	engine.action_queued.emit()
 
-func swap_to_ez(engine: BattleEngine, action: SwapToEzAction) -> void:
+static func swap_to_ez(engine: BattleEngine, action: SwapToEzAction) -> void:
 	if engine.state.phase != Phase.SELECT_ACTION or engine.state.turn_id != action.player_id:
+		Logging.error('Player %d can\'t perform this action. Not their turn' % action.player_id)
 		return
 	
-	var action_callback: ActionCallback = ActionCallback.new(action, engine._move_back_to_ez)
+	var action_callback: ActionCallback = ActionCallback.new(action, engine.swap_to_ez)
 	engine.action_queue.append(action_callback)
 	engine.action_queued.emit()
 
-func use_skill(engine: BattleEngine, action: UseSkillAction) -> void:
+static func use_skill(engine: BattleEngine, action: UseSkillAction) -> void:
 	if engine.state.phase != Phase.SELECT_ACTION or engine.state.turn_id != action.player_id:
+		Logging.error('Player %d can\'t perform this action. Not their turn' % action.player_id)
 		return
 	
-	var action_callback: ActionCallback = ActionCallback.new(action, engine._use_skill)
+	var action_callback: ActionCallback = ActionCallback.new(action, engine.use_skill)
 	engine.action_queue.append(action_callback)
 	engine.action_queued.emit()

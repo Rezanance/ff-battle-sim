@@ -58,14 +58,13 @@ func start() -> void:
 			await action_queued
 			var action_callback: ActionCallback = action_queue.pop_front()
 
-			if action_callback.action is EndTurnAction:
-				break
-
-			if action_callback != null:
-				await action_callback.callback.call(action_callback.action)
+			await action_callback.callback.call(action_callback.action)
 			
 			if state.winner != null:
 				winner = state.winner
+				break
+			
+			if action_callback.action is EndTurnAction:
 				break
 		
 		if winner != null:
@@ -95,7 +94,7 @@ func _start_battle() -> void:
 	battle_started.emit(event)
 
 func _get_opponent_id(player_id: int) -> int:
-	return state.player_ids.find_custom(func(id: int) -> bool: return id != player_id)
+	return state.player_ids[state.player_ids.find_custom(func(id: int) -> bool: return id != player_id)]
 
 func _apply_support_effects(player_id: int) -> void:
 	state.phase = Phase.APPLY_SUPPORT_EFFECTS
@@ -136,15 +135,15 @@ func _apply_support_effects(player_id: int) -> void:
 		event.evasion_modifier = support_effects.evasion_modifier
 		support_effects_applied.emit(event)
 
-func calculate_total_lp(vivosaurs: Array[VivosaurState]) -> int:
-		return vivosaurs.reduce(func(acc: int, vivo: VivosaurState) -> int: return acc + vivo.info.stats.life_points if vivo else 0, 0)
+func _calculate_total_lp(vivosaurs: Array[VivosaurState]) -> int:
+	return vivosaurs.reduce(func(acc: int, vivo: VivosaurState) -> int: return acc + (vivo.info.stats.life_points if vivo else 0), 0)
 
 func _determine_who_goes_first() -> void:
 	state.phase = Phase.DETERMINE_WHO_GOES_FIRST
 	var player1_id: int = state.player_ids[0]
 	var player2_id: int = state.player_ids[1]
-	var player_1_total_lp: int = calculate_total_lp(state.formations[state.player_ids[0]].vivosaurs)
-	var player_2_total_lp: int = calculate_total_lp(state.formations[state.player_ids[1]].vivosaurs)
+	var player_1_total_lp: int = _calculate_total_lp(state.formations[state.player_ids[0]].vivosaurs)
+	var player_2_total_lp: int = _calculate_total_lp(state.formations[state.player_ids[1]].vivosaurs)
 
 	var first_player_id: int
 	
@@ -205,18 +204,20 @@ func _start_turn() -> void:
 
 	_recharge_fp()
 
-func _end_turn(_action: EndTurnAction) -> void:
+func end_turn(_action: EndTurnAction) -> void:
 	state.phase = Phase.RESOLVE_ACTION
 	
+	Logging.info(state.turn_id)
+	state.turn_id = _get_opponent_id(state.turn_id)
+	Logging.info(state.turn_id)
+
 	var event: TurnEndedEvent = TurnEndedEvent.new()
 	event.player_id = state.turn_id
 	turn_ended.emit(event)
 
-	state.turn_id = state.player_ids.find_custom(func(id: int) -> bool: return id != state.turn_id)
-	
 	# TODO apply statuses, etc.
 
-func _swap_to_ez(action: SwapToEzAction) -> void:
+func swap_to_ez(action: SwapToEzAction) -> void:
 	state.phase = Phase.RESOLVE_ACTION
 	
 	var vivosaurs: Array[VivosaurState] = state.formations[action.player_id].vivosaurs
@@ -271,7 +272,11 @@ func _spend_fp(player_id: int, fp_cost: int) -> bool:
 
 	formation.fp -= fp_cost
 
-	fp_spent.emit(fp_cost, formation.fp)
+	var event: FpSpentEvent = FpSpentEvent.new()
+	event.player_id = player_id
+	event.fp_cost = fp_cost
+	event.current_fp = formation.fp
+	fp_spent.emit(event)
 	return true
 
 func _is_hit(initiator: VivosaurState, target: VivosaurState) -> bool:
@@ -348,7 +353,7 @@ func _calculate_damage(initiator: VivosaurState, target: VivosaurState, skill: S
 
 	vivosaur_damaged.emit(event)
 	
-func _use_skill(action: UseSkillAction) -> void:
+func use_skill(action: UseSkillAction) -> void:
 	if state.turn_id != action.player_id:
 		Logging.error('Player %d can\'t use a skill now. Not their turn' % action.player_id)
 		return
@@ -365,7 +370,7 @@ func _use_skill(action: UseSkillAction) -> void:
 
 	var initiator_skill: Skill = initiator.info.skills[initiator.info.skills.find_custom(func(skill: Skill) -> bool: return skill.id == action.skill_id)]
 
-	if _spend_fp(action.player_id, initiator_skill.fp_cost):
+	if not _spend_fp(action.player_id, initiator_skill.fp_cost):
 		Logging.error('Not enough FP use skill')
 		return
 	
@@ -398,6 +403,7 @@ func _use_skill(action: UseSkillAction) -> void:
 				target = state.formations[opponent_id].vivosaurs[zone]
 				if target and _is_hit(initiator, target):
 					_calculate_damage(initiator, target, initiator_skill)
+					
 		_:
 			Logging.error('Not implemented yet')
 			return

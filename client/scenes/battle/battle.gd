@@ -23,8 +23,6 @@ func _ready() -> void:
 
 	var player_id: int = Networking.player_info.player_id
 	var opponent_id: int = Networking.opponent_info.player_id
-	Logging.info(player_id)
-	Logging.info(opponent_id)
 	formations_ui[player_id] = player_formation_ui
 	formations_ui[opponent_id] = opponent_formation_ui
 
@@ -129,7 +127,7 @@ func end_turn() -> void:
 		if zone == PlayerZone.Zone.EZ:
 			continue
 
-		var vivosaur: VivosaurState = Battling.formations[Networking.player_info.player_id].get_vivosaur_from_zone(zone)
+		var vivosaur: VivosaurState = Battling.formations[Networking.player_info.player_id].vivosaurs[zone]
 		var sprite: VivosaurSprite = player_formation_ui.vivosaur_sprite_zones[zone]
 		if sprite:
 			sprite.set_instance_shader_parameter('used_skill', false)
@@ -343,7 +341,7 @@ func use_skill() -> void:
 	waiting_for_server_overlay.visible = true
 
 	var initiator_sprite: VivosaurSprite = player_formation_ui.vivosaur_sprite_zones[Battling.initiator]
-	Battling.formations[Networking.player_info.player_id].get_vivosaur_from_zone(Battling.initiator).can_use_skill = false
+	Battling.formations[Networking.player_info.player_id].vivosaurs[Battling.initiator].can_use_skill = false
 	initiator_sprite.set_instance_shader_parameter('used_skill', true)
 
 func show_damage_taken(event: VivosaurDamagedEvent) -> void:
@@ -352,7 +350,7 @@ func show_damage_taken(event: VivosaurDamagedEvent) -> void:
 	waiting_for_server_overlay.visible = false
 
 	var vivo_sprite_damaged: VivosaurSprite = formations_ui[event.player_id].vivosaur_sprite_zones[event.zone]
-	var vivosaur: VivosaurState = Battling.formations[event.player_id].get_vivosaur_from_zone(event.zone)
+	var vivosaur: VivosaurState = Battling.formations[event.player_id].vivosaurs[event.zone]
 	vivosaur.current_lp -= event.damage
 	vivo_sprite_damaged.current_lp_bubble.get_node('HBox').get_node('CurrentLp').text = '%d' % vivosaur.current_lp
 
@@ -414,14 +412,14 @@ func swap_to_ez(event: VivosaurSwappedToEZEvent) -> void:
 
 	var target_formation_ui: FormationUI = formations_ui[event.player_id]
 	var target_formation: Formation = Battling.formations[event.player_id]
-	var target_az: VivosaurState = target_formation.az
+	var target_az: VivosaurState = target_formation.vivosaurs[Zone.AZ]
 	target_az.attack_modifier = 0
 	target_az.defense_modifier = 0
 	target_az.accuracy_modifier = 0
 	target_az.evasion_modifier = 0
 	target_formation_ui.update_support_effects(target_az)
 
-	Battling.formations[event.player_id].swap_to_ez(event.support_zone)
+	# Battling.formations[event.player_id].swap_to_ez(event.support_zone)
 	await formations_ui[event.player_id].animate_swap_to_ez(event)
 	swap_to_ez_btn.disabled = Networking.player_info.player_id == event.player_id
 
