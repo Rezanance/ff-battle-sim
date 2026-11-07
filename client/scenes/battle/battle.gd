@@ -3,6 +3,9 @@ extends Node
 const Target = Skill.Target
 const Zone = PlayerZone.Zone
 const SkillScene: Resource = preload("res://client/modules/ui/skill_button/skill_button.tscn")
+const VIVO_DEFAULT_Z_INDEX: int = 10
+const VIVO_FOCUSED_Z_INDEX: int = 60
+
 
 signal event_queued()
 
@@ -16,6 +19,7 @@ signal event_queued()
 @export var waiting_for_server_overlay: Panel
 @export var animation_player: AnimationPlayer
 @export var skill_used: Control
+@export var black_overlay: ColorRect
 
 var event_queue: Array[EventCallback] = []
 var formations_ui: Dictionary[int, FormationUI] = {}
@@ -351,6 +355,13 @@ func show_damage_taken(event: VivosaurDamagedEvent) -> void:
 	go_back()
 
 	waiting_for_server_overlay.visible = false
+	for child: Node in skill_used.get_children():
+		child.queue_free()
+	black_overlay.visible = false
+	for formation_ui: FormationUI in formations_ui.values():
+		for sprite: VivosaurSprite in formation_ui.vivosaur_sprite_zones:
+			if sprite:
+				sprite.z_index = VIVO_DEFAULT_Z_INDEX
 
 	var vivo_sprite_damaged: VivosaurSprite = formations_ui[event.player_id].vivosaur_sprite_zones[event.zone]
 	var vivosaur: VivosaurState = Battling.formations[event.player_id].vivosaurs[event.zone]
@@ -438,10 +449,27 @@ func show_skill_missed(event: SkillMissedEvent) -> void:
 	await formations_ui[event.player_id].animate_miss(event)
 
 func show_skill_used(event: SkillUsedEvent) -> void:
-	Logging.info(event.skill_id)
+	reset_targets()
+
 	var skill_node: SkillButton = SkillScene.instantiate()
 	var skill: Skill = Skill.load(event.skill_id)
-	skill_node.initialize(skill, func() -> void: return , true)
+	skill_node.initialize(skill, func() -> void: return , false)
 	skill_used.add_child(skill_node)
-	await get_tree().create_timer(0.5).timeout
-	skill_used.remove_child(skill_node)
+	black_overlay.visible = true
+
+	var target_formation_ui: FormationUI = formations_ui[event.player_id]
+	# var ally_formation_ui: FormationUI = formations_ui[event.player_id]
+	var enemy_formation_ui: FormationUI = formations_ui[Networking.get_opponent_id(event.player_id)]
+
+	target_formation_ui.vivosaur_sprite_zones[event.target_zone].z_index = VIVO_FOCUSED_Z_INDEX
+	
+	match skill.target:
+		Target.ENEMY_AZ_AND_SZ:
+			for zone: Zone in [Zone.AZ, Zone.SZ1, Zone.SZ2]:
+				var sprite: VivosaurSprite = enemy_formation_ui.vivosaur_sprite_zones[zone]
+				if sprite:
+					sprite.z_index = VIVO_FOCUSED_Z_INDEX
+		Target.ENEMY:
+			enemy_formation_ui.vivosaur_sprite_zones[event.target_zone].z_index = VIVO_FOCUSED_Z_INDEX
+
+	await get_tree().create_timer(1).timeout

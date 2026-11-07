@@ -59,7 +59,6 @@ func get_formation() -> Formation:
 	else:
 		return Battling.formations[Networking.opponent_info.player_id]
 		
-
 func _initialize_sprite(vivosaur: VivosaurState, sprite: VivosaurSprite) -> void:
 	if vivosaur:
 		var info: VivosaurInfo = vivosaur.info
@@ -168,7 +167,6 @@ func _format_support_modifier(
 	modifier_label.text = text
 	modifier_label.add_theme_color_override("font_color", color)
 	
-
 func show_who_goes_first(total_lp: int, is_first: bool) -> void:
 	total_lp_panel.get_node('Lp').text = '%d' % total_lp
 	total_lp_panel.visible = true
@@ -207,7 +205,6 @@ func change_fp_banner(is_player_turn: bool) -> void:
 	else:
 		fp_bg.texture = texture_manager.opponent_fp_bg_not_turn
 		
-
 func animate_turn_start() -> void:
 	var tween: Tween = create_tween()
 	tween.tween_property(turn_banner, "position", Vector2(0, 0), 0.2)
@@ -275,7 +272,6 @@ func animate_back_to_ez() -> void:
 	vivosaur_sprite_zones[PlayerZone.Zone.EZ] = null
 
 	await tween.finished
-
 
 func animate_miss(event: SkillMissedEvent) -> void:
 	vivosaur_sprite_zones[event.target_zone].animation_player.play('miss')
