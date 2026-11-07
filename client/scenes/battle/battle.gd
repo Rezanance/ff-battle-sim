@@ -2,6 +2,7 @@ extends Node
 
 const Target = Skill.Target
 const Zone = PlayerZone.Zone
+const SkillScene: Resource = preload("res://client/modules/ui/skill_button/skill_button.tscn")
 
 signal event_queued()
 
@@ -14,6 +15,7 @@ signal event_queued()
 @export var ok_btn: TextureButton
 @export var waiting_for_server_overlay: Panel
 @export var animation_player: AnimationPlayer
+@export var skill_used: Control
 
 var event_queue: Array[EventCallback] = []
 var formations_ui: Dictionary[int, FormationUI] = {}
@@ -46,6 +48,7 @@ func _ready() -> void:
 	ClientRPCs.vivosaur_swapped_to_ez.connect(queue_event.bind(swap_to_ez))
 	ClientRPCs.skill_missed.connect(queue_event.bind(show_skill_missed))
 	ClientRPCs.vivosaur_back_to_sz.connect(queue_event.bind(back_to_sz))
+	ClientRPCs.skill_used.connect(queue_event.bind(show_skill_used))
 	
 	await get_tree().create_timer(0.25).timeout
 	player_formation_ui.initialize()
@@ -433,3 +436,12 @@ func show_skill_missed(event: SkillMissedEvent) -> void:
 	waiting_for_server_overlay.visible = false
 
 	await formations_ui[event.player_id].animate_miss(event)
+
+func show_skill_used(event: SkillUsedEvent) -> void:
+	Logging.info(event.skill_id)
+	var skill_node: SkillButton = SkillScene.instantiate()
+	var skill: Skill = Skill.load(event.skill_id)
+	skill_node.initialize(skill, func() -> void: return , true)
+	skill_used.add_child(skill_node)
+	await get_tree().create_timer(0.5).timeout
+	skill_used.remove_child(skill_node)

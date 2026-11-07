@@ -196,7 +196,7 @@ _data = {
 &"blink_transparent": SubResource("Animation_skp18")
 }
 
-[node name="Battle" type="ColorRect" unique_id=972273508 node_paths=PackedStringArray("battling_component", "player_formation_ui", "opponent_formation_ui", "swap_to_ez_btn", "end_turn_btn", "back_btn", "ok_btn", "waiting_for_server_overlay", "animation_player")]
+[node name="Battle" type="ColorRect" unique_id=972273508 node_paths=PackedStringArray("battling_component", "player_formation_ui", "opponent_formation_ui", "swap_to_ez_btn", "end_turn_btn", "back_btn", "ok_btn", "waiting_for_server_overlay", "animation_player", "skill_used")]
 offset_right = 1920.0
 offset_bottom = 1080.0
 color = Color(0.8786593, 0.5368116, 0.35264778, 1)
@@ -210,6 +210,7 @@ back_btn = NodePath("BattleWindow/Back")
 ok_btn = NodePath("BattleWindow/Ok")
 waiting_for_server_overlay = NodePath("WaitingForServerOverlay")
 animation_player = NodePath("AnimationPlayer")
+skill_used = NodePath("BattleWindow/SkillUsedPos")
 
 [node name="BattleWindow" type="TextureRect" parent="." unique_id=309800834]
 layout_mode = 1
@@ -832,6 +833,14 @@ texture_normal = ExtResource("21_oefcp")
 texture_hover = ExtResource("24_ird6i")
 texture_disabled = ExtResource("28_qy8xr")
 script = ExtResource("21_nhhto")
+
+[node name="SkillUsedPos" type="Control" parent="BattleWindow" unique_id=435508642]
+z_index = 100
+anchors_preset = 0
+offset_left = 50.0
+offset_top = 400.0
+offset_right = 50.0
+offset_bottom = 400.0
 
 [node name="SkillScreen" type="TextureRect" parent="." unique_id=1127375912]
 z_index = 100

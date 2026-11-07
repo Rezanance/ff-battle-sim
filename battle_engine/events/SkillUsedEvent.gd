@@ -3,4 +3,5 @@ class_name SkillUsedEvent
 var player_id: int
 var zone: PlayerZone.Zone
 var skill_id: String
-var target: PlayerZone # | null
+var target_id: int
+var target_zone: PlayerZone.Zone

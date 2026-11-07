@@ -32,7 +32,7 @@ var effects: Array[Effect]
 var counterable: bool
 
 func _init(skill: SkillResource) -> void:
-	id = '%d' % skill.name.hash()
+	id = skill.id
 	type = skill.skill_type
 	description = skill.description
 	name = skill.name
@@ -41,3 +41,8 @@ func _init(skill: SkillResource) -> void:
 	target = skill.target
 	effects.assign(skill.skill_effects.map(func(skill_effect_res: SkillEffectResource) -> Effect: return Effect.new(skill_effect_res)))
 	counterable = skill.counterable
+
+
+static func load(skill_id: String) -> Skill:
+	var skill_res: SkillResource = load("res://core/data/skills/%s/%s.tres" % [skill_id, skill_id])
+	return Skill.new(skill_res)

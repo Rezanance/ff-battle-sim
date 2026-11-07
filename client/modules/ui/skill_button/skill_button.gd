@@ -24,5 +24,5 @@ func initialize(skill: Skill, _on_skill_clicked: Callable, is_disabled: bool) ->
 	$HBoxContainer/VBoxContainer/Counterable.text = "Counterable: yes" if skill.counterable else "Counterable: no"
 	$HBoxContainer/Description.text = skill.description
 
-	if not is_disabled and not skill.fp_cost > current_fp:
+	if not is_disabled and not skill.fp_cost > current_fp and _on_skill_clicked:
 		gui_input.connect(_on_skill_clicked.bind(skill))

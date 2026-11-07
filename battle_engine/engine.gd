@@ -211,11 +211,12 @@ func end_turn(_action: EndTurnAction) -> void:
 	state.turn_id = _get_opponent_id(state.turn_id)
 	Logging.info(state.turn_id)
 
+	# TODO apply statuses and reduce turn count.
+
 	var event: TurnEndedEvent = TurnEndedEvent.new()
 	event.player_id = state.turn_id
 	turn_ended.emit(event)
 
-	# TODO apply statuses, etc.
 
 func swap_to_ez(action: SwapToEzAction) -> void:
 	state.phase = Phase.RESOLVE_ACTION
@@ -382,7 +383,8 @@ func use_skill(action: UseSkillAction) -> void:
 	skill_used_event.player_id = action.player_id
 	skill_used_event.zone = action.zone
 	skill_used_event.skill_id = action.skill_id
-	skill_used_event.target = action.target
+	skill_used_event.target_id = action.target.player_id
+	skill_used_event.target_zone = action.target.zone
 	skill_used.emit(skill_used_event)
 	
 	match initiator_skill.target:

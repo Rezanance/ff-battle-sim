@@ -59,7 +59,7 @@ func initialize_battle(player1_id: int) -> void:
 	engine.turn_started.connect(ServerUtils.notify_event.bind(player_ids, ClientRPCs.notify_turn_start.rpc_id))
 	engine.vivosaur_swapped_to_ez.connect(ServerUtils.notify_event.bind(player_ids, ClientRPCs.notify_vivosaur_swapped_to_ez.rpc_id))
 	engine.vivosaur_back_to_sz.connect(ServerUtils.notify_event.bind(player_ids, ClientRPCs.notify_vivosaur_swapped_to_ez.rpc_id))
-	# engine.skill_used.connect(ServerUtils.notify_event.bind(player_ids, ClientRPCs.notify_skill_used.rpc_id))
+	engine.skill_used.connect(ServerUtils.notify_event.bind(player_ids, ClientRPCs.notify_skill_used.rpc_id))
 	engine.skill_missed.connect(ServerUtils.notify_event.bind(player_ids, ClientRPCs.notify_skill_missed.rpc_id))
 	engine.vivosaur_damaged.connect(ServerUtils.notify_event.bind(player_ids, ClientRPCs.notify_vivosaur_damaged.rpc_id))
 	

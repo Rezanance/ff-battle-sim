@@ -69,6 +69,7 @@ signal vivosaur_damaged(event: VivosaurDamagedEvent)
 signal vivosaur_swapped_to_ez(event: VivosaurSwappedToEZEvent)
 signal vivosaur_back_to_sz(event: VivosaurBackToSzEvent)
 signal skill_missed(event: SkillMissedEvent)
+signal skill_used(event: SkillUsedEvent)
 
 @rpc("authority", "call_remote", "reliable")
 func notify_support_effects_applied(event_dict: Dictionary[String, Variant]) -> void:
@@ -105,3 +106,7 @@ func notify_skill_missed(event_dict: Dictionary[String, Variant]) -> void:
 @rpc("authority", "call_remote", "reliable")
 func notify_vivosaur_back_to_sz(event_dict: Dictionary[String, Variant]) -> void:
 	vivosaur_back_to_sz.emit(Serializer.deserialize(event_dict, VivosaurBackToSzEvent))
+
+@rpc("authority", "call_remote", "reliable")
+func notify_skill_used(event_dict: Dictionary[String, Variant]) -> void:
+	skill_used.emit(Serializer.deserialize(event_dict, SkillUsedEvent))
