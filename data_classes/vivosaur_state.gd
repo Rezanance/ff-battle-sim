@@ -34,3 +34,6 @@ static func deserialize(vivosaur_dict: Dictionary[String, Variant]) -> VivosaurS
 		vivosaur_dict['player_id'],
 		VivosaurInfo.load(vivosaur_dict['vivosaur_id']),
 	)
+
+func get_current_lp_percent() -> float:
+	return current_lp / (info.stats.life_points as float) * 100

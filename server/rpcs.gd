@@ -62,6 +62,7 @@ func initialize_battle(player1_id: int) -> void:
 	engine.skill_used.connect(ServerUtils.notify_event.bind(player_ids, ClientRPCs.notify_skill_used.rpc_id))
 	engine.skill_missed.connect(ServerUtils.notify_event.bind(player_ids, ClientRPCs.notify_skill_missed.rpc_id))
 	engine.vivosaur_damaged.connect(ServerUtils.notify_event.bind(player_ids, ClientRPCs.notify_vivosaur_damaged.rpc_id))
+	engine.vivosaur_healed.connect(ServerUtils.notify_event.bind(player_ids, ClientRPCs.notify_vivosaur_healed.rpc_id))
 	
 	ServerVariables.battle_engines[battle_id] = engine
 	ServerVariables.battle_engines[battle_id].start()

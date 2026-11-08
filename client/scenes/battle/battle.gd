@@ -53,6 +53,7 @@ func _ready() -> void:
 	ClientRPCs.skill_missed.connect(queue_event.bind(show_skill_missed))
 	ClientRPCs.vivosaur_back_to_sz.connect(queue_event.bind(back_to_sz))
 	ClientRPCs.skill_used.connect(queue_event.bind(show_skill_used))
+	ClientRPCs.vivosaur_healed.connect(queue_event.bind(show_vivosaur_healed))
 	
 	await get_tree().create_timer(0.25).timeout
 	player_formation_ui.initialize()
@@ -286,6 +287,15 @@ func go_back() -> void:
 	player_formation_ui.get_node('EZ SZ1 Arrow').visible = false
 	player_formation_ui.get_node('EZ SZ2 Arrow').visible = false
 
+	waiting_for_server_overlay.visible = false
+	for child: Node in skill_used.get_children():
+		child.queue_free()
+	black_overlay.visible = false
+	for formation_ui: FormationUI in formations_ui.values():
+		for sprite: VivosaurSprite in formation_ui.vivosaur_sprite_zones:
+			if sprite:
+				sprite.z_index = VIVO_DEFAULT_Z_INDEX
+
 func reset_targets() -> void:
 	var ally_az: VivosaurSprite = player_formation_ui.vivosaur_sprite_zones[Zone.AZ]
 	var ally_sz1: VivosaurSprite = player_formation_ui.vivosaur_sprite_zones[Zone.SZ1]
@@ -353,16 +363,7 @@ func use_skill() -> void:
 
 func show_damage_taken(event: VivosaurDamagedEvent) -> void:
 	go_back()
-
-	waiting_for_server_overlay.visible = false
-	for child: Node in skill_used.get_children():
-		child.queue_free()
-	black_overlay.visible = false
-	for formation_ui: FormationUI in formations_ui.values():
-		for sprite: VivosaurSprite in formation_ui.vivosaur_sprite_zones:
-			if sprite:
-				sprite.z_index = VIVO_DEFAULT_Z_INDEX
-
+	
 	var vivo_sprite_damaged: VivosaurSprite = formations_ui[event.player_id].vivosaur_sprite_zones[event.zone]
 	var vivosaur: VivosaurState = Battling.formations[event.player_id].vivosaurs[event.zone]
 	vivosaur.current_lp -= event.damage
@@ -457,11 +458,10 @@ func show_skill_used(event: SkillUsedEvent) -> void:
 	skill_used.add_child(skill_node)
 	black_overlay.visible = true
 
-	var target_formation_ui: FormationUI = formations_ui[event.player_id]
-	# var ally_formation_ui: FormationUI = formations_ui[event.player_id]
+	var ally_formation_ui: FormationUI = formations_ui[event.player_id]
 	var enemy_formation_ui: FormationUI = formations_ui[Networking.get_opponent_id(event.player_id)]
 
-	target_formation_ui.vivosaur_sprite_zones[event.target_zone].z_index = VIVO_FOCUSED_Z_INDEX
+	ally_formation_ui.vivosaur_sprite_zones[event.zone].z_index = VIVO_FOCUSED_Z_INDEX
 	
 	match skill.target:
 		Target.ENEMY_AZ_AND_SZ:
@@ -471,5 +471,25 @@ func show_skill_used(event: SkillUsedEvent) -> void:
 					sprite.z_index = VIVO_FOCUSED_Z_INDEX
 		Target.ENEMY:
 			enemy_formation_ui.vivosaur_sprite_zones[event.target_zone].z_index = VIVO_FOCUSED_Z_INDEX
+		Target.ALL_ALLIES:
+			for sprite: VivosaurSprite in ally_formation_ui.vivosaur_sprite_zones:
+				if sprite:
+					sprite.z_index = VIVO_FOCUSED_Z_INDEX
 
 	await get_tree().create_timer(1).timeout
+
+func show_vivosaur_healed(event: VivosaurHealedEvent) -> void:
+	go_back()
+
+	var vivo_sprite_healed: VivosaurSprite = formations_ui[event.player_id].vivosaur_sprite_zones[event.zone]
+
+	var vivosaur: VivosaurState = Battling.formations[event.player_id].vivosaurs[event.zone]
+	vivosaur.current_lp += event.heal_amount
+	vivo_sprite_healed.current_lp_bubble.get_node('HBox').get_node('CurrentLp').text = '%d' % vivosaur.current_lp
+
+	vivo_sprite_healed.life_bar.size.x = event.current_lp_percent
+
+	vivo_sprite_healed.lp_gained.text = '+%d' % event.heal_amount
+	vivo_sprite_healed.lp_gained.visible = true
+	await get_tree().create_timer(1.25).timeout
+	vivo_sprite_healed.lp_gained.visible = false

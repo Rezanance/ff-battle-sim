@@ -355,6 +355,21 @@ theme_override_fonts/font = SubResource("SystemFont_5wttr")
 theme_override_font_sizes/font_size = 32
 text = "100"
 
+[node name="LpGained" type="Label" parent="." unique_id=877135113]
+visible = false
+layout_mode = 0
+offset_left = 86.0
+offset_top = 73.0
+offset_right = 144.0
+offset_bottom = 106.0
+pivot_offset_ratio = Vector2(1, 1)
+theme_override_colors/font_color = Color(0, 0.68309957, 0.20856482, 1)
+theme_override_colors/font_outline_color = Color(1, 1, 1, 1)
+theme_override_constants/outline_size = 3
+theme_override_fonts/font = SubResource("SystemFont_5wttr")
+theme_override_font_sizes/font_size = 32
+text = "100"
+
 [node name="CurrentLpBubble" type="Panel" parent="." unique_id=1374865400]
 visible = false
 layout_mode = 0

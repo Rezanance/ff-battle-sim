@@ -9,6 +9,7 @@ const UI_STEP = Battling.UI_STEP
 @onready var damage: Label = $Damage
 @onready var life_bar: ColorRect = $LifeBar/Main
 @onready var current_lp_bubble: Panel = $CurrentLpBubble
+@onready var lp_gained: Label = $LpGained
 
 # Removed for now 
 # enum PanelPosition {LEFT, RIGHT}

@@ -20,6 +20,7 @@ signal vivosaur_back_to_sz(event: VivosaurBackToSzEvent)
 signal skill_used(event: SkillUsedEvent)
 signal skill_missed(event: SkillMissedEvent)
 signal vivosaur_damaged(event: VivosaurDamagedEvent)
+signal vivosaur_healed(event: VivosaurHealedEvent)
 
 signal action_queued(action: Variant, engine_callback: Callable)
 var action_queue: Array[ActionCallback] = []
@@ -310,7 +311,7 @@ func _get_vivosaur_zone(vivosaur: VivosaurState) -> Zone:
 		_:
 			return Zone.EZ
 
-func _calculate_damage(initiator: VivosaurState, target: VivosaurState, skill: Skill) -> void:
+func _apply_damage(initiator: VivosaurState, target: VivosaurState, skill: Skill) -> void:
 	var element_multiplier: float = 1
 	var initiator_element: Element = initiator.info.element
 	var target_element: Element = target.info.element
@@ -345,23 +346,26 @@ func _calculate_damage(initiator: VivosaurState, target: VivosaurState, skill: S
 		target.defense_modifier, element_multiplier, range_multiplier, critical_hit_multiplier
 	])
 
+	target.current_lp -= damage
+
 	var event: VivosaurDamagedEvent = VivosaurDamagedEvent.new()
 	event.player_id = target.player_id
 	event.zone = _get_vivosaur_zone(target)
 	event.damage = damage
 	event.is_critical_hit = critical_hit_multiplier == 1.5
-	event.current_lp_percent = target.current_lp / (target.info.stats.life_points as float) * 100
+	event.current_lp_percent = target.get_current_lp_percent()
 
 	vivosaur_damaged.emit(event)
-	
-func use_skill(action: UseSkillAction) -> void:
-	if state.turn_id != action.player_id:
-		Logging.error('Player %d can\'t use a skill now. Not their turn' % action.player_id)
-		return
-	if action.zone in [PlayerZone.Zone.SZ1, PlayerZone.Zone.SZ2] and action.target.zone in [PlayerZone.Zone.SZ1, PlayerZone.Zone.SZ2]:
-		Logging.error('A vivosaur in the SZ cannot target another vivosaur in the enemy SZ, only the AZ')
 
-	var initiator: VivosaurState = state.formations[action.player_id].vivosaurs[action.zone]
+func _skill_missed(action: UseSkillAction) -> void:
+	var skill_missed_event: SkillMissedEvent = SkillMissedEvent.new()
+	skill_missed_event.player_id = action.target.player_id
+	skill_missed_event.target_zone = action.target.zone
+	skill_missed.emit(skill_missed_event)
+
+func use_skill(action: UseSkillAction) -> void:
+	var initiator_formation: Formation = state.formations[action.player_id]
+	var initiator: VivosaurState = initiator_formation.vivosaurs[action.zone]
 	if initiator == null:
 		Logging.error('Vivosaur does not exist')
 		return
@@ -369,15 +373,20 @@ func use_skill(action: UseSkillAction) -> void:
 		Logging.error('This vivosaur already used a skill this turn')
 		return
 
-	var initiator_skill: Skill = initiator.info.skills[initiator.info.skills.find_custom(func(skill: Skill) -> bool: return skill.id == action.skill_id)]
+	var skill: Skill = initiator.info.skills[initiator.info.skills.find_custom(func(skill: Skill) -> bool: return skill.id == action.skill_id)]
 
-	if not _spend_fp(action.player_id, initiator_skill.fp_cost):
+	if state.turn_id != action.player_id:
+		Logging.error('Player %d can\'t use a skill now. Not their turn' % action.player_id)
+		return
+	if skill.target == Skill.Target.ENEMY and action.zone in [PlayerZone.Zone.SZ1, PlayerZone.Zone.SZ2] and action.target.zone in [PlayerZone.Zone.SZ1, PlayerZone.Zone.SZ2]:
+		Logging.error('A vivosaur in the SZ cannot target another vivosaur in the enemy SZ, only the AZ')
+	if not _spend_fp(action.player_id, skill.fp_cost):
 		Logging.error('Not enough FP use skill')
 		return
 	
 	var target: VivosaurState = state.formations[action.target.player_id].vivosaurs[action.target.zone]
 
-	Logging.info('Player %d\'s %s uses %s' % [action.player_id, initiator.info.name, initiator_skill.name])
+	Logging.info('Player %d\'s %s uses %s' % [action.player_id, initiator.info.name, skill.name])
 
 	var skill_used_event: SkillUsedEvent = SkillUsedEvent.new()
 	skill_used_event.player_id = action.player_id
@@ -387,25 +396,57 @@ func use_skill(action: UseSkillAction) -> void:
 	skill_used_event.target_zone = action.target.zone
 	skill_used.emit(skill_used_event)
 	
-	match initiator_skill.target:
+	match skill.target:
 		Skill.Target.ENEMY:
 			if not target:
 				Logging.error('Single enemy target skills must specify a target')
 				return
 			if _is_hit(initiator, target):
-				_calculate_damage(initiator, target, initiator_skill)
+				_apply_damage(initiator, target, skill)
 			else:
-				var skill_missed_event: SkillMissedEvent = SkillMissedEvent.new()
-				skill_missed_event.player_id = action.target.player_id
-				skill_missed_event.target_zone = action.target.zone
-				skill_missed.emit(skill_missed_event)
+				_skill_missed(action)
 		Skill.Target.ENEMY_AZ_AND_SZ:
 			var opponent_id: int = _get_opponent_id(action.player_id)
 			for zone: PlayerZone.Zone in [PlayerZone.Zone.AZ, PlayerZone.Zone.SZ1, PlayerZone.Zone.SZ2]:
 				target = state.formations[opponent_id].vivosaurs[zone]
-				if target and _is_hit(initiator, target):
-					_calculate_damage(initiator, target, initiator_skill)
+				var is_hit: bool = _is_hit(initiator, target) if target else false
+				if target and (skill.type == Skill.Type.TEAM_SKILL or is_hit):
+					_apply_damage(initiator, target, skill)
+				elif target and not is_hit:
+					_skill_missed(action)
+		Skill.Target.ALL_ALLIES:
+			match skill.id:
+				"Sacrifice":
+					var hp_sacrificed: int = initiator.current_lp - 1
+					initiator.current_lp -= hp_sacrificed
+
+					var event: VivosaurDamagedEvent = VivosaurDamagedEvent.new()
+					event.player_id = action.player_id
+					event.zone = action.zone
+					event.damage = hp_sacrificed
+					event.is_critical_hit = false
+					event.current_lp_percent = initiator.get_current_lp_percent()
+
+					vivosaur_damaged.emit(event)
 					
+					var other_vivos: Array[VivosaurState] = []
+					for zone: Zone in Zone.values():
+						var vivo: VivosaurState = initiator_formation.vivosaurs[zone]
+						if vivo and zone != action.zone:
+							other_vivos.append(vivo)
+					
+					for vivo: VivosaurState in other_vivos:
+						var vivosaur_healed_event: VivosaurHealedEvent = VivosaurHealedEvent.new()
+						vivosaur_healed_event.player_id = vivo.player_id
+						vivosaur_healed_event.zone = _get_vivosaur_zone(vivo)
+						@warning_ignore("integer_division")
+						var heal_amount: int = hp_sacrificed / len(other_vivos)
+						heal_amount = vivo.info.stats.life_points - vivo.current_lp if vivo.current_lp + heal_amount > vivo.info.stats.life_points else heal_amount
+						vivo.current_lp += heal_amount
+						vivosaur_healed_event.heal_amount = heal_amount
+						vivosaur_healed_event.current_lp_percent = vivo.get_current_lp_percent()
+						vivosaur_healed.emit(vivosaur_healed_event)
+			
 		_:
 			Logging.error('Not implemented yet')
 			return
