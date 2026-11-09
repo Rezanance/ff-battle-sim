@@ -218,7 +218,6 @@ func end_turn(_action: EndTurnAction) -> void:
 	event.player_id = state.turn_id
 	turn_ended.emit(event)
 
-
 func swap_to_ez(action: SwapToEzAction) -> void:
 	state.phase = Phase.RESOLVE_ACTION
 	
@@ -414,41 +413,56 @@ func use_skill(action: UseSkillAction) -> void:
 					_apply_damage(initiator, target, skill)
 				elif target and not is_hit:
 					_skill_missed(action)
-		Skill.Target.ALL_ALLIES:
-			match skill.id:
-				"Sacrifice":
-					var hp_sacrificed: int = initiator.current_lp - 1
-					initiator.current_lp -= hp_sacrificed
+		
+	match skill.id:
+		"Sacrifice":
+			var hp_sacrificed: int = initiator.current_lp - 1
+			initiator.current_lp -= hp_sacrificed
 
-					var event: VivosaurDamagedEvent = VivosaurDamagedEvent.new()
-					event.player_id = action.player_id
-					event.zone = action.zone
-					event.damage = hp_sacrificed
-					event.is_critical_hit = false
-					event.current_lp_percent = initiator.get_current_lp_percent()
+			var event: VivosaurDamagedEvent = VivosaurDamagedEvent.new()
+			event.player_id = action.player_id
+			event.zone = action.zone
+			event.damage = hp_sacrificed
+			event.is_critical_hit = false
+			event.current_lp_percent = initiator.get_current_lp_percent()
 
-					vivosaur_damaged.emit(event)
-					
-					var other_vivos: Array[VivosaurState] = []
-					for zone: Zone in Zone.values():
-						var vivo: VivosaurState = initiator_formation.vivosaurs[zone]
-						if vivo and zone != action.zone:
-							other_vivos.append(vivo)
-					
-					for vivo: VivosaurState in other_vivos:
-						var vivosaur_healed_event: VivosaurHealedEvent = VivosaurHealedEvent.new()
-						vivosaur_healed_event.player_id = vivo.player_id
-						vivosaur_healed_event.zone = _get_vivosaur_zone(vivo)
-						@warning_ignore("integer_division")
-						var heal_amount: int = hp_sacrificed / len(other_vivos)
-						heal_amount = vivo.info.stats.life_points - vivo.current_lp if vivo.current_lp + heal_amount > vivo.info.stats.life_points else heal_amount
-						vivo.current_lp += heal_amount
-						vivosaur_healed_event.heal_amount = heal_amount
-						vivosaur_healed_event.current_lp_percent = vivo.get_current_lp_percent()
-						vivosaur_healed.emit(vivosaur_healed_event)
+			vivosaur_damaged.emit(event)
 			
-		_:
-			Logging.error('Not implemented yet')
-			return
+			var other_vivos: Array[VivosaurState] = []
+			for zone: Zone in Zone.values():
+				var vivo: VivosaurState = initiator_formation.vivosaurs[zone]
+				if vivo and zone != action.zone:
+					other_vivos.append(vivo)
+			
+			for vivo: VivosaurState in other_vivos:
+				var vivosaur_healed_event: VivosaurHealedEvent = VivosaurHealedEvent.new()
+				vivosaur_healed_event.player_id = vivo.player_id
+				vivosaur_healed_event.zone = _get_vivosaur_zone(vivo)
+				@warning_ignore("integer_division")
+				var heal_amount: int = hp_sacrificed / len(other_vivos)
+				heal_amount = vivo.info.stats.life_points - vivo.current_lp if vivo.current_lp + heal_amount > vivo.info.stats.life_points else heal_amount
+				vivo.current_lp += heal_amount
+				vivosaur_healed_event.heal_amount = heal_amount
+				vivosaur_healed_event.current_lp_percent = vivo.get_current_lp_percent()
+				vivosaur_healed.emit(vivosaur_healed_event)
+		"PowerScale":
+			var formations: Array[Formation] = state.formations.values()
+			var avg_fp: int = formations.reduce(func(acc: int, formation: Formation) -> int: return acc + formation.fp, 0) / 2
+			for player_id: int in state.formations.keys():
+				var formation: Formation = state.formations[player_id]
+				var fp_diff: int = avg_fp - formation.fp
+				formation.fp += fp_diff
+				if fp_diff < 0:
+					var event: FpSpentEvent = FpSpentEvent.new()
+					event.player_id = player_id
+					event.fp_cost = fp_diff
+					event.current_fp = formation.fp
+					fp_spent.emit(event)
+				else:
+					var event: FpGainedEvent = FpGainedEvent.new()
+					event.player_id = player_id
+					event.fp_diff = fp_diff
+					event.current_fp = formation.fp
+					fp_gained.emit(event)
 	
 	initiator.can_use_skill = false

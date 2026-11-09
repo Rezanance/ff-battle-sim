@@ -146,10 +146,14 @@ func end_turn() -> void:
 	swap_to_ez_btn.disabled = true
 
 func gain_fp(event: FpGainedEvent) -> void:
+	go_back()
+
 	Battling.formations[event.player_id].fp = event.current_fp
 	await formations_ui[event.player_id].animate_fp_gain(event)
 
 func spend_fp(event: FpSpentEvent) -> void:
+	go_back()
+
 	Battling.formations[event.player_id].fp = event.current_fp
 	await formations_ui[event.player_id].animate_fp_spent(event)
 	
@@ -473,6 +477,13 @@ func show_skill_used(event: SkillUsedEvent) -> void:
 			enemy_formation_ui.vivosaur_sprite_zones[event.target_zone].z_index = VIVO_FOCUSED_Z_INDEX
 		Target.ALL_ALLIES:
 			for sprite: VivosaurSprite in ally_formation_ui.vivosaur_sprite_zones:
+				if sprite:
+					sprite.z_index = VIVO_FOCUSED_Z_INDEX
+		Target.ALL:
+			for sprite: VivosaurSprite in ally_formation_ui.vivosaur_sprite_zones:
+				if sprite:
+					sprite.z_index = VIVO_FOCUSED_Z_INDEX
+			for sprite: VivosaurSprite in enemy_formation_ui.vivosaur_sprite_zones:
 				if sprite:
 					sprite.z_index = VIVO_FOCUSED_Z_INDEX
 

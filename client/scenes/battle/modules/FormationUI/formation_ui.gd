@@ -66,15 +66,15 @@ func _initialize_sprite(vivosaur: VivosaurState, sprite: VivosaurSprite) -> void
 		sprite.id = info.id
 		sprite.texture_normal = vivosaur_resource.sprite
 		sprite.get_node('LifeBar/Bg').texture = load('res://client/assets/lifebars/%d.png'%info.element)
-		sprite.pressed.connect(_update_vivosaur_summary.bind(vivosaur))
+		sprite.pressed.connect(vivosaur_summary.update_summary.bind(vivosaur.info.id))
+		sprite.pressed.connect(_update_skills.bind(vivosaur))
 		sprite.pressed.connect(_notify_vivosaur_selected.bind(vivosaur))
 		sprite.current_lp_bubble.get_node('HBox').get_node('CurrentLp').text = '%d' % vivosaur.current_lp
 	else:
 		sprite.queue_free()
 
-func _update_vivosaur_summary(vivosaur: VivosaurState) -> void:
-	vivosaur_summary.update_summary(vivosaur.info.id)
-	if is_player_formation:
+func _update_skills(vivosaur: VivosaurState) -> void:
+	if is_player_formation and Battling.ui_step != Battling.UI_STEP.CHOOSE_SKILL_TARGET:
 		UIUtils.update_skills_shown(
 			skills,
 			vivosaur.info.skills,
