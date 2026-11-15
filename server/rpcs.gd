@@ -58,11 +58,15 @@ func initialize_battle(player1_id: int) -> void:
 	engine.fp_spent.connect(ServerUtils.notify_event.bind(player_ids, ClientRPCs.notify_fp_spent.rpc_id))
 	engine.turn_started.connect(ServerUtils.notify_event.bind(player_ids, ClientRPCs.notify_turn_start.rpc_id))
 	engine.vivosaur_swapped_to_ez.connect(ServerUtils.notify_event.bind(player_ids, ClientRPCs.notify_vivosaur_swapped_to_ez.rpc_id))
-	engine.vivosaur_back_to_sz.connect(ServerUtils.notify_event.bind(player_ids, ClientRPCs.notify_vivosaur_swapped_to_ez.rpc_id))
+	engine.vivosaur_back_to_sz.connect(ServerUtils.notify_event.bind(player_ids, ClientRPCs.notify_vivosaur_back_to_sz.rpc_id))
 	engine.skill_used.connect(ServerUtils.notify_event.bind(player_ids, ClientRPCs.notify_skill_used.rpc_id))
 	engine.skill_missed.connect(ServerUtils.notify_event.bind(player_ids, ClientRPCs.notify_skill_missed.rpc_id))
 	engine.vivosaur_damaged.connect(ServerUtils.notify_event.bind(player_ids, ClientRPCs.notify_vivosaur_damaged.rpc_id))
 	engine.vivosaur_healed.connect(ServerUtils.notify_event.bind(player_ids, ClientRPCs.notify_vivosaur_healed.rpc_id))
+	engine.vivosaur_koed.connect(ServerUtils.notify_event.bind(player_ids, ClientRPCs.notify_vivosaur_koed.rpc_id))
+	engine.vivosaur_moved_to_zone.connect(ServerUtils.notify_event.bind(player_ids, ClientRPCs.notify_vivosaur_moved_to_zone.rpc_id))
+	engine.winner_determined.connect(ServerUtils.notify_event.bind(player_ids, ClientRPCs.notify_winner_determined.rpc_id))
+	engine.winner_determined.connect(ServerUtils.cleanup_battle.bind(battle_id))
 	
 	ServerVariables.battle_engines[battle_id] = engine
 	ServerVariables.battle_engines[battle_id].start()

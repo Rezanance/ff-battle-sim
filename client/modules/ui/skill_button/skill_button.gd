@@ -1,10 +1,10 @@
 extends Panel
 class_name SkillButton
 
-func initialize(skill: Skill, _on_skill_clicked: Callable, is_disabled: bool) -> void:
+func initialize(skill: Skill, _on_skill_clicked: Callable, is_disabled: bool, is_using_skill: bool = false) -> void:
 	var current_fp: int = Battling.formations[Networking.player_info.player_id].fp if Networking.player_info.player_id else 500
 
-	var disabled_saturation: float = 0.3 if is_disabled or skill.fp_cost > current_fp else 0.0
+	var disabled_saturation: float = 0.3 if not is_using_skill and (is_disabled or skill.fp_cost > current_fp) else 0.0
 	var style_box: StyleBox = theme.get_stylebox('panel', 'Panel')
 	var style_box_flat: StyleBoxFlat = style_box.duplicate()
 	if skill.type == Skill.Type.DAMAGE or skill.type == Skill.Type.NEUTRAL:

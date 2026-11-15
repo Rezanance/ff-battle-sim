@@ -21,6 +21,9 @@ signal skill_used(event: SkillUsedEvent)
 signal skill_missed(event: SkillMissedEvent)
 signal vivosaur_damaged(event: VivosaurDamagedEvent)
 signal vivosaur_healed(event: VivosaurHealedEvent)
+signal vivosaur_koed(event: VivosaurKOedEvent)
+signal vivosaur_moved_to_zone(event: VivosaurMovedToZoneEvent)
+signal winner_determined(event: WinnerDeterminedEvent)
 
 signal action_queued(action: Variant, engine_callback: Callable)
 var action_queue: Array[ActionCallback] = []
@@ -164,19 +167,19 @@ func _determine_who_goes_first() -> void:
 	
 	state.turn_id = first_player_id
 
-func _recharge_fp() -> void:
+func _recharge_fp(player_id: int, fp: int) -> void:
 	state.phase = Phase.RECHARGE_FP
-	var formation: Formation = state.formations[state.turn_id]
+	var formation: Formation = state.formations[player_id]
 	var fp_diff: int
-	if formation.fp + Formation.BASE_FP_RECHARGE > Formation.MAX_FP:
+	if formation.fp + fp > Formation.MAX_FP:
 		fp_diff = Formation.MAX_FP - formation.fp
-		state.formations[state.turn_id].fp += fp_diff
+		state.formations[player_id].fp += fp_diff
 	else:
-		fp_diff = Formation.BASE_FP_RECHARGE
+		fp_diff = fp
 		formation.fp += fp_diff
 	
 	var event: FpGainedEvent = FpGainedEvent.new()
-	event.player_id = state.turn_id
+	event.player_id = player_id
 	event.fp_diff = fp_diff
 	event.current_fp = formation.fp
 	fp_gained.emit(event)
@@ -192,7 +195,7 @@ func _start_turn() -> void:
 	if formation.turns_left_in_ez > 0:
 		formation.turns_left_in_ez -= 1
 	if vivosaurs[Zone.EZ] != null and formation.turns_left_in_ez == 0:
-		_move_back_to_ez(formation)
+		_move_back_to_sz(formation)
 
 	for zone: Zone in [Zone.AZ, Zone.SZ1, Zone.SZ2]:
 		var vivo: VivosaurState = vivosaurs[zone]
@@ -203,7 +206,7 @@ func _start_turn() -> void:
 	for id: int in state.player_ids:
 		_apply_support_effects(id)
 
-	_recharge_fp()
+	_recharge_fp(state.turn_id, Formation.BASE_FP_RECHARGE)
 
 func end_turn(_action: EndTurnAction) -> void:
 	state.phase = Phase.RESOLVE_ACTION
@@ -253,17 +256,16 @@ func swap_to_ez(action: SwapToEzAction) -> void:
 	event.support_zone = action.sz
 	vivosaur_swapped_to_ez.emit(event)
 
-func _move_back_to_ez(formation: Formation) -> void:
+func _move_back_to_sz(formation: Formation) -> void:
 	var vivosaurs: Array[VivosaurState] = formation.vivosaurs
-	if vivosaurs[Zone.SZ1] == null:
-		vivosaurs[Zone.SZ1] = vivosaurs[Zone.EZ]
-	else:
-		vivosaurs[Zone.SZ2] = vivosaurs[Zone.EZ]
+	var new_sz: Zone = Zone.SZ1 if vivosaurs[Zone.SZ1] == null else Zone.SZ2
 	
+	vivosaurs[new_sz] = vivosaurs[Zone.EZ]
 	vivosaurs[Zone.EZ] = null
 
 	var event: VivosaurBackToSzEvent = VivosaurBackToSzEvent.new()
 	event.player_id = state.turn_id
+	event.sz = new_sz
 	vivosaur_back_to_sz.emit()
 
 func _spend_fp(player_id: int, fp_cost: int) -> bool:
@@ -362,6 +364,55 @@ func _skill_missed(action: UseSkillAction) -> void:
 	skill_missed_event.target_zone = action.target.zone
 	skill_missed.emit(skill_missed_event)
 
+func _check_vivosaur_death_and_winner(initiator: VivosaurState, target: VivosaurState) -> void:
+	var target_zone: Zone = _get_vivosaur_zone(target)
+	if target.current_lp > 0:
+		return
+
+	Logging.info("Player %d's %s has been defeated" % [target.player_id, target.info.name])
+	state.formations[target.player_id].vivosaurs[target_zone] = null
+
+	var event: VivosaurKOedEvent = VivosaurKOedEvent.new()
+	event.player_id = target.player_id
+	event.zone = target_zone
+	vivosaur_koed.emit(event)
+
+	if state.formations[target.player_id].vivosaurs.find_custom(func(v: VivosaurState) -> bool: return v != null) == -1:
+		Logging.info('Player %d has no more vivosaur left' % target.player_id)
+		state.winner = initiator.player_id
+		var winner_event: WinnerDeterminedEvent = WinnerDeterminedEvent.new()
+		winner_event.winner_id = state.winner
+		winner_determined.emit(winner_event)
+		return
+	
+	if target_zone == Zone.AZ:
+		# If the AZ vivosaur is defeated, move a vivosaur from the SZ to the AZ if possible
+		var sz1_vivo: VivosaurState = state.formations[target.player_id].vivosaurs[Zone.SZ1]
+		var sz2_vivo: VivosaurState = state.formations[target.player_id].vivosaurs[Zone.SZ2]
+		var ez_vivo: VivosaurState = state.formations[target.player_id].vivosaurs[Zone.EZ]
+		var old_zone: Zone = Zone.AZ
+		# var 
+		if sz1_vivo != null:
+			state.formations[target.player_id].vivosaurs[Zone.AZ] = sz1_vivo
+			state.formations[target.player_id].vivosaurs[Zone.SZ1] = null
+			old_zone = Zone.SZ1
+		elif sz2_vivo != null:
+			state.formations[target.player_id].vivosaurs[Zone.AZ] = sz2_vivo
+			state.formations[target.player_id].vivosaurs[Zone.SZ2] = null
+			old_zone = Zone.SZ2
+		else:
+			state.formations[target.player_id].vivosaurs[Zone.AZ] = ez_vivo
+			state.formations[target.player_id].vivosaurs[Zone.EZ] = null
+			old_zone = Zone.EZ
+		
+		var vivosaur_moved_event: VivosaurMovedToZoneEvent = VivosaurMovedToZoneEvent.new()
+		vivosaur_moved_event.player_id = target.player_id
+		vivosaur_moved_event.old_zone = old_zone
+		vivosaur_moved_event.new_zone = Zone.AZ
+		vivosaur_moved_to_zone.emit(vivosaur_moved_event)
+	
+	_recharge_fp(target.player_id, Formation.FP_GAIN_AFTER_KO)
+	
 func use_skill(action: UseSkillAction) -> void:
 	var initiator_formation: Formation = state.formations[action.player_id]
 	var initiator: VivosaurState = initiator_formation.vivosaurs[action.zone]
@@ -372,13 +423,14 @@ func use_skill(action: UseSkillAction) -> void:
 		Logging.error('This vivosaur already used a skill this turn')
 		return
 
-	var skill: Skill = initiator.info.skills[initiator.info.skills.find_custom(func(skill: Skill) -> bool: return skill.id == action.skill_id)]
+	var skill: Skill = initiator.info.skills[initiator.info.skills.find_custom(func(s: Skill) -> bool: return s.id == action.skill_id)]
 
 	if state.turn_id != action.player_id:
 		Logging.error('Player %d can\'t use a skill now. Not their turn' % action.player_id)
 		return
 	if skill.target == Skill.Target.ENEMY and action.zone in [PlayerZone.Zone.SZ1, PlayerZone.Zone.SZ2] and action.target.zone in [PlayerZone.Zone.SZ1, PlayerZone.Zone.SZ2]:
 		Logging.error('A vivosaur in the SZ cannot target another vivosaur in the enemy SZ, only the AZ')
+		return
 	if not _spend_fp(action.player_id, skill.fp_cost):
 		Logging.error('Not enough FP use skill')
 		return
@@ -402,6 +454,7 @@ func use_skill(action: UseSkillAction) -> void:
 				return
 			if _is_hit(initiator, target):
 				_apply_damage(initiator, target, skill)
+				_check_vivosaur_death_and_winner(initiator, target)
 			else:
 				_skill_missed(action)
 		Skill.Target.ENEMY_AZ_AND_SZ:
@@ -411,6 +464,7 @@ func use_skill(action: UseSkillAction) -> void:
 				var is_hit: bool = _is_hit(initiator, target) if target else false
 				if target and (skill.type == Skill.Type.TEAM_SKILL or is_hit):
 					_apply_damage(initiator, target, skill)
+					_check_vivosaur_death_and_winner(initiator, target)
 				elif target and not is_hit:
 					_skill_missed(action)
 		
@@ -451,18 +505,10 @@ func use_skill(action: UseSkillAction) -> void:
 			for player_id: int in state.formations.keys():
 				var formation: Formation = state.formations[player_id]
 				var fp_diff: int = avg_fp - formation.fp
-				formation.fp += fp_diff
+				
 				if fp_diff < 0:
-					var event: FpSpentEvent = FpSpentEvent.new()
-					event.player_id = player_id
-					event.fp_cost = fp_diff
-					event.current_fp = formation.fp
-					fp_spent.emit(event)
+					_recharge_fp(player_id, fp_diff)
 				else:
-					var event: FpGainedEvent = FpGainedEvent.new()
-					event.player_id = player_id
-					event.fp_diff = fp_diff
-					event.current_fp = formation.fp
-					fp_gained.emit(event)
+					_spend_fp(player_id, -fp_diff)
 	
 	initiator.can_use_skill = false

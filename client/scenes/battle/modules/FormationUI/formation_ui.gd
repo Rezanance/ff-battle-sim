@@ -64,7 +64,7 @@ func _initialize_sprite(vivosaur: VivosaurState, sprite: VivosaurSprite) -> void
 		var info: VivosaurInfo = vivosaur.info
 		var vivosaur_resource: VivosaurResource = load("res://core/data/vivosaurs/%s.tres"%info.id)
 		sprite.id = info.id
-		sprite.texture_normal = vivosaur_resource.sprite
+		sprite.get_node('Sprite').texture = vivosaur_resource.sprite
 		sprite.get_node('LifeBar/Bg').texture = load('res://client/assets/lifebars/%d.png'%info.element)
 		sprite.pressed.connect(vivosaur_summary.update_summary.bind(vivosaur.info.id))
 		sprite.pressed.connect(_update_skills.bind(vivosaur))
@@ -249,7 +249,7 @@ func animate_swap_to_ez(event: VivosaurSwappedToEZEvent) -> void:
 	tween.parallel()
 	tween.tween_property(vivosaur_sprite_zones[event.support_zone], 'position', az_position.position, duration)
 
-	az_sprite.set_instance_shader_parameter('used_skill', true)
+	az_sprite.sprite.set_instance_shader_parameter('used_skill', true)
 
 	vivosaur_sprite_zones[PlayerZone.Zone.EZ] = az_sprite
 	vivosaur_sprite_zones[PlayerZone.Zone.AZ] = vivosaur_sprite_zones[event.support_zone]
@@ -266,7 +266,7 @@ func animate_back_to_ez() -> void:
 	var zone: PlayerZone.Zone = PlayerZone.Zone.SZ1 if vivosaur_sprite_zones[PlayerZone.Zone.SZ1] == null else PlayerZone.Zone.SZ2
 	tween.tween_property(ez_sprite, 'position', position, duration)
 
-	ez_sprite.set_instance_shader_parameter('used_skill', false)
+	ez_sprite.sprite.set_instance_shader_parameter('used_skill', false)
 
 	vivosaur_sprite_zones[zone] = vivosaur_sprite_zones[PlayerZone.Zone.EZ]
 	vivosaur_sprite_zones[PlayerZone.Zone.EZ] = null
@@ -279,3 +279,25 @@ func animate_miss(event: SkillMissedEvent) -> void:
 	await vivosaur_sprite_zones[event.target_zone].animation_player.animation_finished;
 
 	vivosaur_sprite_zones[event.target_zone].animation_player.queue('RESET')
+
+func animate_move_to_zone(event: VivosaurMovedToZoneEvent) -> void:
+	var old_zone: PlayerZone.Zone = event.old_zone as PlayerZone.Zone
+	var new_zone: PlayerZone.Zone = event.new_zone as PlayerZone.Zone
+	var destination: Control
+	match new_zone:
+		PlayerZone.Zone.AZ:
+			destination = az_position
+		PlayerZone.Zone.SZ1:
+			destination = sz1_position
+		PlayerZone.Zone.SZ2:
+			destination = sz2_position
+		PlayerZone.Zone.EZ:
+			destination = ez_position
+
+	var vivo_sprite: VivosaurSprite = vivosaur_sprite_zones[old_zone]
+	var tween: Tween = create_tween()
+	tween.tween_property(vivo_sprite, 'position', destination.position, 0.5)
+	await tween.finished
+
+	vivosaur_sprite_zones[new_zone] = vivo_sprite
+	vivosaur_sprite_zones[old_zone] = null

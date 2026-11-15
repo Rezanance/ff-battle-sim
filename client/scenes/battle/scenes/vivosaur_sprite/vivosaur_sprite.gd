@@ -1,7 +1,5 @@
-extends TextureButton
+extends Button
 class_name VivosaurSprite
-
-const UI_STEP = Battling.UI_STEP
 
 @onready var animation_player: AnimationPlayer = $AnimationPlayer
 @onready var arrow: TextureRect = $Arrow
@@ -10,10 +8,7 @@ const UI_STEP = Battling.UI_STEP
 @onready var life_bar: ColorRect = $LifeBar/Main
 @onready var current_lp_bubble: Panel = $CurrentLpBubble
 @onready var lp_gained: Label = $LpGained
-
-# Removed for now 
-# enum PanelPosition {LEFT, RIGHT}
-# @export var current_lp_position: PanelPosition = PanelPosition.LEFT
+@onready var sprite: TextureRect = $Sprite
 
 var id: String
 var is_targetable: bool = false
@@ -23,9 +18,6 @@ func _ready() -> void:
 	pressed.connect(_on_pressed)
 	mouse_entered.connect(_mouse_entered)
 	mouse_exited.connect(_mouse_exited)
-
-	# if current_lp_position == PanelPosition.RIGHT:
-	# 	current_lp_bubble.position.x = 160
 
 func pulse() -> void:
 	animation_player.play("pulse")

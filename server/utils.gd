@@ -6,7 +6,7 @@ static func get_battle_id_from_player(player_id: int) -> int:
 		var engine: BattleEngine = ServerVariables.battle_engines[id]
 		if player_id in engine.state.player_ids:
 			battle_id = id
-			break ;
+			break
 	return battle_id
 
 static func generate_battle_id(player1_id: int, player2_id: int) -> int:
@@ -22,3 +22,8 @@ static func notify_battle_prep_start(event: BattlePrepStartedEvent) -> void:
 static func notify_event(event: Variant, player_ids: Array[int], callback: Callable) -> void:
 	for player_id: int in player_ids:
 		callback.call(player_id, Serializer.serialize(event))
+
+static func cleanup_battle(_event: WinnerDeterminedEvent, battle_id: int) -> void:
+	if ServerVariables.battle_engines.has(battle_id):
+		ServerVariables.battle_engines.erase(battle_id)
+		ServerVariables.used_battle_ids.erase(battle_id)

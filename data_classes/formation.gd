@@ -2,7 +2,7 @@ class_name Formation
 
 const BASE_FP_RECHARGE: int = 180
 const MAX_FP: int = 500
-const FP_GAIN_AFTER_KNOCKOUT: int = BASE_FP_RECHARGE * 2
+const FP_GAIN_AFTER_KO: int = BASE_FP_RECHARGE * 2
 
 # Vivosaur | null
 var vivosaurs: Array[VivosaurState]

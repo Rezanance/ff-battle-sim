@@ -71,6 +71,9 @@ signal vivosaur_back_to_sz(event: VivosaurBackToSzEvent)
 signal skill_missed(event: SkillMissedEvent)
 signal skill_used(event: SkillUsedEvent)
 signal vivosaur_healed(event: VivosaurHealedEvent)
+signal vivosaur_koed(event: VivosaurKOedEvent)
+signal vivosaur_moved_to_zone(event: VivosaurMovedToZoneEvent)
+signal winner_determined(event: WinnerDeterminedEvent)
 
 @rpc("authority", "call_remote", "reliable")
 func notify_support_effects_applied(event_dict: Dictionary[String, Variant]) -> void:
@@ -115,3 +118,15 @@ func notify_skill_used(event_dict: Dictionary[String, Variant]) -> void:
 @rpc("authority", "call_remote", "reliable")
 func notify_vivosaur_healed(event_dict: Dictionary[String, Variant]) -> void:
 	vivosaur_healed.emit(Serializer.deserialize(event_dict, VivosaurHealedEvent))
+
+@rpc("authority", "call_remote", "reliable")
+func notify_vivosaur_koed(event_dict: Dictionary[String, Variant]) -> void:
+	vivosaur_koed.emit(Serializer.deserialize(event_dict, VivosaurKOedEvent))
+
+@rpc("authority", "call_remote", "reliable")
+func notify_vivosaur_moved_to_zone(event_dict: Dictionary[String, Variant]) -> void:
+	vivosaur_moved_to_zone.emit(Serializer.deserialize(event_dict, VivosaurMovedToZoneEvent))
+
+@rpc("authority", "call_remote", "reliable")
+func notify_winner_determined(event_dict: Dictionary[String, Variant]) -> void:
+	winner_determined.emit(Serializer.deserialize(event_dict, WinnerDeterminedEvent))

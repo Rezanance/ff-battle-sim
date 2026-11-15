@@ -272,24 +272,24 @@ offset_bottom = 322.0
 
 [node name="VivosaurSprite3" parent="BattleWindow/PlayerFormation" unique_id=1726440973 instance=ExtResource("4_dgjnm")]
 layout_mode = 0
-offset_left = -384.0
-offset_top = 120.0
-offset_right = -254.0
-offset_bottom = 250.0
+offset_left = -126.0
+offset_top = -143.0
+offset_right = 4.0
+offset_bottom = -13.0
 
 [node name="VivosaurSprite1" parent="BattleWindow/PlayerFormation" unique_id=842959755 instance=ExtResource("4_dgjnm")]
 layout_mode = 0
-offset_left = -248.0
-offset_top = 11.0
-offset_right = -118.0
-offset_bottom = 141.0
+offset_left = -126.0
+offset_top = -143.0
+offset_right = 4.0
+offset_bottom = -13.0
 
 [node name="VivosaurSprite2" parent="BattleWindow/PlayerFormation" unique_id=279789939 instance=ExtResource("4_dgjnm")]
 layout_mode = 0
-offset_left = -347.0
-offset_top = -121.0
-offset_right = -217.0
-offset_bottom = 9.0
+offset_left = -126.0
+offset_top = -143.0
+offset_right = 4.0
+offset_bottom = -13.0
 
 [node name="SupportEffects" type="TextureRect" parent="BattleWindow/PlayerFormation" unique_id=2090783814]
 z_index = 10
@@ -571,26 +571,32 @@ offset_bottom = 322.0
 
 [node name="VivosaurSprite3" parent="BattleWindow/OpponentFormation" unique_id=1364536298 instance=ExtResource("4_dgjnm")]
 layout_mode = 0
-offset_left = 938.0
-offset_top = 120.0
-offset_right = 1068.0
-offset_bottom = 250.0
+offset_left = 725.0
+offset_top = -143.0
+offset_right = 855.0
+offset_bottom = -13.0
+
+[node name="Sprite" parent="BattleWindow/OpponentFormation/VivosaurSprite3" index="0" unique_id=1220913447]
 flip_h = false
 
 [node name="VivosaurSprite1" parent="BattleWindow/OpponentFormation" unique_id=1698200647 instance=ExtResource("4_dgjnm")]
 layout_mode = 0
-offset_left = 821.0
-offset_top = -12.0
-offset_right = 951.0
-offset_bottom = 118.0
+offset_left = 725.0
+offset_top = -143.0
+offset_right = 855.0
+offset_bottom = -13.0
+
+[node name="Sprite" parent="BattleWindow/OpponentFormation/VivosaurSprite1" index="0" unique_id=1220913447]
 flip_h = false
 
 [node name="VivosaurSprite2" parent="BattleWindow/OpponentFormation" unique_id=722176375 instance=ExtResource("4_dgjnm")]
 layout_mode = 0
-offset_left = 915.0
-offset_top = -121.0
-offset_right = 1045.0
-offset_bottom = 9.0
+offset_left = 725.0
+offset_top = -143.0
+offset_right = 855.0
+offset_bottom = -13.0
+
+[node name="Sprite" parent="BattleWindow/OpponentFormation/VivosaurSprite2" index="0" unique_id=1220913447]
 flip_h = false
 
 [node name="SupportEffects" type="TextureRect" parent="BattleWindow/OpponentFormation" unique_id=362350159]
@@ -933,3 +939,7 @@ libraries/ = SubResource("AnimationLibrary_0617l")
 
 [connection signal="pressed" from="BattleWindow/Back" to="." method="on_back_pressed"]
 [connection signal="pressed" from="BattleWindow/Ok" to="." method="on_ok_pressed"]
+
+[editable path="BattleWindow/OpponentFormation/VivosaurSprite3"]
+[editable path="BattleWindow/OpponentFormation/VivosaurSprite1"]
+[editable path="BattleWindow/OpponentFormation/VivosaurSprite2"]

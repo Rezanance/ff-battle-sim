@@ -54,6 +54,9 @@ func _ready() -> void:
 	ClientRPCs.vivosaur_back_to_sz.connect(queue_event.bind(back_to_sz))
 	ClientRPCs.skill_used.connect(queue_event.bind(show_skill_used))
 	ClientRPCs.vivosaur_healed.connect(queue_event.bind(show_vivosaur_healed))
+	ClientRPCs.vivosaur_koed.connect(queue_event.bind(show_vivosaur_koed))
+	ClientRPCs.vivosaur_moved_to_zone.connect(queue_event.bind(show_vivosaur_moved_to_zone))
+	ClientRPCs.winner_determined.connect(queue_event.bind(show_winner_determined))
 	
 	await get_tree().create_timer(0.25).timeout
 	player_formation_ui.initialize()
@@ -136,9 +139,9 @@ func end_turn() -> void:
 			continue
 
 		var vivosaur: VivosaurState = Battling.formations[Networking.player_info.player_id].vivosaurs[zone]
-		var sprite: VivosaurSprite = player_formation_ui.vivosaur_sprite_zones[zone]
-		if sprite:
-			sprite.set_instance_shader_parameter('used_skill', false)
+		var vivo_sprite: VivosaurSprite = player_formation_ui.vivosaur_sprite_zones[zone]
+		if vivo_sprite:
+			vivo_sprite.sprite.set_instance_shader_parameter('used_skill', false)
 		if vivosaur:
 			vivosaur.can_use_skill = false
 
@@ -150,18 +153,21 @@ func gain_fp(event: FpGainedEvent) -> void:
 
 	Battling.formations[event.player_id].fp = event.current_fp
 	await formations_ui[event.player_id].animate_fp_gain(event)
+	await get_tree().create_timer(0.5).timeout
 
 func spend_fp(event: FpSpentEvent) -> void:
 	go_back()
 
 	Battling.formations[event.player_id].fp = event.current_fp
 	await formations_ui[event.player_id].animate_fp_spent(event)
+	await get_tree().create_timer(0.5).timeout
 	
 func select_vivosaur(zone: PlayerZone.Zone, player_id: int) -> void:
 	var previous_selection: VivosaurSelection = Battling.selection
 	if previous_selection and not previous_selection.equals(VivosaurSelection.new(zone, player_id)):
 		var previous_vivosaur_sprite_selected: VivosaurSprite = formations_ui[previous_selection.player_id].vivosaur_sprite_zones[previous_selection.zone]
-		previous_vivosaur_sprite_selected.arrow.visible = false
+		if previous_vivosaur_sprite_selected:
+			previous_vivosaur_sprite_selected.arrow.visible = false
 	if Battling.target and not Battling.target.equals(VivosaurSelection.new(zone, player_id)):
 		var previous_vivosaur_sprite_target: VivosaurSprite = formations_ui[Battling.target.player_id].vivosaur_sprite_zones[Battling.target.zone]
 		previous_vivosaur_sprite_target.cursor.visible = false
@@ -172,7 +178,6 @@ func select_vivosaur(zone: PlayerZone.Zone, player_id: int) -> void:
 			else:
 				player_formation_ui.get_node('EZ SZ1 Arrow').visible = true
 				player_formation_ui.get_node('EZ SZ2 Arrow').visible = false
-
 
 	Battling.selection = VivosaurSelection.new(zone, player_id)
 	Battling.target = VivosaurSelection.new(zone, player_id)
@@ -190,7 +195,7 @@ func show_skill_targets(skill: Skill) -> void:
 	var enemy_ez: VivosaurSprite = opponent_formation_ui.vivosaur_sprite_zones[Zone.EZ]
 
 	var initiator_sprite: VivosaurSprite = player_formation_ui.vivosaur_sprite_zones[Battling.selection.zone]
-	initiator_sprite.set_instance_shader_parameter('is_using_skill', true)
+	initiator_sprite.sprite.set_instance_shader_parameter('is_using_skill', true)
 
 	var ally_modulate: Color = Color.BLUE
 	var enemy_modulate: Color = Color.RED
@@ -218,60 +223,60 @@ func show_skill_targets(skill: Skill) -> void:
 			if ally_sz2: ally_sz2.cursor.visible = true
 			if ally_ez: ally_ez.cursor.visible = true
 
-			if ally_az: ally_az.self_modulate = ally_modulate
-			if ally_sz1: ally_sz1.self_modulate = ally_modulate
-			if ally_sz2: ally_sz2.self_modulate = ally_modulate
-			if ally_ez: ally_ez.self_modulate = ally_modulate
+			if ally_az: ally_az.sprite.self_modulate = ally_modulate
+			if ally_sz1: ally_sz1.sprite.self_modulate = ally_modulate
+			if ally_sz2: ally_sz2.sprite.self_modulate = ally_modulate
+			if ally_ez: ally_ez.sprite.self_modulate = ally_modulate
 		Target.ALL_ENEMIES:
 			if enemy_az: enemy_az.cursor.visible = true
 			if enemy_sz1: enemy_sz1.cursor.visible = true
 			if enemy_sz2: enemy_sz2.cursor.visible = true
 			if enemy_ez: enemy_ez.cursor.visible = true
 
-			if enemy_az: enemy_az.self_modulate = enemy_modulate
-			if enemy_sz1: enemy_sz1.self_modulate = enemy_modulate
-			if enemy_sz2: enemy_sz2.self_modulate = enemy_modulate
-			if enemy_ez: enemy_ez.self_modulate = enemy_modulate
+			if enemy_az: enemy_az.sprite.self_modulate = enemy_modulate
+			if enemy_sz1: enemy_sz1.sprite.self_modulate = enemy_modulate
+			if enemy_sz2: enemy_sz2.sprite.self_modulate = enemy_modulate
+			if enemy_ez: enemy_ez.sprite.self_modulate = enemy_modulate
 		Target.ALLY:
 			if ally_az:
-				ally_az.self_modulate = ally_modulate
+				ally_az.sprite.self_modulate = ally_modulate
 				ally_az.is_targetable = true
 			if ally_sz1:
-				ally_sz1.self_modulate = ally_modulate
+				ally_sz1.sprite.self_modulate = ally_modulate
 				ally_sz1.is_targetable = true
 			if ally_sz2:
-				ally_sz2.self_modulate = ally_modulate
+				ally_sz2.sprite.self_modulate = ally_modulate
 				ally_sz2.is_targetable = true
 		Target.ALLY_AZ_AND_SZ:
 			if ally_az: ally_az.cursor.visible = true
 			if ally_sz1: ally_sz1.cursor.visible = true
 			if ally_sz2: ally_sz2.cursor.visible = true
 
-			if ally_az: ally_az.self_modulate = ally_modulate
-			if ally_sz1: ally_sz1.self_modulate = ally_modulate
-			if ally_sz2: ally_sz2.self_modulate = ally_modulate
+			if ally_az: ally_az.sprite.self_modulate = ally_modulate
+			if ally_sz1: ally_sz1.sprite.self_modulate = ally_modulate
+			if ally_sz2: ally_sz2.sprite.self_modulate = ally_modulate
 		Target.ENEMY_AZ_AND_SZ:
 			if enemy_az: enemy_az.cursor.visible = true
 			if enemy_sz1: enemy_sz1.cursor.visible = true
 			if enemy_sz2: enemy_sz2.cursor.visible = true
 
-			if enemy_az: enemy_az.self_modulate = enemy_modulate
-			if enemy_sz1: enemy_sz1.self_modulate = enemy_modulate
-			if enemy_sz2: enemy_sz2.self_modulate = enemy_modulate
+			if enemy_az: enemy_az.sprite.self_modulate = enemy_modulate
+			if enemy_sz1: enemy_sz1.sprite.self_modulate = enemy_modulate
+			if enemy_sz2: enemy_sz2.sprite.self_modulate = enemy_modulate
 		Target.ALLY_EXCEPT_SELF:
 			# TODO: enable cursors for other allies
 			pass
 		Target.ENEMY:
 			if enemy_az:
-				enemy_az.self_modulate = enemy_modulate
+				enemy_az.sprite.self_modulate = enemy_modulate
 				enemy_az.is_targetable = true
 				enemy_az.cursor.visible = true
 				Battling.target = VivosaurSelection.new(PlayerZone.Zone.AZ, Networking.opponent_info.player_id)
 			if enemy_sz1 and Battling.initiator == PlayerZone.Zone.AZ:
-				enemy_sz1.self_modulate = enemy_modulate
+				enemy_sz1.sprite.self_modulate = enemy_modulate
 				enemy_sz1.is_targetable = true
 			if enemy_sz2 and Battling.initiator == PlayerZone.Zone.AZ:
-				enemy_sz2.self_modulate = enemy_modulate
+				enemy_sz2.sprite.self_modulate = enemy_modulate
 				enemy_sz2.is_targetable = true
 		Target.SELF:
 			initiator_sprite.cursor.visible = true
@@ -281,7 +286,8 @@ func go_back() -> void:
 	Battling.ui_step = Battling.UI_STEP.SELECT_ACTION
 
 	var initiator_sprite: VivosaurSprite = player_formation_ui.vivosaur_sprite_zones[Battling.initiator]
-	initiator_sprite.set_instance_shader_parameter('is_using_skill', false)
+	if initiator_sprite:
+		initiator_sprite.sprite.set_instance_shader_parameter('is_using_skill', false)
 
 	Battling.target = null
 	back_btn.visible = false
@@ -312,36 +318,36 @@ func reset_targets() -> void:
 	var enemy_ez: VivosaurSprite = opponent_formation_ui.vivosaur_sprite_zones[Zone.EZ]
 
 	if ally_az:
-		ally_az.self_modulate = Color.WHITE
+		ally_az.sprite.self_modulate = Color.WHITE
 		ally_az.is_targetable = false
 		ally_az.cursor.visible = false
 	if ally_sz1:
-		ally_sz1.self_modulate = Color.WHITE
+		ally_sz1.sprite.self_modulate = Color.WHITE
 		ally_sz1.is_targetable = false
 		ally_sz1.cursor.visible = false
 	if ally_sz2:
-		ally_sz2.self_modulate = Color.WHITE
+		ally_sz2.sprite.self_modulate = Color.WHITE
 		ally_sz2.is_targetable = false
 		ally_sz2.cursor.visible = false
 	if ally_ez:
-		ally_ez.self_modulate = Color.WHITE
+		ally_ez.sprite.self_modulate = Color.WHITE
 		ally_ez.is_targetable = false
 		ally_ez.cursor.visible = false
 	
 	if enemy_az:
-		enemy_az.self_modulate = Color.WHITE
+		enemy_az.sprite.self_modulate = Color.WHITE
 		enemy_az.is_targetable = false
 		enemy_az.cursor.visible = false
 	if enemy_sz1:
-		enemy_sz1.self_modulate = Color.WHITE
+		enemy_sz1.sprite.self_modulate = Color.WHITE
 		enemy_sz1.is_targetable = false
 		enemy_sz1.cursor.visible = false
 	if enemy_sz2:
-		enemy_sz2.self_modulate = Color.WHITE
+		enemy_sz2.sprite.self_modulate = Color.WHITE
 		enemy_sz2.is_targetable = false
 		enemy_sz2.cursor.visible = false
 	if enemy_ez:
-		enemy_ez.self_modulate = Color.WHITE
+		enemy_ez.sprite.self_modulate = Color.WHITE
 		enemy_ez.is_targetable = false
 		enemy_ez.cursor.visible = false
 
@@ -356,14 +362,14 @@ func use_skill() -> void:
 	battling_component.notify_skill_used(
 		Battling.initiator,
 		Battling.skill_id_selected,
-		Battling.target.player_id,
-		Battling.target.zone,
+		Battling.target.player_id if Battling.target else null,
+		Battling.target.zone if Battling.target else null,
 	)
 	waiting_for_server_overlay.visible = true
 
 	var initiator_sprite: VivosaurSprite = player_formation_ui.vivosaur_sprite_zones[Battling.initiator]
 	Battling.formations[Networking.player_info.player_id].vivosaurs[Battling.initiator].can_use_skill = false
-	initiator_sprite.set_instance_shader_parameter('used_skill', true)
+	initiator_sprite.sprite.set_instance_shader_parameter('used_skill', true)
 
 func show_damage_taken(event: VivosaurDamagedEvent) -> void:
 	go_back()
@@ -458,7 +464,7 @@ func show_skill_used(event: SkillUsedEvent) -> void:
 
 	var skill_node: SkillButton = SkillScene.instantiate()
 	var skill: Skill = Skill.load(event.skill_id)
-	skill_node.initialize(skill, func() -> void: return , false)
+	skill_node.initialize(skill, func() -> void: return , false, true)
 	skill_used.add_child(skill_node)
 	black_overlay.visible = true
 
@@ -504,3 +510,23 @@ func show_vivosaur_healed(event: VivosaurHealedEvent) -> void:
 	vivo_sprite_healed.lp_gained.visible = true
 	await get_tree().create_timer(1.25).timeout
 	vivo_sprite_healed.lp_gained.visible = false
+
+func show_vivosaur_koed(event: VivosaurKOedEvent) -> void:
+	go_back()
+
+	var vivo_sprite_koed: VivosaurSprite = formations_ui[event.player_id].vivosaur_sprite_zones[event.zone]
+	vivo_sprite_koed.animation_player.play('ko')
+	await vivo_sprite_koed.animation_player.animation_finished
+
+func show_vivosaur_moved_to_zone(event: VivosaurMovedToZoneEvent) -> void:
+	go_back()
+	await formations_ui[event.player_id].animate_move_to_zone(event)
+
+func show_winner_determined(event: WinnerDeterminedEvent) -> void:
+	go_back()
+
+	# Show winner/loser banner and animate winning vivosaurs
+	
+	await get_tree().create_timer(1).timeout
+	
+	SceneTransition.change_scene('res://client/scenes/player_lobby/PlayerLobby.tscn')
