@@ -1,9 +1,9 @@
 [gd_resource type="Resource" script_class="VivosaurResource" format=3 uid="uid://bdsxfb33ulkls"]
 
-[ext_resource type="Texture2D" uid="uid://b8wckpf2hd2fl" path="res://client/assets/vivosaurs/Shanshan/reviver_009.bin_1.png" id="1_clbv7"]
+[ext_resource type="Texture2D" uid="uid://b8wckpf2hd2fl" path="res://client/assets/vivosaurs/Shanshan/medal.png" id="1_clbv7"]
 [ext_resource type="Script" uid="uid://bj0qwk3daymcj" path="res://core/data/VivosaurResource.gd" id="2_xjnet"]
 [ext_resource type="Script" uid="uid://tfde3pcbhqpi" path="res://core/data/SkillResource.gd" id="3_fws3m"]
-[ext_resource type="Texture2D" uid="uid://vnugcyxxanfr" path="res://client/assets/vivosaurs/Shanshan/28_0.png" id="4_2rrnf"]
+[ext_resource type="Texture2D" uid="uid://vnugcyxxanfr" path="res://client/assets/vivosaurs/Shanshan/sprite.png" id="4_2rrnf"]
 [ext_resource type="Script" uid="uid://nubhjw6614kq" path="res://core/data/StatusResource.gd" id="5_k815c"]
 
 [resource]

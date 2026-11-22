@@ -1,10 +1,10 @@
 [gd_resource type="Resource" script_class="VivosaurResource" format=3 uid="uid://bcstbxugtp7ej"]
 
-[ext_resource type="Texture2D" uid="uid://d0wxe4ltcr8tl" path="res://client/assets/vivosaurs/Frigi/reviver_105.bin_0.png" id="1_8fxev"]
+[ext_resource type="Texture2D" uid="uid://d0wxe4ltcr8tl" path="res://client/assets/vivosaurs/Frigi/medal.png" id="1_8fxev"]
 [ext_resource type="Script" uid="uid://bj0qwk3daymcj" path="res://core/data/VivosaurResource.gd" id="1_rlvmf"]
 [ext_resource type="Script" uid="uid://tfde3pcbhqpi" path="res://core/data/SkillResource.gd" id="2_f78vi"]
 [ext_resource type="Script" uid="uid://nubhjw6614kq" path="res://core/data/StatusResource.gd" id="3_8fxev"]
-[ext_resource type="Texture2D" uid="uid://53ip3ahaxpsq" path="res://client/assets/vivosaurs/Frigi/125_0.png" id="4_656ub"]
+[ext_resource type="Texture2D" uid="uid://53ip3ahaxpsq" path="res://client/assets/vivosaurs/Frigi/sprite.png" id="4_656ub"]
 
 [resource]
 script = ExtResource("1_rlvmf")

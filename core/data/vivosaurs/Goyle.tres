@@ -1,10 +1,10 @@
 [gd_resource type="Resource" script_class="VivosaurResource" format=3 uid="uid://bpibwk4ptsbfh"]
 
 [ext_resource type="Script" uid="uid://bj0qwk3daymcj" path="res://core/data/VivosaurResource.gd" id="1_cijm5"]
-[ext_resource type="Texture2D" uid="uid://b2i5e5ck0ifjn" path="res://client/assets/vivosaurs/Goyle/reviver_059.bin_0.png" id="1_jeg0q"]
+[ext_resource type="Texture2D" uid="uid://b2i5e5ck0ifjn" path="res://client/assets/vivosaurs/Goyle/medal.png" id="1_jeg0q"]
 [ext_resource type="Script" uid="uid://tfde3pcbhqpi" path="res://core/data/SkillResource.gd" id="2_t8ef4"]
 [ext_resource type="Script" uid="uid://nubhjw6614kq" path="res://core/data/StatusResource.gd" id="3_jeg0q"]
-[ext_resource type="Texture2D" uid="uid://bry7x7jtuwwhx" path="res://client/assets/vivosaurs/Goyle/79_0.png" id="4_f5f2h"]
+[ext_resource type="Texture2D" uid="uid://bry7x7jtuwwhx" path="res://client/assets/vivosaurs/Goyle/sprite.png" id="4_f5f2h"]
 
 [resource]
 script = ExtResource("1_cijm5")

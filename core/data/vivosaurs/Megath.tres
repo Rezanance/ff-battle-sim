@@ -1,10 +1,10 @@
 [gd_resource type="Resource" script_class="VivosaurResource" format=3 uid="uid://cpnrxokawkg1n"]
 
-[ext_resource type="Texture2D" uid="uid://rkfdxl0wj6rw" path="res://client/assets/vivosaurs/Megath/reviver_099.bin_0.png" id="1_1mtk0"]
+[ext_resource type="Texture2D" uid="uid://rkfdxl0wj6rw" path="res://client/assets/vivosaurs/Megath/medal.png" id="1_1mtk0"]
 [ext_resource type="Script" uid="uid://bj0qwk3daymcj" path="res://core/data/VivosaurResource.gd" id="1_yqmty"]
 [ext_resource type="Script" uid="uid://tfde3pcbhqpi" path="res://core/data/SkillResource.gd" id="2_4osnf"]
 [ext_resource type="Script" uid="uid://nubhjw6614kq" path="res://core/data/StatusResource.gd" id="3_1mtk0"]
-[ext_resource type="Texture2D" uid="uid://yefb04fsyby7" path="res://client/assets/vivosaurs/Megath/119_0.png" id="4_u5nno"]
+[ext_resource type="Texture2D" uid="uid://yefb04fsyby7" path="res://client/assets/vivosaurs/Megath/sprite.png" id="4_u5nno"]
 
 [resource]
 script = ExtResource("1_yqmty")

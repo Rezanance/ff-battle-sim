@@ -3,7 +3,7 @@
 [ext_resource type="Script" uid="uid://bj0qwk3daymcj" path="res://core/data/VivosaurResource.gd" id="1_1tsqo"]
 [ext_resource type="Script" uid="uid://tfde3pcbhqpi" path="res://core/data/SkillResource.gd" id="2_0afns"]
 [ext_resource type="Script" uid="uid://nubhjw6614kq" path="res://core/data/StatusResource.gd" id="3_tsn62"]
-[ext_resource type="Texture2D" uid="uid://b72wg4q5ave0m" path="res://client/assets/vivosaurs/Daspleto/21_0.png" id="4_trvfr"]
+[ext_resource type="Texture2D" uid="uid://b72wg4q5ave0m" path="res://client/assets/vivosaurs/Daspleto/sprite.png" id="4_trvfr"]
 
 [sub_resource type="CompressedTexture2D" id="CompressedTexture2D_0afns"]
 load_path = "res://.godot/imported/reviver_002.bin_1.png-f00c59f2fc4f8c1da2952021720dbd52.ctex"

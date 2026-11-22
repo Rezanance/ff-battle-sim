@@ -1,10 +1,10 @@
 [gd_resource type="Resource" script_class="VivosaurResource" format=3 uid="uid://dns3kjo6csbmd"]
 
-[ext_resource type="Texture2D" uid="uid://qumbko4vwulc" path="res://client/assets/vivosaurs/Chelon/reviver_100.bin_0.png" id="1_fe03i"]
+[ext_resource type="Texture2D" uid="uid://qumbko4vwulc" path="res://client/assets/vivosaurs/Chelon/medal.png" id="1_fe03i"]
 [ext_resource type="Script" uid="uid://bj0qwk3daymcj" path="res://core/data/VivosaurResource.gd" id="1_tpyay"]
 [ext_resource type="Script" uid="uid://tfde3pcbhqpi" path="res://core/data/SkillResource.gd" id="2_n2yyh"]
 [ext_resource type="Script" uid="uid://nubhjw6614kq" path="res://core/data/StatusResource.gd" id="3_fe03i"]
-[ext_resource type="Texture2D" uid="uid://dx36kk12glb0p" path="res://client/assets/vivosaurs/Chelon/120_0.png" id="4_ij07q"]
+[ext_resource type="Texture2D" uid="uid://dx36kk12glb0p" path="res://client/assets/vivosaurs/Chelon/sprite.png" id="4_ij07q"]
 
 [resource]
 script = ExtResource("1_tpyay")

@@ -78,13 +78,13 @@ func init_fossilary_container(team: Team) -> void:
 		fossilary_container.init(team, create_medal_btn)
 
 func show_assign(medal_btn: MedalBtn) -> bool:
-	return not medal_btn.vivosaur_id in team_slots.team.slots_vivosaur_ids()
+	return not medal_btn.vivosaur_id in team_slots.team.slots
 
 func show_move_swap(medal_btn: MedalBtn) -> bool:
-	return medal_btn.vivosaur_id in team_slots.team.slots_vivosaur_ids()
+	return medal_btn.vivosaur_id in team_slots.team.slots
 
 func show_remove(medal_btn: MedalBtn) -> bool:
-	return medal_btn.vivosaur_id in team_slots.team.slots_vivosaur_ids()
+	return medal_btn.vivosaur_id in team_slots.team.slots
 
 func create_medal_btn(_texture: Resource, vivosaur_id: String) -> MedalBtn:
 	var medal_btn: MedalBtn = MedalBtnScene.instantiate()

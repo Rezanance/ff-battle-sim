@@ -1,9 +1,9 @@
 [gd_resource type="Resource" script_class="VivosaurResource" format=3 uid="uid://dx1a3y8qb4841"]
 
-[ext_resource type="Texture2D" uid="uid://cowgl8fjka7ag" path="res://client/assets/vivosaurs/Guan/reviver_008.bin_1.png" id="1_j2xg5"]
+[ext_resource type="Texture2D" uid="uid://cowgl8fjka7ag" path="res://client/assets/vivosaurs/Guan/medal.png" id="1_j2xg5"]
 [ext_resource type="Script" uid="uid://bj0qwk3daymcj" path="res://core/data/VivosaurResource.gd" id="2_xcx5d"]
 [ext_resource type="Script" uid="uid://tfde3pcbhqpi" path="res://core/data/SkillResource.gd" id="3_61243"]
-[ext_resource type="Texture2D" uid="uid://cscnlgsb6f7p" path="res://client/assets/vivosaurs/Guan/27_0.png" id="4_v5jfh"]
+[ext_resource type="Texture2D" uid="uid://cscnlgsb6f7p" path="res://client/assets/vivosaurs/Guan/sprite.png" id="4_v5jfh"]
 [ext_resource type="Script" uid="uid://nubhjw6614kq" path="res://core/data/StatusResource.gd" id="5_p2jvb"]
 
 [resource]

@@ -222,6 +222,8 @@ texture = ExtResource("1_hkniu")
 
 [node name="PlayerFormation" type="Control" parent="BattleWindow" unique_id=1004944074 node_paths=PackedStringArray("total_lp_panel", "total_lp_panel_position", "az_position", "sz1_position", "sz2_position", "ez_position", "vivosaur_sprite_1", "vivosaur_sprite_2", "vivosaur_sprite_3", "support_effects", "fp_bg", "fp", "fp_delta", "turn_banner", "turn_banner_start", "texture_manager", "vivosaur_summary", "skills")]
 anchors_preset = 0
+offset_left = -18.0
+offset_right = -18.0
 script = ExtResource("2_jdafm")
 total_lp_panel = NodePath("TotalLpPanel")
 total_lp_panel_position = NodePath("TotalLpFinish")

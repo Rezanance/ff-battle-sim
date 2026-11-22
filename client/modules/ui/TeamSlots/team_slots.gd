@@ -47,7 +47,7 @@ func show_selectable_slots(current_action: Action, selected_medal: MedalBtn) -> 
 				slots[i].visible = team.slots[i] == null
 		Action.MOVE_SWAP:
 			for i: int in range(len(slots)):
-				slots[i].visible = selected_medal.vivosaur_id in team.slots_vivosaur_ids()
+				slots[i].visible = selected_medal.vivosaur_id in team.slots
 				var medal_btn: MedalBtn = slots[i].medal_btn
 				if medal_btn != null:
 					medal_btn.mouse_filter = Control.MOUSE_FILTER_IGNORE
@@ -89,7 +89,7 @@ func __assign_slot(selected_medal_btn: MedalBtn, team_slot: int) -> void:
 	team_modified.emit(team)
 
 func __move_swap_slots(selected_medal_btn: MedalBtn, team_slot: int) -> void:
-	var selected_medal_team_slot: int = team.slots_vivosaur_ids().find(selected_medal_btn.vivosaur_id)
+	var selected_medal_team_slot: int = team.slots.find(selected_medal_btn.vivosaur_id)
 	var medal_btn_in_new_slot: MedalBtn = slots[team_slot].medal_btn
 	slots[team_slot].medal_btn = slots[selected_medal_team_slot].medal_btn
 	slots[selected_medal_team_slot].medal_btn = medal_btn_in_new_slot
@@ -120,7 +120,7 @@ func __remove_medal(selected_medal_btn: MedalBtn) -> void:
 	await selected_medal_btn.move(tween, OFFSCREEN_POSITION).finished
 	selected_medal_btn.queue_free()
 
-	var selected_medal_team_slot: int = team.slots_vivosaur_ids().find(selected_medal_btn.vivosaur_id)
+	var selected_medal_team_slot: int = team.slots.find(selected_medal_btn.vivosaur_id)
 	slots[selected_medal_team_slot].medal_btn = null
 	team.slots[selected_medal_team_slot] = null
 	

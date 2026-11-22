@@ -1,10 +1,10 @@
 [gd_resource type="Resource" script_class="VivosaurResource" format=3 uid="uid://dv5ydvkgw8nmb"]
 
 [ext_resource type="Script" uid="uid://bj0qwk3daymcj" path="res://core/data/VivosaurResource.gd" id="1_0vnn2"]
-[ext_resource type="Texture2D" uid="uid://7lov8pp7olpg" path="res://client/assets/vivosaurs/Elasmoth/reviver_092.bin_0.png" id="1_fy6hq"]
+[ext_resource type="Texture2D" uid="uid://7lov8pp7olpg" path="res://client/assets/vivosaurs/Elasmoth/medal.png" id="1_fy6hq"]
 [ext_resource type="Script" uid="uid://tfde3pcbhqpi" path="res://core/data/SkillResource.gd" id="2_cr0o8"]
 [ext_resource type="Script" uid="uid://nubhjw6614kq" path="res://core/data/StatusResource.gd" id="3_fy6hq"]
-[ext_resource type="Texture2D" uid="uid://fbpe6diem8t5" path="res://client/assets/vivosaurs/Elasmoth/112_0.png" id="4_clke0"]
+[ext_resource type="Texture2D" uid="uid://fbpe6diem8t5" path="res://client/assets/vivosaurs/Elasmoth/sprite.png" id="4_clke0"]
 
 [resource]
 script = ExtResource("1_0vnn2")

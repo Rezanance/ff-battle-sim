@@ -15,7 +15,7 @@ func init(team: Team, _create_medal_btn: Callable) -> void:
 	create_medal_btn = _create_medal_btn
 	
 	for vivosaur_id: String in load_all_vivosaurs():
-		var slot: int = team.slots_vivosaur_ids().find(vivosaur_id)
+		var slot: int = team.slots.find(vivosaur_id)
 		var medal_placeholder: TextureRect = add_medal_placeholder(vivosaur_id)
 		if slot < 0:
 			var medal_btn: MedalBtn = create_medal_btn.call(medal_placeholder.texture, vivosaur_id)

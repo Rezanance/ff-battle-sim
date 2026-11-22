@@ -1,10 +1,10 @@
 [gd_resource type="Resource" script_class="VivosaurResource" format=3 uid="uid://dbh08s7fs3gwo"]
 
 [ext_resource type="Script" uid="uid://bj0qwk3daymcj" path="res://core/data/VivosaurResource.gd" id="1_g62yn"]
-[ext_resource type="Texture2D" uid="uid://du6hybawkv0" path="res://client/assets/vivosaurs/Jara/reviver_082.bin_0.png" id="1_hv0ml"]
+[ext_resource type="Texture2D" uid="uid://du6hybawkv0" path="res://client/assets/vivosaurs/Jara/medal.png" id="1_hv0ml"]
 [ext_resource type="Script" uid="uid://tfde3pcbhqpi" path="res://core/data/SkillResource.gd" id="2_i4sld"]
 [ext_resource type="Script" uid="uid://nubhjw6614kq" path="res://core/data/StatusResource.gd" id="3_hv0ml"]
-[ext_resource type="Texture2D" uid="uid://dptul57bg0ijx" path="res://client/assets/vivosaurs/Jara/102_0.png" id="4_psjoj"]
+[ext_resource type="Texture2D" uid="uid://dptul57bg0ijx" path="res://client/assets/vivosaurs/Jara/sprite.png" id="4_psjoj"]
 
 [resource]
 script = ExtResource("1_g62yn")
