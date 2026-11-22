@@ -1,0 +1,27 @@
+[gd_resource type="Resource" script_class="VivosaurResource" format=3 uid="uid://bdsxfb33ulkls"]
+
+[ext_resource type="Texture2D" uid="uid://b8wckpf2hd2fl" path="res://client/assets/vivosaurs/Shanshan/reviver_009.bin_1.png" id="1_clbv7"]
+[ext_resource type="Script" uid="uid://bj0qwk3daymcj" path="res://core/data/VivosaurResource.gd" id="2_xjnet"]
+[ext_resource type="Script" uid="uid://tfde3pcbhqpi" path="res://core/data/SkillResource.gd" id="3_fws3m"]
+[ext_resource type="Texture2D" uid="uid://vnugcyxxanfr" path="res://client/assets/vivosaurs/Shanshan/28_0.png" id="4_2rrnf"]
+[ext_resource type="Script" uid="uid://nubhjw6614kq" path="res://core/data/StatusResource.gd" id="5_k815c"]
+
+[resource]
+script = ExtResource("2_xjnet")
+medal = ExtResource("1_clbv7")
+sprite = ExtResource("4_2rrnf")
+element = 2
+team_skill_groups = Array[int]([2, 7])
+battle_class = 4
+lp = 280
+atk = 61
+def = 29
+acc = 50
+eva = 25
+crit = 40
+own_az = true
+se_atk = 5
+se_def = 5
+se_acc = 5
+se_eva = 5
+metadata/_custom_type_script = "uid://bj0qwk3daymcj"

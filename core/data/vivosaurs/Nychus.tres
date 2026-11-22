@@ -1,0 +1,23 @@
+[gd_resource type="Resource" script_class="VivosaurResource" format=3 uid="uid://ckg76bfxw2xwr"]
+
+[ext_resource type="Script" uid="uid://bj0qwk3daymcj" path="res://core/data/VivosaurResource.gd" id="1_1trse"]
+[ext_resource type="Texture2D" uid="uid://cisd33tfv7rno" path="res://client/assets/vivosaurs/Nychus/reviver_026.bin_1.png" id="1_gylen"]
+[ext_resource type="Script" uid="uid://tfde3pcbhqpi" path="res://core/data/SkillResource.gd" id="2_a1604"]
+[ext_resource type="Script" uid="uid://nubhjw6614kq" path="res://core/data/StatusResource.gd" id="3_gylen"]
+[ext_resource type="Texture2D" uid="uid://sndor7a406r6" path="res://client/assets/vivosaurs/Nychus/45_0.png" id="4_4r42g"]
+
+[resource]
+script = ExtResource("1_1trse")
+name = "Nychus"
+medal = ExtResource("1_gylen")
+sprite = ExtResource("4_4r42g")
+team_skill_groups = Array[int]([1, 12])
+battle_class = 4
+lp = 300
+atk = 59
+def = 20
+acc = 50
+eva = 21
+crit = 20
+se_def = -10
+se_eva = -5

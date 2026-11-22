@@ -1,0 +1,23 @@
+[gd_resource type="Resource" script_class="VivosaurResource" format=3 uid="uid://130e8furdxpk"]
+
+[ext_resource type="Script" uid="uid://bj0qwk3daymcj" path="res://core/data/VivosaurResource.gd" id="1_o3y5f"]
+[ext_resource type="Texture2D" uid="uid://c6u82b3yovey1" path="res://client/assets/vivosaurs/URaptor/reviver_028.bin_1.png" id="1_r50yg"]
+[ext_resource type="Script" uid="uid://tfde3pcbhqpi" path="res://core/data/SkillResource.gd" id="2_3g7xe"]
+[ext_resource type="Script" uid="uid://nubhjw6614kq" path="res://core/data/StatusResource.gd" id="3_r50yg"]
+[ext_resource type="Texture2D" uid="uid://buftbs2j8pup4" path="res://client/assets/vivosaurs/URaptor/47_0.png" id="4_qxcct"]
+
+[resource]
+script = ExtResource("1_o3y5f")
+name = "U-Raptor"
+medal = ExtResource("1_r50yg")
+sprite = ExtResource("4_qxcct")
+team_skill_groups = Array[int]([1, 12])
+battle_class = 4
+lp = 440
+atk = 68
+def = 22
+acc = 50
+eva = 21
+crit = 20
+own_az = true
+se_atk = 5

@@ -1,0 +1,27 @@
+[gd_resource type="Resource" script_class="VivosaurResource" format=3 uid="uid://ce3l4ln0umi65"]
+
+[ext_resource type="Texture2D" uid="uid://2ll1hyp2jiyq" path="res://client/assets/vivosaurs/Krona/reviver_085.bin_0.png" id="1_8bqe2"]
+[ext_resource type="Script" uid="uid://bj0qwk3daymcj" path="res://core/data/VivosaurResource.gd" id="1_rx7ul"]
+[ext_resource type="Script" uid="uid://tfde3pcbhqpi" path="res://core/data/SkillResource.gd" id="2_6ef52"]
+[ext_resource type="Script" uid="uid://nubhjw6614kq" path="res://core/data/StatusResource.gd" id="3_8bqe2"]
+[ext_resource type="Texture2D" uid="uid://rcr8imor668p" path="res://client/assets/vivosaurs/Krona/105_0.png" id="4_rc0gw"]
+
+[resource]
+script = ExtResource("1_rx7ul")
+name = "Krona"
+medal = ExtResource("1_8bqe2")
+sprite = ExtResource("4_rc0gw")
+element = 1
+team_skill_groups = Array[int]([4, 8, 11, 13])
+battle_class = 1
+lp = 620
+atk = 85
+def = 25
+acc = 36
+eva = 10
+crit = 15
+own_az = true
+se_atk = -20
+se_def = -20
+se_acc = -20
+se_eva = -20

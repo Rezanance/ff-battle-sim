@@ -1,0 +1,26 @@
+[gd_resource type="Resource" script_class="VivosaurResource" format=3 uid="uid://b751fsjtjhdtq"]
+
+[ext_resource type="Script" uid="uid://bj0qwk3daymcj" path="res://core/data/VivosaurResource.gd" id="1_0n75g"]
+[ext_resource type="Texture2D" uid="uid://b1gsmkhl6vjsw" path="res://client/assets/vivosaurs/Dilopho/reviver_033.bin_1.png" id="1_hk5ul"]
+[ext_resource type="Script" uid="uid://tfde3pcbhqpi" path="res://core/data/SkillResource.gd" id="2_7a4f2"]
+[ext_resource type="Script" uid="uid://nubhjw6614kq" path="res://core/data/StatusResource.gd" id="3_hk5ul"]
+[ext_resource type="Texture2D" uid="uid://v8endv43w2n8" path="res://client/assets/vivosaurs/Dilopho/52_0.png" id="4_3olcq"]
+
+[resource]
+script = ExtResource("1_0n75g")
+name = "Dilopho"
+medal = ExtResource("1_hk5ul")
+sprite = ExtResource("4_3olcq")
+element = 1
+team_skill_groups = Array[int]([4, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15])
+battle_class = 4
+lp = 400
+atk = 65
+def = 11
+acc = 50
+eva = 21
+crit = 20
+se_atk = -10
+se_def = -10
+se_acc = -10
+se_eva = -10

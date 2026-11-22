@@ -1,0 +1,23 @@
+[gd_resource type="Resource" script_class="VivosaurResource" format=3 uid="uid://c5h5igu0crwu1"]
+
+[ext_resource type="Script" uid="uid://bj0qwk3daymcj" path="res://core/data/VivosaurResource.gd" id="1_6brvq"]
+[ext_resource type="Texture2D" uid="uid://bkwdg4xdm2skm" path="res://client/assets/vivosaurs/Stygi/reviver_070.bin_0.png" id="1_q8uce"]
+[ext_resource type="Script" uid="uid://tfde3pcbhqpi" path="res://core/data/SkillResource.gd" id="2_kutho"]
+[ext_resource type="Script" uid="uid://nubhjw6614kq" path="res://core/data/StatusResource.gd" id="3_q8uce"]
+[ext_resource type="Texture2D" uid="uid://b58d4fxxttxwd" path="res://client/assets/vivosaurs/Stygi/90_0.png" id="4_p5ct3"]
+
+[resource]
+script = ExtResource("1_6brvq")
+name = "Stygi"
+medal = ExtResource("1_q8uce")
+sprite = ExtResource("4_p5ct3")
+team_skill_groups = Array[int]([1, 14, 15])
+battle_class = 1
+lp = 280
+atk = 43
+def = 22
+acc = 45
+eva = 20
+crit = 40
+se_atk = -5
+se_def = -15

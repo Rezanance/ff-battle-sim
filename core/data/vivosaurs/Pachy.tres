@@ -1,0 +1,24 @@
+[gd_resource type="Resource" script_class="VivosaurResource" format=3 uid="uid://5xjowbqhasuj"]
+
+[ext_resource type="Script" uid="uid://bj0qwk3daymcj" path="res://core/data/VivosaurResource.gd" id="1_kwagh"]
+[ext_resource type="Texture2D" uid="uid://bhagfnljrw14n" path="res://client/assets/vivosaurs/Pachy/reviver_069.bin_0.png" id="1_n2yjp"]
+[ext_resource type="Script" uid="uid://tfde3pcbhqpi" path="res://core/data/SkillResource.gd" id="2_y0r7u"]
+[ext_resource type="Script" uid="uid://nubhjw6614kq" path="res://core/data/StatusResource.gd" id="3_n2yjp"]
+[ext_resource type="Texture2D" uid="uid://dkj8ybv8yajcy" path="res://client/assets/vivosaurs/Pachy/89_0.png" id="4_tt7mm"]
+
+[resource]
+script = ExtResource("1_kwagh")
+name = "Pachy"
+medal = ExtResource("1_n2yjp")
+sprite = ExtResource("4_tt7mm")
+element = 3
+team_skill_groups = Array[int]([3, 14, 15])
+battle_class = 1
+lp = 360
+atk = 47
+def = 25
+acc = 44
+eva = 21
+crit = 40
+se_atk = -5
+se_def = -10

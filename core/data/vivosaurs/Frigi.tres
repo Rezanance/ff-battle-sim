@@ -1,0 +1,26 @@
+[gd_resource type="Resource" script_class="VivosaurResource" format=3 uid="uid://bo7yrvgb6hy7v"]
+
+[ext_resource type="Texture2D" uid="uid://d0wxe4ltcr8tl" path="res://client/assets/vivosaurs/Frigi/reviver_105.bin_0.png" id="1_0g2do"]
+[ext_resource type="Script" uid="uid://bj0qwk3daymcj" path="res://core/data/VivosaurResource.gd" id="1_hm5ho"]
+[ext_resource type="Script" uid="uid://tfde3pcbhqpi" path="res://core/data/SkillResource.gd" id="2_qt1n5"]
+[ext_resource type="Script" uid="uid://nubhjw6614kq" path="res://core/data/StatusResource.gd" id="3_0g2do"]
+[ext_resource type="Texture2D" uid="uid://53ip3ahaxpsq" path="res://client/assets/vivosaurs/Frigi/125_0.png" id="4_ovpdi"]
+
+[resource]
+script = ExtResource("1_hm5ho")
+name = "Frigi"
+medal = ExtResource("1_0g2do")
+sprite = ExtResource("4_ovpdi")
+element = 5
+battle_class = 1
+lp = 600
+atk = 99
+def = 45
+acc = 30
+eva = 5
+crit = 10
+own_az = true
+se_atk = -50
+se_def = -50
+se_acc = -50
+se_eva = -50

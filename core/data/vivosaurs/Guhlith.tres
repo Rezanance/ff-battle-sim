@@ -1,0 +1,24 @@
+[gd_resource type="Resource" script_class="VivosaurResource" format=3 uid="uid://bv7pt1sn85kxc"]
+
+[ext_resource type="Script" uid="uid://bj0qwk3daymcj" path="res://core/data/VivosaurResource.gd" id="1_i1vtj"]
+[ext_resource type="Texture2D" uid="uid://cw76uc1tf0hd7" path="res://client/assets/vivosaurs/Guhlith/reviver_114.bin_0.png" id="1_w61i1"]
+[ext_resource type="Script" uid="uid://tfde3pcbhqpi" path="res://core/data/SkillResource.gd" id="2_my14o"]
+[ext_resource type="Script" uid="uid://nubhjw6614kq" path="res://core/data/StatusResource.gd" id="3_w61i1"]
+[ext_resource type="Texture2D" uid="uid://cxwujduvtdgg" path="res://client/assets/vivosaurs/Guhlith/134_0.png" id="4_52ta4"]
+
+[resource]
+script = ExtResource("1_i1vtj")
+name = "Guhlith"
+medal = ExtResource("1_w61i1")
+sprite = ExtResource("4_52ta4")
+element = 5
+team_skill_groups = Array[int]([1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16])
+battle_class = 3
+lp = 666
+atk = 54
+def = 54
+acc = 30
+eva = 5
+crit = 10
+own_az = true
+se_def = 10

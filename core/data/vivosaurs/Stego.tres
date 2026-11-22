@@ -1,0 +1,25 @@
+[gd_resource type="Resource" script_class="VivosaurResource" format=3 uid="uid://5no2gqcvc1dd"]
+
+[ext_resource type="Texture2D" uid="uid://dqgrbxur0nk3y" path="res://client/assets/vivosaurs/Stego/reviver_051.bin_0.png" id="1_c8wnp"]
+[ext_resource type="Script" uid="uid://bj0qwk3daymcj" path="res://core/data/VivosaurResource.gd" id="1_tka5m"]
+[ext_resource type="Script" uid="uid://tfde3pcbhqpi" path="res://core/data/SkillResource.gd" id="2_623yg"]
+[ext_resource type="Script" uid="uid://nubhjw6614kq" path="res://core/data/StatusResource.gd" id="3_c8wnp"]
+[ext_resource type="Texture2D" uid="uid://b08op0bgclky6" path="res://client/assets/vivosaurs/Stego/71_0.png" id="4_lbbh5"]
+
+[resource]
+script = ExtResource("1_tka5m")
+name = "Stego"
+medal = ExtResource("1_c8wnp")
+sprite = ExtResource("4_lbbh5")
+element = 2
+team_skill_groups = Array[int]([2, 15])
+battle_class = 4
+lp = 500
+atk = 65
+def = 34
+acc = 45
+eva = 19
+crit = 20
+own_az = true
+se_atk = 10
+se_def = 10

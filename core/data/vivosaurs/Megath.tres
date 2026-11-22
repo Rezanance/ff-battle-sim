@@ -1,0 +1,24 @@
+[gd_resource type="Resource" script_class="VivosaurResource" format=3 uid="uid://cpnrxokawkg1n"]
+
+[ext_resource type="Texture2D" uid="uid://rkfdxl0wj6rw" path="res://client/assets/vivosaurs/Megath/reviver_099.bin_0.png" id="1_1mtk0"]
+[ext_resource type="Script" uid="uid://bj0qwk3daymcj" path="res://core/data/VivosaurResource.gd" id="1_yqmty"]
+[ext_resource type="Script" uid="uid://tfde3pcbhqpi" path="res://core/data/SkillResource.gd" id="2_4osnf"]
+[ext_resource type="Script" uid="uid://nubhjw6614kq" path="res://core/data/StatusResource.gd" id="3_1mtk0"]
+[ext_resource type="Texture2D" uid="uid://yefb04fsyby7" path="res://client/assets/vivosaurs/Megath/119_0.png" id="4_u5nno"]
+
+[resource]
+script = ExtResource("1_yqmty")
+name = "Megath"
+medal = ExtResource("1_1mtk0")
+sprite = ExtResource("4_u5nno")
+element = 2
+team_skill_groups = Array[int]([2, 14, 15])
+battle_class = 4
+lp = 400
+atk = 32
+def = 25
+acc = 45
+eva = 21
+crit = 20
+se_acc = -20
+se_eva = -20

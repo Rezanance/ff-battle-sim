@@ -1,0 +1,23 @@
+[gd_resource type="Resource" script_class="VivosaurResource" format=3 uid="uid://drirf8g255fu5"]
+
+[ext_resource type="Texture2D" uid="uid://0khorbodatql" path="res://client/assets/vivosaurs/Cerato/reviver_038.bin_1.png" id="1_7mvm5"]
+[ext_resource type="Script" uid="uid://bj0qwk3daymcj" path="res://core/data/VivosaurResource.gd" id="1_m1dob"]
+[ext_resource type="Script" uid="uid://tfde3pcbhqpi" path="res://core/data/SkillResource.gd" id="2_4vv6c"]
+[ext_resource type="Script" uid="uid://nubhjw6614kq" path="res://core/data/StatusResource.gd" id="3_7mvm5"]
+[ext_resource type="Texture2D" uid="uid://3hdah0vs6v22" path="res://client/assets/vivosaurs/Cerato/58_0.png" id="4_wngp6"]
+
+[resource]
+script = ExtResource("1_m1dob")
+name = "Cerato"
+medal = ExtResource("1_7mvm5")
+sprite = ExtResource("4_wngp6")
+element = 2
+lp = 420
+atk = 65
+def = 31
+acc = 50
+eva = 20
+crit = 40
+own_az = true
+se_atk = 20
+se_def = -10

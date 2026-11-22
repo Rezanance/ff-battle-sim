@@ -1,0 +1,23 @@
+[gd_resource type="Resource" script_class="VivosaurResource" format=3 uid="uid://c0sh1w1pgo44s"]
+
+[ext_resource type="Script" uid="uid://bj0qwk3daymcj" path="res://core/data/VivosaurResource.gd" id="1_7k8ic"]
+[ext_resource type="Texture2D" uid="uid://uwefl8lid1g0" path="res://client/assets/vivosaurs/Ptera/reviver_080.bin_0.png" id="1_cltxo"]
+[ext_resource type="Script" uid="uid://tfde3pcbhqpi" path="res://core/data/SkillResource.gd" id="2_fibm7"]
+[ext_resource type="Script" uid="uid://nubhjw6614kq" path="res://core/data/StatusResource.gd" id="3_cltxo"]
+[ext_resource type="Texture2D" uid="uid://daul7yw0utkly" path="res://client/assets/vivosaurs/Ptera/100_0.png" id="4_15i1w"]
+
+[resource]
+script = ExtResource("1_7k8ic")
+name = "Ptera"
+medal = ExtResource("1_cltxo")
+sprite = ExtResource("4_15i1w")
+element = 2
+team_skill_groups = Array[int]([2, 6, 7, 8, 14, 15])
+battle_class = 1
+lp = 320
+atk = 43
+def = 11
+acc = 48
+eva = 22
+crit = 40
+se_eva = -40

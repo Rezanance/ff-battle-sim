@@ -1,0 +1,25 @@
+[gd_resource type="Resource" script_class="VivosaurResource" format=3 uid="uid://cfxic37fji3pk"]
+
+[ext_resource type="Script" uid="uid://bj0qwk3daymcj" path="res://core/data/VivosaurResource.gd" id="1_hk422"]
+[ext_resource type="Texture2D" uid="uid://hb1pcyolikg7" path="res://client/assets/vivosaurs/Brontoth/reviver_091.bin_0.png" id="1_hp2ya"]
+[ext_resource type="Script" uid="uid://tfde3pcbhqpi" path="res://core/data/SkillResource.gd" id="2_3w8ap"]
+[ext_resource type="Script" uid="uid://nubhjw6614kq" path="res://core/data/StatusResource.gd" id="3_hp2ya"]
+[ext_resource type="Texture2D" uid="uid://2ef8e4h51vb3" path="res://client/assets/vivosaurs/Brontoth/111_0.png" id="4_b1grm"]
+
+[resource]
+script = ExtResource("1_hk422")
+name = "Brontoth"
+medal = ExtResource("1_hp2ya")
+sprite = ExtResource("4_b1grm")
+element = 1
+team_skill_groups = Array[int]([4, 14, 15])
+battle_class = 2
+lp = 260
+atk = 56
+def = 32
+acc = 46
+eva = 25
+crit = 20
+own_az = true
+se_def = 30
+se_acc = 15

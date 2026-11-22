@@ -1,0 +1,24 @@
+[gd_resource type="Resource" script_class="VivosaurResource" format=3 uid="uid://bmro0rcakwc8s"]
+
+[ext_resource type="Texture2D" uid="uid://dw51iopl7trig" path="res://client/assets/vivosaurs/Mihu/reviver_079.bin_0.png" id="1_4c3oq"]
+[ext_resource type="Script" uid="uid://bj0qwk3daymcj" path="res://core/data/VivosaurResource.gd" id="1_buafq"]
+[ext_resource type="Script" uid="uid://tfde3pcbhqpi" path="res://core/data/SkillResource.gd" id="2_hkuo4"]
+[ext_resource type="Script" uid="uid://nubhjw6614kq" path="res://core/data/StatusResource.gd" id="3_4c3oq"]
+[ext_resource type="Texture2D" uid="uid://cbkdt0rmtvqaw" path="res://client/assets/vivosaurs/Mihu/99_0.png" id="4_vsx07"]
+
+[resource]
+script = ExtResource("1_buafq")
+name = "Mihu"
+medal = ExtResource("1_4c3oq")
+sprite = ExtResource("4_vsx07")
+element = 4
+team_skill_groups = Array[int]([16])
+battle_class = 4
+lp = 440
+atk = 67
+def = 32
+acc = 60
+eva = 24
+crit = 20
+own_az = true
+se_atk = 60

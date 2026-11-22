@@ -1,0 +1,24 @@
+[gd_resource type="Resource" script_class="VivosaurResource" format=3 uid="uid://fvi6fga1ah6t"]
+
+[ext_resource type="Texture2D" uid="uid://d006kce5vvpqg" path="res://client/assets/vivosaurs/Lambeo/reviver_065.bin_0.png" id="1_4fgmh"]
+[ext_resource type="Script" uid="uid://bj0qwk3daymcj" path="res://core/data/VivosaurResource.gd" id="1_d7uii"]
+[ext_resource type="Script" uid="uid://tfde3pcbhqpi" path="res://core/data/SkillResource.gd" id="2_ct4rn"]
+[ext_resource type="Script" uid="uid://nubhjw6614kq" path="res://core/data/StatusResource.gd" id="3_4fgmh"]
+[ext_resource type="Texture2D" uid="uid://kjr5rdxtjnhx" path="res://client/assets/vivosaurs/Lambeo/85_0.png" id="4_bm5ym"]
+
+[resource]
+script = ExtResource("1_d7uii")
+name = "Lambeo"
+medal = ExtResource("1_4fgmh")
+sprite = ExtResource("4_bm5ym")
+team_skill_groups = Array[int]([1, 14, 15])
+lp = 620
+atk = 90
+def = 29
+acc = 47
+eva = 22
+crit = 15
+se_atk = -10
+se_def = -10
+se_acc = -10
+se_eva = -10

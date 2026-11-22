@@ -1,0 +1,23 @@
+[gd_resource type="Resource" script_class="VivosaurResource" format=3 uid="uid://5p2eadbybtbp"]
+
+[ext_resource type="Script" uid="uid://bj0qwk3daymcj" path="res://core/data/VivosaurResource.gd" id="1_odn54"]
+[ext_resource type="Texture2D" uid="uid://cp3ncnyjpeksw" path="res://client/assets/vivosaurs/Pelto/reviver_060.bin_0.png" id="1_y2s85"]
+[ext_resource type="Script" uid="uid://tfde3pcbhqpi" path="res://core/data/SkillResource.gd" id="2_vusak"]
+[ext_resource type="Script" uid="uid://nubhjw6614kq" path="res://core/data/StatusResource.gd" id="3_y2s85"]
+[ext_resource type="Texture2D" uid="uid://cfpbswg6rqsg7" path="res://client/assets/vivosaurs/Pelto/80_0.png" id="4_76rx8"]
+
+[resource]
+script = ExtResource("1_odn54")
+name = "Pelto"
+medal = ExtResource("1_y2s85")
+sprite = ExtResource("4_76rx8")
+element = 3
+team_skill_groups = Array[int]([3, 14, 15])
+battle_class = 3
+lp = 420
+atk = 67
+def = 43
+acc = 45
+eva = 18
+crit = 20
+se_atk = -40
