@@ -1,0 +1,22 @@
+[gd_resource type="Resource" script_class="VivosaurResource" format=3 uid="uid://cdjjcmmahsdim"]
+
+[ext_resource type="Script" uid="uid://bj0qwk3daymcj" path="res://core/data/VivosaurResource.gd" id="1_245x4"]
+[ext_resource type="Texture2D" uid="uid://cgr5nm67dcavc" path="res://client/assets/vivosaurs/Andrarch/reviver_094.bin_0.png" id="1_elgdm"]
+[ext_resource type="Script" uid="uid://tfde3pcbhqpi" path="res://core/data/SkillResource.gd" id="2_knxcv"]
+[ext_resource type="Script" uid="uid://nubhjw6614kq" path="res://core/data/StatusResource.gd" id="3_elgdm"]
+[ext_resource type="Texture2D" uid="uid://c7cjyk6hiuei0" path="res://client/assets/vivosaurs/Andrarch/114_0.png" id="4_jmdmu"]
+
+[resource]
+script = ExtResource("1_245x4")
+name = "Andrarch"
+medal = ExtResource("1_elgdm")
+sprite = ExtResource("4_jmdmu")
+team_skill_groups = Array[int]([1, 14, 15])
+battle_class = 4
+lp = 300
+atk = 65
+def = 25
+acc = 50
+eva = 25
+crit = 40
+se_atk = -15

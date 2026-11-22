@@ -1,0 +1,25 @@
+[gd_resource type="Resource" script_class="VivosaurResource" format=3 uid="uid://cwiixrbracfjo"]
+
+[ext_resource type="Script" uid="uid://bj0qwk3daymcj" path="res://core/data/VivosaurResource.gd" id="1_2r8tr"]
+[ext_resource type="Texture2D" uid="uid://bmy8iitdo77b8" path="res://client/assets/vivosaurs/Cryo/reviver_016.bin_1.png" id="1_ns2cp"]
+[ext_resource type="Script" uid="uid://tfde3pcbhqpi" path="res://core/data/SkillResource.gd" id="2_k4u1f"]
+[ext_resource type="Script" uid="uid://nubhjw6614kq" path="res://core/data/StatusResource.gd" id="3_ns2cp"]
+[ext_resource type="Texture2D" uid="uid://bm5b0jkqomxu1" path="res://client/assets/vivosaurs/Cryo/35_0.png" id="4_3t0sd"]
+
+[resource]
+script = ExtResource("1_2r8tr")
+medal = ExtResource("1_ns2cp")
+sprite = ExtResource("4_3t0sd")
+element = 1
+team_skill_groups = Array[int]([4, 10])
+battle_class = 4
+lp = 440
+atk = 70
+def = 36
+acc = 48
+eva = 20
+crit = 20
+own_az = true
+se_def = 30
+se_acc = 30
+metadata/_custom_type_script = "uid://bj0qwk3daymcj"

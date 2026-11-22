@@ -1,0 +1,23 @@
+[gd_resource type="Resource" script_class="VivosaurResource" format=3 uid="uid://djbufumae2mcu"]
+
+[ext_resource type="Texture2D" uid="uid://db3o1kqmkkecf" path="res://client/assets/vivosaurs/Paki/reviver_095.bin_0.png" id="1_7vlhn"]
+[ext_resource type="Script" uid="uid://bj0qwk3daymcj" path="res://core/data/VivosaurResource.gd" id="1_mslr0"]
+[ext_resource type="Script" uid="uid://tfde3pcbhqpi" path="res://core/data/SkillResource.gd" id="2_r8h3v"]
+[ext_resource type="Script" uid="uid://nubhjw6614kq" path="res://core/data/StatusResource.gd" id="3_7vlhn"]
+[ext_resource type="Texture2D" uid="uid://hhk0uncierqf" path="res://client/assets/vivosaurs/Paki/115_0.png" id="4_urgtg"]
+
+[resource]
+script = ExtResource("1_mslr0")
+name = "Paki"
+medal = ExtResource("1_7vlhn")
+sprite = ExtResource("4_urgtg")
+element = 1
+team_skill_groups = Array[int]([4, 14, 15])
+battle_class = 4
+lp = 260
+atk = 61
+def = 25
+acc = 50
+eva = 25
+crit = 40
+se_atk = -15

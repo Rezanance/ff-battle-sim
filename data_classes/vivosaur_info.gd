@@ -1,13 +1,16 @@
 class_name VivosaurInfo
 
 enum Element {FIRE, WATER, AIR, EARTH, NEUTRAL, LEGENDARY}
-enum Class {ATTACK, LONG_RANGE, SUPPORT}
+enum Class {ATTACK, LONG_RANGE, SUPPORT, DEFENSIVE, ALL_AROUND, TRANSFORMATION}
 
 static var battle_classes: Dictionary[Class, String]
 static func _static_init() -> void:
 	battle_classes[Class.ATTACK] = 'Attack'
 	battle_classes[Class.LONG_RANGE] = 'Long-range'
 	battle_classes[Class.SUPPORT] = 'Support'
+	battle_classes[Class.DEFENSIVE] = 'Defensive'
+	battle_classes[Class.ALL_AROUND] = 'All-Around'
+	battle_classes[Class.TRANSFORMATION] = 'Transformation'
 
 var id: String
 var name: String

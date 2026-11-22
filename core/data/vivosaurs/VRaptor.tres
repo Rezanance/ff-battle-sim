@@ -1,0 +1,21 @@
+[gd_resource type="Resource" script_class="VivosaurResource" format=3 uid="uid://5y7mlk26q3ah"]
+
+[ext_resource type="Script" uid="uid://bj0qwk3daymcj" path="res://core/data/VivosaurResource.gd" id="1_fejhx"]
+[ext_resource type="Texture2D" uid="uid://bcgdp34t2jdme" path="res://client/assets/vivosaurs/VRaptor/reviver_029.bin_1.png" id="1_g1bt3"]
+[ext_resource type="Script" uid="uid://tfde3pcbhqpi" path="res://core/data/SkillResource.gd" id="2_r6y72"]
+[ext_resource type="Script" uid="uid://nubhjw6614kq" path="res://core/data/StatusResource.gd" id="3_g1bt3"]
+[ext_resource type="Texture2D" uid="uid://71vn83yntuyf" path="res://client/assets/vivosaurs/VRaptor/48_0.png" id="4_rdmti"]
+
+[resource]
+script = ExtResource("1_fejhx")
+name = "V-Raptor"
+medal = ExtResource("1_g1bt3")
+sprite = ExtResource("4_rdmti")
+element = 2
+team_skill_groups = Array[int]([2, 12])
+lp = 280
+atk = 52
+def = 18
+acc = 50
+eva = 25
+crit = 40

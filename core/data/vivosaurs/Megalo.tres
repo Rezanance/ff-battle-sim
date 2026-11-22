@@ -1,0 +1,26 @@
+[gd_resource type="Resource" script_class="VivosaurResource" format=3 uid="uid://cdd4ja5ndp4j2"]
+
+[ext_resource type="Script" uid="uid://bj0qwk3daymcj" path="res://core/data/VivosaurResource.gd" id="1_8c1bm"]
+[ext_resource type="Script" uid="uid://tfde3pcbhqpi" path="res://core/data/SkillResource.gd" id="2_ox8ro"]
+[ext_resource type="Script" uid="uid://nubhjw6614kq" path="res://core/data/StatusResource.gd" id="3_ohlpu"]
+[ext_resource type="Texture2D" uid="uid://bq7ummtif7yg8" path="res://client/assets/vivosaurs/Megalo/31_0.png" id="3_ox8ro"]
+
+[sub_resource type="CompressedTexture2D" id="CompressedTexture2D_ohlpu"]
+load_path = "res://.godot/imported/reviver_012.bin_1.png-ded47d48c2bf0c9087a8378529c3c7c6.ctex"
+
+[resource]
+script = ExtResource("1_8c1bm")
+medal = SubResource("CompressedTexture2D_ohlpu")
+sprite = ExtResource("3_ox8ro")
+element = 4
+team_skill_groups = Array[int]([5, 9])
+battle_class = 4
+lp = 460
+atk = 70
+def = 36
+acc = 50
+eva = 20
+crit = 15
+se_atk = -5
+se_eva = -5
+metadata/_custom_type_script = "uid://bj0qwk3daymcj"

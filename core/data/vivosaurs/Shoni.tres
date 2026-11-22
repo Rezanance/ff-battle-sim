@@ -1,0 +1,27 @@
+[gd_resource type="Resource" script_class="VivosaurResource" format=3 uid="uid://cgs833ovhkwwx"]
+
+[ext_resource type="Script" uid="uid://bj0qwk3daymcj" path="res://core/data/VivosaurResource.gd" id="1_eqtv8"]
+[ext_resource type="Texture2D" uid="uid://2xnvi11suqv1" path="res://client/assets/vivosaurs/Shoni/reviver_089.bin_0.png" id="1_ojmpt"]
+[ext_resource type="Script" uid="uid://tfde3pcbhqpi" path="res://core/data/SkillResource.gd" id="2_1skyk"]
+[ext_resource type="Script" uid="uid://nubhjw6614kq" path="res://core/data/StatusResource.gd" id="3_ojmpt"]
+[ext_resource type="Texture2D" uid="uid://cyfbmqen0sqc0" path="res://client/assets/vivosaurs/Shoni/109_0.png" id="4_e8g8c"]
+
+[resource]
+script = ExtResource("1_eqtv8")
+name = "Shoni"
+medal = ExtResource("1_ojmpt")
+sprite = ExtResource("4_e8g8c")
+element = 1
+team_skill_groups = Array[int]([4])
+battle_class = 1
+lp = 640
+atk = 66
+def = 25
+acc = 35
+eva = 10
+crit = 15
+own_az = true
+se_atk = -15
+se_def = -15
+se_acc = -15
+se_eva = -15

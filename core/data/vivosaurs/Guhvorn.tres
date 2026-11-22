@@ -1,0 +1,23 @@
+[gd_resource type="Resource" script_class="VivosaurResource" format=3 uid="uid://b1kjg8yogu883"]
+
+[ext_resource type="Script" uid="uid://bj0qwk3daymcj" path="res://core/data/VivosaurResource.gd" id="1_rkiqq"]
+[ext_resource type="Texture2D" uid="uid://hlocw5apho6f" path="res://client/assets/vivosaurs/Guhvorn/reviver_113.bin_0.png" id="1_xoyf4"]
+[ext_resource type="Script" uid="uid://tfde3pcbhqpi" path="res://core/data/SkillResource.gd" id="2_3xqgd"]
+[ext_resource type="Script" uid="uid://nubhjw6614kq" path="res://core/data/StatusResource.gd" id="3_xoyf4"]
+[ext_resource type="Texture2D" uid="uid://b5e6glp770c0a" path="res://client/assets/vivosaurs/Guhvorn/133_0.png" id="4_bqug0"]
+
+[resource]
+script = ExtResource("1_rkiqq")
+name = "Guhvorn"
+medal = ExtResource("1_xoyf4")
+sprite = ExtResource("4_bqug0")
+element = 5
+team_skill_groups = Array[int]([1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16])
+lp = 888
+atk = 99
+def = 36
+acc = 30
+eva = 10
+crit = 10
+own_az = true
+se_atk = 10

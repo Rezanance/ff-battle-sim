@@ -12,4 +12,4 @@ class_name SkillResource
 @export var counterable: bool
 
 func load(skill_id: String) -> SkillResource:
-    return load("res://core/data/skills/%s.tres" % skill_id)
+	return load("res://core/data/skills/%s.tres" % skill_id)

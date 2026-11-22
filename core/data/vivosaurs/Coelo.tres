@@ -1,0 +1,27 @@
+[gd_resource type="Resource" script_class="VivosaurResource" format=3 uid="uid://ltd2akiagbea"]
+
+[ext_resource type="Script" uid="uid://bj0qwk3daymcj" path="res://core/data/VivosaurResource.gd" id="1_i4os6"]
+[ext_resource type="Texture2D" uid="uid://c4p33b4lbyb3e" path="res://client/assets/vivosaurs/Coelo/reviver_032.bin_1.png" id="1_p8wk0"]
+[ext_resource type="Script" uid="uid://tfde3pcbhqpi" path="res://core/data/SkillResource.gd" id="2_1jaal"]
+[ext_resource type="Script" uid="uid://nubhjw6614kq" path="res://core/data/StatusResource.gd" id="3_p8wk0"]
+[ext_resource type="Texture2D" uid="uid://b7qwiyg1uivf5" path="res://client/assets/vivosaurs/Coelo/51_0.png" id="4_j6pe7"]
+
+[resource]
+script = ExtResource("1_i4os6")
+name = "Coelo"
+medal = ExtResource("1_p8wk0")
+sprite = ExtResource("4_j6pe7")
+element = 2
+team_skill_groups = Array[int]([2, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15])
+battle_class = 2
+lp = 260
+atk = 52
+def = 11
+acc = 50
+eva = 21
+crit = 20
+own_az = true
+se_atk = 30
+se_def = 10
+se_acc = 20
+se_eva = 20

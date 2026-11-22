@@ -1,0 +1,26 @@
+[gd_resource type="Resource" script_class="VivosaurResource" format=3 uid="uid://c3xlvggtie8kn"]
+
+[ext_resource type="Script" uid="uid://bj0qwk3daymcj" path="res://core/data/VivosaurResource.gd" id="1_prs3l"]
+[ext_resource type="Texture2D" uid="uid://b18dj82nnnobo" path="res://client/assets/vivosaurs/Nasaur/reviver_062.bin_0.png" id="1_v2l75"]
+[ext_resource type="Script" uid="uid://tfde3pcbhqpi" path="res://core/data/SkillResource.gd" id="2_1voy8"]
+[ext_resource type="Script" uid="uid://nubhjw6614kq" path="res://core/data/StatusResource.gd" id="3_v2l75"]
+[ext_resource type="Texture2D" uid="uid://7pa0pqltivhr" path="res://client/assets/vivosaurs/Nasaur/82_0.png" id="4_jb2q1"]
+
+[resource]
+script = ExtResource("1_prs3l")
+name = "Nasaur"
+medal = ExtResource("1_v2l75")
+sprite = ExtResource("4_jb2q1")
+element = 1
+team_skill_groups = Array[int]([4, 14, 15])
+battle_class = 2
+lp = 260
+atk = 40
+def = 14
+acc = 50
+eva = 25
+crit = 20
+se_atk = -15
+se_def = -15
+se_acc = -15
+se_eva = -15

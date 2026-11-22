@@ -1,0 +1,26 @@
+[gd_resource type="Resource" script_class="VivosaurResource" format=3 uid="uid://bgwde8o16l0a6"]
+
+[ext_resource type="Script" uid="uid://bj0qwk3daymcj" path="res://core/data/VivosaurResource.gd" id="1_0wxbv"]
+[ext_resource type="Texture2D" uid="uid://6qh1mcgca3yi" path="res://client/assets/vivosaurs/Ankylo/reviver_057.bin_0.png" id="1_eu5bo"]
+[ext_resource type="Script" uid="uid://tfde3pcbhqpi" path="res://core/data/SkillResource.gd" id="2_iu11u"]
+[ext_resource type="Script" uid="uid://nubhjw6614kq" path="res://core/data/StatusResource.gd" id="3_eu5bo"]
+[ext_resource type="Texture2D" uid="uid://cb8r34elui1w2" path="res://client/assets/vivosaurs/Ankylo/77_0.png" id="4_h88w6"]
+
+[resource]
+script = ExtResource("1_0wxbv")
+name = "Ankylo"
+medal = ExtResource("1_eu5bo")
+sprite = ExtResource("4_h88w6")
+element = 1
+team_skill_groups = Array[int]([4, 14, 15])
+battle_class = 3
+lp = 440
+atk = 65
+def = 50
+acc = 46
+eva = 18
+crit = 20
+own_az = true
+se_atk = -20
+se_def = 99
+se_eva = -10

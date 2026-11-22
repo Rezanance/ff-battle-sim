@@ -1,0 +1,21 @@
+[gd_resource type="Resource" script_class="VivosaurResource" format=3 uid="uid://dqxg4b64kf0ch"]
+
+[ext_resource type="Script" uid="uid://bj0qwk3daymcj" path="res://core/data/VivosaurResource.gd" id="1_0anwm"]
+[ext_resource type="Texture2D" uid="uid://c0p3u6ckc8r1e" path="res://client/assets/vivosaurs/Dinomaton/reviver_101.bin_0.png" id="1_ch15t"]
+[ext_resource type="Script" uid="uid://tfde3pcbhqpi" path="res://core/data/SkillResource.gd" id="2_uxsvd"]
+[ext_resource type="Script" uid="uid://nubhjw6614kq" path="res://core/data/StatusResource.gd" id="3_ch15t"]
+[ext_resource type="Texture2D" uid="uid://b5iuiv0nyx7gl" path="res://client/assets/vivosaurs/Dinomaton/121_0.png" id="4_yex7j"]
+
+[resource]
+script = ExtResource("1_0anwm")
+name = "Dinomaton"
+medal = ExtResource("1_ch15t")
+sprite = ExtResource("4_yex7j")
+element = 4
+team_skill_groups = Array[int]([1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16])
+lp = 500
+atk = 90
+def = 14
+acc = 35
+eva = 25
+crit = 10

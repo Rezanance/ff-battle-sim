@@ -1,0 +1,24 @@
+[gd_resource type="Resource" script_class="VivosaurResource" format=3 uid="uid://nm40wkl1nxqn"]
+
+[ext_resource type="Texture2D" uid="uid://3kmmwnmlueer" path="res://client/assets/vivosaurs/Shuno/reviver_046.bin_0.png" id="1_1ivnt"]
+[ext_resource type="Script" uid="uid://bj0qwk3daymcj" path="res://core/data/VivosaurResource.gd" id="1_j182y"]
+[ext_resource type="Script" uid="uid://tfde3pcbhqpi" path="res://core/data/SkillResource.gd" id="2_c62or"]
+[ext_resource type="Script" uid="uid://nubhjw6614kq" path="res://core/data/StatusResource.gd" id="3_1ivnt"]
+[ext_resource type="Texture2D" uid="uid://ckdfwgkb1py3o" path="res://client/assets/vivosaurs/Shuno/66_0.png" id="4_emvp3"]
+
+[resource]
+script = ExtResource("1_j182y")
+name = "Shuno"
+medal = ExtResource("1_1ivnt")
+sprite = ExtResource("4_emvp3")
+team_skill_groups = Array[int]([1, 14])
+battle_class = 1
+lp = 580
+atk = 63
+def = 27
+acc = 47
+eva = 15
+crit = 20
+own_az = true
+se_def = -15
+se_eva = -10

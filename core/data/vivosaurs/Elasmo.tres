@@ -1,0 +1,22 @@
+[gd_resource type="Resource" script_class="VivosaurResource" format=3 uid="uid://cuci0oia08j4n"]
+
+[ext_resource type="Script" uid="uid://bj0qwk3daymcj" path="res://core/data/VivosaurResource.gd" id="1_5ax0v"]
+[ext_resource type="Texture2D" uid="uid://b0xu0f7reu8lf" path="res://client/assets/vivosaurs/Elasmo/reviver_087.bin_0.png" id="1_q2qoh"]
+[ext_resource type="Script" uid="uid://tfde3pcbhqpi" path="res://core/data/SkillResource.gd" id="2_hq2bo"]
+[ext_resource type="Script" uid="uid://nubhjw6614kq" path="res://core/data/StatusResource.gd" id="3_q2qoh"]
+[ext_resource type="Texture2D" uid="uid://bqvgv4k60u2it" path="res://client/assets/vivosaurs/Elasmo/107_0.png" id="4_8lsa2"]
+
+[resource]
+script = ExtResource("1_5ax0v")
+name = "Elasmo"
+medal = ExtResource("1_q2qoh")
+sprite = ExtResource("4_8lsa2")
+element = 1
+team_skill_groups = Array[int]([4, 8, 11, 12, 13])
+battle_class = 1
+lp = 520
+atk = 72
+def = 29
+acc = 40
+eva = 21
+crit = 15

@@ -1,0 +1,25 @@
+[gd_resource type="Resource" script_class="VivosaurResource" format=3 uid="uid://db08vbp8x5uk4"]
+
+[ext_resource type="Script" uid="uid://bj0qwk3daymcj" path="res://core/data/VivosaurResource.gd" id="1_723g5"]
+[ext_resource type="Texture2D" uid="uid://bpkgkh2yp37lj" path="res://client/assets/vivosaurs/Proto/reviver_072.bin_0.png" id="1_qp4un"]
+[ext_resource type="Script" uid="uid://tfde3pcbhqpi" path="res://core/data/SkillResource.gd" id="2_vqadk"]
+[ext_resource type="Script" uid="uid://nubhjw6614kq" path="res://core/data/StatusResource.gd" id="3_qp4un"]
+[ext_resource type="Texture2D" uid="uid://c1y4a66pu6htm" path="res://client/assets/vivosaurs/Proto/92_0.png" id="4_sdpnv"]
+
+[resource]
+script = ExtResource("1_723g5")
+name = "Proto"
+medal = ExtResource("1_qp4un")
+sprite = ExtResource("4_sdpnv")
+element = 1
+team_skill_groups = Array[int]([4, 15])
+battle_class = 5
+lp = 220
+atk = 41
+def = 11
+acc = 40
+eva = 25
+crit = 20
+own_az = true
+se_def = 70
+se_eva = 70

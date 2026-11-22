@@ -1,0 +1,24 @@
+[gd_resource type="Resource" script_class="VivosaurResource" format=3 uid="uid://bk2bq0o35q3nj"]
+
+[ext_resource type="Script" uid="uid://bj0qwk3daymcj" path="res://core/data/VivosaurResource.gd" id="1_ipdoc"]
+[ext_resource type="Texture2D" uid="uid://burns27y05jkl" path="res://client/assets/vivosaurs/Guhweep/reviver_112.bin_0.png" id="1_r5fjn"]
+[ext_resource type="Script" uid="uid://tfde3pcbhqpi" path="res://core/data/SkillResource.gd" id="2_d7s1c"]
+[ext_resource type="Script" uid="uid://nubhjw6614kq" path="res://core/data/StatusResource.gd" id="3_r5fjn"]
+[ext_resource type="Texture2D" uid="uid://behubnxoxfktc" path="res://client/assets/vivosaurs/Guhweep/132_0.png" id="4_apx0g"]
+
+[resource]
+script = ExtResource("1_ipdoc")
+name = "Guhweep"
+medal = ExtResource("1_r5fjn")
+sprite = ExtResource("4_apx0g")
+element = 5
+team_skill_groups = Array[int]([1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16])
+battle_class = 2
+lp = 666
+atk = 54
+def = 18
+acc = 30
+eva = 30
+crit = 10
+own_az = true
+se_acc = 10

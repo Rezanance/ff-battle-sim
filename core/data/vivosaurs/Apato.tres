@@ -1,0 +1,25 @@
+[gd_resource type="Resource" script_class="VivosaurResource" format=3 uid="uid://gcp0ilv08e4q"]
+
+[ext_resource type="Texture2D" uid="uid://bxm4xxtvlxkrt" path="res://client/assets/vivosaurs/Apato/reviver_049.bin_0.png" id="1_4s835"]
+[ext_resource type="Script" uid="uid://bj0qwk3daymcj" path="res://core/data/VivosaurResource.gd" id="1_t6jx7"]
+[ext_resource type="Script" uid="uid://tfde3pcbhqpi" path="res://core/data/SkillResource.gd" id="2_ynx4c"]
+[ext_resource type="Script" uid="uid://nubhjw6614kq" path="res://core/data/StatusResource.gd" id="3_4s835"]
+[ext_resource type="Texture2D" uid="uid://ohvirbpfd2ny" path="res://client/assets/vivosaurs/Apato/69_0.png" id="4_7jnie"]
+
+[resource]
+script = ExtResource("1_t6jx7")
+name = "Apato"
+medal = ExtResource("1_4s835")
+sprite = ExtResource("4_7jnie")
+element = 4
+team_skill_groups = Array[int]([5, 14])
+battle_class = 1
+lp = 680
+atk = 64
+def = 27
+acc = 45
+eva = 13
+crit = 15
+own_az = true
+se_def = -30
+se_eva = -30

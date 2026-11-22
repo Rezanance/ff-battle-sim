@@ -1,0 +1,22 @@
+[gd_resource type="Resource" script_class="VivosaurResource" format=3 uid="uid://b30vtfraatncj"]
+
+[ext_resource type="Texture2D" uid="uid://dvuso74tlhmgd" path="res://client/assets/vivosaurs/Zino/reviver_043.bin_0.png" id="1_5d8sw"]
+[ext_resource type="Script" uid="uid://bj0qwk3daymcj" path="res://core/data/VivosaurResource.gd" id="1_bhu3h"]
+[ext_resource type="Script" uid="uid://tfde3pcbhqpi" path="res://core/data/SkillResource.gd" id="2_0v84l"]
+[ext_resource type="Script" uid="uid://nubhjw6614kq" path="res://core/data/StatusResource.gd" id="3_5d8sw"]
+[ext_resource type="Texture2D" uid="uid://ddlkakfdciqul" path="res://client/assets/vivosaurs/Zino/63_0.png" id="4_j2eh0"]
+
+[resource]
+script = ExtResource("1_bhu3h")
+name = "Zino"
+medal = ExtResource("1_5d8sw")
+sprite = ExtResource("4_j2eh0")
+team_skill_groups = Array[int]([1, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15])
+lp = 460
+atk = 70
+def = 31
+acc = 6
+eva = 10
+crit = 100
+se_acc = 20
+se_eva = 20

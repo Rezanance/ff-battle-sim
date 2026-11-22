@@ -1,0 +1,23 @@
+[gd_resource type="Resource" script_class="VivosaurResource" format=3 uid="uid://byxxerfe6y8go"]
+
+[ext_resource type="Texture2D" uid="uid://wwk55o5oruiy" path="res://client/assets/vivosaurs/Tarbo/reviver_004.bin_1.png" id="1_5lefa"]
+[ext_resource type="Script" uid="uid://bj0qwk3daymcj" path="res://core/data/VivosaurResource.gd" id="1_hvh07"]
+[ext_resource type="Script" uid="uid://tfde3pcbhqpi" path="res://core/data/SkillResource.gd" id="2_a5rgb"]
+[ext_resource type="Script" uid="uid://nubhjw6614kq" path="res://core/data/StatusResource.gd" id="3_5lefa"]
+[ext_resource type="Texture2D" uid="uid://be1sidl1ddhas" path="res://client/assets/vivosaurs/Tarbo/23_0.png" id="4_r0awd"]
+
+[resource]
+script = ExtResource("1_hvh07")
+medal = ExtResource("1_5lefa")
+sprite = ExtResource("4_r0awd")
+element = 2
+team_skill_groups = Array[int]([2, 7])
+lp = 540
+atk = 85
+def = 40
+acc = 46
+eva = 19
+crit = 15
+own_az = true
+se_eva = -10
+metadata/_custom_type_script = "uid://bj0qwk3daymcj"

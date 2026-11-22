@@ -1,0 +1,25 @@
+[gd_resource type="Resource" script_class="VivosaurResource" format=3 uid="uid://ueaviaq5gdl0"]
+
+[ext_resource type="Texture2D" uid="uid://ckxtcxltsrib3" path="res://client/assets/vivosaurs/Dynal/reviver_104.bin_0.png" id="1_ios3e"]
+[ext_resource type="Script" uid="uid://bj0qwk3daymcj" path="res://core/data/VivosaurResource.gd" id="1_llger"]
+[ext_resource type="Script" uid="uid://tfde3pcbhqpi" path="res://core/data/SkillResource.gd" id="2_8ikpn"]
+[ext_resource type="Script" uid="uid://nubhjw6614kq" path="res://core/data/StatusResource.gd" id="3_ios3e"]
+[ext_resource type="Texture2D" uid="uid://dol6dps0ogee6" path="res://client/assets/vivosaurs/Dynal/124_0.png" id="4_iarn0"]
+
+[resource]
+script = ExtResource("1_llger")
+name = "Dynal"
+medal = ExtResource("1_ios3e")
+sprite = ExtResource("4_iarn0")
+element = 4
+team_skill_groups = Array[int]([1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16])
+lp = 700
+atk = 99
+def = 40
+acc = 41
+eva = 16
+crit = 10
+se_atk = -77
+se_def = -77
+se_acc = -77
+se_eva = -77

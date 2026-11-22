@@ -1,0 +1,27 @@
+[gd_resource type="Resource" script_class="VivosaurResource" format=3 uid="uid://ckkhqpxcf3bnr"]
+
+[ext_resource type="Script" uid="uid://bj0qwk3daymcj" path="res://core/data/VivosaurResource.gd" id="1_3mj4w"]
+[ext_resource type="Texture2D" uid="uid://bljo6t2xuvwof" path="res://client/assets/vivosaurs/Paraloph/reviver_068.bin_0.png" id="1_xtn3i"]
+[ext_resource type="Script" uid="uid://tfde3pcbhqpi" path="res://core/data/SkillResource.gd" id="2_pd1dd"]
+[ext_resource type="Script" uid="uid://nubhjw6614kq" path="res://core/data/StatusResource.gd" id="3_xtn3i"]
+[ext_resource type="Texture2D" uid="uid://d1gvrr5qgs1c1" path="res://client/assets/vivosaurs/Paraloph/88_0.png" id="4_u2vs3"]
+
+[resource]
+script = ExtResource("1_3mj4w")
+name = "Paraloph"
+medal = ExtResource("1_xtn3i")
+sprite = ExtResource("4_u2vs3")
+element = 2
+team_skill_groups = Array[int]([2, 14, 15])
+battle_class = 4
+lp = 500
+atk = 72
+def = 25
+acc = 50
+eva = 21
+crit = 20
+own_az = true
+se_atk = 7
+se_def = 7
+se_acc = 7
+se_eva = 7

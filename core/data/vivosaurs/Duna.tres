@@ -1,0 +1,26 @@
+[gd_resource type="Resource" script_class="VivosaurResource" format=3 uid="uid://sd0fvwbv65kb"]
+
+[ext_resource type="Script" uid="uid://bj0qwk3daymcj" path="res://core/data/VivosaurResource.gd" id="1_2fq2g"]
+[ext_resource type="Texture2D" uid="uid://bxkgvfy6jiijk" path="res://client/assets/vivosaurs/Duna/reviver_102.bin_0.png" id="1_kof2r"]
+[ext_resource type="Script" uid="uid://tfde3pcbhqpi" path="res://core/data/SkillResource.gd" id="2_dyfaq"]
+[ext_resource type="Script" uid="uid://nubhjw6614kq" path="res://core/data/StatusResource.gd" id="3_kof2r"]
+[ext_resource type="Texture2D" uid="uid://gag18k48gjlc" path="res://client/assets/vivosaurs/Duna/122_0.png" id="4_loe5p"]
+
+[resource]
+script = ExtResource("1_2fq2g")
+name = "Duna"
+medal = ExtResource("1_kof2r")
+sprite = ExtResource("4_loe5p")
+element = 1
+team_skill_groups = Array[int]([1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16])
+battle_class = 4
+lp = 500
+atk = 67
+def = 29
+acc = 48
+eva = 25
+crit = 20
+own_az = true
+se_def = 77
+se_acc = 77
+se_eva = 77

@@ -1,0 +1,25 @@
+[gd_resource type="Resource" script_class="VivosaurResource" format=3 uid="uid://qp68dh3t50pl"]
+
+[ext_resource type="Texture2D" uid="uid://cupt3v4hn2s6h" path="res://client/assets/vivosaurs/Jiango/reviver_053.bin_0.png" id="1_opgo2"]
+[ext_resource type="Script" uid="uid://bj0qwk3daymcj" path="res://core/data/VivosaurResource.gd" id="1_xpkt6"]
+[ext_resource type="Script" uid="uid://tfde3pcbhqpi" path="res://core/data/SkillResource.gd" id="2_gh1re"]
+[ext_resource type="Script" uid="uid://nubhjw6614kq" path="res://core/data/StatusResource.gd" id="3_opgo2"]
+[ext_resource type="Texture2D" uid="uid://dvrjdg8nqun3p" path="res://client/assets/vivosaurs/Jiango/73_0.png" id="4_rdfbg"]
+
+[resource]
+script = ExtResource("1_xpkt6")
+name = "Jiango"
+medal = ExtResource("1_opgo2")
+sprite = ExtResource("4_rdfbg")
+element = 1
+team_skill_groups = Array[int]([4, 15])
+lp = 440
+atk = 67
+def = 29
+acc = 45
+eva = 20
+crit = 40
+own_az = true
+se_def = -10
+se_acc = 5
+se_eva = 5
